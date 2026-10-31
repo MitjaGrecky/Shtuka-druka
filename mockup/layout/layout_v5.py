@@ -59,7 +59,8 @@ other("meter", "Meter L", 117, 405, 5, 104, "Levels", label="L")
 other("meter", "Meter R", 125, 405, 5, 104, "Levels", label="R")
 
 # ---------------- CENTER ----------------
-other("zone", "Palm rest", 212, 21, 200, 34, "Palm", label="palm rest")
+# touch strip under the pads (R105): 2 x Bela Trill Bar (101 x 22 mm) side by side; palm rejection by touch size
+other("strip", "Touch strip", 212, 22, 202, 18, "Strip", label="MOD · SCROLL")
 for j in range(8):
     for i in range(8):
         other("pad", f"Pad {i+1}.{8-j}", 124.5 + 25 * i, 56.5 + 25 * j, 21, 21, "Grid", color=TRACK[7 - j])
@@ -89,10 +90,10 @@ btn("Scene A", 402, 24, 14, 12, "Live", label="A", color="red")
 other("fader", "Crossfader", 450, 24, 72, 4, "Live", label="Scene A ↔ B")
 btn("Scene B", 498, 24, 14, 12, "Live", label="B", color="blue")
 # screen navigation: wheel (push = OK) + Back; Page buttons at the ends of the screen-knob row (P64)
-other("wheel", "Wheel", 472, 160, 45, 45, "Navigation", label="")
-btn("Back", 418, 160, 36, 18, "Navigation", freq="часто")
-btn("Page ◄", 122, 306, 18, 14, "Navigation", label="◄ Page", freq="часто")
-btn("Page ►", 386, 306, 18, 14, "Navigation", label="Page ►", freq="часто")
+other("wheel", "Wheel", 478, 160, 45, 45, "Navigation", label="")
+btn("Back", 421, 146, 50, 16, "Navigation", freq="часто")
+btn("Page ◄", 408, 172, 24, 14, "Navigation", label="◄ Page", freq="часто")
+btn("Page ►", 434, 172, 24, 14, "Navigation", label="Page ►", freq="часто")
 # PAD MODE: what the pads do, 2 x 3 next to the grid
 gm = [["Chords", "Touch FX", "Scale"], ["Clips", "Steps", "Notes"]]  # front -> back (behind the crossfader)
 for r, row in enumerate(gm):

@@ -53,7 +53,7 @@ for hx, ht in ((330, "MUTE"), (352, "SELECT"), (378, "LEVEL")): t(X(hx), Y(244),
 frame(395, 12, 505, 34, "")
 frame(395, 48, 505, 98, "PAD MODE")
 frame(397, 230, 454, 324, "SCREEN")
-frame(395, 130, 505, 190, "SCREEN NAV")
+frame(395, 132, 505, 190, "SCREEN NAV")
 frame(455, 230, 505, 324, "LIVE")
 BG = "#24282c"
 frame(8, 348, 132, 462, "LEVELS")
@@ -61,7 +61,13 @@ frame(380, 356, 507, 456, "SYSTEM")
 
 for e in E:
     k, x, y, w, h = e["kind"], e["x"], e["y"], e["w"], e["h"]
-    if k == "zone":
+    if k == "strip":
+        a(f'<rect x="{X(x-w/2):.1f}" y="{Y(y+h/2):.1f}" width="{w*S:.1f}" height="{h*S:.1f}" rx="{3*S}" fill="#0d0f11" stroke="#3a3f44" stroke-width="1.2"/>')
+        for i in range(25):
+            lx = x - w / 2 + 6 + i * (w - 12) / 24
+            a(f'<circle cx="{X(lx):.1f}" cy="{Y(y+h/2+3.2):.1f}" r="{0.8*S:.1f}" fill="#9b93f0" fill-opacity="{0.9 if 6 <= i <= 11 else 0.18}"/>')
+        t(X(x), Y(y + 1), "TOUCH STRIP", 2.6, "#4d5358", weight=500)
+    elif k == "zone":
         a(f'<rect x="{X(x-w/2):.1f}" y="{Y(y+h/2):.1f}" width="{w*S:.1f}" height="{h*S:.1f}" rx="{3*S}" '
           f'fill="#202326" stroke="#2c3034" stroke-dasharray="3 4"/>')
         t(X(x), Y(y), "PALM REST", 3, "#4d5358")
@@ -165,6 +171,7 @@ t(X(-7), Y(170), "плоская", 2.8, "#555", "end"); t(X(-7), Y(162), "час
 t(X(-7), Y(410), "наклон", 2.8, "#555", "end"); t(X(-7), Y(402), "30°", 2.8, "#555", "end")
 t(X(-7), Y(485), "полка", 2.8, "#555", "end")
 t(X(-7), Y(14), "край", 2.8, "#555", "end")
+t(X(212), Y(0) + 12, "Notes, Chords: модуляция · Clips, Steps: прокрутка ◄ ► · Touch FX: глубина эффекта", 2.6, "#555")
 # legend: endless vs finite
 lx, ly = X(130), Y(0) + 52
 for i in range(15):

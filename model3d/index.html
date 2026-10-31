@@ -316,12 +316,18 @@ wframe(15,130,350,465,GREY,'Inputs');
 wlabel('Gain 1',45,423,2.6);wlabel('Gain 2',100,423,2.6);wlabel('P48',45,386,2.6);wlabel('P48',100,386,2.6);wlabel('Input',72,356,2.6);
 
 const segs=12;for(let i=0;i<segs;i++){const c=i<8?'#55c26b':(i<10?'#e7d24a':'#e8564a');button(wedge,Wp(395,357+i*8.5),6,5,c,{name:'Индикатор Main',group:'Система',desc:'Уровень главного выхода, рядом с экраном. Справа у экрана — выходы, как и сзади.'},i<6?.9:.08,1.5);}
-button(wedge,Wp(440,435),22,10,'#dfe6e3',{name:'Браузер',group:'Система',desc:'Браузер сэмплов и проектов с избранным.'},.22);
-button(wedge,Wp(476,435),22,10,'#dfe6e3',{name:'Настройки',group:'Система',desc:'Системное меню.'},.22);
+button(wedge,Wp(440,440),22,10,'#dfe6e3',{name:'Браузер',group:'Система',desc:'Браузер сэмплов и проектов с избранным.'},.22);
+button(wedge,Wp(476,440),22,10,'#dfe6e3',{name:'Настройки',group:'Система',desc:'Системное меню.'},.22);
 {const g=new THREE.Group();const ring=new THREE.Mesh(new THREE.TorusGeometry(8,1,8,40),emat('#e6ebea',.5));ring.rotation.x=-Math.PI/2;ring.position.y=.5;g.add(ring);
- const b=new THREE.Mesh(new THREE.CylinderGeometry(5.5,5.5,2,32),KNOB);b.position.y=.5;g.add(b);put(wedge,g,Wp(458,378),{name:'Питание',group:'Система',desc:'Утоплено, срабатывает при удержании 2 с, чтобы не нажать случайно (FAA 6.4.4). Дальний правый угол, над разъёмом питания сзади.'});}
+ const b=new THREE.Mesh(new THREE.CylinderGeometry(5.5,5.5,2,32),KNOB);b.position.y=.5;g.add(b);put(wedge,g,Wp(472,372),{name:'Питание',group:'Система',desc:'Утоплено, срабатывает при удержании 2 с, чтобы не нажать случайно (FAA 6.4.4). Дальний правый угол, над разъёмом питания сзади.'});}
 wframe(380,500,350,465,GREY,'System');
-wlabel('Main',395,348,2.6);wlabel('Browser',440,424,2.6);wlabel('Menu',476,424,2.6);wlabel('Power',458,364,2.6);
+wlabel('Main',395,348,2.6);wlabel('Browser',440,430,2.6);wlabel('Menu',476,430,2.6);wlabel('Power',472,358,2.6);
+{const media={name:'USB-A и SD',group:'Система · носители',desc:'Горячая замена флешек и карт с сэмплами, музыкой, проектами (R81). В блоке System, в углублении: далеко от рук и не на торце, где флешку снесут на первом же лайве. Всё копируется на внутренний SSD — вынуть можно в любой момент; пока горит индикатор, идёт запись.'};
+ const pocket=new THREE.Mesh(new THREE.BoxGeometry(66,1,20),HOLE);pocket.position.set(...Wp(447,402));pocket.position.y=.3;wedge.add(pocket);reg(pocket,media);
+ const ua=new THREE.Mesh(new THREE.BoxGeometry(13,1.2,5.5),new THREE.MeshStandardMaterial({color:0x2b6cb0,roughness:.5}));ua.position.set(...Wp(425,402));ua.position.y=.9;wedge.add(ua);reg(ua,media);
+ const sd=new THREE.Mesh(new THREE.BoxGeometry(26,1.2,2.5),KNOBTOP);sd.position.set(...Wp(458,402));sd.position.y=.9;wedge.add(sd);reg(sd,media);
+ button(wedge,Wp(482,402),3,3,'#e8564a',media,.6,1.2);}
+wlabel('USB',425,392,2.6);wlabel('SD',458,392,2.6);
 
 function jack(kind,xmm,y,front,info){
   const g=new THREE.Group();let nut,hole;
@@ -378,8 +384,6 @@ for(let i=0;i<8;i++)J('trs',428+(i%4)*22,i<4?56:28,'Line '+(i+1),0,{name:'Лин
 
 jack('trs',35,30,true,{name:'Наушники 1',group:'Передний торец',desc:'6,3 мм; источник Main или Cue; ≥ 4 В на 600 Ом (P25).'});
 jack('trs',95,30,true,{name:'Наушники 2',group:'Передний торец',desc:'Второй выход наушников со своей громкостью.'});
-{const sd=new THREE.Mesh(new THREE.BoxGeometry(26,2.5,2),HOLE);sd.position.set(X(430),34,D/2+.8);scene.add(sd);reg(sd,{name:'Слот SD',group:'Передний торец',desc:'Импорт и экспорт; проекты живут на внутреннем SSD (P15).'});
- const ua=new THREE.Mesh(new THREE.BoxGeometry(13,5.5,2),HOLE);ua.position.set(X(472),34,D/2+.8);scene.add(ua);reg(ua,{name:'USB-A для флешек',group:'Передний торец',desc:'Горячая замена флешек с сэмплами и музыкой (R80). Всё копируется на внутренний SSD, поэтому флешку можно выдернуть в любой момент — звук не прервётся. Рядом индикатор записи.'});}
 
 {const dpm=new THREE.MeshStandardMaterial({map:tex(deckC),roughness:.75}),wpm=new THREE.MeshStandardMaterial({map:tex(wedgeC),roughness:.75});SKINS.push(dpm,wpm);const dp=new THREE.Mesh(new THREE.PlaneGeometry(W,WZ0),dpm);dp.rotation.x=-Math.PI/2;dp.position.set(0,DECK+.05,Z(WZ0/2));scene.add(dp);
  const wp=new THREE.Mesh(new THREE.PlaneGeometry(W,L),wpm);wp.rotation.x=-Math.PI/2;wp.position.set(0,.05,-L/2);wedge.add(wp);}

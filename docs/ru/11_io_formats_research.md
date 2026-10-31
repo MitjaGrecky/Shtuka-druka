@@ -170,6 +170,8 @@
 
 ### 5.1 USB-аудио к компьютеру
 
+*Обновление 31.10.2026: после перехода на x86 Mini-ITX (R36) режим USB-гаджета недоступен — варианты в документе 19, раздел 9.*
+
 У MPC — 24 канала в каждую сторону через USB-C, у Push 3 — 10 × 12 ([Gearnews](https://www.gearnews.com/akai-mpc-live-iii-review/), [Thomann](https://www.thomann.de/be/ableton_push_3_standalone_live_std.htm)).
 
 На Linux устройство-гаджет UAC2 долго было ограничено 27 каналами. Патч июля 2026 года добавляет явное число каналов, проверено до 96 каналов на Pi Zero 2 W ([LKML](https://lkml.iu.edu/2607.3/09667.html)).

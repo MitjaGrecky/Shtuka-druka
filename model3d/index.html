@@ -1,8 +1,8 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0}</style>
-<title>Штука Дрюка v4</title>
+<title>Штука Дрюка 3D</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@500&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@500&family=JetBrains+Mono:wght@400&family=IBM+Plex+Sans+Condensed:wght@500;600&display=swap">
 <style>
 /* Layout: stage-first workbench — 3D model left, inspector right, stacked on phones */
 :root{
@@ -19,7 +19,7 @@
   --bg:#0f1213; --surface:#161b1c; --stage:#1a2021; --fg:#e6ebea; --muted:#93a09f; --line:#28322f;
   --left:#3fc39d; --right:#9b93f0; --rare:#a3a8a5; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55;margin:0}
 .wrap{max-width:1240px;margin:0 auto;padding-block:20px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:16px}
 header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px}
 h1{font-family:var(--display);font-weight:500;font-size:clamp(22px,3.2vw,30px);margin:0;letter-spacing:-.01em;text-wrap:balance}
@@ -38,8 +38,7 @@ h1{font-family:var(--display);font-weight:500;font-size:clamp(22px,3.2vw,30px);m
 .hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--muted);pointer-events:none}
 aside{display:grid;gap:12px;min-width:0}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-.card h2{font-family:var(--display);font-weight:500;font-size:15px;margin:0 0 4px}
-.eyebrow{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.card h2{font-family:var(--display);font-weight:500;font-size:15px;margin:0 0 6px}
 #info-name{font-size:17px;font-weight:600;margin:0}
 #info-group{font-size:12.5px;color:var(--muted);margin:2px 0 8px}
 #info-desc{margin:0;font-size:14px}
@@ -53,12 +52,13 @@ aside{display:grid;gap:12px;min-width:0}
 .stats dt{color:var(--muted)}
 .note{font-size:12.5px;color:var(--muted);margin:0}
 #fallback{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto}}
 </style>
 
 <div class="wrap">
   <header>
-    <h1>Штука Дрюка, макет v4</h1>
-    <div class="meta">515 × 500 мм + подставка 70 мм · спереди 68 мм · сзади 143 мм · экран 10,1″ под 30°</div>
+    <h1>Штука Дрюка, панель v7</h1>
+    <div class="meta">515 × 460 мм, подставка 70 мм, высота 68–143 мм, экран 10,1″ под 30°</div>
   </header>
   <div class="main">
     <div class="stagebox">
@@ -73,22 +73,21 @@ aside{display:grid;gap:12px;min-width:0}
       </div>
       <div id="stage">
         <div id="fallback">Загружаю 3D-модель…</div>
-        <div class="hint">Крутить — тянуть, масштаб — колесо или щипок, клик по ручке — описание</div>
+        <div class="hint">Крутить — тянуть, масштаб — колесо или щипок, клик по органу — описание</div>
       </div>
     </div>
     <aside>
       <section class="card" aria-live="polite">
-        <p class="eyebrow">Выбрано</p>
-        <p id="info-name">Сетка 8×8</p>
-        <p id="info-group">Центр · обе руки</p>
-        <p id="info-desc">Строки — окно из 8 дорожек из 16 и больше, столбцы — сцены или шаги. Окно двигается построчно стрелками или колесом (R15). Шаг 25 мм, RGB, чувствительность к силе удара и давлению.</p>
+        <p id="info-name">Сетка 8 × 8</p>
+        <p id="info-group">Сетка</p>
+        <p id="info-desc">Строки — дорожки (дорожка 1 — дальняя строка), столбцы — сцены или шаги (R93). Пэд 25,5 × 21 мм — «на два пальца» (R106), шаг 28 × 25 мм.</p>
       </section>
       <section class="card">
         <h2>Как читать</h2>
         <ul class="legend">
-          <li><span class="chip l"></span><span>Левая рука: время — транспорт, захват, правка, страницы</span></li>
-          <li><span class="chip r"></span><span>Правая рука: значения — параметры, колесо, макро, кроссфейдер, дорожки</span></li>
-          <li><span class="chip g"></span><span>Настройка и редкое — у экрана, дальше от рук</span></li>
+          <li><span class="chip l"></span><span>Четыре полосы на всю глубину: время слева, сетка с экраном, дорожки с индикаторами, значения справа. Блок на наклоне стоит над своей колонкой</span></li>
+          <li><span class="chip r"></span><span>Столбец пэдов, кнопка сцены, ручка и столбец на экране — на одной оси</span></li>
+          <li><span class="chip g"></span><span>Энкодеры без риски, значение на кольце огней; потенциометры уровней — с риской</span></li>
           <li><span class="chip o"></span><span>Заливка у разъёма — выход</span></li>
           <li><span class="chip i"></span><span>Рамка у разъёма — вход</span></li>
         </ul>
@@ -97,15 +96,15 @@ aside{display:grid;gap:12px;min-width:0}
         <h2>Состав</h2>
         <dl class="stats">
           <dt>Пэды</dt><dd>64</dd>
-          <dt>Энкодеры</dt><dd>25</dd>
-          <dt>Кнопки</dt><dd>45</dd>
-          <dt>Громкости</dt><dd>3</dd>
-          <dt>Кроссфейдер</dt><dd>1</dd>
+          <dt>Кнопки</dt><dd>75</dd>
+          <dt>Энкодеры</dt><dd>22</dd>
+          <dt>Потенциометры</dt><dd>4</dd>
+          <dt>Колесо, кроссфейдер, полоса</dt><dd>3</dd>
           <dt>Гнёзд сзади</dt><dd>≈ 50</dd>
-          <dt>Корпус</dt><dd>515 × 500 × 68–143</dd>
+          <dt>Корпус, мм</dt><dd>515 × 460 × 68–143</dd>
         </dl>
       </section>
-      <p class="note">Схематичная модель по документам 13 и 17 проекта: размеры групп точные, форма ручек и цвета условные. Кнопка «Внутри» делает корпус прозрачным и показывает платы.</p>
+      <p class="note">Модель строится из того же файла раскладки, что и чертёж (layout_v7.json): места и размеры точные, форма ручек и цвета условные. «Внутри» делает корпус прозрачным и показывает платы, отсек аккумулятора и модуль экрана.</p>
     </aside>
   </div>
 </div>
@@ -117,12 +116,14 @@ aside{display:grid;gap:12px;min-width:0}
 const stage=document.getElementById('stage');
 const fb=document.getElementById('fallback');
 if(!window.THREE||!THREE.OrbitControls){fb.textContent='Не удалось загрузить 3D-библиотеку.';return;}
-try{await Promise.all([document.fonts.load('500 40px "Golos Text"'),document.fonts.load('600 40px "Golos Text"'),document.fonts.load('400 40px "JetBrains Mono"')]);}catch(e){}
+try{await Promise.all([document.fonts.load('500 40px "Golos Text"'),document.fonts.load('600 40px "Golos Text"'),document.fonts.load('500 40px "IBM Plex Sans Condensed"'),document.fonts.load('600 40px "IBM Plex Sans Condensed"'),document.fonts.load('400 40px "JetBrains Mono"')]);}catch(e){}
 
-const W=515,D=500,DECK=68,WZ0=340,WZ1=470,ANG=Math.PI/6;
-const L=(WZ1-WZ0)/Math.cos(ANG), TOP=DECK+(WZ1-WZ0)*Math.tan(ANG), K=4;
-const X=x=>x-W/2, Z=z=>D/2-z, S=z=>(z-WZ0)/Math.cos(ANG);
-const FONT='"Golos Text",system-ui,sans-serif';
+const LAY={"W": 515, "D": 460, "F0": 300, "F1": 430, "E": [{"kind": "button", "name": "● Rec", "x": 24, "y": 22, "w": 28, "h": 22, "group": "Transport", "label": "● Rec", "color": "red", "freq": "часто, в долю", "note": ""}, {"kind": "button", "name": "▶ Play", "x": 56, "y": 22, "w": 28, "h": 22, "group": "Transport", "label": "▶ Play", "color": "green", "freq": "часто, в долю", "note": ""}, {"kind": "button", "name": "■ Stop", "x": 88, "y": 22, "w": 28, "h": 22, "group": "Transport", "label": "■ Stop", "color": "white", "freq": "часто, в долю", "note": ""}, {"kind": "button", "name": "Restart", "x": 24, "y": 52, "w": 28, "h": 16, "group": "Transport", "label": "Restart", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "button", "name": "Metronome", "x": 56, "y": 52, "w": 28, "h": 16, "group": "Transport", "label": "Metronome", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "button", "name": "Tap", "x": 88, "y": 52, "w": 28, "h": 16, "group": "Transport", "label": "Tap", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "button", "name": "Capture", "x": 32, "y": 77, "w": 44, "h": 16, "group": "Capture", "label": "Capture", "color": "teal", "freq": "часто", "note": ""}, {"kind": "button", "name": "Resample", "x": 80, "y": 77, "w": 44, "h": 16, "group": "Capture", "label": "Resample", "color": "teal", "freq": "иногда", "note": ""}, {"kind": "button", "name": "Undo", "x": 24, "y": 127, "w": 28, "h": 16, "group": "Edit", "label": "Undo", "color": "grey", "freq": "часто", "note": ""}, {"kind": "button", "name": "Redo", "x": 56, "y": 127, "w": 28, "h": 16, "group": "Edit", "label": "Redo", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "button", "name": "Delete", "x": 88, "y": 127, "w": 28, "h": 16, "group": "Edit", "label": "Delete", "color": "grey", "freq": "часто", "note": ""}, {"kind": "button", "name": "Duplicate", "x": 24, "y": 152, "w": 28, "h": 16, "group": "Edit", "label": "Duplicate", "color": "grey", "freq": "часто", "note": ""}, {"kind": "button", "name": "Double", "x": 56, "y": 152, "w": 28, "h": 16, "group": "Edit", "label": "Double", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "button", "name": "New", "x": 88, "y": 152, "w": 28, "h": 16, "group": "Edit", "label": "New", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "button", "name": "Quantize", "x": 24, "y": 177, "w": 28, "h": 16, "group": "Edit", "label": "Quantize", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "button", "name": "Length", "x": 56, "y": 177, "w": 28, "h": 16, "group": "Edit", "label": "Length", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "button", "name": "Automate", "x": 88, "y": 177, "w": 28, "h": 16, "group": "Edit", "label": "Automate", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "button", "name": "Repeat", "x": 32, "y": 227, "w": 44, "h": 16, "group": "Repeat", "label": "Repeat", "color": "grey", "freq": "часто", "note": ""}, {"kind": "button", "name": "Accent", "x": 80, "y": 227, "w": 44, "h": 16, "group": "Repeat", "label": "Accent", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "encoder", "name": "Tempo", "x": 32, "y": 277, "w": 22, "h": 22, "group": "Knob line", "label": "Tempo", "ring": 30, "color": "grey", "freq": "иногда", "note": ""}, {"kind": "encoder", "name": "Swing", "x": 80, "y": 277, "w": 22, "h": 22, "group": "Knob line", "label": "Swing", "ring": 30, "color": "grey", "freq": "редко", "note": ""}, {"kind": "button", "name": "Arrow ◄", "x": 118, "y": 22, "w": 16, "h": 14, "group": "Grid scroll", "label": "◄", "color": "grey", "freq": "часто", "note": "ход потуже"}, {"kind": "strip", "name": "Touch strip", "x": 220.75, "y": 22, "w": 181.5, "h": 18, "group": "Strip", "label": "", "color": "grey", "note": ""}, {"kind": "button", "name": "Arrow ►", "x": 323.5, "y": 22, "w": 16, "h": 14, "group": "Grid scroll", "label": "►", "color": "grey", "freq": "часто", "note": "ход потуже"}, {"kind": "pad", "name": "Pad 1.8", "x": 122.75, "y": 52, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#d4537e", "note": ""}, {"kind": "pad", "name": "Pad 2.8", "x": 150.75, "y": 52, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#d4537e", "note": ""}, {"kind": "pad", "name": "Pad 3.8", "x": 178.75, "y": 52, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#d4537e", "note": ""}, {"kind": "pad", "name": "Pad 4.8", "x": 206.75, "y": 52, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#d4537e", "note": ""}, {"kind": "pad", "name": "Pad 5.8", "x": 234.75, "y": 52, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#d4537e", "note": ""}, {"kind": "pad", "name": "Pad 6.8", "x": 262.75, "y": 52, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#d4537e", "note": ""}, {"kind": "pad", "name": "Pad 7.8", "x": 290.75, "y": 52, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#d4537e", "note": ""}, {"kind": "pad", "name": "Pad 8.8", "x": 318.75, "y": 52, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#d4537e", "note": ""}, {"kind": "pad", "name": "Pad 1.7", "x": 122.75, "y": 77, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#7f77dd", "note": ""}, {"kind": "pad", "name": "Pad 2.7", "x": 150.75, "y": 77, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#7f77dd", "note": ""}, {"kind": "pad", "name": "Pad 3.7", "x": 178.75, "y": 77, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#7f77dd", "note": ""}, {"kind": "pad", "name": "Pad 4.7", "x": 206.75, "y": 77, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#7f77dd", "note": ""}, {"kind": "pad", "name": "Pad 5.7", "x": 234.75, "y": 77, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#7f77dd", "note": ""}, {"kind": "pad", "name": "Pad 6.7", "x": 262.75, "y": 77, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#7f77dd", "note": ""}, {"kind": "pad", "name": "Pad 7.7", "x": 290.75, "y": 77, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#7f77dd", "note": ""}, {"kind": "pad", "name": "Pad 8.7", "x": 318.75, "y": 77, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#7f77dd", "note": ""}, {"kind": "pad", "name": "Pad 1.6", "x": 122.75, "y": 102, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#4aa8e8", "note": ""}, {"kind": "pad", "name": "Pad 2.6", "x": 150.75, "y": 102, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#4aa8e8", "note": ""}, {"kind": "pad", "name": "Pad 3.6", "x": 178.75, "y": 102, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#4aa8e8", "note": ""}, {"kind": "pad", "name": "Pad 4.6", "x": 206.75, "y": 102, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#4aa8e8", "note": ""}, {"kind": "pad", "name": "Pad 5.6", "x": 234.75, "y": 102, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#4aa8e8", "note": ""}, {"kind": "pad", "name": "Pad 6.6", "x": 262.75, "y": 102, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#4aa8e8", "note": ""}, {"kind": "pad", "name": "Pad 7.6", "x": 290.75, "y": 102, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#4aa8e8", "note": ""}, {"kind": "pad", "name": "Pad 8.6", "x": 318.75, "y": 102, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#4aa8e8", "note": ""}, {"kind": "pad", "name": "Pad 1.5", "x": 122.75, "y": 127, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#3fc39d", "note": ""}, {"kind": "pad", "name": "Pad 2.5", "x": 150.75, "y": 127, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#3fc39d", "note": ""}, {"kind": "pad", "name": "Pad 3.5", "x": 178.75, "y": 127, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#3fc39d", "note": ""}, {"kind": "pad", "name": "Pad 4.5", "x": 206.75, "y": 127, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#3fc39d", "note": ""}, {"kind": "pad", "name": "Pad 5.5", "x": 234.75, "y": 127, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#3fc39d", "note": ""}, {"kind": "pad", "name": "Pad 6.5", "x": 262.75, "y": 127, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#3fc39d", "note": ""}, {"kind": "pad", "name": "Pad 7.5", "x": 290.75, "y": 127, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#3fc39d", "note": ""}, {"kind": "pad", "name": "Pad 8.5", "x": 318.75, "y": 127, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#3fc39d", "note": ""}, {"kind": "pad", "name": "Pad 1.4", "x": 122.75, "y": 152, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#55c26b", "note": ""}, {"kind": "pad", "name": "Pad 2.4", "x": 150.75, "y": 152, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#55c26b", "note": ""}, {"kind": "pad", "name": "Pad 3.4", "x": 178.75, "y": 152, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#55c26b", "note": ""}, {"kind": "pad", "name": "Pad 4.4", "x": 206.75, "y": 152, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#55c26b", "note": ""}, {"kind": "pad", "name": "Pad 5.4", "x": 234.75, "y": 152, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#55c26b", "note": ""}, {"kind": "pad", "name": "Pad 6.4", "x": 262.75, "y": 152, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#55c26b", "note": ""}, {"kind": "pad", "name": "Pad 7.4", "x": 290.75, "y": 152, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#55c26b", "note": ""}, {"kind": "pad", "name": "Pad 8.4", "x": 318.75, "y": 152, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#55c26b", "note": ""}, {"kind": "pad", "name": "Pad 1.3", "x": 122.75, "y": 177, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e7d24a", "note": ""}, {"kind": "pad", "name": "Pad 2.3", "x": 150.75, "y": 177, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e7d24a", "note": ""}, {"kind": "pad", "name": "Pad 3.3", "x": 178.75, "y": 177, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e7d24a", "note": ""}, {"kind": "pad", "name": "Pad 4.3", "x": 206.75, "y": 177, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e7d24a", "note": ""}, {"kind": "pad", "name": "Pad 5.3", "x": 234.75, "y": 177, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e7d24a", "note": ""}, {"kind": "pad", "name": "Pad 6.3", "x": 262.75, "y": 177, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e7d24a", "note": ""}, {"kind": "pad", "name": "Pad 7.3", "x": 290.75, "y": 177, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e7d24a", "note": ""}, {"kind": "pad", "name": "Pad 8.3", "x": 318.75, "y": 177, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e7d24a", "note": ""}, {"kind": "pad", "name": "Pad 1.2", "x": 122.75, "y": 202, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#f0a23a", "note": ""}, {"kind": "pad", "name": "Pad 2.2", "x": 150.75, "y": 202, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#f0a23a", "note": ""}, {"kind": "pad", "name": "Pad 3.2", "x": 178.75, "y": 202, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#f0a23a", "note": ""}, {"kind": "pad", "name": "Pad 4.2", "x": 206.75, "y": 202, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#f0a23a", "note": ""}, {"kind": "pad", "name": "Pad 5.2", "x": 234.75, "y": 202, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#f0a23a", "note": ""}, {"kind": "pad", "name": "Pad 6.2", "x": 262.75, "y": 202, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#f0a23a", "note": ""}, {"kind": "pad", "name": "Pad 7.2", "x": 290.75, "y": 202, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#f0a23a", "note": ""}, {"kind": "pad", "name": "Pad 8.2", "x": 318.75, "y": 202, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#f0a23a", "note": ""}, {"kind": "pad", "name": "Pad 1.1", "x": 122.75, "y": 227, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e8564a", "note": ""}, {"kind": "pad", "name": "Pad 2.1", "x": 150.75, "y": 227, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e8564a", "note": ""}, {"kind": "pad", "name": "Pad 3.1", "x": 178.75, "y": 227, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e8564a", "note": ""}, {"kind": "pad", "name": "Pad 4.1", "x": 206.75, "y": 227, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e8564a", "note": ""}, {"kind": "pad", "name": "Pad 5.1", "x": 234.75, "y": 227, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e8564a", "note": ""}, {"kind": "pad", "name": "Pad 6.1", "x": 262.75, "y": 227, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e8564a", "note": ""}, {"kind": "pad", "name": "Pad 7.1", "x": 290.75, "y": 227, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e8564a", "note": ""}, {"kind": "pad", "name": "Pad 8.1", "x": 318.75, "y": 227, "w": 25.5, "h": 21, "group": "Grid", "label": "", "color": "#e8564a", "note": ""}, {"kind": "button", "name": "Scene 1", "x": 122.75, "y": 252, "w": 25.5, "h": 10, "group": "Scenes", "label": "1", "color": "grey", "freq": "часто, в долю", "note": ""}, {"kind": "button", "name": "Scene 2", "x": 150.75, "y": 252, "w": 25.5, "h": 10, "group": "Scenes", "label": "2", "color": "grey", "freq": "часто, в долю", "note": ""}, {"kind": "button", "name": "Scene 3", "x": 178.75, "y": 252, "w": 25.5, "h": 10, "group": "Scenes", "label": "3", "color": "grey", "freq": "часто, в долю", "note": ""}, {"kind": "button", "name": "Scene 4", "x": 206.75, "y": 252, "w": 25.5, "h": 10, "group": "Scenes", "label": "4", "color": "grey", "freq": "часто, в долю", "note": ""}, {"kind": "button", "name": "Scene 5", "x": 234.75, "y": 252, "w": 25.5, "h": 10, "group": "Scenes", "label": "5", "color": "grey", "freq": "часто, в долю", "note": ""}, {"kind": "button", "name": "Scene 6", "x": 262.75, "y": 252, "w": 25.5, "h": 10, "group": "Scenes", "label": "6", "color": "grey", "freq": "часто, в долю", "note": ""}, {"kind": "button", "name": "Scene 7", "x": 290.75, "y": 252, "w": 25.5, "h": 10, "group": "Scenes", "label": "7", "color": "grey", "freq": "часто, в долю", "note": ""}, {"kind": "button", "name": "Scene 8", "x": 318.75, "y": 252, "w": 25.5, "h": 10, "group": "Scenes", "label": "8", "color": "grey", "freq": "часто, в долю", "note": ""}, {"kind": "encoder", "name": "Param 1", "x": 122.75, "y": 277, "w": 18, "h": 18, "group": "Knob line", "label": "", "ring": 24, "color": "purple", "freq": "постоянно", "note": "низкая, с касанием"}, {"kind": "encoder", "name": "Param 2", "x": 150.75, "y": 277, "w": 18, "h": 18, "group": "Knob line", "label": "", "ring": 24, "color": "purple", "freq": "постоянно", "note": "низкая, с касанием"}, {"kind": "encoder", "name": "Param 3", "x": 178.75, "y": 277, "w": 18, "h": 18, "group": "Knob line", "label": "", "ring": 24, "color": "purple", "freq": "постоянно", "note": "низкая, с касанием"}, {"kind": "encoder", "name": "Param 4", "x": 206.75, "y": 277, "w": 18, "h": 18, "group": "Knob line", "label": "", "ring": 24, "color": "purple", "freq": "постоянно", "note": "низкая, с касанием"}, {"kind": "encoder", "name": "Param 5", "x": 234.75, "y": 277, "w": 18, "h": 18, "group": "Knob line", "label": "", "ring": 24, "color": "purple", "freq": "постоянно", "note": "низкая, с касанием"}, {"kind": "encoder", "name": "Param 6", "x": 262.75, "y": 277, "w": 18, "h": 18, "group": "Knob line", "label": "", "ring": 24, "color": "purple", "freq": "постоянно", "note": "низкая, с касанием"}, {"kind": "encoder", "name": "Param 7", "x": 290.75, "y": 277, "w": 18, "h": 18, "group": "Knob line", "label": "", "ring": 24, "color": "purple", "freq": "постоянно", "note": "низкая, с касанием"}, {"kind": "encoder", "name": "Param 8", "x": 318.75, "y": 277, "w": 18, "h": 18, "group": "Knob line", "label": "", "ring": 24, "color": "purple", "freq": "постоянно", "note": "низкая, с касанием"}, {"kind": "button", "name": "Solo", "x": 349, "y": 22, "w": 16, "h": 14, "group": "Tracks", "label": "Solo", "color": "blue", "freq": "иногда", "note": "держать + Select"}, {"kind": "button", "name": "Arm", "x": 371, "y": 22, "w": 16, "h": 14, "group": "Tracks", "label": "Arm", "color": "red", "freq": "иногда", "note": "держать + Select"}, {"kind": "button", "name": "Arrow ▼", "x": 394.5, "y": 22, "w": 16, "h": 14, "group": "Grid scroll", "label": "▼", "color": "grey", "freq": "часто", "note": ""}, {"kind": "button", "name": "Mute 8", "x": 349, "y": 52, "w": 16, "h": 16, "group": "Tracks", "label": "M", "color": "amber", "freq": "постоянно, в долю", "note": ""}, {"kind": "button", "name": "Select 8", "x": 371, "y": 52, "w": 16, "h": 16, "group": "Tracks", "label": "8", "color": "#d4537e", "freq": "постоянно", "note": ""}, {"kind": "encoder", "name": "Level 8", "x": 394.5, "y": 52, "w": 14, "h": 14, "group": "Tracks", "label": "", "ring": 21, "color": "#d4537e", "freq": "часто", "note": "низкая, с касанием"}, {"kind": "button", "name": "Mute 7", "x": 349, "y": 77, "w": 16, "h": 16, "group": "Tracks", "label": "M", "color": "amber", "freq": "постоянно, в долю", "note": ""}, {"kind": "button", "name": "Select 7", "x": 371, "y": 77, "w": 16, "h": 16, "group": "Tracks", "label": "7", "color": "#7f77dd", "freq": "постоянно", "note": ""}, {"kind": "encoder", "name": "Level 7", "x": 394.5, "y": 77, "w": 14, "h": 14, "group": "Tracks", "label": "", "ring": 21, "color": "#7f77dd", "freq": "часто", "note": "низкая, с касанием"}, {"kind": "button", "name": "Mute 6", "x": 349, "y": 102, "w": 16, "h": 16, "group": "Tracks", "label": "M", "color": "amber", "freq": "постоянно, в долю", "note": ""}, {"kind": "button", "name": "Select 6", "x": 371, "y": 102, "w": 16, "h": 16, "group": "Tracks", "label": "6", "color": "#4aa8e8", "freq": "постоянно", "note": ""}, {"kind": "encoder", "name": "Level 6", "x": 394.5, "y": 102, "w": 14, "h": 14, "group": "Tracks", "label": "", "ring": 21, "color": "#4aa8e8", "freq": "часто", "note": "низкая, с касанием"}, {"kind": "button", "name": "Mute 5", "x": 349, "y": 127, "w": 16, "h": 16, "group": "Tracks", "label": "M", "color": "amber", "freq": "постоянно, в долю", "note": ""}, {"kind": "button", "name": "Select 5", "x": 371, "y": 127, "w": 16, "h": 16, "group": "Tracks", "label": "5", "color": "#3fc39d", "freq": "постоянно", "note": ""}, {"kind": "encoder", "name": "Level 5", "x": 394.5, "y": 127, "w": 14, "h": 14, "group": "Tracks", "label": "", "ring": 21, "color": "#3fc39d", "freq": "часто", "note": "низкая, с касанием"}, {"kind": "button", "name": "Mute 4", "x": 349, "y": 152, "w": 16, "h": 16, "group": "Tracks", "label": "M", "color": "amber", "freq": "постоянно, в долю", "note": ""}, {"kind": "button", "name": "Select 4", "x": 371, "y": 152, "w": 16, "h": 16, "group": "Tracks", "label": "4", "color": "#55c26b", "freq": "постоянно", "note": ""}, {"kind": "encoder", "name": "Level 4", "x": 394.5, "y": 152, "w": 14, "h": 14, "group": "Tracks", "label": "", "ring": 21, "color": "#55c26b", "freq": "часто", "note": "низкая, с касанием"}, {"kind": "button", "name": "Mute 3", "x": 349, "y": 177, "w": 16, "h": 16, "group": "Tracks", "label": "M", "color": "amber", "freq": "постоянно, в долю", "note": ""}, {"kind": "button", "name": "Select 3", "x": 371, "y": 177, "w": 16, "h": 16, "group": "Tracks", "label": "3", "color": "#e7d24a", "freq": "постоянно", "note": ""}, {"kind": "encoder", "name": "Level 3", "x": 394.5, "y": 177, "w": 14, "h": 14, "group": "Tracks", "label": "", "ring": 21, "color": "#e7d24a", "freq": "часто", "note": "низкая, с касанием"}, {"kind": "button", "name": "Mute 2", "x": 349, "y": 202, "w": 16, "h": 16, "group": "Tracks", "label": "M", "color": "amber", "freq": "постоянно, в долю", "note": ""}, {"kind": "button", "name": "Select 2", "x": 371, "y": 202, "w": 16, "h": 16, "group": "Tracks", "label": "2", "color": "#f0a23a", "freq": "постоянно", "note": ""}, {"kind": "encoder", "name": "Level 2", "x": 394.5, "y": 202, "w": 14, "h": 14, "group": "Tracks", "label": "", "ring": 21, "color": "#f0a23a", "freq": "часто", "note": "низкая, с касанием"}, {"kind": "button", "name": "Mute 1", "x": 349, "y": 227, "w": 16, "h": 16, "group": "Tracks", "label": "M", "color": "amber", "freq": "постоянно, в долю", "note": ""}, {"kind": "button", "name": "Select 1", "x": 371, "y": 227, "w": 16, "h": 16, "group": "Tracks", "label": "1", "color": "#e8564a", "freq": "постоянно", "note": ""}, {"kind": "encoder", "name": "Level 1", "x": 394.5, "y": 227, "w": 14, "h": 14, "group": "Tracks", "label": "", "ring": 21, "color": "#e8564a", "freq": "часто", "note": "низкая, с касанием"}, {"kind": "button", "name": "Stop All", "x": 360.0, "y": 252, "w": 38, "h": 10, "group": "Scenes", "label": "Stop All", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "button", "name": "Arrow ▲", "x": 394.5, "y": 252, "w": 16, "h": 10, "group": "Grid scroll", "label": "▲", "color": "grey", "freq": "часто", "note": ""}, {"kind": "encoder", "name": "FX Mix", "x": 355.0, "y": 277, "w": 22, "h": 22, "group": "Knob line", "label": "FX Mix", "ring": 30, "color": "coral", "freq": "часто", "note": ""}, {"kind": "encoder", "name": "Filter", "x": 389.0, "y": 277, "w": 22, "h": 22, "group": "Knob line", "label": "Filter", "ring": 30, "color": "coral", "freq": "часто", "note": ""}, {"kind": "button", "name": "Scene A", "x": 421, "y": 22, "w": 14, "h": 12, "group": "Live", "label": "A", "color": "red", "freq": "", "note": ""}, {"kind": "fader", "name": "Crossfader", "x": 459, "y": 22, "w": 52, "h": 4, "group": "Live", "label": "", "color": "grey", "note": ""}, {"kind": "button", "name": "Scene B", "x": 497, "y": 22, "w": 14, "h": 12, "group": "Live", "label": "B", "color": "blue", "freq": "", "note": ""}, {"kind": "button", "name": "Chords", "x": 427, "y": 52, "w": 28, "h": 16, "group": "Pad modes", "label": "Chords", "color": "teal", "freq": "часто", "note": ""}, {"kind": "button", "name": "Touch FX", "x": 459, "y": 52, "w": 28, "h": 16, "group": "Pad modes", "label": "Touch FX", "color": "teal", "freq": "часто", "note": ""}, {"kind": "button", "name": "Scale", "x": 491, "y": 52, "w": 28, "h": 16, "group": "Pad modes", "label": "Scale", "color": "grey", "freq": "часто", "note": ""}, {"kind": "button", "name": "Clips", "x": 427, "y": 77, "w": 28, "h": 16, "group": "Pad modes", "label": "Clips", "color": "teal", "freq": "часто", "note": ""}, {"kind": "button", "name": "Steps", "x": 459, "y": 77, "w": 28, "h": 16, "group": "Pad modes", "label": "Steps", "color": "teal", "freq": "часто", "note": ""}, {"kind": "button", "name": "Notes", "x": 491, "y": 77, "w": 28, "h": 16, "group": "Pad modes", "label": "Notes", "color": "teal", "freq": "часто", "note": ""}, {"kind": "button", "name": "Sound", "x": 427, "y": 127, "w": 28, "h": 16, "group": "Screen modes", "label": "Sound", "color": "purple", "freq": "часто", "note": ""}, {"kind": "button", "name": "Effects", "x": 459, "y": 127, "w": 28, "h": 16, "group": "Screen modes", "label": "Effects", "color": "purple", "freq": "часто", "note": ""}, {"kind": "button", "name": "Mod", "x": 491, "y": 127, "w": 28, "h": 16, "group": "Screen modes", "label": "Mod", "color": "purple", "freq": "часто", "note": ""}, {"kind": "button", "name": "Mixer", "x": 427, "y": 152, "w": 28, "h": 16, "group": "Screen modes", "label": "Mixer", "color": "purple", "freq": "часто", "note": ""}, {"kind": "button", "name": "Song", "x": 459, "y": 152, "w": 28, "h": 16, "group": "Screen modes", "label": "Song", "color": "purple", "freq": "часто", "note": ""}, {"kind": "button", "name": "Browser", "x": 491, "y": 152, "w": 28, "h": 16, "group": "Screen modes", "label": "Browser", "color": "purple", "freq": "часто", "note": ""}, {"kind": "button", "name": "Sampler", "x": 427, "y": 177, "w": 28, "h": 16, "group": "Screen modes", "label": "Sampler", "color": "purple", "freq": "часто", "note": ""}, {"kind": "button", "name": "Inputs", "x": 459, "y": 177, "w": 28, "h": 16, "group": "Screen modes", "label": "Inputs", "color": "purple", "freq": "часто", "note": ""}, {"kind": "button", "name": "Settings", "x": 491, "y": 177, "w": 28, "h": 16, "group": "Screen modes", "label": "Settings", "color": "purple", "freq": "редко", "note": ""}, {"kind": "button", "name": "Page ◄", "x": 427, "y": 227, "w": 28, "h": 16, "group": "Navigation", "label": "◄ Page", "color": "grey", "freq": "часто", "note": ""}, {"kind": "button", "name": "Back", "x": 459, "y": 227, "w": 28, "h": 16, "group": "Navigation", "label": "Back", "color": "grey", "freq": "часто", "note": ""}, {"kind": "button", "name": "Page ►", "x": 491, "y": 227, "w": 28, "h": 16, "group": "Navigation", "label": "Page ►", "color": "grey", "freq": "часто", "note": ""}, {"kind": "wheel", "name": "Wheel", "x": 459, "y": 277, "w": 38, "h": 38, "group": "Navigation", "label": "", "color": "grey", "note": ""}, {"kind": "pot", "name": "Main", "x": 32, "y": 323, "w": 15, "h": 15, "group": "Levels", "label": "Main", "ring": 22, "color": "alu", "freq": "редко, аварийно", "note": ""}, {"kind": "pot", "name": "Cue Mix", "x": 80, "y": 323, "w": 15, "h": 15, "group": "Levels", "label": "Cue Mix", "ring": 22, "color": "alu", "freq": "редко", "note": ""}, {"kind": "pot", "name": "Phones 1", "x": 32, "y": 351, "w": 15, "h": 15, "group": "Levels", "label": "Phones 1", "ring": 22, "color": "alu", "freq": "иногда", "note": ""}, {"kind": "pot", "name": "Phones 2", "x": 80, "y": 351, "w": 15, "h": 15, "group": "Levels", "label": "Phones 2", "ring": 22, "color": "alu", "freq": "иногда", "note": ""}, {"kind": "encoder", "name": "Gain 1", "x": 32, "y": 379, "w": 16, "h": 16, "group": "Levels", "label": "Gain 1", "ring": 21, "color": "grey", "freq": "редко", "note": "утоплен"}, {"kind": "encoder", "name": "Gain 2", "x": 80, "y": 379, "w": 16, "h": 16, "group": "Levels", "label": "Gain 2", "ring": 21, "color": "grey", "freq": "редко", "note": "утоплен"}, {"kind": "led", "name": "Clip 1", "x": 48, "y": 386, "w": 4, "h": 4, "group": "Levels", "label": "", "color": "red", "note": ""}, {"kind": "led", "name": "Clip 2", "x": 96, "y": 386, "w": 4, "h": 4, "group": "Levels", "label": "", "color": "red", "note": ""}, {"kind": "button", "name": "P48 1", "x": 32, "y": 407, "w": 20, "h": 10, "group": "Levels", "label": "P48", "color": "amber", "freq": "редко", "note": "утоплена, удержание 1 с"}, {"kind": "button", "name": "P48 2", "x": 80, "y": 407, "w": 20, "h": 10, "group": "Levels", "label": "P48", "color": "amber", "freq": "редко", "note": "утоплена, удержание 1 с"}, {"kind": "screen", "name": "Screen 10.1in", "x": 220.75, "y": 365, "w": 223, "h": 122, "group": "Screen", "label": "", "color": "grey", "note": ""}, {"kind": "meter", "name": "Meter L", "x": 364.0, "y": 365, "w": 9, "h": 104, "group": "Meters", "label": "L", "color": "grey", "note": ""}, {"kind": "meter", "name": "Meter R", "x": 380.0, "y": 365, "w": 9, "h": 104, "group": "Meters", "label": "R", "color": "grey", "note": ""}, {"kind": "button", "name": "Save", "x": 435, "y": 323, "w": 44, "h": 16, "group": "System", "label": "Save", "color": "grey", "freq": "иногда", "note": ""}, {"kind": "button", "name": "Project", "x": 483, "y": 323, "w": 44, "h": 16, "group": "System", "label": "Project", "color": "grey", "freq": "редко", "note": ""}, {"kind": "pocket", "name": "USB-A + SD", "x": 459.0, "y": 365, "w": 92, "h": 24, "group": "System", "label": "USB · SD", "color": "grey", "note": "огонь записи внутри кармана"}, {"kind": "power", "name": "Power", "x": 459.0, "y": 407, "w": 14, "h": 14, "group": "System", "label": "", "color": "grey", "note": "утоплена, удержание 2 с"}]};
+const INFO={"● Rec": {"name": "Rec", "group": "Левая колонка · время", "desc": "Запись в выбранную дорожку: включил — пишет, выключил — играет; поверх петли дописывает, не стирая (R97). Держать Rec и нажать пустой пэд в Clips — запись прямо в эту ячейку."}, "▶ Play": {"name": "Play", "group": "Левая колонка · время", "desc": "Старт."}, "■ Stop": {"name": "Stop", "group": "Левая колонка · время", "desc": "Стоп. Заодно отпускает все ноты, которые Штука включила на выходах MIDI и CV (P63)."}, "Restart": {"name": "Restart", "group": "Левая колонка · время", "desc": "Играть с начала — вместо двойного нажатия Stop."}, "Metronome": {"name": "Metronome", "group": "Левая колонка · время", "desc": "Метроном вкл/выкл."}, "Tap": {"name": "Tap", "group": "Левая колонка · время", "desc": "Темп постукиванием."}, "Capture": {"name": "Capture", "group": "Левая колонка · время", "desc": "Забрать последние секунды — и звук со входов, и сыгранные на пэдах ноты (как Capture у Push 3)."}, "Resample": {"name": "Resample", "group": "Левая колонка · время", "desc": "Записать выход дорожки или мастера в новый сэмпл."}, "Undo": {"name": "Undo", "group": "Левая колонка · время", "desc": "Отменить."}, "Redo": {"name": "Redo", "group": "Левая колонка · время", "desc": "Вернуть отменённое."}, "Delete": {"name": "Delete", "group": "Левая колонка · время", "desc": "Держать и нажать цель: клип, шаг, ноты пэда на ходу, дорожку. Delete + касание ручки — значение по умолчанию."}, "Duplicate": {"name": "Duplicate", "group": "Левая колонка · время", "desc": "Держать, нажать источник и куда: клип, сцена, шаги, дорожка."}, "Double": {"name": "Double", "group": "Левая колонка · время", "desc": "Удвоить длину петли вместе с содержимым."}, "New": {"name": "New", "group": "Левая колонка · время", "desc": "Новый пустой клип в дорожке или новая сцена из того, что играет."}, "Quantize": {"name": "Quantize", "group": "Левая колонка · время", "desc": "Выровнять выбранное по сетке."}, "Length": {"name": "Length", "group": "Левая колонка · время", "desc": "Длина петли до записи: 1, 2, 4, 8 тактов (выбор на экране)."}, "Automate": {"name": "Automate", "group": "Левая колонка · время", "desc": "Запись движений ручек вкл/выкл — чтобы не записать случайно."}, "Repeat": {"name": "Repeat", "group": "Левая колонка · время", "desc": "Держать — повтор нот при игре (Note Repeat); шаг на экране."}, "Accent": {"name": "Accent", "group": "Левая колонка · время", "desc": "Все удары на полную силу вкл/выкл."}, "Tempo": {"name": "Tempo", "group": "Левая колонка · время", "desc": "Темп точно. Энкодер без упоров: значение — на кольце огней, риски на колпачке нет (R98)."}, "Swing": {"name": "Swing", "group": "Левая колонка · время", "desc": "Свинг. Энкодер без упоров (R98)."}, "Arrow ◄": {"name": "Стрелка ◄", "group": "Сетка", "desc": "Сдвиг окна сетки на столбец влево; удержание — на 8. Ход потуже — рядом лежат ладони."}, "Arrow ►": {"name": "Стрелка ►", "group": "Сетка", "desc": "Сдвиг окна сетки на столбец вправо; удержание — на 8. Ход потуже — рядом лежат ладони."}, "Arrow ▲": {"name": "Стрелка ▲", "group": "Колонка дорожек", "desc": "Сдвиг окна сетки на строку (дорожку) вверх; удержание — на 8."}, "Arrow ▼": {"name": "Стрелка ▼", "group": "Колонка дорожек", "desc": "Сдвиг окна сетки на строку (дорожку) вниз; удержание — на 8."}, "Touch strip": {"name": "Сенсорная полоса", "group": "Сетка", "desc": "Две Bela Trill Bar, обрезанные до ≈ 91 мм (P65). В Notes и Chords — модуляция, в Clips и Steps — прокрутка вправо-влево, в Touch FX — глубина эффекта (R105). Ладонь отсеивается по размеру касания."}, "Stop All": {"name": "Stop All", "group": "Колонка дорожек", "desc": "Остановить все клипы в конце такта."}, "Solo": {"name": "Solo", "group": "Колонка дорожек", "desc": "Действие + цель: держать Solo и нажать Select нужных строк (R96)."}, "Arm": {"name": "Arm", "group": "Колонка дорожек", "desc": "Действие + цель: держать Arm и нажать Select строк, чьи входы писать; можно сразу несколько (R97)."}, "FX Mix": {"name": "FX Mix", "group": "Колонка дорожек", "desc": "Глубина посылов на эффекты. На линии ручек, сзади у экрана — по пути рук не стоит (R91)."}, "Filter": {"name": "Filter", "group": "Колонка дорожек", "desc": "Фильтр на мастере, всегда одна функция. На линии ручек, сзади у экрана (R91)."}, "Scene A": {"name": "Scene A", "group": "Правая колонка · значения", "desc": "Держать и нажать сцену — назначить левую сторону кроссфейдера."}, "Scene B": {"name": "Scene B", "group": "Правая колонка · значения", "desc": "Держать и нажать сцену — назначить правую сторону кроссфейдера."}, "Crossfader": {"name": "Кроссфейдер", "group": "Правая колонка · значения", "desc": "Смешивает сцену A и сцену B. В правом переднем углу — колесо в 255 мм от него (R104)."}, "Clips": {"name": "Clips", "group": "Правая колонка · значения", "desc": "Пэды — клипы: строки — дорожки, столбцы — сцены."}, "Steps": {"name": "Steps", "group": "Правая колонка · значения", "desc": "Пэды — шаги: строки — дорожки, столбцы — шаги, как у драм-машины."}, "Notes": {"name": "Notes", "group": "Правая колонка · значения", "desc": "Играть нотами (у ударных — пэдами набора)."}, "Chords": {"name": "Chords", "group": "Правая колонка · значения", "desc": "Аккорды в ладу на пэдах."}, "Touch FX": {"name": "Touch FX", "group": "Правая колонка · значения", "desc": "Пэды — эффекты в реальном времени: повтор, срез, фильтр."}, "Scale": {"name": "Scale", "group": "Правая колонка · значения", "desc": "Выбрать лад и тонику для Notes и Chords (на экране)."}, "Sound": {"name": "Sound", "group": "Правая колонка · значения", "desc": "Экран: источник выбранной дорожки — синтез, сэмпл, вход."}, "Effects": {"name": "Effects", "group": "Правая колонка · значения", "desc": "Экран: фильтр, слот 1, слот 2, посылы A–D."}, "Mod": {"name": "Mod", "group": "Правая колонка · значения", "desc": "Экран: модуляция — LFO, огибающие, кто чем управляет."}, "Mixer": {"name": "Mixer", "group": "Правая колонка · значения", "desc": "Экран: все дорожки — панорама, посылы, уровни."}, "Song": {"name": "Song", "group": "Правая колонка · значения", "desc": "Экран: сцены, аранжировка, мини-карта всех дорожек."}, "Browser": {"name": "Browser", "group": "Правая колонка · значения", "desc": "Экран: сэмплы, пресеты, избранное."}, "Sampler": {"name": "Sampler", "group": "Правая колонка · значения", "desc": "Экран: захваченное и сэмплы — обрезка, нарезка, вейвтейбл."}, "Inputs": {"name": "Inputs", "group": "Правая колонка · значения", "desc": "Экран: все ≈ 14 входов — уровень, мониторинг, на какую дорожку."}, "Settings": {"name": "Settings", "group": "Правая колонка · значения", "desc": "Экран: настройки устройства — MIDI, CV, клок, экран, All Notes Off. Нужна редко, поэтому в дальнем углу блока страниц (R90)."}, "Page ◄": {"name": "Page ◄", "group": "Правая колонка · значения", "desc": "Предыдущая страница внутри экрана, если параметров больше 8."}, "Page ►": {"name": "Page ►", "group": "Правая колонка · значения", "desc": "Следующая страница внутри экрана."}, "Back": {"name": "Back", "group": "Правая колонка · значения", "desc": "Шаг назад, отмена."}, "Wheel": {"name": "Колесо", "group": "Правая колонка · значения", "desc": "Колесо ⌀ 38 мм без упоров и без лунки (R98): листать и выбирать на экране, нажатие — OK. Конец линии ручек, прямо над ◄ Page, Back, Page ►."}, "Main": {"name": "Main", "group": "Наклон · уровни", "desc": "Громкость мониторов. Потенциометр с упорами: риска и шкала. Ближе всех в блоке — на случай «срочно убавить»."}, "Cue Mix": {"name": "Cue Mix", "group": "Наклон · уровни", "desc": "В наушниках: Main ↔ Cue."}, "Phones 1": {"name": "Phones 1", "group": "Наклон · уровни", "desc": "Громкость наушников 1; гнездо — на переднем торце прямо под этим столбцом."}, "Phones 2": {"name": "Phones 2", "group": "Наклон · уровни", "desc": "Громкость наушников 2 — отдельная, чтобы играть вдвоём."}, "Gain 1": {"name": "Gain 1", "group": "Наклон · уровни", "desc": "Усиление комбо-входа 1 (цифровой предусилитель). Утоплен, чтобы не задеть."}, "Gain 2": {"name": "Gain 2", "group": "Наклон · уровни", "desc": "Усиление комбо-входа 2. Утоплен."}, "Clip 1": {"name": "Перегруз 1", "group": "Наклон · уровни", "desc": "Огонь перегруза входа 1."}, "Clip 2": {"name": "Перегруз 2", "group": "Наклон · уровни", "desc": "Огонь перегруза входа 2."}, "P48 1": {"name": "P48 1", "group": "Наклон · уровни", "desc": "Фантомное питание входа 1, только на XLR. Утоплена, удержание 1 с."}, "P48 2": {"name": "P48 2", "group": "Наклон · уровни", "desc": "Фантомное питание входа 2, только на XLR. Утоплена, удержание 1 с."}, "Screen 10.1in": {"name": "Экран 10,1″", "group": "Наклон · экран", "desc": "10,1″, 1280 × 800, наклон 30° (R18). Окно 223 мм — ровно по ширине сетки: столбцы на экране стоят над ручками и столбцами пэдов (R107)."}, "Meter L": {"name": "Индикатор L", "group": "Наклон · индикаторы", "desc": "Уровень мастера, левый канал. Над колонкой дорожек — как общий уровень в конце линейки каналов на пульте."}, "Meter R": {"name": "Индикатор R", "group": "Наклон · индикаторы", "desc": "Уровень мастера, правый канал."}, "Save": {"name": "Save", "group": "Наклон · System", "desc": "Сохранить проект."}, "Project": {"name": "Project", "group": "Наклон · System", "desc": "Открыть, создать, экспортировать проект."}, "USB-A + SD": {"name": "USB-A и SD", "group": "Наклон · System", "desc": "Горячая замена флешек и карт (R81), в углублении. Всё копируется на внутренний SSD; пока горит огонь — идёт запись."}, "Power": {"name": "Power", "group": "Наклон · System", "desc": "Утоплена, срабатывает при удержании 2 с."}, "Mute 1": {"name": "Mute 1", "group": "Колонка дорожек", "desc": "Заглушить дорожку 1 одним нажатием, в долю."}, "Select 1": {"name": "Select 1", "group": "Колонка дорожек", "desc": "Выбрать дорожку 1 — экран и ручки показывают её. Цвет кнопки — цвет дорожки."}, "Level 1": {"name": "Level 1", "group": "Колонка дорожек", "desc": "Громкость дорожки 1. Низкий энкодер с касанием; шаг 25 мм — по строкам сетки."}, "Scene 1": {"name": "Scene 1", "group": "Сетка", "desc": "Запустить сцену 1 (в Steps — страница шагов). Стоит над столбцом пэдов 1."}, "Param 1": {"name": "Param 1", "group": "Сетка", "desc": "Параметр 1 текущей страницы. Подпись и значение — на экране прямо над ручкой, в том же столбце, что пэды 1 (R107). Энкодер без упоров: значение на кольце огней (R98); касание — показать значение."}, "Mute 2": {"name": "Mute 2", "group": "Колонка дорожек", "desc": "Заглушить дорожку 2 одним нажатием, в долю."}, "Select 2": {"name": "Select 2", "group": "Колонка дорожек", "desc": "Выбрать дорожку 2 — экран и ручки показывают её. Цвет кнопки — цвет дорожки."}, "Level 2": {"name": "Level 2", "group": "Колонка дорожек", "desc": "Громкость дорожки 2. Низкий энкодер с касанием; шаг 25 мм — по строкам сетки."}, "Scene 2": {"name": "Scene 2", "group": "Сетка", "desc": "Запустить сцену 2 (в Steps — страница шагов). Стоит над столбцом пэдов 2."}, "Param 2": {"name": "Param 2", "group": "Сетка", "desc": "Параметр 2 текущей страницы. Подпись и значение — на экране прямо над ручкой, в том же столбце, что пэды 2 (R107). Энкодер без упоров: значение на кольце огней (R98); касание — показать значение."}, "Mute 3": {"name": "Mute 3", "group": "Колонка дорожек", "desc": "Заглушить дорожку 3 одним нажатием, в долю."}, "Select 3": {"name": "Select 3", "group": "Колонка дорожек", "desc": "Выбрать дорожку 3 — экран и ручки показывают её. Цвет кнопки — цвет дорожки."}, "Level 3": {"name": "Level 3", "group": "Колонка дорожек", "desc": "Громкость дорожки 3. Низкий энкодер с касанием; шаг 25 мм — по строкам сетки."}, "Scene 3": {"name": "Scene 3", "group": "Сетка", "desc": "Запустить сцену 3 (в Steps — страница шагов). Стоит над столбцом пэдов 3."}, "Param 3": {"name": "Param 3", "group": "Сетка", "desc": "Параметр 3 текущей страницы. Подпись и значение — на экране прямо над ручкой, в том же столбце, что пэды 3 (R107). Энкодер без упоров: значение на кольце огней (R98); касание — показать значение."}, "Mute 4": {"name": "Mute 4", "group": "Колонка дорожек", "desc": "Заглушить дорожку 4 одним нажатием, в долю."}, "Select 4": {"name": "Select 4", "group": "Колонка дорожек", "desc": "Выбрать дорожку 4 — экран и ручки показывают её. Цвет кнопки — цвет дорожки."}, "Level 4": {"name": "Level 4", "group": "Колонка дорожек", "desc": "Громкость дорожки 4. Низкий энкодер с касанием; шаг 25 мм — по строкам сетки."}, "Scene 4": {"name": "Scene 4", "group": "Сетка", "desc": "Запустить сцену 4 (в Steps — страница шагов). Стоит над столбцом пэдов 4."}, "Param 4": {"name": "Param 4", "group": "Сетка", "desc": "Параметр 4 текущей страницы. Подпись и значение — на экране прямо над ручкой, в том же столбце, что пэды 4 (R107). Энкодер без упоров: значение на кольце огней (R98); касание — показать значение."}, "Mute 5": {"name": "Mute 5", "group": "Колонка дорожек", "desc": "Заглушить дорожку 5 одним нажатием, в долю."}, "Select 5": {"name": "Select 5", "group": "Колонка дорожек", "desc": "Выбрать дорожку 5 — экран и ручки показывают её. Цвет кнопки — цвет дорожки."}, "Level 5": {"name": "Level 5", "group": "Колонка дорожек", "desc": "Громкость дорожки 5. Низкий энкодер с касанием; шаг 25 мм — по строкам сетки."}, "Scene 5": {"name": "Scene 5", "group": "Сетка", "desc": "Запустить сцену 5 (в Steps — страница шагов). Стоит над столбцом пэдов 5."}, "Param 5": {"name": "Param 5", "group": "Сетка", "desc": "Параметр 5 текущей страницы. Подпись и значение — на экране прямо над ручкой, в том же столбце, что пэды 5 (R107). Энкодер без упоров: значение на кольце огней (R98); касание — показать значение."}, "Mute 6": {"name": "Mute 6", "group": "Колонка дорожек", "desc": "Заглушить дорожку 6 одним нажатием, в долю."}, "Select 6": {"name": "Select 6", "group": "Колонка дорожек", "desc": "Выбрать дорожку 6 — экран и ручки показывают её. Цвет кнопки — цвет дорожки."}, "Level 6": {"name": "Level 6", "group": "Колонка дорожек", "desc": "Громкость дорожки 6. Низкий энкодер с касанием; шаг 25 мм — по строкам сетки."}, "Scene 6": {"name": "Scene 6", "group": "Сетка", "desc": "Запустить сцену 6 (в Steps — страница шагов). Стоит над столбцом пэдов 6."}, "Param 6": {"name": "Param 6", "group": "Сетка", "desc": "Параметр 6 текущей страницы. Подпись и значение — на экране прямо над ручкой, в том же столбце, что пэды 6 (R107). Энкодер без упоров: значение на кольце огней (R98); касание — показать значение."}, "Mute 7": {"name": "Mute 7", "group": "Колонка дорожек", "desc": "Заглушить дорожку 7 одним нажатием, в долю."}, "Select 7": {"name": "Select 7", "group": "Колонка дорожек", "desc": "Выбрать дорожку 7 — экран и ручки показывают её. Цвет кнопки — цвет дорожки."}, "Level 7": {"name": "Level 7", "group": "Колонка дорожек", "desc": "Громкость дорожки 7. Низкий энкодер с касанием; шаг 25 мм — по строкам сетки."}, "Scene 7": {"name": "Scene 7", "group": "Сетка", "desc": "Запустить сцену 7 (в Steps — страница шагов). Стоит над столбцом пэдов 7."}, "Param 7": {"name": "Param 7", "group": "Сетка", "desc": "Параметр 7 текущей страницы. Подпись и значение — на экране прямо над ручкой, в том же столбце, что пэды 7 (R107). Энкодер без упоров: значение на кольце огней (R98); касание — показать значение."}, "Mute 8": {"name": "Mute 8", "group": "Колонка дорожек", "desc": "Заглушить дорожку 8 одним нажатием, в долю."}, "Select 8": {"name": "Select 8", "group": "Колонка дорожек", "desc": "Выбрать дорожку 8 — экран и ручки показывают её. Цвет кнопки — цвет дорожки."}, "Level 8": {"name": "Level 8", "group": "Колонка дорожек", "desc": "Громкость дорожки 8. Низкий энкодер с касанием; шаг 25 мм — по строкам сетки."}, "Scene 8": {"name": "Scene 8", "group": "Сетка", "desc": "Запустить сцену 8 (в Steps — страница шагов). Стоит над столбцом пэдов 8."}, "Param 8": {"name": "Param 8", "group": "Сетка", "desc": "Параметр 8 текущей страницы. Подпись и значение — на экране прямо над ручкой, в том же столбце, что пэды 8 (R107). Энкодер без упоров: значение на кольце огней (R98); касание — показать значение."}, "Pad": {"name": "Pad", "group": "Сетка", "desc": "Сетка 8 × 8: строки — дорожки (дорожка 1 — дальняя строка), столбцы — сцены или шаги (R93). Пэд 25,5 × 21 мм — «на два пальца» (R106), шаг 28 × 25 мм. RGB, сила удара и давление."}};
+const W=LAY.W,D=LAY.D,DECK=68,WZ0=LAY.F0,WZ1=LAY.F1,ANG=Math.PI/6,C30=Math.cos(ANG);
+const L=(WZ1-WZ0)/C30, TOP=DECK+(WZ1-WZ0)*Math.tan(ANG), K=4;
+const X=x=>x-W/2, Z=z=>D/2-z, S=z=>(z-WZ0)/C30;
+const FONT='"Golos Text",system-ui,sans-serif', KEYFONT='"IBM Plex Sans Condensed","Golos Text",sans-serif';
 
 const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
 renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
@@ -134,36 +135,31 @@ fb.remove();
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(32,1.4,10,6000);
 const controls=new THREE.OrbitControls(camera,renderer.domElement);
-controls.enableDamping=true;controls.dampingFactor=.08;controls.target.set(0,50,30);
-controls.minDistance=320;controls.maxDistance=1800;
+controls.enableDamping=true;controls.dampingFactor=.08;controls.target.set(0,55,10);
+controls.minDistance=300;controls.maxDistance=1800;
 scene.add(new THREE.HemisphereLight(0xffffff,0x3a3f44,.85));
-const key=new THREE.DirectionalLight(0xffffff,.75);key.position.set(-350,800,600);scene.add(key);
+const key=new THREE.DirectionalLight(0xffffff,.7);key.position.set(-350,800,600);scene.add(key);
 const rim=new THREE.DirectionalLight(0xffffff,.4);rim.position.set(500,350,-700);scene.add(rim);
 
 const maxAniso=renderer.capabilities.getMaxAnisotropy();
 function tex(canvas){const t=new THREE.CanvasTexture(canvas);t.anisotropy=maxAniso;t.encoding=THREE.sRGBEncoding;return t;}
 function mkCanvas(wmm,hmm){const c=document.createElement('canvas');c.width=Math.round(wmm*K);c.height=Math.round(hmm*K);return c;}
-const PANEL='#1c1f22', PRINT='rgba(236,240,238,.92)', TEAL='#3fc39d', PURP='#9b93f0', GREY='#9aa09c';
-
+const PANEL='#1d2023', PRINT='rgba(232,236,234,.92)', DIM='rgba(201,207,204,.85)';
 function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();}
-function label(g,text,cx,cy,size,color,weight,align){g.font=(weight||500)+' '+(size*K)+'px '+FONT;g.fillStyle=color||PRINT;g.textAlign=align||'center';g.textBaseline='middle';g.fillText(text,cx,cy);}
-function frame(g,x0,x1,y0,y1,color,title){rr(g,x0*K,y0*K,(x1-x0)*K,(y1-y0)*K,2.5*K);g.strokeStyle=color;g.lineWidth=.45*K;g.stroke();if(title){g.font='600 '+(3.6*K)+'px '+FONT;const tw=g.measureText(title).width;g.fillStyle=PANEL;g.fillRect(x0*K+3*K,y0*K-2.2*K,tw+3*K,4.4*K);label(g,title,x0*K+4.5*K,y0*K,3.6,color,600,'left');}}
+function label(g,text,cx,cy,size,color,weight,align,font){g.font=(weight||500)+' '+(size*K)+'px '+(font||KEYFONT);g.fillStyle=color||PRINT;g.textAlign=align||'center';g.textBaseline='middle';g.fillText(text,cx,cy);}
+function frame(g,x0,x1,y0,y1,color,title){rr(g,x0*K,y0*K,(x1-x0)*K,(y1-y0)*K,2.5*K);g.strokeStyle=color;g.lineWidth=.45*K;g.stroke();if(title){g.font='600 '+(3.6*K)+'px '+FONT;const tw=g.measureText(title).width;g.fillStyle=PANEL;g.fillRect(x0*K+3*K,y0*K-2.2*K,tw+3*K,4.4*K);label(g,title,x0*K+4.5*K,y0*K,3.6,color,600,'left',FONT);}}
+function hash(s){let h=0;for(const ch of s)h=(h*31+ch.charCodeAt(0))>>>0;return h;}
 
-const deckC=mkCanvas(W,WZ0), dg=deckC.getContext('2d');
-dg.fillStyle=PANEL;dg.fillRect(0,0,deckC.width,deckC.height);
-const dy=z=>(WZ0-z);
-function dframe(x0,x1,z0,z1,color,title){frame(dg,x0,x1,dy(z1),dy(z0),color,title);}
-function dlabel(text,x,z,size,color){label(dg,text,x*K,dy(z)*K,size||3,color);}
+// printed skins: deck (flat), wedge (30°), shelf (rear labels, R73), rear panel
+const deckC=mkCanvas(W,WZ0), dg=deckC.getContext('2d');dg.fillStyle=PANEL;dg.fillRect(0,0,deckC.width,deckC.height);
+const dpx=(x,z)=>[x*K,(WZ0-z)*K];
+const wedgeC=mkCanvas(W,L), wgc=wedgeC.getContext('2d');wgc.fillStyle='#24282c';wgc.fillRect(0,0,wedgeC.width,wedgeC.height);
+const wpx=(x,z)=>[x*K,(L-S(z))*K];
+const wlab=(x,z,off)=>[x*K,(L-S(z)+off)*K];   // off: mm along the slope towards the front
+const shelfC=mkCanvas(W,D-WZ1), sg=shelfC.getContext('2d');sg.fillStyle='#1a1d20';sg.fillRect(0,0,shelfC.width,shelfC.height);
+const RH=TOP, rearC=mkCanvas(W,RH), rg=rearC.getContext('2d');rg.fillStyle=PANEL;rg.fillRect(0,0,rearC.width,rearC.height);
 
-const wedgeC=mkCanvas(W,L), wgc=wedgeC.getContext('2d');
-wgc.fillStyle=PANEL;wgc.fillRect(0,0,wedgeC.width,wedgeC.height);
-const wy=z=>(L-S(z));
-function wframe(x0,x1,z0,z1,color,title){frame(wgc,x0,x1,wy(z1),wy(z0),color,title);}
-function wlabel(text,x,z,size,color){label(wgc,text,x*K,wy(z)*K,size||3,color);}
-
-const RH=TOP, rearC=mkCanvas(W,RH), rg=rearC.getContext('2d');
-rg.fillStyle=PANEL;rg.fillRect(0,0,rearC.width,rearC.height);
-
+// body: deck, fold at WZ0, 30° wedge to WZ1, flat shelf to D
 const body=new THREE.Group();scene.add(body);
 const shape=new THREE.Shape();
 shape.moveTo(Z(0),0);shape.lineTo(Z(0),DECK);shape.lineTo(Z(WZ0),DECK);shape.lineTo(Z(WZ1),TOP);shape.lineTo(Z(D),TOP);shape.lineTo(Z(D),0);shape.lineTo(Z(0),0);
@@ -177,157 +173,136 @@ const wedge=new THREE.Group();wedge.position.set(0,DECK,Z(WZ0));wedge.rotation.x
 const P=(x,z)=>[X(x),0,Z(z)];
 const Wp=(x,z)=>[X(x),0,-S(z)];
 
-const pick=[];
-const matCache={};
+const pick=[];const matCache={};
 function emat(color,intensity){const k=color+'|'+intensity;if(!matCache[k])matCache[k]=new THREE.MeshStandardMaterial({color:new THREE.Color(color).multiplyScalar(.35),emissive:new THREE.Color(color),emissiveIntensity:intensity,roughness:.5});return matCache[k];}
 const KNOB=new THREE.MeshStandardMaterial({color:0x17191b,roughness:.45,metalness:.2});
-const JBODY=new THREE.MeshStandardMaterial({color:0x3b4045,roughness:.7});const YS=1.2;
-const KNOBTOP=new THREE.MeshStandardMaterial({color:0x2b2f33,roughness:.35,metalness:.4});
+const KNOBTOP=new THREE.MeshStandardMaterial({color:0x1c1f22,roughness:.55,metalness:.15});
 const ALU=new THREE.MeshStandardMaterial({color:0xb9bec2,roughness:.3,metalness:.85});
 const HOLE=new THREE.MeshStandardMaterial({color:0x050506,roughness:1});
 const WHITE=new THREE.MeshStandardMaterial({color:0xe8ecea,roughness:.6});
+const JBODY=new THREE.MeshStandardMaterial({color:0x3b4045,roughness:.7});const YS=1.2;
+const DOT=new THREE.CylinderGeometry(.85,.85,.6,10);
 function reg(obj,info){obj.traverse(o=>{if(o.isMesh){o.userData.info=info;pick.push(o);}});}
 function put(parent,obj,pos,info){obj.position.set(pos[0],pos[1],pos[2]);parent.add(obj);if(info)reg(obj,info);return obj;}
 
-function encoder(parent,pos,ring,info,r){r=r||9;const g=new THREE.Group();
-  const k=new THREE.Mesh(new THREE.CylinderGeometry(r*.92,r,14,40),KNOB);k.position.y=7;g.add(k);
-  const t=new THREE.Mesh(new THREE.CylinderGeometry(r*.8,r*.8,.8,40),KNOBTOP);t.position.y=14.2;g.add(t);
-  const ptr=new THREE.Mesh(new THREE.BoxGeometry(1.2,1,r*.75),WHITE);ptr.position.set(0,14.6,-r*.42);g.add(ptr);
-  const ring2=new THREE.Mesh(new THREE.TorusGeometry(r+3.6,1,8,48,Math.PI*1.5),emat(ring,.9));ring2.rotation.x=-Math.PI/2;ring2.rotation.z=-Math.PI*1.25;ring2.position.y=.6;g.add(ring2);
-  return put(parent,g,pos,info);}
-function button(parent,pos,w,d,color,info,lit,h){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h||4,d),emat(color,lit==null?.55:lit));m.position.y=(h||4)/2;const g=new THREE.Group();g.add(m);return put(parent,g,pos,info);}
-function pot(parent,pos,info){const g=new THREE.Group();
-  const sk=new THREE.Mesh(new THREE.CylinderGeometry(13,13,2.5,40),ALU);sk.position.y=1.25;g.add(sk);
-  const k=new THREE.Mesh(new THREE.CylinderGeometry(9.5,9.5,17,24),ALU);k.position.y=10;g.add(k);
-  const ptr=new THREE.Mesh(new THREE.BoxGeometry(1.4,1,8),new THREE.MeshStandardMaterial({color:0x111111}));ptr.position.set(0,18.6,-4);g.add(ptr);
-  return put(parent,g,pos,info);}
+const COL={grey:'#3b4045',red:'#c9473d',green:'#3f9f5a',white:'#d9dddb',teal:'#2d8c73',purple:'#6b63c9',amber:'#b5852c',blue:'#3d86c6',coral:'#c0613f',alu:'#b9bec2'};
+const RING={grey:'#e6ebea',purple:'#9b93f0',coral:'#e07a52'};
+const col=c=>COL[c]||c;
+function light(hex){const c=new THREE.Color(hex);return .2126*c.r+.7152*c.g+.0722*c.b>.42;}
+const infoOf=e=>e.kind==='pad'?INFO.Pad:(INFO[e.name]||{name:e.name,group:'',desc:''});
+
+// ---------- generic panel parts, all sizes from the layout file ----------
+function keycap(parent,pos,e,depth){
+  const w=e.w, d=depth, fill=col(e.color), ink=light(fill)?'#16191b':'#f2f5f3', k=10;
+  const c=document.createElement('canvas');c.width=Math.round(w*k);c.height=Math.round(d*k);const g=c.getContext('2d');
+  g.fillStyle=fill;g.fillRect(0,0,c.width,c.height);
+  const lab=e.label||'';let size=Math.min(3.3,(w-2.5)/Math.max(lab.length,1)*1.65,e.h*.42);
+  if(w>=26&&e.h>=20)size=Math.min(4.2,(w-3)/Math.max(lab.length,1)*1.7);
+  g.font=(e.h>=20?600:500)+' '+(size*k)+'px '+KEYFONT;g.fillStyle=ink;g.textAlign='center';g.textBaseline='middle';g.fillText(lab,c.width/2,c.height/2+.2*k);
+  const t=tex(c);const h=e.h>=20?5:(e.note&&e.note.includes('утоплена')?1.5:3.5);
+  const side=new THREE.MeshStandardMaterial({color:new THREE.Color(fill).multiplyScalar(.55),roughness:.6});
+  const top=new THREE.MeshStandardMaterial({map:t,emissiveMap:t,emissive:0xffffff,emissiveIntensity:.28,roughness:.55});
+  const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),[side,side,top,side,side,side]);m.position.y=h/2;
+  const g3=new THREE.Group();g3.add(m);return put(parent,g3,pos,infoOf(e));}
+
+function encoder(parent,pos,e){
+  const g=new THREE.Group(), r=e.w/2, rec=(e.note||'').includes('утоплен');
+  const h0=e.w>=22?16:(e.w>=18?12:10), h=rec?h0*.55:h0;
+  if(rec){const cl=new THREE.Mesh(new THREE.CylinderGeometry(r+1.8,r+1.8,.4,40),HOLE);cl.position.y=.2;g.add(cl);}
+  const k=new THREE.Mesh(new THREE.CylinderGeometry(r*.94,r,h,48),KNOB);k.position.y=h/2;g.add(k);
+  const t=new THREE.Mesh(new THREE.CylinderGeometry(r*.8,r*.8,.6,48),KNOBTOP);t.position.y=h+.3;g.add(t);
+  const rr2=(e.ring||e.w+7)/2, n=4+hash(e.name)%9, rc=RING[e.color]||col(e.color);
+  for(let i=0;i<15;i++){const a=(225-270*i/14)*Math.PI/180;const dot=new THREE.Mesh(DOT,emat(rc,i<n?1.1:.05));dot.position.set(rr2*Math.cos(a),.3,-rr2*Math.sin(a));g.add(dot);}
+  return put(parent,g,pos,infoOf(e));}
+
+function pot(parent,pos,e){
+  const g=new THREE.Group(), r=e.w/2;
+  const sk=new THREE.Mesh(new THREE.CylinderGeometry(r+1.5,r+1.5,2,40),ALU);sk.position.y=1;g.add(sk);
+  const k=new THREE.Mesh(new THREE.CylinderGeometry(r*.85,r*.9,15,32),ALU);k.position.y=9.5;g.add(k);
+  const a=(225-270*(.35+(hash(e.name)%5)*.1))*Math.PI/180;
+  const ptr=new THREE.Mesh(new THREE.BoxGeometry(1.4,1,r*.8),new THREE.MeshStandardMaterial({color:0x111111}));
+  ptr.position.set(Math.cos(a)*r*.4,17.1,-Math.sin(a)*r*.4);ptr.rotation.y=a-Math.PI/2;g.add(ptr);
+  return put(parent,g,pos,infoOf(e));}
+
+function wheel(parent,pos,e){
+  const g=new THREE.Group(), r=e.w/2;
+  const k=new THREE.Mesh(new THREE.CylinderGeometry(r,r+.4,12,72),ALU);k.position.y=6;g.add(k);
+  const t=new THREE.Mesh(new THREE.CylinderGeometry(r-2,r-2,.6,72),KNOB);t.position.y=12.2;g.add(t);
+  const grip=new THREE.Mesh(new THREE.TorusGeometry(r-2.2,.5,8,72),KNOBTOP);grip.rotation.x=-Math.PI/2;grip.position.y=12.5;g.add(grip);
+  return put(parent,g,pos,infoOf(e));}
 
 const TRACK=['#e8564a','#f0a23a','#e7d24a','#55c26b','#3fc39d','#4aa8e8','#7f77dd','#d4537e'];
-const pads=[];
-const clip=(i,j)=>((i*5+j*3)%7)>1;
-const padInfo={name:'Сетка 8×8',group:'Центр · обе руки',desc:'Строки — окно из 8 дорожек из 16 и больше, столбцы — сцены или шаги. Окно двигается построчно стрелками или колесом (R15). Шаг 25 мм, RGB, чувствительность к силе удара и давлению.'};
-for(let j=0;j<8;j++)for(let i=0;i<8;i++){
-  const color=TRACK[7-j];
-  const m=new THREE.Mesh(new THREE.BoxGeometry(21,4,21),new THREE.MeshStandardMaterial({color:new THREE.Color(color).multiplyScalar(.3),emissive:new THREE.Color(color),emissiveIntensity:clip(i,7-j)?.55:.03,roughness:.6}));
-  m.position.set(X(137.5+25*i),2,Z(102.5+25*j));deck.add(m);m.userData.info=padInfo;pick.push(m);
-  pads.push({m,i,on:clip(i,7-j)});}
-dframe(122,328,88,293,'rgba(236,240,238,.35)');
+const PAR=['Cutoff','Reso','Drive','Slot 1','Slot 2','Send A','Send B','Level'];
+const pads=[];const LEN=[6,4,7,5,8,3,6,5];
+function pad(parent,pos,e){
+  const [c,trk]=e.name.split(' ')[1].split('.').map(Number);const on=c<=LEN[trk-1];
+  const m=new THREE.Mesh(new THREE.BoxGeometry(e.w,3.5,e.h),new THREE.MeshStandardMaterial({color:new THREE.Color(e.color).multiplyScalar(.3),emissive:new THREE.Color(e.color),emissiveIntensity:on?(c===3?.85:.28):.03,roughness:.6}));
+  m.position.y=1.75;const g=new THREE.Group();g.add(m);put(parent,g,pos,infoOf(e));pads.push({m,i:c-1,on,play:c===3});}
 
-const sceneInfo={name:'Сцены',group:'Под сеткой · обе руки',desc:'8 кнопок: запуск сцены в режиме клипов, выбор страницы шагов в шаговом режиме.'};
-for(let i=0;i<8;i++)button(deck,P(137.5+25*i,75),19,10,'#dfe6e3',sceneInfo,.25,3.5);
-dlabel('Scenes 1–8',225,66,3.2);
+for(const e of LAY.E){
+  const onW=e.y>WZ0, parent=onW?wedge:deck, pos=onW?Wp(e.x,e.y):P(e.x,e.y), depth=onW?e.h/C30:e.h;
+  const [cx,cy]=onW?wpx(e.x,e.y):dpx(e.x,e.y), g2=onW?wgc:dg;
+  if(e.kind==='button')keycap(parent,pos,e,depth);
+  else if(e.kind==='pad')pad(parent,pos,e);
+  else if(e.kind==='encoder'){encoder(parent,pos,e);
+    if(e.label){const off=(e.ring||e.w+7)/2+2.6;const p=onW?wlab(e.x,e.y,off):dpx(e.x,e.y+off+.6);label(g2,e.label,p[0],p[1],2.6,DIM);}}
+  else if(e.kind==='pot'){pot(parent,pos,e);const r=e.w/2;
+    for(let i=0;i<11;i++){const a=(225-27*i)*Math.PI/180, r0=(r+2.2)*K, r1=(r+(i%10===0?3.6:3))*K;g2.strokeStyle='#d9dddb';g2.lineWidth=(i%10===0?1.4:.9)*K/2;g2.beginPath();g2.moveTo(cx+r0*Math.cos(a),cy-r0*Math.sin(a));g2.lineTo(cx+r1*Math.cos(a),cy-r1*Math.sin(a));g2.stroke();}
+    const p=wlab(e.x,e.y,r+4.4);label(g2,e.label,p[0],p[1],2.6,DIM);}
+  else if(e.kind==='wheel'){wheel(parent,pos,e);const p=dpx(e.x,e.y-e.w/2-3.2);label(g2,'push = OK',p[0],p[1],2.3,'rgba(143,150,154,.9)');}
+  else if(e.kind==='strip'){
+    const m=new THREE.Mesh(new THREE.BoxGeometry(e.w,1.2,e.h),new THREE.MeshStandardMaterial({color:0x0d0f11,roughness:.18,metalness:.3}));m.position.y=.6;const g=new THREE.Group();g.add(m);
+    for(let i=0;i<25;i++){const lx=-e.w/2+6+i*(e.w-12)/24;const dot=new THREE.Mesh(DOT,emat('#9b93f0',i>=6&&i<=11?1.1:.06));dot.position.set(lx,.3,-(e.h/2+3.2));g.add(dot);}
+    put(parent,g,pos,infoOf(e));}
+  else if(e.kind==='fader'){
+    const slot=new THREE.Mesh(new THREE.BoxGeometry(e.w,1,e.h),HOLE);slot.position.y=.5;const g=new THREE.Group();g.add(slot);
+    const cap=new THREE.Mesh(new THREE.BoxGeometry(10,12,16),KNOB);cap.position.y=6;g.add(cap);const s=new THREE.Mesh(new THREE.BoxGeometry(1.5,.6,16),WHITE);s.position.y=12.3;g.add(s);
+    put(parent,g,pos,infoOf(e));}
+  else if(e.kind==='meter'){const g=new THREE.Group();
+    for(let i=0;i<14;i++){const c=i<9?'#55c26b':(i<12?'#e7d24a':'#e8564a');const seg=new THREE.Mesh(new THREE.BoxGeometry(e.w,1.5,5.6),emat(c,i<7?1:.07));seg.position.set(0,.75,depth/2-5-i*(depth-10)/13);g.add(seg);}
+    put(parent,g,pos,infoOf(e));const p=wlab(e.x,e.y,depth/2+2.6);label(g2,e.label,p[0],p[1],2.8,DIM);}
+  else if(e.kind==='led'){const m=new THREE.Mesh(new THREE.CylinderGeometry(e.w/2,e.w/2,1,20),emat(col(e.color),.7));m.position.y=.5;const g=new THREE.Group();g.add(m);put(parent,g,pos,infoOf(e));}
+  else if(e.kind==='pocket'){const g=new THREE.Group();
+    const hole=new THREE.Mesh(new THREE.BoxGeometry(e.w,1,depth),HOLE);hole.position.y=.3;g.add(hole);
+    const ua=new THREE.Mesh(new THREE.BoxGeometry(13,1.2,6/C30),new THREE.MeshStandardMaterial({color:0x2b6cb0,roughness:.5}));ua.position.set(-23.5,.9,-2/C30);g.add(ua);
+    const sd=new THREE.Mesh(new THREE.BoxGeometry(26,1.2,3/C30),KNOBTOP);sd.position.set(23,.9,-2/C30);g.add(sd);
+    const led=new THREE.Mesh(new THREE.CylinderGeometry(1.6,1.6,1,20),emat('#e8564a',.8));led.position.set(0,1,-2/C30);g.add(led);
+    put(parent,g,pos,infoOf(e));
+    [['USB',-23.5],['busy',0],['SD',23]].forEach(([t,dx])=>{const p=wlab(e.x+dx,e.y,6.5);label(g2,t,p[0],p[1],2.4,DIM);});}
+  else if(e.kind==='power'){const g=new THREE.Group();const ring=new THREE.Mesh(new THREE.TorusGeometry(e.w/2,.9,8,40),emat('#e6ebea',.5));ring.rotation.x=-Math.PI/2;ring.position.y=.5;g.add(ring);
+    const b=new THREE.Mesh(new THREE.CylinderGeometry(e.w/2-2,e.w/2-2,1.5,32),KNOB);b.position.y=.4;g.add(b);put(parent,g,pos,infoOf(e));
+    const p=wlab(e.x,e.y,e.w/2+3.6);label(g2,'Power',p[0],p[1],2.6,DIM);}
+  else if(e.kind==='screen'){screen(e);}
+}
 
-const trInfo={name:'Дорожки',group:'Справа от сетки · правая рука',desc:'По строкам сетки: кнопка выбора дорожки и энкодер уровня. Удержание кнопки — заглушить. Энкодеры стоят с шагом 25 мм, это минимум по норме, зато совпадают со строками.'};
-for(let j=0;j<8;j++){const z=102.5+25*j, c=TRACK[7-j];
-  button(deck,P(342,z),14,14,c,trInfo,.6);
-  encoder(deck,P(370,z),c,trInfo,8);}
-button(deck,P(342,75),14,10,'#e7d24a',{name:'Mute',group:'Дорожки',desc:'Переключает кнопки дорожек в режим заглушения.'},.35,3.5);
-button(deck,P(370,75),14,10,'#4aa8e8',{name:'Solo',group:'Дорожки',desc:'Переключает кнопки дорожек в режим соло.'},.35,3.5);
-dframe(331,388,62,293,PURP,'Tracks');
-dlabel('Mute',342,66,2.6);dlabel('Solo',370,66,2.6);
+// ---------- screen: window as wide as the pad grid, UI columns over the knobs ----------
+function screen(e){
+  const info=infoOf(e);
+  const bez=new THREE.Mesh(new THREE.BoxGeometry(e.w,1.2,e.h/C30),new THREE.MeshStandardMaterial({color:0x0b0d0f,roughness:.35,metalness:.3}));bez.position.set(...Wp(e.x,e.y));bez.position.y=.6;wedge.add(bez);reg(bez,info);
+  const sc=document.createElement('canvas');sc.width=1280;sc.height=800;const s=sc.getContext('2d');const pxmm=1280/217.5;
+  s.fillStyle='#0b0d0f';s.fillRect(0,0,1280,800);s.fillStyle='#14181b';s.fillRect(0,0,1280,58);
+  s.font='600 26px '+KEYFONT;s.fillStyle='#e6ebea';s.textBaseline='middle';s.textAlign='left';s.fillText('Sound',28,29);
+  s.font='500 26px '+KEYFONT;s.fillStyle='#93a09f';s.fillText('Track 1   Drums',128,29);s.textAlign='right';s.fillText('120 BPM   Page 1 / 3',1252,29);
+  // clip overview of the 8 x 8 window: same columns as the pads
+  const PX=c=>640+(-98+28*c)*pxmm, cw=21.5*pxmm;
+  for(let t=0;t<8;t++)for(let c=0;c<8;c++){const on=c+1<=LEN[t];s.fillStyle=on?TRACK[t]:'#1c2124';s.globalAlpha=on?(c===2?.95:.5):1;s.fillRect(PX(c)-cw/2,84+t*36,cw,28);}
+  s.globalAlpha=1;
+  for(let c=0;c<8;c++){const cx=PX(c),cy=640;
+    s.fillStyle='#161a1d';s.fillRect(cx-cw/2,384,cw,396);
+    s.textAlign='center';s.font='500 24px '+KEYFONT;s.fillStyle='#e6ebea';s.fillText(PAR[c],cx,420);
+    s.strokeStyle='#2a3034';s.lineWidth=10;s.beginPath();s.arc(cx,cy,50,Math.PI*.75,Math.PI*2.25);s.stroke();
+    const v=.2+((c*37)%60)/100;s.strokeStyle='#9b93f0';s.beginPath();s.arc(cx,cy,50,Math.PI*.75,Math.PI*(.75+1.5*v));s.stroke();
+    s.font='400 22px "JetBrains Mono",monospace';s.fillStyle='#93a09f';s.fillText(Math.round(v*100)+'%',cx,cy+4);}
+  const disp=new THREE.Mesh(new THREE.PlaneGeometry(217.5,135.6),new THREE.MeshBasicMaterial({map:tex(sc),toneMapped:false}));
+  disp.rotation.x=-Math.PI/2;disp.position.set(...Wp(e.x,e.y));disp.position.y=1.25;wedge.add(disp);reg(disp,info);}
 
-const parNames=['Cutoff','Reso','Drive','Slot 1','Slot 2','Send A','Send B','Level'];
-const parInfo={name:'8 энкодеров параметров',group:'Под экраном · правая рука',desc:'Крутят параметры выбранного блока; подпись и значение на экране прямо над ручкой. Шаг 30 мм. Нажать и крутить — точная настройка.'};
-for(let k=0;k<8;k++){encoder(deck,P(150+30*k,318),'#9b93f0',parInfo,9.5);dlabel(parNames[k],150+30*k,301,2.7);}
-dframe(135,375,296,340,PURP,'Params');
-
-const pages=['Grab','Shape','Perform','Arrange'];
-const pageDesc={'Grab':'Страница добычи звука: входы, захват, ресэмплинг.','Shape':'Страница обработки: фильтр, слоты эффектов, шины.','Perform':'Страница игры: клипы, сцены, перформанс.','Arrange':'Страница аранжировки и сведения.'};
-pages.forEach((p,i)=>{button(deck,P(30+22*i,322),18,12,i===2?'#3fc39d':'#dfe6e3',{name:p,group:'Страницы · левая рука',desc:pageDesc[p]+' Страница меняет сразу экран, энкодеры, сетку и подсветку.'},i===2?.8:.22);dlabel(p,30+22*i,309,2.6);});
-dframe(15,125,300,340,TEAL,'Pages');
-
-const edit=[['Undo',45,262,'Отмена последнего действия.'],['Copy',85,262,'Копировать клип, дорожку или шаги (R42).'],['Delete',45,228,'Удалить выбранное (R42).'],['Save',85,228,'Сохранить проект на внутренний SSD.']];
-edit.forEach(e=>{button(deck,P(e[1],e[2]),22,14,'#dfe6e3',{name:e[0],group:'Правка · левая рука',desc:e[3]},.22);dlabel(e[0],e[1],e[2]-11.5,2.8);});
-dframe(15,115,208,286,TEAL,'Edit');
-
-button(deck,P(42,165),28,28,'#3fc39d',{name:'Capture',group:'Захват · левая рука',desc:'Буфер входа пишет всегда; нажатие забирает последние секунды в сэмпл. Удержание — выбрать длину: 4, 8, 16 или 24 с.'},.7,5);
-button(deck,P(88,165),28,28,'#8fe3cb',{name:'Freeze',group:'Захват · левая рука',desc:'Захват выхода дорожки: сэмпл, цикл или вейвтейбл. Удержание — выбрать цель.'},.45,5);
-dlabel('Capture',42,145,3.2);dlabel('Freeze',88,145,3.2);
-dframe(15,115,137,203,TEAL,'Capture');
-
-const trp=[['Rec','#e8564a','Запись. Красный — системный цвет записи.'],['Play','#55c26b','Старт воспроизведения.'],['Stop','#dfe6e3','Стоп; второе нажатие — в начало.'],['Tap','#f0a23a','Темп по нажатиям; удержание — метроном.']];
-trp.forEach((t,i)=>{button(deck,P(30+22*i,98),18,14,t[1],{name:t[0],group:'Транспорт · левая рука',desc:t[2]},i<2?.55:.3);dlabel(t[0],30+22*i,84,2.8);});
-dframe(15,115,78,116,TEAL,'Transport');
-
-const potN=[['Monitor',35],['Phones',65],['Cue/Mix',95]];
-potN.forEach(p=>{pot(deck,P(p[1],42),{name:'Громкость: '+p[0],group:'Громкости · левая рука, вслепую',desc:'Обычный потенциометр с упорами (R13), другой формы колпачка, чтобы найти на ощупь. Гнёзда наушников на переднем торце под ними.'});dlabel(p[0],p[1],24,2.6);});
-dframe(15,115,18,66,'rgba(236,240,238,.45)','Volume');
-
-dframe(125,388,15,58,'rgba(236,240,238,.18)');
-dlabel('reserved: touch strip (phase 2)',256,36,3,'rgba(236,240,238,.45)');
-
-const wheelInfo={name:'Колесо навигации',group:'Навигация · правая рука',desc:'⌀ 45 мм, с нажатием. Поворот — по дорожкам вверх-вниз, нажать и крутить — по времени. Перенесено ближе к руке: ≈ 26 см от края вместо 40 (R41).'};
-{const g=new THREE.Group();
- const k=new THREE.Mesh(new THREE.CylinderGeometry(22,22.5,16,64),ALU);k.position.y=8;g.add(k);
- const t=new THREE.Mesh(new THREE.CylinderGeometry(19,19,.6,64),KNOB);t.position.y=16.2;g.add(t);
- const dimple=new THREE.Mesh(new THREE.CylinderGeometry(3.5,3.5,.8,24),KNOBTOP);dimple.position.set(9,16.4,-9);g.add(dimple);
- put(deck,g,P(447,292),wheelInfo);}
-const arrows=[['↑',455,238],['↓',455,206],['←',439,222],['→',471,222]];
-arrows.forEach(a=>{button(deck,P(a[1],a[2]),12,12,'#dfe6e3',{name:'Стрелка '+a[0],group:'Навигация · правая рука',desc:'Сдвиг окна сетки на одну строку или столбец; удержание — на 8. Дублирует колесо.'},.22);});
-button(deck,P(410,222),18,12,'#dfe6e3',{name:'Назад',group:'Навигация · правая рука',desc:'Шаг назад по меню и экранам.'},.22);
-dlabel('Back',410,211,2.6);
-dframe(395,500,195,330,PURP,'Navigation');
-
-const macroInfo={name:'Макро-энкодеры',group:'Перформанс · правая рука',desc:'6 ручек звука: по умолчанию частота, резонанс, слот 1, слот 2, посыл A, посыл B. Назначение меняется, подписи на экране.'};
-[[415,160],[447,160],[479,160],[415,128],[447,128],[479,128]].forEach(p=>encoder(deck,P(p[0],p[1]),'#f0a23a',macroInfo,9.5));
-dframe(395,500,105,185,PURP,'Macro');
-
-const xf={name:'Кроссфейдер',group:'Перформанс · правая рука',desc:'Смешивает две сцены, назначенные кнопками A и B. Бесконтактный или долговечный ползунок, кривая в софте.'};
-{const slot=new THREE.Mesh(new THREE.BoxGeometry(84,1,4),HOLE);slot.position.set(X(447),.5,Z(42));deck.add(slot);
- const cap=new THREE.Group();const c=new THREE.Mesh(new THREE.BoxGeometry(10,12,16),KNOB);c.position.y=6;cap.add(c);const s=new THREE.Mesh(new THREE.BoxGeometry(1.5,.6,16),WHITE);s.position.y=12.3;cap.add(s);put(deck,cap,P(447,42),xf);reg(slot,xf);}
-button(deck,P(415,78),18,12,'#e8564a',{name:'Сцена A',group:'Перформанс',desc:'Назначить сцену на левую сторону кроссфейдера.'},.4);
-button(deck,P(479,78),18,12,'#4aa8e8',{name:'Сцена B',group:'Перформанс',desc:'Назначить сцену на правую сторону кроссфейдера.'},.4);
-dlabel('A',415,66,3);dlabel('B',479,66,3);
-dframe(395,500,18,98,PURP,'Crossfader');
-
-const screenInfo={name:'Экран 10,1″',group:'Центр, наклон 30°',desc:'1280 × 800, фиксированный наклон 30° (R18; норма FAA для неподвижного экрана 30–45°). Над каждым из 8 энкодеров — свой столбец с параметром.'};
-{const bez=new THREE.Mesh(new THREE.BoxGeometry(240,5,146),new THREE.MeshStandardMaterial({color:0x101214,roughness:.4,metalness:.3}));bez.position.set(X(255),2.5,-S(405));wedge.add(bez);reg(bez,screenInfo);
- const sc=document.createElement('canvas');sc.width=1280;sc.height=800;const s=sc.getContext('2d');
- s.fillStyle='#0b0d0f';s.fillRect(0,0,1280,800);
- s.fillStyle='#161a1d';s.fillRect(0,0,1280,58);
- s.font='500 26px '+FONT;s.fillStyle='#e6ebea';s.textBaseline='middle';s.fillText('PERFORM  ·  Track 3: Line 1 (TD-3)  ·  120 BPM',28,29);
- s.textAlign='right';s.fillStyle='#93a09f';s.fillText('buffer 24 s  ·  CPU 38%',1252,29);s.textAlign='left';
- const mx=28,my=90,cw=13,ch=18;
- for(let r=0;r<16;r++)for(let c=0;c<40;c++){const on=((r*7+c*3)%9)>3;s.fillStyle=on?TRACK[r%8]:'#1c2124';s.globalAlpha=on?.85:1;s.fillRect(mx+c*cw,my+r*ch,cw-2,ch-3);}
- s.globalAlpha=1;s.strokeStyle='#ffffff';s.lineWidth=3;s.strokeRect(mx+8*cw-2,my+2*ch-2,8*cw+2,8*ch+1);
- s.font='400 20px "JetBrains Mono",monospace';s.fillStyle='#93a09f';s.fillText('overview: 16 tracks × 40 bars, frame = grid window',mx,my+16*ch+22);
- const wx=600,wyy=96,ww=652,wh=250;s.fillStyle='#11161a';s.fillRect(wx,wyy,ww,wh);
- s.strokeStyle='#3fc39d';s.lineWidth=2;s.beginPath();for(let x=0;x<ww;x++){const a=Math.sin(x*.07)*Math.sin(x*.011)*(.35+.6*Math.abs(Math.sin(x*.004)));const y=wyy+wh/2+a*wh*.45;x?s.lineTo(wx+x,y):s.moveTo(wx+x,y);}s.stroke();
- s.fillStyle='rgba(63,195,157,.18)';s.fillRect(wx+420,wyy,180,wh);
- s.font='500 22px '+FONT;s.fillStyle='#e6ebea';s.fillText('Capture: last 8 s from Line 1',wx+14,wyy+26);
- const colW=1280/8;
- for(let k=0;k<8;k++){const cx=colW*k+colW/2, cy=620;
-   s.fillStyle='#161a1d';s.fillRect(colW*k+8,470,colW-16,310);
-   s.strokeStyle='#2a3034';s.lineWidth=10;s.beginPath();s.arc(cx,cy,56,Math.PI*.75,Math.PI*2.25);s.stroke();
-   const v=.2+((k*37)%60)/100;s.strokeStyle='#9b93f0';s.beginPath();s.arc(cx,cy,56,Math.PI*.75,Math.PI*(.75+1.5*v));s.stroke();
-   s.textAlign='center';s.font='500 24px '+FONT;s.fillStyle='#e6ebea';s.fillText(parNames[k],cx,505);
-   s.font='400 22px "JetBrains Mono",monospace';s.fillStyle='#93a09f';s.fillText(Math.round(v*100)+'%',cx,cy+4);s.textAlign='left';}
- const disp=new THREE.Mesh(new THREE.PlaneGeometry(217,136),new THREE.MeshBasicMaterial({map:tex(sc),toneMapped:false}));
- disp.rotation.x=-Math.PI/2;disp.position.set(X(255),5.1,-S(405));wedge.add(disp);reg(disp,screenInfo);}
-
-const inInfo=n=>({name:n,group:'Входы · настройка',desc:'Настраивают один раз, поэтому у экрана, а не у рук (R41). Индикаторы перегруза рядом с экраном, в пределах 15° от линии взгляда.'});
-encoder(wedge,Wp(45,440),'#3fc39d',{name:'Усиление 1',group:'Входы · настройка',desc:'Энкодер с цифровым предусилителем для комбо-входа 1 (R16): запоминание, авто-подстройка, защита от перегруза.'},9);
-encoder(wedge,Wp(100,440),'#3fc39d',{name:'Усиление 2',group:'Входы · настройка',desc:'Энкодер с цифровым предусилителем для комбо-входа 2 (R16).'},9);
-button(wedge,Wp(45,395),16,10,'#f0a23a',{name:'P48, канал 1',group:'Входы · настройка',desc:'Фантомное питание, только на XLR. Включение с индикатором.'},.3);
-button(wedge,Wp(100,395),16,10,'#f0a23a',{name:'P48, канал 2',group:'Входы · настройка',desc:'Фантомное питание, только на XLR.'},.3);
-button(wedge,Wp(72,365),26,10,'#dfe6e3',{name:'Вход',group:'Входы',desc:'Вместо 5 кнопок источника: список всех ≈ 14 входов на экране, выбор колесом. Вход — это источник дорожки (P2, R37).'},.25);
-[[30,455,'#55c26b'],[115,455,'#e8564a']].forEach(l=>button(wedge,Wp(l[0],l[1]),4,4,l[2],inInfo('Индикатор перегруза'),.9,1.5));
-wframe(15,130,350,465,GREY,'Inputs');
-wlabel('Gain 1',45,423,2.6);wlabel('Gain 2',100,423,2.6);wlabel('P48',45,386,2.6);wlabel('P48',100,386,2.6);wlabel('Input',72,356,2.6);
-
-const segs=12;for(let i=0;i<segs;i++){const c=i<8?'#55c26b':(i<10?'#e7d24a':'#e8564a');button(wedge,Wp(395,357+i*8.5),6,5,c,{name:'Индикатор Main',group:'Система',desc:'Уровень главного выхода, рядом с экраном. Справа у экрана — выходы, как и сзади.'},i<6?.9:.08,1.5);}
-button(wedge,Wp(440,440),22,10,'#dfe6e3',{name:'Браузер',group:'Система',desc:'Браузер сэмплов и проектов с избранным.'},.22);
-button(wedge,Wp(476,440),22,10,'#dfe6e3',{name:'Настройки',group:'Система',desc:'Системное меню.'},.22);
-{const g=new THREE.Group();const ring=new THREE.Mesh(new THREE.TorusGeometry(8,1,8,40),emat('#e6ebea',.5));ring.rotation.x=-Math.PI/2;ring.position.y=.5;g.add(ring);
- const b=new THREE.Mesh(new THREE.CylinderGeometry(5.5,5.5,2,32),KNOB);b.position.y=.5;g.add(b);put(wedge,g,Wp(472,372),{name:'Питание',group:'Система',desc:'Утоплено, срабатывает при удержании 2 с, чтобы не нажать случайно (FAA 6.4.4). Дальний правый угол, над разъёмом питания сзади.'});}
-wframe(380,500,350,465,GREY,'System');
-wlabel('Main',395,348,2.6);wlabel('Browser',440,430,2.6);wlabel('Menu',476,430,2.6);wlabel('Power',472,358,2.6);
-{const media={name:'USB-A и SD',group:'Система · носители',desc:'Горячая замена флешек и карт с сэмплами, музыкой, проектами (R81). В блоке System, в углублении: далеко от рук и не на торце, где флешку снесут на первом же лайве. Всё копируется на внутренний SSD — вынуть можно в любой момент; пока горит индикатор, идёт запись.'};
- const pocket=new THREE.Mesh(new THREE.BoxGeometry(66,1,20),HOLE);pocket.position.set(...Wp(447,402));pocket.position.y=.3;wedge.add(pocket);reg(pocket,media);
- const ua=new THREE.Mesh(new THREE.BoxGeometry(13,1.2,5.5),new THREE.MeshStandardMaterial({color:0x2b6cb0,roughness:.5}));ua.position.set(...Wp(425,402));ua.position.y=.9;wedge.add(ua);reg(ua,media);
- const sd=new THREE.Mesh(new THREE.BoxGeometry(26,1.2,2.5),KNOBTOP);sd.position.set(...Wp(458,402));sd.position.y=.9;wedge.add(sd);reg(sd,media);
- button(wedge,Wp(482,402),3,3,'#e8564a',media,.6,1.2);}
-wlabel('USB',425,392,2.6);wlabel('SD',458,392,2.6);
+// ---------- shelf behind the screen: rear jack labels seen from the front (R73) ----------
+[['Audio In',4.5,162.5,['Mic/Line 1–2, Hi-Z 1–2','Line 1–8, Phono L R, GND']],
+ ['Audio Out',172.5,242.5,['Main L R, Aux L R','RCA L R']],
+ ['Control',252.5,426.5,['MIDI In 1–2, Out 1–4, TRS In, O1, O2','Clock, Reset, CV In 1–4, CV 1–8']],
+ ['Power / USB',436.5,510.5,['LAN, USB-A, USB-C (PC)','DC 12–24V, On/Off']]].forEach(([t,x0,x1,lines])=>{
+  const cx=(x0+x1)/2*K;label(sg,t,cx,8*K,3.2,PRINT,600);lines.forEach((l,i)=>label(sg,l,cx,(15.5+i*6.5)*K,2.4,DIM));
+  sg.strokeStyle='rgba(232,236,234,.25)';sg.lineWidth=.3*K;sg.beginPath();sg.moveTo((x0+2)*K,3*K);sg.lineTo((x1-2)*K,3*K);sg.stroke();});
 
 function jack(kind,xmm,y,front,info){
   const g=new THREE.Group();let nut,hole;
@@ -382,45 +357,51 @@ for(let i=0;i<8;i++)J('trs',428+(i%4)*22,i<4?56:28,'Line '+(i+1),0,{name:'Лин
 
 {const rpm=new THREE.MeshStandardMaterial({map:tex(rearC),roughness:.7});SKINS.push(rpm);const rp=new THREE.Mesh(new THREE.PlaneGeometry(W,RH),rpm);rp.rotation.y=Math.PI;rp.position.set(0,RH/2,-D/2-.05);scene.add(rp);}
 
-jack('trs',35,30,true,{name:'Наушники 1',group:'Передний торец',desc:'6,3 мм; источник Main или Cue; ≥ 4 В на 600 Ом (P25).'});
-jack('trs',95,30,true,{name:'Наушники 2',group:'Передний торец',desc:'Второй выход наушников со своей громкостью.'});
 
-{const dpm=new THREE.MeshStandardMaterial({map:tex(deckC),roughness:.75}),wpm=new THREE.MeshStandardMaterial({map:tex(wedgeC),roughness:.75});SKINS.push(dpm,wpm);const dp=new THREE.Mesh(new THREE.PlaneGeometry(W,WZ0),dpm);dp.rotation.x=-Math.PI/2;dp.position.set(0,DECK+.05,Z(WZ0/2));scene.add(dp);
- const wp=new THREE.Mesh(new THREE.PlaneGeometry(W,L),wpm);wp.rotation.x=-Math.PI/2;wp.position.set(0,.05,-L/2);wedge.add(wp);}
+jack('trs',32,30,true,{name:'Наушники 1',group:'Передний торец',desc:'6,3 мм, прямо под столбцом Phones 1; источник Main или Cue; ≥ 4 В на 600 Ом (P25).'});
+jack('trs',80,30,true,{name:'Наушники 2',group:'Передний торец',desc:'Второй выход наушников со своей громкостью Phones 2.'});
 
+{const dpm=new THREE.MeshStandardMaterial({map:tex(deckC),roughness:.75}),wpm=new THREE.MeshStandardMaterial({map:tex(wedgeC),roughness:.75}),spm=new THREE.MeshStandardMaterial({map:tex(shelfC),roughness:.75});SKINS.push(dpm,wpm,spm);
+ const dp=new THREE.Mesh(new THREE.PlaneGeometry(W,WZ0),dpm);dp.rotation.x=-Math.PI/2;dp.position.set(0,DECK+.05,Z(WZ0/2));scene.add(dp);
+ const wp=new THREE.Mesh(new THREE.PlaneGeometry(W,L),wpm);wp.rotation.x=-Math.PI/2;wp.position.set(0,.05,-L/2);wedge.add(wp);
+ const sp=new THREE.Mesh(new THREE.PlaneGeometry(W,D-WZ1),spm);sp.rotation.x=-Math.PI/2;sp.position.set(0,TOP+.05,Z((WZ1+D)/2));scene.add(sp);}
 
+// ---------- inside: what has to fit into the shorter body ----------
 const PCB=new THREE.MeshStandardMaterial({color:0x1f6b45,roughness:.6});
 const inside=new THREE.Group();scene.add(inside);
 function ibox(w,h,d,xmm,y,zmm,mat,info){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(X(xmm),y,Z(zmm));inside.add(m);if(info)reg(m,info);return m;}
-const itx={name:'Mini-ITX: вычислитель',group:'Внутри · под панелью',desc:'Плата 170 × 170 мм (на старте ASRock N100DC-ITX, R36), лежит плашмя под сеткой. С памятью стоя ≈ 45 мм, свободно ≈ 47 мм — ради этого корпус спереди 68 мм (R44). Апгрейд — любая Mini-ITX на те же стойки.'};
-ibox(170,1.6,170,235,6,165,PCB,itx);
-ibox(64,26,64,215,6.8+13,150,ALU,itx);
-ibox(133,31,4,235,6.8+4+15.5,225,new THREE.MeshStandardMaterial({color:0x2d5a8a,roughness:.5}),itx);
-ibox(80,2.5,22,280,9,110,new THREE.MeshStandardMaterial({color:0x111111}),{name:'SSD NVMe',group:'Внутри',desc:'Проекты живут на внутреннем SSD (P15).'});
-ibox(W-30,1.6,WZ0-20,W/2,DECK-3-15,WZ0/2,new THREE.MeshStandardMaterial({color:0x3fc39d,roughness:.6,transparent:true,opacity:.14,depthWrite:false}),{name:'Плата панели',group:'Внутри · под верхней панелью',desc:'Пэды, кнопки, энкодеры, драйверы светодиодов и микроконтроллер панели; к вычислителю — по USB. Слой ≈ 15 мм под обшивкой.'});
-ibox(W-20,104,1.6,W/2,8+52,D-3-42,PCB,{name:'Плата разъёмов',group:'Внутри · за задней стенкой',desc:'Вертикальная плата параллельно задней стенке, гнёзда стоят на ней. Верх ≈ 112 мм — ниже наклона экрана с запасом (документ 13, раздел 3.6).'});
-ibox(60,18,50,470,6+9,400,new THREE.MeshStandardMaterial({color:0x6b4f2a,roughness:.6}),{name:'Питание',group:'Внутри',desc:'USB-C PD и DC 12–24 В, преобразователи, отдельная ветка для светодиодов (документ 11).'});
-ibox(140,22,90,90,6+11,400,PCB,{name:'Аудиоплата',group:'Внутри',desc:'АЦП и ЦАП (около 16 входов), предусилители, выходные каскады ±12 В; к вычислителю по USB Audio Class 2.'});
-{const sm=new THREE.Mesh(new THREE.BoxGeometry(230,10,150),new THREE.MeshStandardMaterial({color:0x0c0d0f,roughness:.5}));sm.position.set(X(255),-6,-S(405));wedge.add(sm);reg(sm,{name:'Модуль экрана',group:'Внутри · под наклоном',desc:'Панель 10,1″ с контроллером ≈ 10 мм; вместе с ручками у экрана занимает слой ≈ 18 мм под наклоном.'});}
+const itx={name:'Mini-ITX: вычислитель',group:'Внутри · под сеткой',desc:'Плата 170 × 170 мм (ASRock N100DC-ITX, R36) плашмя под сеткой: x 136–306, от края 45–215 мм. С памятью стоя ≈ 45 мм при свободных ≈ 47 мм (R44): высота спереди не менялась, поэтому и запас тот же. За платой до сгиба ещё 85 мм свободно.'};
+ibox(170,1.6,170,221,6,130,PCB,itx);
+ibox(64,26,64,200,6.8+13,115,ALU,itx);
+ibox(133,31,4,221,6.8+4+15.5,200,new THREE.MeshStandardMaterial({color:0x2d5a8a,roughness:.5}),itx);
+ibox(80,2.5,22,280,9,70,new THREE.MeshStandardMaterial({color:0x111111}),{name:'SSD NVMe',group:'Внутри',desc:'Проекты живут на внутреннем SSD.'});
+ibox(W-30,1.6,WZ0-16,W/2,DECK-2-15,WZ0/2,new THREE.MeshStandardMaterial({color:0x3fc39d,roughness:.6,transparent:true,opacity:.14,depthWrite:false}),{name:'Плата панели',group:'Внутри · под верхней панелью',desc:'Пэды, кнопки, энкодеры, драйверы огней и микроконтроллер панели; слой ≈ 15 мм под обшивкой. Заканчивается перед сгибом: за ним модуль экрана.'});
+ibox(W-20,104,1.6,W/2,8+52,D-45,PCB,{name:'Плата разъёмов',group:'Внутри · за задней стенкой',desc:'Вертикальная плата параллельно задней стенке, гнёзда стоят на ней. Верх ≈ 112 мм; наклон над ней на высоте ≈ 134 мм — запас прежний, потому что наклон и полка просто сдвинулись вперёд вместе со стенкой.'});
+ibox(140,22,90,90,6+11,360,PCB,{name:'Аудиоплата',group:'Внутри · под уровнями',desc:'АЦП и ЦАП, предусилители, выходные каскады; под блоком Levels, рядом с гнёздами входов сзади. До платы разъёмов 10 мм.'});
+ibox(60,18,50,380,6+9,360,new THREE.MeshStandardMaterial({color:0x6b4f2a,roughness:.6}),{name:'Питание',group:'Внутри · под индикаторами',desc:'USB-C PD и DC 12–24 В, преобразователи, отдельная ветка для огней.'});
+ibox(90,45,86,459,3+22.5,355,new THREE.MeshStandardMaterial({color:0x8a6d1f,roughness:.7,transparent:true,opacity:.85}),{name:'Отсек аккумулятора',group:'Внутри · под System, люк снизу',desc:'Под съёмный аккумулятор до 99 Вт·ч (R40, R59): 8 элементов 18650 по 3,4 А·ч в сборке 4S2P ≈ 98 Вт·ч, пакет ≈ 74 × 65 × 37 мм, с корпусом и платой защиты ≈ 90 × 80 × 45 мм. Под наклоном места по высоте больше, чем под плоской частью.'});
+{const sm=new THREE.Mesh(new THREE.BoxGeometry(229.3,2.85,149),new THREE.MeshStandardMaterial({color:0x0c0d0f,roughness:.5}));sm.position.set(...Wp(LAY.E.find(e=>e.kind==='screen').x,365));sm.position.y=-3.5;wedge.add(sm);
+ reg(sm,{name:'Модуль экрана',group:'Внутри · под наклоном',desc:'Голая панель 10,1″, например Winstar WF101KTYAPLNN0: 229,3 × 149 × 2,85 мм, активная область 217 × 135,6 мм. Длина наклона 150 мм — модуль ложится впритык; края уходят под сгиб и под полку на ≈ 0,5 мм.'});}
 
 const rest=new THREE.Shape();rest.moveTo(0,0);rest.lineTo(0,58);rest.lineTo(70,24);rest.lineTo(70,0);rest.lineTo(0,0);
-const rgeo=new THREE.ExtrudeGeometry(rest,{depth:265,bevelEnabled:false});rgeo.rotateY(-Math.PI/2);rgeo.translate(0,0,0);
-const restM=new THREE.Mesh(rgeo,new THREE.MeshStandardMaterial({color:0x24272a,roughness:.95}));
-restM.position.set(X(122)+265,0,D/2+3);scene.add(restM);
-reg(restM,{name:'Подставка под запястья',group:'Спереди · съёмная',desc:'70 мм, мягкая, от 24 до 58 мм высотой. Нужна, потому что корпус спереди 68 мм. Стоит только под сеткой: слева свободны громкости и наушники, справа — SD и USB.'});
+const RW=221.5, rgeo=new THREE.ExtrudeGeometry(rest,{depth:RW,bevelEnabled:false});rgeo.rotateY(-Math.PI/2);
+const restM=new THREE.Mesh(rgeo,new THREE.MeshStandardMaterial({color:0x1b1d20,roughness:.95}));
+restM.position.set(X(110)+RW,0,D/2+3);scene.add(restM);
+reg(restM,{name:'Подставка под запястья',group:'Спереди · съёмная',desc:'70 мм, мягкая, высотой от 24 до 58 мм (R44). Ровно по ширине сетки, 110–331,5 мм: слева свободны гнёзда наушников, справа — кроссфейдер.'});
 
 let xray=false;const tx=document.getElementById('t-xray');
 tx.addEventListener('click',()=>{xray=!xray;tx.setAttribute('aria-pressed',xray?'true':'false');
   SKINS.forEach(m=>{m.transparent=xray;m.opacity=xray?(m===BODYMAT?.1:.12):1;m.depthWrite=!xray;m.needsUpdate=true;});});
-const views={iso:[-600,660,860],top:[0,1250,30],front:[0,220,1060],back:[60,300,-1000]};
+const views={iso:[-560,640,820],top:[0,1200,40],front:[0,230,1020],back:[60,300,-960]};
 let tween=null;
-function go(name){document.querySelectorAll('.bar button[id^="v-"]').forEach(b=>b.setAttribute('aria-pressed',b.id==='v-'+name?'true':'false'));
-  const to=new THREE.Vector3(...views[name]).multiplyScalar(fit());tween={from:camera.position.clone(),to,t0:performance.now(),dur:reduce?1:650};}
 const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fit=()=>Math.max(1,1.5/Math.max(.5,camera.aspect));let placed=false;
+function go(name){document.querySelectorAll('.bar button[id^="v-"]').forEach(b=>b.setAttribute('aria-pressed',b.id==='v-'+name?'true':'false'));
+  const to=new THREE.Vector3(...views[name]).multiplyScalar(fit());tween={from:camera.position.clone(),to,t0:performance.now(),dur:reduce?1:650};}
 ['iso','top','front','back'].forEach(n=>document.getElementById('v-'+n).addEventListener('click',()=>go(n)));
 let playing=!reduce;const tp=document.getElementById('t-play');
-function setPlay(v){playing=v;tp.setAttribute('aria-pressed',v?'true':'false');tp.textContent=v?'Пэды: игра':'Пэды: статично';if(!v)pads.forEach(p=>p.m.material.emissiveIntensity=p.on?.55:.03);}
+const still=p=>p.on?(p.play?.85:.28):.03;
+function setPlay(v){playing=v;tp.setAttribute('aria-pressed',v?'true':'false');tp.textContent=v?'Пэды: игра':'Пэды: статично';if(!v)pads.forEach(p=>p.m.material.emissiveIntensity=still(p));}
 setPlay(playing);tp.addEventListener('click',()=>setPlay(!playing));
 
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2();let down=null;
@@ -432,12 +413,14 @@ el.addEventListener('pointerup',e=>{if(!down)return;const moved=Math.hypot(e.cli
 
 function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();if(!placed&&w>0){camera.position.set(...views.iso).multiplyScalar(fit());placed=true;}}
 new ResizeObserver(resize).observe(stage);resize();
+window.__ready=true;
 
 function loop(now){
   if(tween){const k=Math.min(1,(now-tween.t0)/tween.dur),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;camera.position.lerpVectors(tween.from,tween.to,e);if(k>=1)tween=null;}
-  if(playing){const step=Math.floor(now/250)%8;pads.forEach(p=>{p.m.material.emissiveIntensity=p.on?(p.i===step?1.6:.45):(p.i===step?.12:.03);});}
+  if(playing){const step=Math.floor(now/250)%8;pads.forEach(p=>{p.m.material.emissiveIntensity=p.on?(p.i===step?1.3:(p.play?.85:.28)):(p.i===step?.12:.03);});}
   controls.update();renderer.render(scene,camera);requestAnimationFrame(loop);}
 requestAnimationFrame(loop);
 })();
 </script>
+
 </html>

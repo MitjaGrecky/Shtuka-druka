@@ -14,7 +14,7 @@ a CPU benchmark is running on the first test machine.
 | `docs/ru/` | Research and design documents (Russian). Start with `14_decisions_log.md` — the single source of truth for every decision |
 | `bench/` | CPU benchmark: how many reference tracks a processor can run at 48 kHz / 128 samples |
 | `mockup/` | 1:1 cardboard mockup templates (A4, PDF) and the script that generates them |
-| `model3d/` | Interactive 3D model of layout v4 (open `index.html` in a browser) |
+| `model3d/` | Interactive 3D model of panel v7, built from `mockup/layout/layout_v7.json` (open `index.html` in a browser; rebuild with `build_model3d_v7.py`) |
 | `firmware/protocol/` | Board <-> computer protocol (SDP v0): C header for firmware and host |
 | `tools/` | `sdp.py`: reference codec, self-test and frame monitor |
 | `hardware/` | Hardware design files (to come) |

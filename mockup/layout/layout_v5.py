@@ -40,8 +40,8 @@ for r, row in enumerate(edit):
     for c, n in enumerate(row):
         btn(n, 24 + 34 * c, 146 + 24 * r, 30, 18, "Edit", freq="часто" if n in ("Undo", "Delete", "Duplicate") else "иногда")
 # held with the left hand while the right hand plays the pads (like Note Repeat on Maschine)
-btn("Repeat", 31, 238, 44, 18, "Repeat", freq="часто")
-btn("Accent", 81, 238, 44, 18, "Repeat", freq="иногда")
+btn("Repeat", 31, 233, 44, 18, "Repeat", freq="часто")
+btn("Accent", 81, 233, 44, 18, "Repeat", freq="иногда")
 knob("Tempo", 33, 292, 18, "Tempo", freq="иногда")
 knob("Swing", 83, 292, 18, "Tempo", freq="редко")
 
@@ -65,7 +65,12 @@ for j in range(8):
         other("pad", f"Pad {i+1}.{8-j}", 124.5 + 25 * i, 56.5 + 25 * j, 21, 21, "Grid", color=TRACK[7 - j])
 for i in range(8):
     btn(f"Scene {i+1}", 124.5 + 25 * i, 258, 19, 10, "Scenes", label=str(i + 1), freq="часто, в долю")
-btn("Stop All", 341, 258, 36, 10, "Scenes", freq="иногда")
+btn("Stop All", 350, 258, 26, 10, "Scenes", freq="иногда")
+# grid window scroll: each arrow sits at the edge it scrolls towards (P64)
+btn("Arrow ◄", 102, 258, 15, 10, "Grid scroll", label="◄", freq="часто")
+btn("Arrow ►", 322, 258, 15, 10, "Grid scroll", label="►", freq="часто")
+btn("Arrow ▲", 378, 258, 15, 10, "Grid scroll", label="▲", freq="часто")
+btn("Arrow ▼", 378, 28, 15, 14, "Grid scroll", label="▼", freq="часто")
 btn("Solo", 330, 28, 18, 14, "Tracks", color="blue", note="держать + Select", freq="иногда")
 btn("Arm", 352, 28, 18, 14, "Tracks", color="red", note="держать + Select", freq="иногда")
 for j in range(8):
@@ -83,24 +88,22 @@ for k in range(8):
 btn("Scene A", 402, 24, 14, 12, "Live", label="A", color="red")
 other("fader", "Crossfader", 450, 24, 72, 4, "Live", label="Scene A ↔ B")
 btn("Scene B", 498, 24, 14, 12, "Live", label="B", color="blue")
-# NAV block (R102): arrows (grid window only) + Back, Page (screen only) + wheel (screen only) together
-btn("Back", 412, 54, 30, 14, "Navigation", freq="часто")
-btn("Page ◄", 452, 54, 26, 14, "Navigation", label="◄ Page", freq="часто")
-btn("Page ►", 484, 54, 26, 14, "Navigation", label="Page ►", freq="часто")
-for n, dx, dy in [("▲", 0, 19), ("▼", 0, -19), ("◄", -19, 0), ("►", 19, 0)]:
-    btn("Arrow " + n, 424 + dx, 104 + dy, 15, 15, "Navigation", label=n, freq="часто")
-other("wheel", "Wheel", 480, 108, 45, 45, "Navigation", label="")
+# screen navigation: wheel (push = OK) + Back; Page buttons at the ends of the screen-knob row (P64)
+other("wheel", "Wheel", 472, 160, 45, 45, "Navigation", label="")
+btn("Back", 418, 160, 36, 18, "Navigation", freq="часто")
+btn("Page ◄", 122, 306, 18, 14, "Navigation", label="◄ Page", freq="часто")
+btn("Page ►", 386, 306, 18, 14, "Navigation", label="Page ►", freq="часто")
 # PAD MODE: what the pads do, 2 x 3 next to the grid
-gm = [["Chords", "Touch FX", "Scale"], ["Clips", "Steps", "Notes"]]  # front -> back
+gm = [["Chords", "Touch FX", "Scale"], ["Clips", "Steps", "Notes"]]  # front -> back (behind the crossfader)
 for r, row in enumerate(gm):
     for c, n in enumerate(row):
-        btn(n, 413 + 37 * c, 176 + 24 * r, 32, 16, "Pad modes",
+        btn(n, 413 + 37 * c, 62 + 24 * r, 32, 16, "Pad modes",
             color="teal" if n != "Scale" else "grey", freq="часто")
 # SCREEN modes next to the screen knobs; Filter and FX Mix level with them (R102)
 sm = [["Inputs", "Browser"], ["Sampler", "Song"], ["Mod", "Mixer"], ["Sound", "Effects"]]  # front -> back
 for r, row in enumerate(sm):
     for c, n in enumerate(row):
-        btn(n, 409 + 28 * c, 242 + 22 * r, 25, 15, "Screen modes", color="purple", freq="часто")
+        btn(n, 412 + 28 * c, 242 + 22 * r, 25, 15, "Screen modes", color="purple", freq="часто")
 knob("Filter", 480, 300, 26, "Live", ring=34, color="coral", freq="часто")
 knob("FX Mix", 480, 251, 26, "Live", ring=34, color="coral", freq="часто")
 

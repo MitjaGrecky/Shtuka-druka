@@ -15,7 +15,8 @@ TYPES = {0x01: 'HELLO', 0x02: 'PING', 0x03: 'PONG', 0x04: 'ACK', 0x05: 'NACK', 0
          0x15: 'ENC_TOUCH', 0x16: 'ANALOG', 0x20: 'LED_SET', 0x21: 'LED_FRAME', 0x22: 'LED_ANIM',
          0x23: 'LED_BRIGHTNESS', 0x24: 'TEMPO', 0x28: 'CONFIG_PADS', 0x29: 'CONFIG_ENC', 0x30: 'CV_SET',
          0x31: 'GATE', 0x32: 'CV_MODE', 0x33: 'CV_IN', 0x34: 'CLOCK_CFG', 0x35: 'TRANSPORT', 0x36: 'CLOCK_IN',
-         0x37: 'MIDI_TRS_TYPE', 0x38: 'MUTE', 0x39: 'MIDI_OUT_TS'}
+         0x37: 'MIDI_TRS_TYPE', 0x38: 'MUTE', 0x39: 'MIDI_OUT_TS', 0x3A: 'PREAMP_GAIN',
+         0x3B: 'PHANTOM', 0x3C: 'INPUT_MODE', 0x3D: 'CLIP'}
 NAME = {v: k for k, v in TYPES.items()}
 
 

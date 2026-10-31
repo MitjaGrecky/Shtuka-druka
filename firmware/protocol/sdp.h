@@ -33,7 +33,9 @@ enum sdp_type {
   SDP_TEMPO = 0x24, SDP_CONFIG_PADS = 0x28, SDP_CONFIG_ENC = 0x29,
   /* control board */
   SDP_CV_SET = 0x30, SDP_GATE = 0x31, SDP_CV_MODE = 0x32, SDP_CV_IN = 0x33, SDP_CLOCK_CFG = 0x34,
-  SDP_TRANSPORT = 0x35, SDP_CLOCK_IN = 0x36, SDP_MIDI_TRS_TYPE = 0x37, SDP_MUTE = 0x38, SDP_MIDI_OUT_TS = 0x39
+  SDP_TRANSPORT = 0x35, SDP_CLOCK_IN = 0x36, SDP_MIDI_TRS_TYPE = 0x37, SDP_MUTE = 0x38, SDP_MIDI_OUT_TS = 0x39,
+  /* control board -> audio board front end (doc 21) */
+  SDP_PREAMP_GAIN = 0x3A, SDP_PHANTOM = 0x3B, SDP_INPUT_MODE = 0x3C, SDP_CLIP = 0x3D
 };
 
 #define SDP_HEARTBEAT_PERIOD_MS 100
@@ -55,6 +57,10 @@ typedef struct { uint8_t ch; uint16_t value; uint32_t t_board_us; } sdp_cv_set_t
 typedef struct { uint8_t ch, state; uint32_t t_board_us; } sdp_gate_t;
 typedef struct { uint32_t bpm_milli, phase; uint8_t running; uint32_t t_board_us; } sdp_transport_t;
 typedef struct { uint8_t mask, state; } sdp_mute_t;
+typedef struct { uint8_t ch; uint8_t gain_db; } sdp_preamp_gain_t;   /* 0 = unity, 10..65 dB (PGA2500) */
+typedef struct { uint8_t ch, on; uint16_t ramp_ms; } sdp_phantom_t;
+typedef struct { uint8_t input, mode; } sdp_input_mode_t;            /* phono: 0 = line, 1 = phono */
+typedef struct { uint8_t ch; uint16_t peak; uint32_t t_us; } sdp_clip_t;
 #pragma pack(pop)
 
 static inline uint16_t sdp_crc16(const uint8_t *d, size_t n) {

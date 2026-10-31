@@ -1,0 +1,4 @@
+bench/shtuka_bench
+__pycache__/
+*.pyc
+.DS_Store

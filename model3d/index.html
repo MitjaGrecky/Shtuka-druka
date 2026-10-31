@@ -1,0 +1,439 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0}</style>
+<title>Штука Дрюка v4</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@500&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: stage-first workbench — 3D model left, inspector right, stacked on phones */
+:root{
+  --bg:#eef1f0; --surface:#ffffff; --stage:#dfe5e3; --fg:#15191a; --muted:#5b6466; --line:#cfd7d5;
+  --left:#0f7a63; --right:#5a50c0; --rare:#6b6f6c;
+  --display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1213; --surface:#161b1c; --stage:#1a2021; --fg:#e6ebea; --muted:#93a09f; --line:#28322f;
+  --left:#3fc39d; --right:#9b93f0; --rare:#a3a8a5; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1213; --surface:#161b1c; --stage:#1a2021; --fg:#e6ebea; --muted:#93a09f; --line:#28322f;
+  --left:#3fc39d; --right:#9b93f0; --rare:#a3a8a5; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55}
+.wrap{max-width:1240px;margin:0 auto;padding-block:20px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px}
+h1{font-family:var(--display);font-weight:500;font-size:clamp(22px,3.2vw,30px);margin:0;letter-spacing:-.01em;text-wrap:balance}
+.meta{font-family:var(--mono);font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+@media (max-width:880px){.main{grid-template-columns:minmax(0,1fr)}}
+.stagebox{display:grid;gap:10px;min-width:0}
+.bar{display:flex;flex-wrap:wrap;gap:6px}
+.bar button{font:500 13px var(--body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 12px;cursor:pointer}
+.bar button[aria-pressed="true"]{border-color:var(--fg)}
+.bar button:focus-visible{outline:2px solid var(--left);outline-offset:2px}
+.bar .sep{flex:1}
+#stage{position:relative;width:100%;aspect-ratio:16/11;min-height:340px;max-height:78vh;background:var(--stage);border-radius:12px;overflow:hidden;touch-action:none}
+#stage canvas{display:block;width:100%;height:100%;cursor:grab}
+#stage canvas.hot{cursor:pointer}
+.hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--muted);pointer-events:none}
+aside{display:grid;gap:12px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card h2{font-family:var(--display);font-weight:500;font-size:15px;margin:0 0 4px}
+.eyebrow{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+#info-name{font-size:17px;font-weight:600;margin:0}
+#info-group{font-size:12.5px;color:var(--muted);margin:2px 0 8px}
+#info-desc{margin:0;font-size:14px}
+.legend{display:grid;gap:8px;margin:0;padding:0;list-style:none;font-size:13.5px}
+.legend li{display:grid;grid-template-columns:14px 1fr;gap:10px;align-items:start}
+.chip{width:14px;height:14px;border-radius:3px;margin-top:3px;border:2px solid}
+.chip.l{border-color:var(--left)} .chip.r{border-color:var(--right)} .chip.g{border-color:var(--rare)}
+.chip.o{background:var(--fg);border-color:var(--fg)} .chip.i{border-color:var(--fg)}
+.stats{display:grid;grid-template-columns:1fr auto;gap:4px 12px;margin:0;font-size:13.5px}
+.stats dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.stats dt{color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted);margin:0}
+#fallback{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--muted)}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Штука Дрюка, макет v4</h1>
+    <div class="meta">515 × 500 мм + подставка 70 мм · спереди 68 мм · сзади 143 мм · экран 10,1″ под 30°</div>
+  </header>
+  <div class="main">
+    <div class="stagebox">
+      <div class="bar" role="group" aria-label="Вид">
+        <button id="v-iso" aria-pressed="true">3/4</button>
+        <button id="v-top" aria-pressed="false">Сверху</button>
+        <button id="v-front" aria-pressed="false">Спереди</button>
+        <button id="v-back" aria-pressed="false">Сзади</button>
+        <span class="sep"></span>
+        <button id="t-xray" aria-pressed="false">Внутри</button>
+        <button id="t-play" aria-pressed="true">Пэды: игра</button>
+      </div>
+      <div id="stage">
+        <div id="fallback">Загружаю 3D-модель…</div>
+        <div class="hint">Крутить — тянуть, масштаб — колесо или щипок, клик по ручке — описание</div>
+      </div>
+    </div>
+    <aside>
+      <section class="card" aria-live="polite">
+        <p class="eyebrow">Выбрано</p>
+        <p id="info-name">Сетка 8×8</p>
+        <p id="info-group">Центр · обе руки</p>
+        <p id="info-desc">Строки — окно из 8 дорожек из 16 и больше, столбцы — сцены или шаги. Окно двигается построчно стрелками или колесом (R15). Шаг 25 мм, RGB, чувствительность к силе удара и давлению.</p>
+      </section>
+      <section class="card">
+        <h2>Как читать</h2>
+        <ul class="legend">
+          <li><span class="chip l"></span><span>Левая рука: время — транспорт, захват, правка, страницы</span></li>
+          <li><span class="chip r"></span><span>Правая рука: значения — параметры, колесо, макро, кроссфейдер, дорожки</span></li>
+          <li><span class="chip g"></span><span>Настройка и редкое — у экрана, дальше от рук</span></li>
+          <li><span class="chip o"></span><span>Заливка у разъёма — выход</span></li>
+          <li><span class="chip i"></span><span>Рамка у разъёма — вход</span></li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Состав</h2>
+        <dl class="stats">
+          <dt>Пэды</dt><dd>64</dd>
+          <dt>Энкодеры</dt><dd>25</dd>
+          <dt>Кнопки</dt><dd>45</dd>
+          <dt>Громкости</dt><dd>3</dd>
+          <dt>Кроссфейдер</dt><dd>1</dd>
+          <dt>Гнёзд сзади</dt><dd>≈ 50</dd>
+          <dt>Корпус</dt><dd>515 × 500 × 68–143</dd>
+        </dl>
+      </section>
+      <p class="note">Схематичная модель по документам 13 и 17 проекта: размеры групп точные, форма ручек и цвета условные. Кнопка «Внутри» делает корпус прозрачным и показывает платы.</p>
+    </aside>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(async function(){
+const stage=document.getElementById('stage');
+const fb=document.getElementById('fallback');
+if(!window.THREE||!THREE.OrbitControls){fb.textContent='Не удалось загрузить 3D-библиотеку.';return;}
+try{await Promise.all([document.fonts.load('500 40px "Golos Text"'),document.fonts.load('600 40px "Golos Text"'),document.fonts.load('400 40px "JetBrains Mono"')]);}catch(e){}
+
+const W=515,D=500,DECK=68,WZ0=340,WZ1=470,ANG=Math.PI/6;
+const L=(WZ1-WZ0)/Math.cos(ANG), TOP=DECK+(WZ1-WZ0)*Math.tan(ANG), K=4;
+const X=x=>x-W/2, Z=z=>D/2-z, S=z=>(z-WZ0)/Math.cos(ANG);
+const FONT='"Golos Text",system-ui,sans-serif';
+
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+renderer.outputEncoding=THREE.sRGBEncoding;
+renderer.setClearColor(0x000000,0);
+stage.insertBefore(renderer.domElement,stage.firstChild);
+fb.remove();
+
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(32,1.4,10,6000);
+const controls=new THREE.OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;controls.dampingFactor=.08;controls.target.set(0,50,30);
+controls.minDistance=320;controls.maxDistance=1800;
+scene.add(new THREE.HemisphereLight(0xffffff,0x3a3f44,.85));
+const key=new THREE.DirectionalLight(0xffffff,.75);key.position.set(-350,800,600);scene.add(key);
+const rim=new THREE.DirectionalLight(0xffffff,.4);rim.position.set(500,350,-700);scene.add(rim);
+
+const maxAniso=renderer.capabilities.getMaxAnisotropy();
+function tex(canvas){const t=new THREE.CanvasTexture(canvas);t.anisotropy=maxAniso;t.encoding=THREE.sRGBEncoding;return t;}
+function mkCanvas(wmm,hmm){const c=document.createElement('canvas');c.width=Math.round(wmm*K);c.height=Math.round(hmm*K);return c;}
+const PANEL='#1c1f22', PRINT='rgba(236,240,238,.92)', TEAL='#3fc39d', PURP='#9b93f0', GREY='#9aa09c';
+
+function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();}
+function label(g,text,cx,cy,size,color,weight,align){g.font=(weight||500)+' '+(size*K)+'px '+FONT;g.fillStyle=color||PRINT;g.textAlign=align||'center';g.textBaseline='middle';g.fillText(text,cx,cy);}
+function frame(g,x0,x1,y0,y1,color,title){rr(g,x0*K,y0*K,(x1-x0)*K,(y1-y0)*K,2.5*K);g.strokeStyle=color;g.lineWidth=.45*K;g.stroke();if(title){g.font='600 '+(3.6*K)+'px '+FONT;const tw=g.measureText(title).width;g.fillStyle=PANEL;g.fillRect(x0*K+3*K,y0*K-2.2*K,tw+3*K,4.4*K);label(g,title,x0*K+4.5*K,y0*K,3.6,color,600,'left');}}
+
+const deckC=mkCanvas(W,WZ0), dg=deckC.getContext('2d');
+dg.fillStyle=PANEL;dg.fillRect(0,0,deckC.width,deckC.height);
+const dy=z=>(WZ0-z);
+function dframe(x0,x1,z0,z1,color,title){frame(dg,x0,x1,dy(z1),dy(z0),color,title);}
+function dlabel(text,x,z,size,color){label(dg,text,x*K,dy(z)*K,size||3,color);}
+
+const wedgeC=mkCanvas(W,L), wgc=wedgeC.getContext('2d');
+wgc.fillStyle=PANEL;wgc.fillRect(0,0,wedgeC.width,wedgeC.height);
+const wy=z=>(L-S(z));
+function wframe(x0,x1,z0,z1,color,title){frame(wgc,x0,x1,wy(z1),wy(z0),color,title);}
+function wlabel(text,x,z,size,color){label(wgc,text,x*K,wy(z)*K,size||3,color);}
+
+const RH=TOP, rearC=mkCanvas(W,RH), rg=rearC.getContext('2d');
+rg.fillStyle=PANEL;rg.fillRect(0,0,rearC.width,rearC.height);
+
+const body=new THREE.Group();scene.add(body);
+const shape=new THREE.Shape();
+shape.moveTo(Z(0),0);shape.lineTo(Z(0),DECK);shape.lineTo(Z(WZ0),DECK);shape.lineTo(Z(WZ1),TOP);shape.lineTo(Z(D),TOP);shape.lineTo(Z(D),0);shape.lineTo(Z(0),0);
+const bgeo=new THREE.ExtrudeGeometry(shape,{depth:W,bevelEnabled:false});
+bgeo.rotateY(-Math.PI/2);bgeo.translate(W/2,0,0);
+const BODYMAT=new THREE.MeshStandardMaterial({color:0x2a2e32,roughness:.55,metalness:.35});body.add(new THREE.Mesh(bgeo,BODYMAT));const SKINS=[BODYMAT];
+const foot=new THREE.Mesh(new THREE.BoxGeometry(W-20,4,D-20),new THREE.MeshStandardMaterial({color:0x111315,roughness:.9}));foot.position.y=-2;body.add(foot);
+
+const deck=new THREE.Group();deck.position.y=DECK;scene.add(deck);
+const wedge=new THREE.Group();wedge.position.set(0,DECK,Z(WZ0));wedge.rotation.x=ANG;scene.add(wedge);
+const P=(x,z)=>[X(x),0,Z(z)];
+const Wp=(x,z)=>[X(x),0,-S(z)];
+
+const pick=[];
+const matCache={};
+function emat(color,intensity){const k=color+'|'+intensity;if(!matCache[k])matCache[k]=new THREE.MeshStandardMaterial({color:new THREE.Color(color).multiplyScalar(.35),emissive:new THREE.Color(color),emissiveIntensity:intensity,roughness:.5});return matCache[k];}
+const KNOB=new THREE.MeshStandardMaterial({color:0x17191b,roughness:.45,metalness:.2});
+const JBODY=new THREE.MeshStandardMaterial({color:0x3b4045,roughness:.7});const YS=1.2;
+const KNOBTOP=new THREE.MeshStandardMaterial({color:0x2b2f33,roughness:.35,metalness:.4});
+const ALU=new THREE.MeshStandardMaterial({color:0xb9bec2,roughness:.3,metalness:.85});
+const HOLE=new THREE.MeshStandardMaterial({color:0x050506,roughness:1});
+const WHITE=new THREE.MeshStandardMaterial({color:0xe8ecea,roughness:.6});
+function reg(obj,info){obj.traverse(o=>{if(o.isMesh){o.userData.info=info;pick.push(o);}});}
+function put(parent,obj,pos,info){obj.position.set(pos[0],pos[1],pos[2]);parent.add(obj);if(info)reg(obj,info);return obj;}
+
+function encoder(parent,pos,ring,info,r){r=r||9;const g=new THREE.Group();
+  const k=new THREE.Mesh(new THREE.CylinderGeometry(r*.92,r,14,40),KNOB);k.position.y=7;g.add(k);
+  const t=new THREE.Mesh(new THREE.CylinderGeometry(r*.8,r*.8,.8,40),KNOBTOP);t.position.y=14.2;g.add(t);
+  const ptr=new THREE.Mesh(new THREE.BoxGeometry(1.2,1,r*.75),WHITE);ptr.position.set(0,14.6,-r*.42);g.add(ptr);
+  const ring2=new THREE.Mesh(new THREE.TorusGeometry(r+3.6,1,8,48,Math.PI*1.5),emat(ring,.9));ring2.rotation.x=-Math.PI/2;ring2.rotation.z=-Math.PI*1.25;ring2.position.y=.6;g.add(ring2);
+  return put(parent,g,pos,info);}
+function button(parent,pos,w,d,color,info,lit,h){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h||4,d),emat(color,lit==null?.55:lit));m.position.y=(h||4)/2;const g=new THREE.Group();g.add(m);return put(parent,g,pos,info);}
+function pot(parent,pos,info){const g=new THREE.Group();
+  const sk=new THREE.Mesh(new THREE.CylinderGeometry(13,13,2.5,40),ALU);sk.position.y=1.25;g.add(sk);
+  const k=new THREE.Mesh(new THREE.CylinderGeometry(9.5,9.5,17,24),ALU);k.position.y=10;g.add(k);
+  const ptr=new THREE.Mesh(new THREE.BoxGeometry(1.4,1,8),new THREE.MeshStandardMaterial({color:0x111111}));ptr.position.set(0,18.6,-4);g.add(ptr);
+  return put(parent,g,pos,info);}
+
+const TRACK=['#e8564a','#f0a23a','#e7d24a','#55c26b','#3fc39d','#4aa8e8','#7f77dd','#d4537e'];
+const pads=[];
+const clip=(i,j)=>((i*5+j*3)%7)>1;
+const padInfo={name:'Сетка 8×8',group:'Центр · обе руки',desc:'Строки — окно из 8 дорожек из 16 и больше, столбцы — сцены или шаги. Окно двигается построчно стрелками или колесом (R15). Шаг 25 мм, RGB, чувствительность к силе удара и давлению.'};
+for(let j=0;j<8;j++)for(let i=0;i<8;i++){
+  const color=TRACK[7-j];
+  const m=new THREE.Mesh(new THREE.BoxGeometry(21,4,21),new THREE.MeshStandardMaterial({color:new THREE.Color(color).multiplyScalar(.3),emissive:new THREE.Color(color),emissiveIntensity:clip(i,7-j)?.55:.03,roughness:.6}));
+  m.position.set(X(137.5+25*i),2,Z(102.5+25*j));deck.add(m);m.userData.info=padInfo;pick.push(m);
+  pads.push({m,i,on:clip(i,7-j)});}
+dframe(122,328,88,293,'rgba(236,240,238,.35)');
+
+const sceneInfo={name:'Сцены',group:'Под сеткой · обе руки',desc:'8 кнопок: запуск сцены в режиме клипов, выбор страницы шагов в шаговом режиме.'};
+for(let i=0;i<8;i++)button(deck,P(137.5+25*i,75),19,10,'#dfe6e3',sceneInfo,.25,3.5);
+dlabel('Scenes 1–8',225,66,3.2);
+
+const trInfo={name:'Дорожки',group:'Справа от сетки · правая рука',desc:'По строкам сетки: кнопка выбора дорожки и энкодер уровня. Удержание кнопки — заглушить. Энкодеры стоят с шагом 25 мм, это минимум по норме, зато совпадают со строками.'};
+for(let j=0;j<8;j++){const z=102.5+25*j, c=TRACK[7-j];
+  button(deck,P(342,z),14,14,c,trInfo,.6);
+  encoder(deck,P(370,z),c,trInfo,8);}
+button(deck,P(342,75),14,10,'#e7d24a',{name:'Mute',group:'Дорожки',desc:'Переключает кнопки дорожек в режим заглушения.'},.35,3.5);
+button(deck,P(370,75),14,10,'#4aa8e8',{name:'Solo',group:'Дорожки',desc:'Переключает кнопки дорожек в режим соло.'},.35,3.5);
+dframe(331,388,62,293,PURP,'Tracks');
+dlabel('Mute',342,66,2.6);dlabel('Solo',370,66,2.6);
+
+const parNames=['Cutoff','Reso','Drive','Slot 1','Slot 2','Send A','Send B','Level'];
+const parInfo={name:'8 энкодеров параметров',group:'Под экраном · правая рука',desc:'Крутят параметры выбранного блока; подпись и значение на экране прямо над ручкой. Шаг 30 мм. Нажать и крутить — точная настройка.'};
+for(let k=0;k<8;k++){encoder(deck,P(150+30*k,318),'#9b93f0',parInfo,9.5);dlabel(parNames[k],150+30*k,301,2.7);}
+dframe(135,375,296,340,PURP,'Params');
+
+const pages=['Grab','Shape','Perform','Arrange'];
+const pageDesc={'Grab':'Страница добычи звука: входы, захват, ресэмплинг.','Shape':'Страница обработки: фильтр, слоты эффектов, шины.','Perform':'Страница игры: клипы, сцены, перформанс.','Arrange':'Страница аранжировки и сведения.'};
+pages.forEach((p,i)=>{button(deck,P(30+22*i,322),18,12,i===2?'#3fc39d':'#dfe6e3',{name:p,group:'Страницы · левая рука',desc:pageDesc[p]+' Страница меняет сразу экран, энкодеры, сетку и подсветку.'},i===2?.8:.22);dlabel(p,30+22*i,309,2.6);});
+dframe(15,125,300,340,TEAL,'Pages');
+
+const edit=[['Undo',45,262,'Отмена последнего действия.'],['Copy',85,262,'Копировать клип, дорожку или шаги (R42).'],['Delete',45,228,'Удалить выбранное (R42).'],['Save',85,228,'Сохранить проект на внутренний SSD.']];
+edit.forEach(e=>{button(deck,P(e[1],e[2]),22,14,'#dfe6e3',{name:e[0],group:'Правка · левая рука',desc:e[3]},.22);dlabel(e[0],e[1],e[2]-11.5,2.8);});
+dframe(15,115,208,286,TEAL,'Edit');
+
+button(deck,P(42,165),28,28,'#3fc39d',{name:'Capture',group:'Захват · левая рука',desc:'Буфер входа пишет всегда; нажатие забирает последние секунды в сэмпл. Удержание — выбрать длину: 4, 8, 16 или 24 с.'},.7,5);
+button(deck,P(88,165),28,28,'#8fe3cb',{name:'Freeze',group:'Захват · левая рука',desc:'Захват выхода дорожки: сэмпл, цикл или вейвтейбл. Удержание — выбрать цель.'},.45,5);
+dlabel('Capture',42,145,3.2);dlabel('Freeze',88,145,3.2);
+dframe(15,115,137,203,TEAL,'Capture');
+
+const trp=[['Rec','#e8564a','Запись. Красный — системный цвет записи.'],['Play','#55c26b','Старт воспроизведения.'],['Stop','#dfe6e3','Стоп; второе нажатие — в начало.'],['Tap','#f0a23a','Темп по нажатиям; удержание — метроном.']];
+trp.forEach((t,i)=>{button(deck,P(30+22*i,98),18,14,t[1],{name:t[0],group:'Транспорт · левая рука',desc:t[2]},i<2?.55:.3);dlabel(t[0],30+22*i,84,2.8);});
+dframe(15,115,78,116,TEAL,'Transport');
+
+const potN=[['Monitor',35],['Phones',65],['Cue/Mix',95]];
+potN.forEach(p=>{pot(deck,P(p[1],42),{name:'Громкость: '+p[0],group:'Громкости · левая рука, вслепую',desc:'Обычный потенциометр с упорами (R13), другой формы колпачка, чтобы найти на ощупь. Гнёзда наушников на переднем торце под ними.'});dlabel(p[0],p[1],24,2.6);});
+dframe(15,115,18,66,'rgba(236,240,238,.45)','Volume');
+
+dframe(125,388,15,58,'rgba(236,240,238,.18)');
+dlabel('reserved: touch strip (phase 2)',256,36,3,'rgba(236,240,238,.45)');
+
+const wheelInfo={name:'Колесо навигации',group:'Навигация · правая рука',desc:'⌀ 45 мм, с нажатием. Поворот — по дорожкам вверх-вниз, нажать и крутить — по времени. Перенесено ближе к руке: ≈ 26 см от края вместо 40 (R41).'};
+{const g=new THREE.Group();
+ const k=new THREE.Mesh(new THREE.CylinderGeometry(22,22.5,16,64),ALU);k.position.y=8;g.add(k);
+ const t=new THREE.Mesh(new THREE.CylinderGeometry(19,19,.6,64),KNOB);t.position.y=16.2;g.add(t);
+ const dimple=new THREE.Mesh(new THREE.CylinderGeometry(3.5,3.5,.8,24),KNOBTOP);dimple.position.set(9,16.4,-9);g.add(dimple);
+ put(deck,g,P(447,292),wheelInfo);}
+const arrows=[['↑',455,238],['↓',455,206],['←',439,222],['→',471,222]];
+arrows.forEach(a=>{button(deck,P(a[1],a[2]),12,12,'#dfe6e3',{name:'Стрелка '+a[0],group:'Навигация · правая рука',desc:'Сдвиг окна сетки на одну строку или столбец; удержание — на 8. Дублирует колесо.'},.22);});
+button(deck,P(410,222),18,12,'#dfe6e3',{name:'Назад',group:'Навигация · правая рука',desc:'Шаг назад по меню и экранам.'},.22);
+dlabel('Back',410,211,2.6);
+dframe(395,500,195,330,PURP,'Navigation');
+
+const macroInfo={name:'Макро-энкодеры',group:'Перформанс · правая рука',desc:'6 ручек звука: по умолчанию частота, резонанс, слот 1, слот 2, посыл A, посыл B. Назначение меняется, подписи на экране.'};
+[[415,160],[447,160],[479,160],[415,128],[447,128],[479,128]].forEach(p=>encoder(deck,P(p[0],p[1]),'#f0a23a',macroInfo,9.5));
+dframe(395,500,105,185,PURP,'Macro');
+
+const xf={name:'Кроссфейдер',group:'Перформанс · правая рука',desc:'Смешивает две сцены, назначенные кнопками A и B. Бесконтактный или долговечный ползунок, кривая в софте.'};
+{const slot=new THREE.Mesh(new THREE.BoxGeometry(84,1,4),HOLE);slot.position.set(X(447),.5,Z(42));deck.add(slot);
+ const cap=new THREE.Group();const c=new THREE.Mesh(new THREE.BoxGeometry(10,12,16),KNOB);c.position.y=6;cap.add(c);const s=new THREE.Mesh(new THREE.BoxGeometry(1.5,.6,16),WHITE);s.position.y=12.3;cap.add(s);put(deck,cap,P(447,42),xf);reg(slot,xf);}
+button(deck,P(415,78),18,12,'#e8564a',{name:'Сцена A',group:'Перформанс',desc:'Назначить сцену на левую сторону кроссфейдера.'},.4);
+button(deck,P(479,78),18,12,'#4aa8e8',{name:'Сцена B',group:'Перформанс',desc:'Назначить сцену на правую сторону кроссфейдера.'},.4);
+dlabel('A',415,66,3);dlabel('B',479,66,3);
+dframe(395,500,18,98,PURP,'Crossfader');
+
+const screenInfo={name:'Экран 10,1″',group:'Центр, наклон 30°',desc:'1280 × 800, фиксированный наклон 30° (R18; норма FAA для неподвижного экрана 30–45°). Над каждым из 8 энкодеров — свой столбец с параметром.'};
+{const bez=new THREE.Mesh(new THREE.BoxGeometry(240,5,146),new THREE.MeshStandardMaterial({color:0x101214,roughness:.4,metalness:.3}));bez.position.set(X(255),2.5,-S(405));wedge.add(bez);reg(bez,screenInfo);
+ const sc=document.createElement('canvas');sc.width=1280;sc.height=800;const s=sc.getContext('2d');
+ s.fillStyle='#0b0d0f';s.fillRect(0,0,1280,800);
+ s.fillStyle='#161a1d';s.fillRect(0,0,1280,58);
+ s.font='500 26px '+FONT;s.fillStyle='#e6ebea';s.textBaseline='middle';s.fillText('PERFORM  ·  Track 3: Line 1 (TD-3)  ·  120 BPM',28,29);
+ s.textAlign='right';s.fillStyle='#93a09f';s.fillText('buffer 24 s  ·  CPU 38%',1252,29);s.textAlign='left';
+ const mx=28,my=90,cw=13,ch=18;
+ for(let r=0;r<16;r++)for(let c=0;c<40;c++){const on=((r*7+c*3)%9)>3;s.fillStyle=on?TRACK[r%8]:'#1c2124';s.globalAlpha=on?.85:1;s.fillRect(mx+c*cw,my+r*ch,cw-2,ch-3);}
+ s.globalAlpha=1;s.strokeStyle='#ffffff';s.lineWidth=3;s.strokeRect(mx+8*cw-2,my+2*ch-2,8*cw+2,8*ch+1);
+ s.font='400 20px "JetBrains Mono",monospace';s.fillStyle='#93a09f';s.fillText('overview: 16 tracks × 40 bars, frame = grid window',mx,my+16*ch+22);
+ const wx=600,wyy=96,ww=652,wh=250;s.fillStyle='#11161a';s.fillRect(wx,wyy,ww,wh);
+ s.strokeStyle='#3fc39d';s.lineWidth=2;s.beginPath();for(let x=0;x<ww;x++){const a=Math.sin(x*.07)*Math.sin(x*.011)*(.35+.6*Math.abs(Math.sin(x*.004)));const y=wyy+wh/2+a*wh*.45;x?s.lineTo(wx+x,y):s.moveTo(wx+x,y);}s.stroke();
+ s.fillStyle='rgba(63,195,157,.18)';s.fillRect(wx+420,wyy,180,wh);
+ s.font='500 22px '+FONT;s.fillStyle='#e6ebea';s.fillText('Capture: last 8 s from Line 1',wx+14,wyy+26);
+ const colW=1280/8;
+ for(let k=0;k<8;k++){const cx=colW*k+colW/2, cy=620;
+   s.fillStyle='#161a1d';s.fillRect(colW*k+8,470,colW-16,310);
+   s.strokeStyle='#2a3034';s.lineWidth=10;s.beginPath();s.arc(cx,cy,56,Math.PI*.75,Math.PI*2.25);s.stroke();
+   const v=.2+((k*37)%60)/100;s.strokeStyle='#9b93f0';s.beginPath();s.arc(cx,cy,56,Math.PI*.75,Math.PI*(.75+1.5*v));s.stroke();
+   s.textAlign='center';s.font='500 24px '+FONT;s.fillStyle='#e6ebea';s.fillText(parNames[k],cx,505);
+   s.font='400 22px "JetBrains Mono",monospace';s.fillStyle='#93a09f';s.fillText(Math.round(v*100)+'%',cx,cy+4);s.textAlign='left';}
+ const disp=new THREE.Mesh(new THREE.PlaneGeometry(217,136),new THREE.MeshBasicMaterial({map:tex(sc),toneMapped:false}));
+ disp.rotation.x=-Math.PI/2;disp.position.set(X(255),5.1,-S(405));wedge.add(disp);reg(disp,screenInfo);}
+
+const inInfo=n=>({name:n,group:'Входы · настройка',desc:'Настраивают один раз, поэтому у экрана, а не у рук (R41). Индикаторы перегруза рядом с экраном, в пределах 15° от линии взгляда.'});
+encoder(wedge,Wp(45,440),'#3fc39d',{name:'Усиление 1',group:'Входы · настройка',desc:'Энкодер с цифровым предусилителем для комбо-входа 1 (R16): запоминание, авто-подстройка, защита от перегруза.'},9);
+encoder(wedge,Wp(100,440),'#3fc39d',{name:'Усиление 2',group:'Входы · настройка',desc:'Энкодер с цифровым предусилителем для комбо-входа 2 (R16).'},9);
+button(wedge,Wp(45,395),16,10,'#f0a23a',{name:'P48, канал 1',group:'Входы · настройка',desc:'Фантомное питание, только на XLR. Включение с индикатором.'},.3);
+button(wedge,Wp(100,395),16,10,'#f0a23a',{name:'P48, канал 2',group:'Входы · настройка',desc:'Фантомное питание, только на XLR.'},.3);
+button(wedge,Wp(72,365),26,10,'#dfe6e3',{name:'Вход',group:'Входы',desc:'Вместо 5 кнопок источника: список всех ≈ 14 входов на экране, выбор колесом. Вход — это источник дорожки (P2, R37).'},.25);
+[[30,455,'#55c26b'],[115,455,'#e8564a']].forEach(l=>button(wedge,Wp(l[0],l[1]),4,4,l[2],inInfo('Индикатор перегруза'),.9,1.5));
+wframe(15,130,350,465,GREY,'Inputs');
+wlabel('Gain 1',45,423,2.6);wlabel('Gain 2',100,423,2.6);wlabel('P48',45,386,2.6);wlabel('P48',100,386,2.6);wlabel('Input',72,356,2.6);
+
+const segs=12;for(let i=0;i<segs;i++){const c=i<8?'#55c26b':(i<10?'#e7d24a':'#e8564a');button(wedge,Wp(395,357+i*8.5),6,5,c,{name:'Индикатор Main',group:'Система',desc:'Уровень главного выхода, рядом с экраном. Справа у экрана — выходы, как и сзади.'},i<6?.9:.08,1.5);}
+button(wedge,Wp(440,435),22,10,'#dfe6e3',{name:'Браузер',group:'Система',desc:'Браузер сэмплов и проектов с избранным.'},.22);
+button(wedge,Wp(476,435),22,10,'#dfe6e3',{name:'Настройки',group:'Система',desc:'Системное меню.'},.22);
+{const g=new THREE.Group();const ring=new THREE.Mesh(new THREE.TorusGeometry(8,1,8,40),emat('#e6ebea',.5));ring.rotation.x=-Math.PI/2;ring.position.y=.5;g.add(ring);
+ const b=new THREE.Mesh(new THREE.CylinderGeometry(5.5,5.5,2,32),KNOB);b.position.y=.5;g.add(b);put(wedge,g,Wp(458,378),{name:'Питание',group:'Система',desc:'Утоплено, срабатывает при удержании 2 с, чтобы не нажать случайно (FAA 6.4.4). Дальний правый угол, над разъёмом питания сзади.'});}
+wframe(380,500,350,465,GREY,'System');
+wlabel('Main',395,348,2.6);wlabel('Browser',440,424,2.6);wlabel('Menu',476,424,2.6);wlabel('Power',458,364,2.6);
+
+function jack(kind,xmm,y,front,info){
+  const g=new THREE.Group();let nut,hole;
+  if(kind==='xlr'){nut=new THREE.CylinderGeometry(12,12,3,40);hole=new THREE.CylinderGeometry(9.5,9.5,3.4,40);}
+  else if(kind==='din'){nut=new THREE.CylinderGeometry(9,9,3,36);hole=new THREE.CylinderGeometry(7,7,3.4,36);}
+  else if(kind==='trs'){nut=new THREE.CylinderGeometry(6,6,4,6);hole=new THREE.CylinderGeometry(3.2,3.2,4.4,24);}
+  else if(kind==='rca'){nut=new THREE.CylinderGeometry(4.6,4.6,7,24);hole=new THREE.CylinderGeometry(1.6,1.6,7.4,16);}
+  else if(kind==='mini'){nut=new THREE.CylinderGeometry(3.6,3.6,3,6);hole=new THREE.CylinderGeometry(1.8,1.8,3.4,16);}
+  else {nut=new THREE.CylinderGeometry(4,4,4,20);hole=new THREE.CylinderGeometry(2,2,4.4,16);}
+  const a=new THREE.Mesh(nut,ALU), b=new THREE.Mesh(hole,HOLE);g.add(a);g.add(b);
+  g.rotation.x=Math.PI/2;
+  const yy=front?y:y*YS;
+  g.position.set(X(xmm),yy,front?D/2+1.5:-D/2-1.5);scene.add(g);reg(g,info);
+  const bd={xlr:[26,31,40],trs:[14,14,32],din:[20,20,20],rca:[10,12,20],mini:[9,9,12]}[kind]||[10,10,15];
+  const jb=new THREE.Mesh(new THREE.BoxGeometry(bd[0],bd[1],bd[2]),JBODY);jb.position.set(X(xmm),yy,front?D/2-3-bd[2]/2:-D/2+3+bd[2]/2);scene.add(jb);reg(jb,info);}
+function box(w,h,xmm,y,mat,info){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,3),mat);m.position.set(X(xmm),y*YS,-D/2-1.5);scene.add(m);reg(m,info);}
+
+const ry=y=>(RH-y*YS);
+function rframe(r0,r1,title){frame(rg,r0,r1,6,RH-4,PRINT,title);}
+function rtag(text,r,y,out){rg.font='600 '+(2.5*K)+'px '+FONT;const tw=rg.measureText(text).width+2*K, th=3.8*K, cx=r*K, cy=ry(y)*K;
+  rr(rg,cx-tw/2,cy-th/2,tw,th,.8*K);if(out){rg.fillStyle=PRINT;rg.fill();label(rg,text,cx,cy,2.5,PANEL,600);}else{rg.strokeStyle=PRINT;rg.lineWidth=.35*K;rg.stroke();label(rg,text,cx,cy,2.5,PRINT,600);}}
+const R=r=>W-r;
+const J=(kind,r,y,tag,out,info)=>{jack(kind,R(r),y,false,info);rtag(tag,r,y-(kind==='xlr'?15.5:kind==='din'?12:kind==='trs'?9:7.5),out);};
+
+rframe(4.5,78.5,'Power / USB');
+box(16,13,R(20),78,HOLE,{name:'Ethernet',group:'Сзади · питание и USB',desc:'Для синхронизации Ableton Link и обновлений.'});rtag('LAN',20,67,false);
+box(13,5.5,R(44),80,HOLE,{name:'USB-A',group:'Сзади · питание и USB',desc:'Для постоянно подключённых контроллеров.'});rtag('USB-A',44,72,false);
+box(9,3.5,R(64),80,HOLE,{name:'USB-C',group:'Сзади · питание и USB',desc:'Компьютер (USB-аудио, MIDI) и питание USB-C PD.'});rtag('USB-C',64,72,false);
+jack('dc',R(22),40,false,{name:'DC 12–24 В',group:'Сзади · питание и USB',desc:'Разъём с фиксацией, защита от переполюсовки и перенапряжения (P30).'});rtag('DC 12–24V',22,30,false);
+box(12,8,R(52),40,KNOB,{name:'Выключатель',group:'Сзади · питание и USB',desc:'Механический выключатель питания.'});rtag('On/Off',52,30,false);
+
+rframe(88.5,262.5,'Control');
+const midi=(n,io)=>({name:'MIDI '+n,group:'Сзади · управление · MIDI',desc:io==='in'?'Вход MIDI DIN на оптроне (R32).':'Выход MIDI DIN, свой порт (R34).'});
+[['In 1',100,82,0],['Out 1',122,82,1],['Out 3',144,82,1],['In 2',100,52,0],['Out 2',122,52,1],['Out 4',144,52,1]].forEach(m=>J('din',m[1],m[2],m[0],m[3],midi(m[0],m[3]?'out':'in')));
+[['TRS In',100,22,0],['TRS O1',122,22,1],['TRS O2',144,22,1]].forEach(m=>J('mini',m[1],m[2],m[0],m[3],{name:'MIDI '+m[0],group:'Сзади · управление · MIDI 3,5 мм',desc:'Мини-джек MIDI, тип A/B переключается в меню (R32, R34). Стоит в MIDI-блоке, отдельно от CV, чтобы не перепутать.'}));
+const syn=[['Clk O1',1],['Clk O2',1],['Rst O',1],['Clk In',0],['Rst In',0]];
+syn.forEach((s,i)=>J('mini',172+i*17,90,s[0],s[1],{name:s[0],group:'Сзади · управление · синхро',desc:'Блок «Синхро» (R33): 2 клок-выхода со своим PPQN, Reset/Run, клок и Reset на вход.'}));
+for(let i=0;i<4;i++)J('mini',172+i*17,68,'CV In '+(i+1),0,{name:'CV-вход '+(i+1),group:'Сзади · управление · CV',desc:'Вход управляющего напряжения.'});
+for(let i=0;i<8;i++)J('mini',172+(i%4)*17,i<4?46:24,'CV '+(i+1),1,{name:'CV/Gate '+(i+1),group:'Сзади · управление · CV',desc:'Универсальный выход: CV ±10 В, 1 В/окт, Gate, триггер или ещё один клок (R35).'});
+
+rframe(272.5,342.5,'Audio Out');
+[['Main L',292,80],['Main R',322,80],['Aux L',292,52],['Aux R',322,52]].forEach(o=>J('trs',o[1],o[2],o[0],1,{name:o[0],group:'Сзади · аудиовыходы',desc:o[0].startsWith('Main')?'Импедансно-балансный TRS, +18 dBu и выше (P22).':'Балансный TRS; режим «Педали» для педальной петли (P23).'}));
+[['RCA L',292,24],['RCA R',322,24]].forEach(o=>J('rca',o[1],o[2],o[0],1,{name:o[0],group:'Сзади · аудиовыходы',desc:'Копия Main для DJ-мониторов с «тюльпанами» (R23).'}));
+
+rframe(352.5,510.5,'Audio In');
+[['Mic/Line 1',370,80],['Mic/Line 2',400,80]].forEach(o=>J('xlr',o[1],o[2],o[0],0,{name:o[0],group:'Сзади · аудиовходы',desc:'Комбо XLR/TRS, фантом только на XLR, усиление — энкодер у экрана.'}));
+[['Hi-Z 1',370,32],['Hi-Z 2',400,32]].forEach(o=>J('trs',o[1],o[2],o[0],0,{name:o[0],group:'Сзади · аудиовходы',desc:'Hi-Z 1 МОм; работает и как возврат педальной петли.'}));
+[['Phono L',428,86],['Phono R',446,86]].forEach(o=>J('rca',o[1],o[2],o[0],0,{name:o[0],group:'Сзади · аудиовходы',desc:'Фоно с RIAA, переключатель «фоно/линия», клемма земли рядом.'}));
+jack('dc',R(468),86,false,{name:'Земля фоно',group:'Сзади · аудиовходы',desc:'Клемма заземления проигрывателя.'});rtag('GND',468,78.5,false);
+box(5,9,R(490),86,KNOB,{name:'Фоно/линия',group:'Сзади · аудиовходы',desc:'Переключатель чувствительности фоно-входа.'});rtag('Phono/Line',490,78.5,false);
+for(let i=0;i<8;i++)J('trs',428+(i%4)*22,i<4?56:28,'Line '+(i+1),0,{name:'Линейный вход '+(i+1),group:'Сзади · аудиовходы',desc:'Балансный TRS 6,3 мм, принимает и обычный моно-кабель; пары связываются в стерео в софте (R37).'});
+
+{const rpm=new THREE.MeshStandardMaterial({map:tex(rearC),roughness:.7});SKINS.push(rpm);const rp=new THREE.Mesh(new THREE.PlaneGeometry(W,RH),rpm);rp.rotation.y=Math.PI;rp.position.set(0,RH/2,-D/2-.05);scene.add(rp);}
+
+jack('trs',35,30,true,{name:'Наушники 1',group:'Передний торец',desc:'6,3 мм; источник Main или Cue; ≥ 4 В на 600 Ом (P25).'});
+jack('trs',95,30,true,{name:'Наушники 2',group:'Передний торец',desc:'Второй выход наушников со своей громкостью.'});
+{const sd=new THREE.Mesh(new THREE.BoxGeometry(26,2.5,2),HOLE);sd.position.set(X(430),34,D/2+.8);scene.add(sd);reg(sd,{name:'Слот SD',group:'Передний торец',desc:'Импорт и экспорт; проекты живут на внутреннем SSD (P15).'});
+ const ua=new THREE.Mesh(new THREE.BoxGeometry(13,5.5,2),HOLE);ua.position.set(X(472),34,D/2+.8);scene.add(ua);reg(ua,{name:'USB-A для флешки',group:'Передний торец',desc:'То, что часто вставляют и вынимают, — спереди.'});}
+
+{const dpm=new THREE.MeshStandardMaterial({map:tex(deckC),roughness:.75}),wpm=new THREE.MeshStandardMaterial({map:tex(wedgeC),roughness:.75});SKINS.push(dpm,wpm);const dp=new THREE.Mesh(new THREE.PlaneGeometry(W,WZ0),dpm);dp.rotation.x=-Math.PI/2;dp.position.set(0,DECK+.05,Z(WZ0/2));scene.add(dp);
+ const wp=new THREE.Mesh(new THREE.PlaneGeometry(W,L),wpm);wp.rotation.x=-Math.PI/2;wp.position.set(0,.05,-L/2);wedge.add(wp);}
+
+
+const PCB=new THREE.MeshStandardMaterial({color:0x1f6b45,roughness:.6});
+const inside=new THREE.Group();scene.add(inside);
+function ibox(w,h,d,xmm,y,zmm,mat,info){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(X(xmm),y,Z(zmm));inside.add(m);if(info)reg(m,info);return m;}
+const itx={name:'Mini-ITX: вычислитель',group:'Внутри · под панелью',desc:'Плата 170 × 170 мм (на старте ASRock N100DC-ITX, R36), лежит плашмя под сеткой. С памятью стоя ≈ 45 мм, свободно ≈ 47 мм — ради этого корпус спереди 68 мм (R44). Апгрейд — любая Mini-ITX на те же стойки.'};
+ibox(170,1.6,170,235,6,165,PCB,itx);
+ibox(64,26,64,215,6.8+13,150,ALU,itx);
+ibox(133,31,4,235,6.8+4+15.5,225,new THREE.MeshStandardMaterial({color:0x2d5a8a,roughness:.5}),itx);
+ibox(80,2.5,22,280,9,110,new THREE.MeshStandardMaterial({color:0x111111}),{name:'SSD NVMe',group:'Внутри',desc:'Проекты живут на внутреннем SSD (P15).'});
+ibox(W-30,1.6,WZ0-20,W/2,DECK-3-15,WZ0/2,new THREE.MeshStandardMaterial({color:0x3fc39d,roughness:.6,transparent:true,opacity:.14,depthWrite:false}),{name:'Плата панели',group:'Внутри · под верхней панелью',desc:'Пэды, кнопки, энкодеры, драйверы светодиодов и микроконтроллер панели; к вычислителю — по USB. Слой ≈ 15 мм под обшивкой.'});
+ibox(W-20,104,1.6,W/2,8+52,D-3-42,PCB,{name:'Плата разъёмов',group:'Внутри · за задней стенкой',desc:'Вертикальная плата параллельно задней стенке, гнёзда стоят на ней. Верх ≈ 112 мм — ниже наклона экрана с запасом (документ 13, раздел 3.6).'});
+ibox(60,18,50,470,6+9,400,new THREE.MeshStandardMaterial({color:0x6b4f2a,roughness:.6}),{name:'Питание',group:'Внутри',desc:'USB-C PD и DC 12–24 В, преобразователи, отдельная ветка для светодиодов (документ 11).'});
+ibox(140,22,90,90,6+11,400,PCB,{name:'Аудиоплата',group:'Внутри',desc:'АЦП и ЦАП (около 16 входов), предусилители, выходные каскады ±12 В; к вычислителю по USB Audio Class 2.'});
+{const sm=new THREE.Mesh(new THREE.BoxGeometry(230,10,150),new THREE.MeshStandardMaterial({color:0x0c0d0f,roughness:.5}));sm.position.set(X(255),-6,-S(405));wedge.add(sm);reg(sm,{name:'Модуль экрана',group:'Внутри · под наклоном',desc:'Панель 10,1″ с контроллером ≈ 10 мм; вместе с ручками у экрана занимает слой ≈ 18 мм под наклоном.'});}
+
+const rest=new THREE.Shape();rest.moveTo(0,0);rest.lineTo(0,58);rest.lineTo(70,24);rest.lineTo(70,0);rest.lineTo(0,0);
+const rgeo=new THREE.ExtrudeGeometry(rest,{depth:265,bevelEnabled:false});rgeo.rotateY(-Math.PI/2);rgeo.translate(0,0,0);
+const restM=new THREE.Mesh(rgeo,new THREE.MeshStandardMaterial({color:0x24272a,roughness:.95}));
+restM.position.set(X(122)+265,0,D/2+3);scene.add(restM);
+reg(restM,{name:'Подставка под запястья',group:'Спереди · съёмная',desc:'70 мм, мягкая, от 24 до 58 мм высотой. Нужна, потому что корпус спереди 68 мм. Стоит только под сеткой: слева свободны громкости и наушники, справа — SD и USB.'});
+
+let xray=false;const tx=document.getElementById('t-xray');
+tx.addEventListener('click',()=>{xray=!xray;tx.setAttribute('aria-pressed',xray?'true':'false');
+  SKINS.forEach(m=>{m.transparent=xray;m.opacity=xray?(m===BODYMAT?.1:.12):1;m.depthWrite=!xray;m.needsUpdate=true;});});
+const views={iso:[-600,660,860],top:[0,1250,30],front:[0,220,1060],back:[60,300,-1000]};
+let tween=null;
+function go(name){document.querySelectorAll('.bar button[id^="v-"]').forEach(b=>b.setAttribute('aria-pressed',b.id==='v-'+name?'true':'false'));
+  const to=new THREE.Vector3(...views[name]).multiplyScalar(fit());tween={from:camera.position.clone(),to,t0:performance.now(),dur:reduce?1:650};}
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fit=()=>Math.max(1,1.5/Math.max(.5,camera.aspect));let placed=false;
+['iso','top','front','back'].forEach(n=>document.getElementById('v-'+n).addEventListener('click',()=>go(n)));
+let playing=!reduce;const tp=document.getElementById('t-play');
+function setPlay(v){playing=v;tp.setAttribute('aria-pressed',v?'true':'false');tp.textContent=v?'Пэды: игра':'Пэды: статично';if(!v)pads.forEach(p=>p.m.material.emissiveIntensity=p.on?.55:.03);}
+setPlay(playing);tp.addEventListener('click',()=>setPlay(!playing));
+
+const ray=new THREE.Raycaster(), mouse=new THREE.Vector2();let down=null;
+const el=renderer.domElement;
+function hit(e){const r=el.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mouse,camera);const h=ray.intersectObjects(pick,false);return h.length?h[0].object.userData.info:null;}
+el.addEventListener('pointermove',e=>{if(e.pointerType==='mouse')el.classList.toggle('hot',!!hit(e));});
+el.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];});
+el.addEventListener('pointerup',e=>{if(!down)return;const moved=Math.hypot(e.clientX-down[0],e.clientY-down[1]);down=null;if(moved>6)return;const info=hit(e);if(info){document.getElementById('info-name').textContent=info.name;document.getElementById('info-group').textContent=info.group;document.getElementById('info-desc').textContent=info.desc;}});
+
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();if(!placed&&w>0){camera.position.set(...views.iso).multiplyScalar(fit());placed=true;}}
+new ResizeObserver(resize).observe(stage);resize();
+
+function loop(now){
+  if(tween){const k=Math.min(1,(now-tween.t0)/tween.dur),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;camera.position.lerpVectors(tween.from,tween.to,e);if(k>=1)tween=null;}
+  if(playing){const step=Math.floor(now/250)%8;pads.forEach(p=>{p.m.material.emissiveIntensity=p.on?(p.i===step?1.6:.45):(p.i===step?.12:.03);});}
+  controls.update();renderer.render(scene,camera);requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+})();
+</script>
+</html>

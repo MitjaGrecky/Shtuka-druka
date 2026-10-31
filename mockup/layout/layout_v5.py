@@ -83,23 +83,26 @@ for k in range(8):
 btn("Scene A", 402, 24, 14, 12, "Live", label="A", color="red")
 other("fader", "Crossfader", 450, 24, 72, 4, "Live", label="Scene A ↔ B")
 btn("Scene B", 498, 24, 14, 12, "Live", label="B", color="blue")
+# NAV block (R102): arrows (grid window only) + Back, Page (screen only) + wheel (screen only) together
+btn("Back", 412, 54, 30, 14, "Navigation", freq="часто")
+btn("Page ◄", 452, 54, 26, 14, "Navigation", label="◄ Page", freq="часто")
+btn("Page ►", 484, 54, 26, 14, "Navigation", label="Page ►", freq="часто")
 for n, dx, dy in [("▲", 0, 19), ("▼", 0, -19), ("◄", -19, 0), ("►", 19, 0)]:
-    btn("Arrow " + n, 422 + dx, 75 + dy, 15, 15, "Arrows", label=n, freq="часто")
-gm = [["Touch FX", "Scale"], ["Notes", "Chords"], ["Clips", "Steps"]]  # front -> back
+    btn("Arrow " + n, 424 + dx, 104 + dy, 15, 15, "Navigation", label=n, freq="часто")
+other("wheel", "Wheel", 480, 108, 45, 45, "Navigation", label="")
+# PAD MODE: what the pads do, 2 x 3 next to the grid
+gm = [["Chords", "Touch FX", "Scale"], ["Clips", "Steps", "Notes"]]  # front -> back
 for r, row in enumerate(gm):
     for c, n in enumerate(row):
-        btn(n, 409 + 28 * c, 128 + 24 * r, 25, 16, "Pad modes",
+        btn(n, 413 + 37 * c, 176 + 24 * r, 32, 16, "Pad modes",
             color="teal" if n != "Scale" else "grey", freq="часто")
-knob("Filter", 480, 70, 26, "Live", ring=34, color="coral", freq="часто")
-knob("FX Mix", 480, 125, 26, "Live", ring=34, color="coral", freq="часто")
+# SCREEN modes next to the screen knobs; Filter and FX Mix level with them (R102)
 sm = [["Inputs", "Browser"], ["Sampler", "Song"], ["Mod", "Mixer"], ["Sound", "Effects"]]  # front -> back
 for r, row in enumerate(sm):
     for c, n in enumerate(row):
-        btn(n, 409 + 28 * c, 236 + 24 * r, 25, 15, "Screen modes", color="purple", freq="часто")
-other("wheel", "Wheel", 480, 210, 45, 45, "Navigation", label="")
-btn("Back", 480, 262, 30, 14, "Navigation", freq="часто")
-btn("Page ◄", 468, 305, 20, 14, "Navigation", label="◄ Page", freq="часто")
-btn("Page ►", 492, 305, 20, 14, "Navigation", label="Page ►", freq="часто")
+        btn(n, 409 + 28 * c, 242 + 22 * r, 25, 15, "Screen modes", color="purple", freq="часто")
+knob("Filter", 480, 300, 26, "Live", ring=34, color="coral", freq="часто")
+knob("FX Mix", 480, 251, 26, "Live", ring=34, color="coral", freq="часто")
 
 # ---------------- RIGHT WEDGE: system (rare) ----------------
 for i, n in enumerate(["Save", "Project", "Settings"]):

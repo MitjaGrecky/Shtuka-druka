@@ -348,8 +348,7 @@ const J=(kind,r,y,tag,out,info)=>{jack(kind,R(r),y,false,info);rtag(tag,r,y-(kin
 
 rframe(4.5,78.5,'Power / USB');
 box(16,13,R(20),78,HOLE,{name:'Ethernet',group:'Сзади · питание и USB',desc:'Для синхронизации Ableton Link и обновлений.'});rtag('LAN',20,67,false);
-box(13,5.5,R(44),80,HOLE,{name:'USB-A',group:'Сзади · питание и USB',desc:'Для постоянно подключённых контроллеров.'});rtag('USB-A',44,72,false);
-box(9,3.5,R(64),80,HOLE,{name:'USB-C',group:'Сзади · питание и USB',desc:'Компьютер (USB-аудио, MIDI) и питание USB-C PD.'});rtag('USB-C',64,72,false);
+box(9,3.5,R(54),80,HOLE,{name:'USB-C (PC)',group:'Сзади · питание и USB',desc:'Порт B аудиоплаты: Штука как звуковая карта 32 × 16 и MIDI для внешнего компьютера (R78, P46); питание USB-C PD.'});rtag('USB-C (PC)',54,72,false);
 jack('dc',R(22),40,false,{name:'DC 12–24 В',group:'Сзади · питание и USB',desc:'Разъём с фиксацией, защита от переполюсовки и перенапряжения (P30).'});rtag('DC 12–24V',22,30,false);
 box(12,8,R(52),40,KNOB,{name:'Выключатель',group:'Сзади · питание и USB',desc:'Механический выключатель питания.'});rtag('On/Off',52,30,false);
 

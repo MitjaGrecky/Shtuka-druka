@@ -119,6 +119,8 @@ def draw_el(c, e, X, Y, k):
         stroke(c, 0.3, GREY, (2, 1.5)); c.rect(X - 217.5 / 2, Y - 135.6 / 2, 217.5, 135.6, stroke=1, fill=0)
         txt(c, 'CUT OUT: screen window %g x %.0f' % (w, h), X, Y + 8, 3, True)
         txt(c, 'dashed = active area 217.5 x 135.6 (10.1", 1280 x 800)', X, Y + 1, 2.6)
+        stroke(c, 0.25, (0.6, 0.2, 0.2), (0.8, 1.2)); c.rect(X - 239 / 2, Y - 147 / 2, 239, 147, stroke=1, fill=0)
+        txt(c, 'dotted = touch glass 239 x 147 behind the panel (Waveshare 10.1DP-CAPLCD)', X, Y - 6, 2.3, False, 'c', (0.6, 0.2, 0.2))
         for col in range(8):
             xx = X - 98 + 28 * col
             stroke(c, 0.2, GREY, (1, 1.5)); c.line(xx, Y - h / 2, xx, Y - h / 2 + 12)

@@ -6,7 +6,7 @@ E = json.load(open("layout_v5.json"))
 W, D, F0, F1 = 515, 500, 340, 470
 S = 2.0                      # px per mm
 MX, MY = 70, 70              # margins (px)
-PW, PH = int(MX * 2 + W * S), int(MY + D * S + 95)
+PW, PH = int(MX * 2 + W * S), int(MY + D * S + 110)
 X = lambda x: MX + x * S
 Y = lambda y: MY + (D - y) * S
 FONT = "DejaVu Sans, Arial, sans-serif"
@@ -42,21 +42,21 @@ BG = "#1d2023"
 
 # group frames (deck)
 BG = "#1d2023"
-frame(8, 12, 108, 66, "TRANSPORT")
-frame(8, 77, 108, 104, "CAPTURE")
-frame(8, 116, 108, 186, "EDIT")
-frame(8, 198, 108, 230, "TEMPO")
-frame(8, 249, 108, 336, "LEVELS")
+frame(8, 10, 108, 70, "TRANSPORT")
+frame(8, 84, 108, 116, "CAPTURE")
+frame(8, 132, 108, 210, "EDIT")
+frame(8, 225, 108, 251, "")
+frame(8, 268, 108, 318, "TEMPO")
 frame(112, 248, 362, 266, "SCENES")
 frame(318, 18, 390, 248, "")
 for hx, ht in ((330, "MUTE"), (352, "SELECT"), (378, "LEVEL")): t(X(hx), Y(244), ht, 2.1, "#8a918d", weight=500)
 frame(395, 12, 505, 34, "")
-frame(395, 104, 451, 192, "PADS")
+frame(395, 112, 451, 192, "PAD MODE")
 frame(395, 225, 451, 322, "SCREEN")
 frame(455, 179, 505, 316, "NAV")
 frame(455, 46, 505, 145, "LIVE")
 BG = "#24282c"
-frame(8, 348, 132, 462, "INPUTS")
+frame(8, 348, 132, 462, "LEVELS")
 frame(380, 356, 507, 456, "SYSTEM")
 
 for e in E:
@@ -81,25 +81,40 @@ for e in E:
         t(X(x), Y(y), lab, size, txt, weight=500 if h >= 20 else 400)
     elif k in ("encoder", "pot"):
         r = w / 2
-        ring = e.get("ring", w + 7) / 2
-        rc = COL.get(e["color"], e["color"])
+        cx, cy = X(x), Y(y)
         if k == "encoder":
-            a(f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="{ring*S:.1f}" fill="none" stroke="{rc}" stroke-width="{1.4*S}" '
-              f'stroke-dasharray="{ring*S*2*math.pi*0.75:.1f} 999" transform="rotate(135 {X(x):.1f} {Y(y):.1f})" opacity="0.9"/>')
-            a(f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="{r*S:.1f}" fill="#111315" stroke="#3a3f44" stroke-width="1.2"/>')
+            # endless: no mark on the cap, value only on the LED ring (15 dots over 270 deg)
+            ring = e.get("ring", w + 7) / 2
+            rc = COL.get(e["color"], e["color"])
+            n_on = 4 + (hash(e["name"]) % 9)
+            for i in range(15):
+                ang = math.radians(225 - 270 * i / 14)
+                px, py = cx + ring * S * math.cos(ang), cy - ring * S * math.sin(ang)
+                a(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="{0.9*S:.1f}" fill="{rc}" fill-opacity="{0.95 if i < n_on else 0.18}"/>')
             if "утоплен" in e.get("note", ""):
-                a(f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="{(r+2.2)*S:.1f}" fill="none" stroke="#0b0c0d" stroke-width="{1.6*S}"/>')
+                a(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{(r+1.8)*S:.1f}" fill="#0b0c0d"/>')
+            a(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r*S:.1f}" fill="#141618" stroke="#4a5055" stroke-width="1.2"/>')
+            a(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{(r-2)*S:.1f}" fill="none" stroke="#24282c" stroke-width="1.5"/>')
+            off = ring + 2.6
         else:
-            a(f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="{(r+2.5)*S:.1f}" fill="#7d8387"/>')
-            a(f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="{r*S:.1f}" fill="#c3c8cb" stroke="#8d9397"/>')
-        a(f'<line x1="{X(x):.1f}" y1="{Y(y):.1f}" x2="{X(x):.1f}" y2="{Y(y+r*0.8):.1f}" stroke="{"#111" if k=="pot" else "#e8ecea"}" stroke-width="{0.9*S}"/>')
+            # finite pot with end stops: printed scale + mark on the cap
+            for i in range(11):
+                ang = math.radians(225 - 27 * i)
+                r0, r1 = (r + 2.2) * S, (r + (3.6 if i in (0, 10) else 3.0)) * S
+                a(f'<line x1="{cx + r0*math.cos(ang):.1f}" y1="{cy - r0*math.sin(ang):.1f}" x2="{cx + r1*math.cos(ang):.1f}" '
+                  f'y2="{cy - r1*math.sin(ang):.1f}" stroke="#d9dddb" stroke-width="{1.4 if i in (0, 10) else 0.9}"/>')
+            a(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r*S:.1f}" fill="#c3c8cb" stroke="#7d8387" stroke-width="1.2"/>')
+            ang = math.radians(225 - 270 * (0.35 + (hash(e["name"]) % 5) * 0.1))
+            a(f'<line x1="{cx:.1f}" y1="{cy:.1f}" x2="{cx + r*0.85*S*math.cos(ang):.1f}" y2="{cy - r*0.85*S*math.sin(ang):.1f}" '
+              f'stroke="#111" stroke-width="{1.0*S}" stroke-linecap="round"/>')
+            off = r + 4.2
         if e["label"]:
-            off = (ring if k == "encoder" else r + 2.5) + 2.6
-            t(X(x), Y(y - off), e["label"], 2.6 if e["group"] != "Tracks" else 2.2, "#c9cfcc")
+            t(X(x), Y(y - off), e["label"], 2.4, "#c9cfcc")
     elif k == "wheel":
-        a(f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="{w/2*S:.1f}" fill="#9fa5a9" stroke="#6c7276" stroke-width="2"/>')
-        a(f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="{(w/2-3.5)*S:.1f}" fill="#2a2e32"/>')
-        a(f'<circle cx="{X(x+9):.1f}" cy="{Y(y+9):.1f}" r="{3.5*S:.1f}" fill="#3a3f44"/>')
+        # endless: no dimple or mark - grip ring only
+        a(f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="{w/2*S:.1f}" fill="#30353a" stroke="#6c7276" stroke-width="2"/>')
+        a(f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="{(w/2-2.5)*S:.1f}" fill="none" stroke="#454b50" stroke-width="{1.2*S}" stroke-dasharray="2 3"/>')
+        a(f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="{(w/2-6)*S:.1f}" fill="#1f2326"/>')
         t(X(x), Y(y - w / 2 - 3), "PUSH = OK", 2.4, "#c9cfcc")
     elif k == "fader":
         a(f'<rect x="{X(x-w/2):.1f}" y="{Y(y+1):.1f}" width="{w*S:.1f}" height="{2*S}" rx="2" fill="#050607"/>')
@@ -150,10 +165,24 @@ t(X(-7), Y(170), "плоская", 2.8, "#555", "end"); t(X(-7), Y(162), "час
 t(X(-7), Y(410), "наклон", 2.8, "#555", "end"); t(X(-7), Y(402), "30°", 2.8, "#555", "end")
 t(X(-7), Y(485), "полка", 2.8, "#555", "end")
 t(X(-7), Y(14), "край", 2.8, "#555", "end")
+# legend: endless vs finite
+lx, ly = X(130), Y(0) + 52
+for i in range(15):
+    ang = math.radians(225 - 270 * i / 14)
+    a(f'<circle cx="{lx + 11*math.cos(ang):.1f}" cy="{ly - 11*math.sin(ang):.1f}" r="1.6" fill="#6b63c9" fill-opacity="{0.95 if i < 8 else 0.2}"/>')
+a(f'<circle cx="{lx}" cy="{ly}" r="8" fill="#141618" stroke="#4a5055"/>')
+t(lx + 18, ly, "энкодер без упоров: значение — на кольце огней, риски на колпачке нет", 2.9, "#333", "start")
+lx2 = X(360)
+for i in range(11):
+    ang = math.radians(225 - 27 * i)
+    a(f'<line x1="{lx2 + 10*math.cos(ang):.1f}" y1="{ly - 10*math.sin(ang):.1f}" x2="{lx2 + 12.5*math.cos(ang):.1f}" y2="{ly - 12.5*math.sin(ang):.1f}" stroke="#333" stroke-width="1"/>')
+a(f'<circle cx="{lx2}" cy="{ly}" r="8" fill="#c3c8cb" stroke="#7d8387"/>')
+a(f'<line x1="{lx2}" y1="{ly}" x2="{lx2 - 5}" y2="{ly - 5}" stroke="#111" stroke-width="2" stroke-linecap="round"/>')
+t(lx2 + 18, ly, "потенциометр с упорами: риска и шкала", 2.9, "#333", "start")
 # scale bar
-a(f'<rect x="{X(0)}" y="{Y(0)+50}" width="{100*S}" height="6" fill="#333"/>')
-t(X(50), Y(0) + 66, "100 мм", 3, "#333")
-t(X(W), Y(0) + 66, "Штука Дрюка · панель v5 · вид сверху, наклон в проекции · масштаб 1:1 = 2 px/мм", 3, "#333", "end")
+a(f'<rect x="{X(0)}" y="{Y(0)+76}" width="{100*S}" height="6" fill="#333"/>')
+t(X(50), Y(0) + 90, "100 мм", 3, "#333")
+t(X(W), Y(0) + 90, "Штука Дрюка · панель v5 · вид сверху, наклон в проекции · масштаб 1:1 = 2 px/мм", 3, "#333", "end")
 a('</svg>')
 open("panel_v5.svg", "w").write("\n".join(o))
 print("ok", PW, PH)

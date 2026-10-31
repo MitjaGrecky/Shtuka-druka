@@ -30,29 +30,31 @@ TRACK = ['#e8564a', '#f0a23a', '#e7d24a', '#55c26b', '#3fc39d', '#4aa8e8', '#7f7
 
 # ---------------- LEFT ZONE: time (left hand), x 8..108 ----------------
 for i, (n, c) in enumerate([("● Rec", "red"), ("▶ Play", "green"), ("■ Stop", "white")]):
-    btn(n, 24 + 34 * i, 27, 28, 24, "Transport", color=c, freq="часто, в долю")
+    btn(n, 24 + 34 * i, 28, 28, 24, "Transport", color=c, freq="часто, в долю")
 for i, n in enumerate(["Restart", "Metronome", "Tap"]):
-    btn(n, 24 + 34 * i, 56, 28, 14, "Transport", freq="иногда")
-btn("Capture", 31, 90, 44, 22, "Capture", color="teal", freq="часто")
-btn("Resample", 81, 90, 44, 22, "Capture", color="teal", freq="иногда")
+    btn(n, 24 + 34 * i, 58, 28, 14, "Transport", freq="иногда")
+btn("Capture", 31, 100, 44, 24, "Capture", color="teal", freq="часто")
+btn("Resample", 81, 100, 44, 24, "Capture", color="teal", freq="иногда")
 edit = [["Undo", "Redo", "Delete"], ["Duplicate", "Double", "New"], ["Quantize", "Length", "Automate"]]
 for r, row in enumerate(edit):
     for c, n in enumerate(row):
-        btn(n, 24 + 34 * c, 128 + 22 * r, 30, 16, "Edit", freq="часто" if n in ("Undo", "Delete", "Duplicate") else "иногда")
-knob("Tempo", 33, 214, 18, "Tempo", freq="иногда")
-knob("Swing", 83, 214, 18, "Tempo", freq="редко")
-knob("Main", 33, 268, 16, "Levels", kind="pot", color="alu", freq="редко, аварийно")
-knob("Phones 1", 83, 268, 16, "Levels", kind="pot", color="alu", freq="иногда")
-knob("Cue Mix", 33, 312, 16, "Levels", kind="pot", color="alu", freq="редко")
-knob("Phones 2", 83, 312, 16, "Levels", kind="pot", color="alu", freq="иногда")
+        btn(n, 24 + 34 * c, 146 + 24 * r, 30, 18, "Edit", freq="часто" if n in ("Undo", "Delete", "Duplicate") else "иногда")
+# held with the left hand while the right hand plays the pads (like Note Repeat on Maschine)
+btn("Repeat", 31, 238, 44, 18, "Repeat", freq="часто")
+btn("Accent", 81, 238, 44, 18, "Repeat", freq="иногда")
+knob("Tempo", 33, 292, 18, "Tempo", freq="иногда")
+knob("Swing", 83, 292, 18, "Tempo", freq="редко")
 
-# ---------------- LEFT WEDGE: rare levels ----------------
-knob("Gain 1", 35, 382, 16, "Levels", note="утоплен", freq="редко")
-knob("Gain 2", 85, 382, 16, "Levels", note="утоплен", freq="редко")
-btn("P48 1", 35, 425, 18, 10, "Levels", label="P48", color="amber", note="утоплена, удержание 1 с", freq="редко")
-btn("P48 2", 85, 425, 18, 10, "Levels", label="P48", color="amber", note="утоплена, удержание 1 с", freq="редко")
-other("led", "Clip 1", 53, 371, 4, 4, "Levels", color="red")
-other("led", "Clip 2", 103, 371, 4, 4, "Levels", color="red")
+# ---------------- LEFT WEDGE: all levels together (R100) ----------------
+for i, n in enumerate(["Main", "Phones 1", "Phones 2", "Cue Mix"]):
+    knob(n, 21 + 25 * i, 370, 15, "Levels", kind="pot", color="alu",
+         freq="редко, аварийно" if n == "Main" else ("иногда" if n.startswith("Phones") else "редко"))
+knob("Gain 1", 33, 410, 16, "Levels", note="утоплен", freq="редко")
+knob("Gain 2", 83, 410, 16, "Levels", note="утоплен", freq="редко")
+other("led", "Clip 1", 51, 410, 4, 4, "Levels", color="red")
+other("led", "Clip 2", 101, 410, 4, 4, "Levels", color="red")
+btn("P48 1", 33, 446, 18, 10, "Levels", label="P48", color="amber", note="утоплена, удержание 1 с", freq="редко")
+btn("P48 2", 83, 446, 18, 10, "Levels", label="P48", color="amber", note="утоплена, удержание 1 с", freq="редко")
 other("meter", "Meter L", 117, 405, 5, 104, "Levels", label="L")
 other("meter", "Meter R", 125, 405, 5, 104, "Levels", label="R")
 
@@ -83,11 +85,11 @@ other("fader", "Crossfader", 450, 24, 72, 4, "Live", label="Scene A ↔ B")
 btn("Scene B", 498, 24, 14, 12, "Live", label="B", color="blue")
 for n, dx, dy in [("▲", 0, 19), ("▼", 0, -19), ("◄", -19, 0), ("►", 19, 0)]:
     btn("Arrow " + n, 422 + dx, 75 + dy, 15, 15, "Arrows", label=n, freq="часто")
-gm = [["Repeat", "Accent"], ["Touch FX", "Scale"], ["Notes", "Chords"], ["Clips", "Steps"]]  # front -> back
+gm = [["Touch FX", "Scale"], ["Notes", "Chords"], ["Clips", "Steps"]]  # front -> back
 for r, row in enumerate(gm):
     for c, n in enumerate(row):
-        btn(n, 409 + 28 * c, 122 + 20 * r, 25, 14, "Grid modes" if n in ("Clips", "Steps", "Notes", "Chords", "Touch FX") else "Play",
-            color="teal" if n in ("Clips", "Steps", "Notes", "Chords", "Touch FX") else "grey", freq="часто")
+        btn(n, 409 + 28 * c, 128 + 24 * r, 25, 16, "Pad modes",
+            color="teal" if n != "Scale" else "grey", freq="часто")
 knob("Filter", 480, 70, 26, "Live", ring=34, color="coral", freq="часто")
 knob("FX Mix", 480, 125, 26, "Live", ring=34, color="coral", freq="часто")
 sm = [["Inputs", "Browser"], ["Sampler", "Song"], ["Mod", "Mixer"], ["Sound", "Effects"]]  # front -> back
@@ -100,12 +102,11 @@ btn("Page ◄", 468, 305, 20, 14, "Navigation", label="◄ Page", freq="част
 btn("Page ►", 492, 305, 20, 14, "Navigation", label="Page ►", freq="часто")
 
 # ---------------- RIGHT WEDGE: system (rare) ----------------
-for i, n in enumerate(["Save", "Project", "Settings", "Help"]):
-    btn(n, 397 + 30 * i, 368, 26, 12, "System", freq="иногда" if n in ("Save", "Help") else "редко")
-other("pocket", "USB-A + SD", 432, 405, 74, 18, "System", label="USB · SD")
-other("led", "Busy", 478, 405, 4, 4, "System", color="red")
-btn("Panic", 410, 445, 30, 12, "System", color="red", note="утоплена", freq="редко, аварийно")
-other("power", "Power", 485, 445, 14, 14, "System", note="утоплена, удержание 2 с")
+for i, n in enumerate(["Save", "Project", "Settings"]):
+    btn(n, 405 + 36 * i, 370, 30, 13, "System", freq="иногда" if n == "Save" else "редко")
+other("pocket", "USB-A + SD", 432, 410, 74, 18, "System", label="USB · SD")
+other("led", "Busy", 478, 410, 4, 4, "System", color="red")
+other("power", "Power", 485, 446, 14, 14, "System", note="утоплена, удержание 2 с")
 
 # ---------------- SCREEN ----------------
 other("screen", "Screen 10.1in", 255, 405, 240, 126, "Screen")

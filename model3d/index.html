@@ -348,7 +348,8 @@ const J=(kind,r,y,tag,out,info)=>{jack(kind,R(r),y,false,info);rtag(tag,r,y-(kin
 
 rframe(4.5,78.5,'Power / USB');
 box(16,13,R(20),78,HOLE,{name:'Ethernet',group:'Сзади · питание и USB',desc:'Для синхронизации Ableton Link и обновлений.'});rtag('LAN',20,67,false);
-box(9,3.5,R(54),80,HOLE,{name:'USB-C (PC)',group:'Сзади · питание и USB',desc:'Порт B аудиоплаты: Штука как звуковая карта 32 × 16 и MIDI для внешнего компьютера (R78, P46); питание USB-C PD.'});rtag('USB-C (PC)',54,72,false);
+box(13,5.5,R(40),80,HOLE,{name:'USB-A',group:'Сзади · питание и USB',desc:'Постоянный накопитель (внешний SSD с библиотекой) и обновление прошивки. Без контроллеров и звука; прямо к Mini-ITX (R80).'});rtag('USB-A',40,72,false);
+box(9,3.5,R(62),80,HOLE,{name:'USB-C (PC)',group:'Сзади · питание и USB',desc:'Порт B аудиоплаты: Штука как звуковая карта 32 × 16 и MIDI для внешнего компьютера (R78, P46); питание USB-C PD.'});rtag('USB-C (PC)',62,72,false);
 jack('dc',R(22),40,false,{name:'DC 12–24 В',group:'Сзади · питание и USB',desc:'Разъём с фиксацией, защита от переполюсовки и перенапряжения (P30).'});rtag('DC 12–24V',22,30,false);
 box(12,8,R(52),40,KNOB,{name:'Выключатель',group:'Сзади · питание и USB',desc:'Механический выключатель питания.'});rtag('On/Off',52,30,false);
 
@@ -378,7 +379,7 @@ for(let i=0;i<8;i++)J('trs',428+(i%4)*22,i<4?56:28,'Line '+(i+1),0,{name:'Лин
 jack('trs',35,30,true,{name:'Наушники 1',group:'Передний торец',desc:'6,3 мм; источник Main или Cue; ≥ 4 В на 600 Ом (P25).'});
 jack('trs',95,30,true,{name:'Наушники 2',group:'Передний торец',desc:'Второй выход наушников со своей громкостью.'});
 {const sd=new THREE.Mesh(new THREE.BoxGeometry(26,2.5,2),HOLE);sd.position.set(X(430),34,D/2+.8);scene.add(sd);reg(sd,{name:'Слот SD',group:'Передний торец',desc:'Импорт и экспорт; проекты живут на внутреннем SSD (P15).'});
- const ua=new THREE.Mesh(new THREE.BoxGeometry(13,5.5,2),HOLE);ua.position.set(X(472),34,D/2+.8);scene.add(ua);reg(ua,{name:'USB-A для флешки',group:'Передний торец',desc:'То, что часто вставляют и вынимают, — спереди.'});}
+ const ua=new THREE.Mesh(new THREE.BoxGeometry(13,5.5,2),HOLE);ua.position.set(X(472),34,D/2+.8);scene.add(ua);reg(ua,{name:'USB-A для флешек',group:'Передний торец',desc:'Горячая замена флешек с сэмплами и музыкой (R80). Всё копируется на внутренний SSD, поэтому флешку можно выдернуть в любой момент — звук не прервётся. Рядом индикатор записи.'});}
 
 {const dpm=new THREE.MeshStandardMaterial({map:tex(deckC),roughness:.75}),wpm=new THREE.MeshStandardMaterial({map:tex(wedgeC),roughness:.75});SKINS.push(dpm,wpm);const dp=new THREE.Mesh(new THREE.PlaneGeometry(W,WZ0),dpm);dp.rotation.x=-Math.PI/2;dp.position.set(0,DECK+.05,Z(WZ0/2));scene.add(dp);
  const wp=new THREE.Mesh(new THREE.PlaneGeometry(W,L),wpm);wp.rotation.x=-Math.PI/2;wp.position.set(0,.05,-L/2);wedge.add(wp);}

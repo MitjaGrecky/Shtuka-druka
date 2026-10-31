@@ -156,7 +156,7 @@ def part_rear(c):
     def Z(r0, r1, t):
         stroke(c, 0.3); c.roundRect(r0, 4, r1 - r0, h - 10, 2.5, stroke=1, fill=0); txt(c, t, r0 + 2, h - 8.6, 2.8, True, 'l')
     Z(4.5, 78.5, 'Power / USB')
-    B(16, 13, 20, 78, 'LAN'); B(9, 3.5, 54, 80, 'USB-C (PC)')
+    B(16, 13, 20, 78, 'LAN'); B(13, 5.5, 40, 80, 'USB-A'); B(9, 3.5, 62, 80, 'USB-C (PC)')
     J('dc', 22, 40, None, False); tag('DC 12-24V', 22, 30 * YS, False); B(12, 8, 52, 40, 'On/Off')
     Z(88.5, 262.5, 'Control')
     for t, r, y, o in [('In 1', 100, 82, 0), ('Out 1', 122, 82, 1), ('Out 3', 144, 82, 1), ('In 2', 100, 52, 0), ('Out 2', 122, 52, 1), ('Out 4', 144, 52, 1)]: J('din', r, y, t, o)

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Shtuka Druka: CPU benchmark. Usage: ./run_bench.sh   (takes about 10-15 minutes)
+# Shtuka Druka: CPU benchmark. Usage: ./run_bench.sh   (takes about 15-20 minutes)
 set -e
 cd "$(dirname "$0")"
 OUT="$HOME/shtuka_bench_results.txt"
@@ -24,6 +24,9 @@ echo "Realtime priority needs sudo:"; sudo -v
   echo
   echo "--- 3. Heavy synths: 16 voices per track, sweep ---"
   sudo ./shtuka_bench --seconds 3 --voices 16
+  echo
+  echo "--- 4. 96 kHz, block 256 (same 2.67 ms), sweep ---"
+  sudo ./shtuka_bench --seconds 3 --rate 96000 --block 256
 } 2>&1 | tee "$OUT"
 echo
 echo "Done. Send this file to Claude: $OUT"

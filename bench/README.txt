@@ -4,7 +4,7 @@ SHTUKA DRUKA - CPU BENCHMARK
 2. Open a terminal and run:
      cd ~/bench
      ./run_bench.sh
-3. Enter your password when asked. Wait 10-15 minutes, do not run anything else.
+3. Enter your password when asked. Wait 15-20 minutes, do not run anything else.
 4. Send the file ~/shtuka_bench_results.txt to Claude.
 
 What it measures: how many reference tracks (8 voices, filter, drive,

@@ -18,7 +18,7 @@
 #include <sched.h>
 #include <sys/mman.h>
 
-static constexpr int SR = 48000;
+static int SR = 48000;
 static int BLOCK = 128;
 static int VOICES = 8;
 static constexpr float PI = 3.14159265358979f;
@@ -202,12 +202,13 @@ int main(int argc, char** argv) {
     else if (a == "--seconds" && i + 1 < argc) secs = std::atof(argv[++i]);
     else if (a == "--block" && i + 1 < argc) BLOCK = std::atoi(argv[++i]);
     else if (a == "--voices" && i + 1 < argc) VOICES = std::max(1, std::min(32, std::atoi(argv[++i])));
+    else if (a == "--rate" && i + 1 < argc) SR = std::atoi(argv[++i]);
     else if (a == "--realtime") rt = true;
-    else { std::printf("usage: shtuka_bench [--tracks N --threads T --seconds S --block 128 --voices 8 --realtime]\n"); return 1; }
+    else { std::printf("usage: shtuka_bench [--tracks N --threads T --seconds S --block 128 --rate 48000 --voices 8 --realtime]\n"); return 1; }
   }
   make_tables();
   int cores = int(std::thread::hardware_concurrency());
-  std::printf("# Shtuka Druka DSP benchmark. 48 kHz, block %d (%.2f ms). Reference track: %d voices with filter+envelope (odd = wavetable synth, 2 osc/voice; even = sampler), track filter, drive, chorus, compressor, 4 sends; buses: 2 reverbs, 2 delays.\n", BLOCK, 1000.0 * BLOCK / SR, VOICES);
+  std::printf("# Shtuka Druka DSP benchmark. %d Hz, block %d (%.2f ms). Reference track: %d voices with filter+envelope (odd = wavetable synth, 2 osc/voice; even = sampler), track filter, drive, chorus, compressor, 4 sends; buses: 2 reverbs, 2 delays.\n", SR, BLOCK, 1000.0 * BLOCK / SR, VOICES);
   std::printf("# Load = processing time / block time. Capacity: p99 < 70%% (offline sweep). Stability: overruns in the 30 s realtime check (depends on kernel and system noise).\n");
   try_realtime_priority();
   if (tracks > 0) {

@@ -110,7 +110,7 @@ def encoder():
     s = re.sub(r'\(property "Value" "[^"]*"', '(property "Value" "EC11E smooth, switch"', s)
     s = s.replace("(pin_names (offset 0.254) hide)", "(pin_names (offset 0.254))")
     s = re.sub(r'\(property "Footprint" "[^"]*"',
-               '(property "Footprint" "Rotary_Encoder:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm"', s)
+               '(property "Footprint" "ShtukaDruka:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm_Ring"', s)
     s = s.replace('with switch"', 'with switch; MP = metal frame and shaft, used as the touch electrode"')
     i = s.rfind('      (pin passive line')
     mp = pin("passive", 0, -7.62, 90, "MP", "MP")
@@ -186,15 +186,35 @@ def qfn60():
         s += f'  (pad "61" thru_hole circle (at {x:g} {y:g}) (size 0.6 0.6) (drill 0.3) (layers "*.Cu"))\n'
     s += fp_rect(-3.5, -3.5, 3.5, 3.5, "F.Fab", 0.1)
     s += fp_line(-3.6, -3.6, -3.0, -3.6, "F.SilkS", 0.12) + fp_line(-3.6, -3.6, -3.6, -3.0, "F.SilkS", 0.12)
-    s += f'  (fp_circle (center -4.1 -2.8) (end -3.95 -2.8) (stroke (width 0.3) (type solid)) (fill solid) (layer "F.SilkS"))\n'
+    s += f'  (fp_circle (center -4.2 -3.4) (end -4.05 -3.4) (stroke (width 0.3) (type solid)) (fill solid) (layer "F.SilkS"))\n'
     s += fp_rect(-4.1, -4.1, 4.1, 4.1, "F.CrtYd", 0.05)
     return n, s
+
+
+def encoder_ring():
+    """Stock Alps EC11E footprint with a courtyard that follows the body and the pins: the stock
+    rectangle also covers the empty corners where the ring LEDs stand (false DRC overlaps)."""
+    src = os.path.join(os.environ.get("KICAD_FOOTPRINT_DIR", "/usr/share/kicad/footprints"),
+                       "Rotary_Encoder.pretty", "RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm.kicad_mod")
+    n = "RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm_Ring"
+    s = open(src).read()
+    s = s.replace('(footprint "RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm"', f'(footprint "{n}"', 1)
+    s = "\n".join(l for l in s.splitlines() if '"F.CrtYd"' not in l)
+    pts = ((1.25, -4.35), (13.75, -4.35), (13.75, -1.25), (15.75, -1.25), (15.75, 6.25), (13.75, 6.25),
+           (13.75, 9.35), (1.25, 9.35), (1.25, 6.25), (-1.5, 6.25), (-1.5, -1.25), (1.25, -1.25))
+    poly = ("  (fp_poly (pts " + " ".join(f"(xy {x:g} {y:g})" for x, y in pts) +
+            ') (layer "F.CrtYd") (width 0.05) (fill none))\n')
+    i = s.rfind("  (model")
+    s = s[:i] + poly + s[i:]
+    s = s.replace("${KICAD6_3DMODEL_DIR}", "${KICAD10_3DMODEL_DIR}")
+    s = s.replace('(descr "', '(descr "Courtyard follows body and pins (ring LEDs at the corners); ', 1)
+    return n, s.rstrip().rstrip(")") + "\n"
 
 
 def write_footprints():
     d = os.path.join(LIB, "ShtukaDruka.pretty")
     os.makedirs(d, exist_ok=True)
-    for n, s in (led1615(), qfn60()):
+    for n, s in (led1615(), qfn60(), encoder_ring()):
         open(os.path.join(d, n + ".kicad_mod"), "w").write(s + ")\n")
 
 

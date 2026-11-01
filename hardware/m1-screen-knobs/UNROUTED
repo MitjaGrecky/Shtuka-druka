@@ -1,1 +1,1 @@
-Routing in progress: placement and nets are final for rev 0.1, tracks are not. CI keeps the DRC report but does not fail on this board until this file is removed.
+Routing nearly done: 4 connections around the LED driver U1 (SW5 pin 20, CS29 pin 56, SW3 to D57, C4 ground) are still open. CI keeps the DRC report but does not fail on this board until this file is removed.

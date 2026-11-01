@@ -76,12 +76,12 @@ for e in E:
         r = w / 2
         cx, cy = X(x), Y(y)
         if k == "encoder":
-            # endless: no mark on the cap, value only on the LED ring (15 dots over 270 deg)
+            # endless: no mark on the cap, value only on the LED ring (13 dots over 270 deg, R122)
             ring = e.get("ring", w + 7) / 2
             rc = COL.get(e["color"], e["color"])
             n_on = 4 + H(e["name"], 9)
-            for i in range(15):
-                ang = math.radians(225 - 270 * i / 14)
+            for i in range(13):
+                ang = math.radians(225 - 270 * i / 12)
                 px, py = cx + ring * S * math.cos(ang), cy - ring * S * math.sin(ang)
                 a(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="{0.9*S:.1f}" fill="{rc}" fill-opacity="{0.95 if i < n_on else 0.18}"/>')
             if "утоплен" in e.get("note", ""):
@@ -161,8 +161,8 @@ t(X(-7), Y(14), "край", 2.8, "#555", "end")
 t(X(220.75), Y(0) + 12, "Notes, Chords: модуляция · Clips, Steps: прокрутка ◄ ► · Touch FX: глубина эффекта", 2.6, "#555")
 # legend: endless vs finite
 lx, ly = X(130), Y(0) + 52
-for i in range(15):
-    ang = math.radians(225 - 270 * i / 14)
+for i in range(13):
+    ang = math.radians(225 - 270 * i / 12)
     a(f'<circle cx="{lx + 11*math.cos(ang):.1f}" cy="{ly - 11*math.sin(ang):.1f}" r="1.6" fill="#6b63c9" fill-opacity="{0.95 if i < 8 else 0.2}"/>')
 a(f'<circle cx="{lx}" cy="{ly}" r="8" fill="#141618" stroke="#4a5055"/>')
 t(lx + 18, ly, "энкодер без упоров: значение — на кольце огней, риски на колпачке нет", 2.9, "#333", "start")

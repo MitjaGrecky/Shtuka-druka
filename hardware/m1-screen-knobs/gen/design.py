@@ -16,7 +16,8 @@ REV = "0.1"
 PITCH = 28.0
 KNOB_Y = 277.0                       # panel y of the knob row
 X0, X1 = 108.75, 332.75              # board edges in panel x (224 mm = 8 x 28)
-Y0, Y1 = 263.0, 291.0                # board edges in panel y (28 mm): knob row +-14; P2 ends before 263
+Y0, Y1 = 263.0, 297.0                # board edges in panel y (34 mm): P2 ends before 263, the fold is at 300;
+                                     # the 6 mm behind the rings give the LED driver room to fan out
 W, H = X1 - X0, Y1 - Y0
 RING_R = 12.0                        # LED ring radius (ring 24 mm in layout_v7)
 RING_N = 13                          # LEDs per ring (P76: 13 = one SW line of IS31FL3741A)
@@ -55,6 +56,20 @@ for n, u in enumerate(("U3", "U4", "U5")):
     SR[u] = _bits[8 * n:8 * n + 8]          # SR[u][0] -> D7, SR[u][7] -> D0
 
 
+def cs_pin(i):
+    """IS31FL3741A pin number of CS i (datasheet pin table)."""
+    return str(25 + i if i <= 10 else 26 + i if i <= 28 else 27 + i if i <= 33 else i - 33)
+
+
+def led_matrix(k, i):
+    """(SW, first CS) of LED i of ring k. LEDs are numbered along the board, n = 13 k + i, and fill
+    the matrix nine at a time: triple n // 9 (CS 3t+1..3t+3), SW n % 9 + 1. So all 9 SW lines run along
+    the board, while each CS triple serves 9 neighbouring LEDs in one or two rings: the CS bus thins out
+    towards the ends of the board instead of 39 lines crossing all of it (ring k -> SW k needs that)."""
+    n = RING_N * k + i
+    return n % 9 + 1, 3 * (n // 9) + 1
+
+
 def parts():
     """List of parts: ref, lib_id, value, footprint, {pin: net}, extra fields."""
     P = []
@@ -67,14 +82,13 @@ def parts():
         "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical", {str(p): n for p, n in CONN.items()},
         Side="bottom")
     # LED driver
-    cs = {}
-    for i in range(1, 40):
-        cs[str(25 + i if i <= 10 else 26 + i if i <= 28 else 27 + i if i <= 33 else i - 33)] = f"CS{i}"
+    cs = {cs_pin(i): f"CS{i}" for i in range(1, 40)}
     u1 = {"14": "+5V", "15": "+5V", "25": "+5V", "9": "SDA", "10": "SCL", "7": "~{INT}", "11": "SDB",
           "8": "ADDR", "13": "REXT", "12": "GND", "36": "GND", "55": "GND", "61": "GND"}
     u1.update({str(15 + k): f"SW{k}" for k in range(1, 10)})
     u1.update(cs)
-    u1["24"] = None                                        # SW9 unused
+    for i in (37, 38, 39):                                 # CS37-39 unused (12 triples are enough)
+        u1[cs_pin(i)] = None
     add("U1", "ShtukaDruka:IS31FL3741A", "IS31FL3741A-QFLS4-TR",
         "ShtukaDruka:QFN-60-1EP_7x7mm_P0.4mm_EP5.25x5.25mm", u1, LCSC="C2940604")
     add("R1", "Device:R", "20k 1%", R0402, {"1": "REXT", "2": "GND"}, Note="I_peak = 383/20k = 19 mA max per CS")
@@ -124,17 +138,18 @@ def parts():
     # encoders
     for k in range(8):
         add(f"ENC{k + 1}", "ShtukaDruka:RotaryEncoder_Switch_Touch", "EC11E smooth, switch",
-            "Rotary_Encoder:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm",
+            "ShtukaDruka:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm_Ring",
             {"A": f"E{k}_A", "B": f"E{k}_B", "C": "GND", "S1": f"E{k}_SW", "S2": "GND", "MP": f"TOUCH{k}"},
             Note="Alps EC11E1834403 or another smooth EC11 with switch and metal shaft")
-    # LED rings: ring k -> SW(k+1); LED i -> CS(3i+1) R, CS(3i+2) G, CS(3i+3) B
+    # LED rings: see led_matrix()
     n = 0
     for k in range(8):
         for i in range(RING_N):
             n += 1
             add(f"D{n}", "ShtukaDruka:XL-1615RGBC-RF", "XL-1615RGBC-RF",
                 "ShtukaDruka:LED_RGB_XL-1615RGBC_1.6x1.5mm",
-                {"2": f"SW{k + 1}", "1": f"CS{3 * i + 1}", "3": f"CS{3 * i + 2}", "4": f"CS{3 * i + 3}"},
+                {"2": f"SW{led_matrix(k, i)[0]}", "1": f"CS{led_matrix(k, i)[1]}",
+                 "3": f"CS{led_matrix(k, i)[1] + 1}", "4": f"CS{led_matrix(k, i)[1] + 2}"},
                 LCSC="C965840", Ring=str(k + 1), Dot=str(i + 1))
     for h in range(4):
         add(f"H{h + 1}", "Mechanical:MountingHole", "M2", "MountingHole:MountingHole_2.2mm_M2", {})
@@ -179,12 +194,13 @@ def placement():
         pl[r] = (GAP[2] - 2.4 + 2.4 * n, 9.5, 90, b)
     # LED driver (gap 4)
     x = GAP[4]
-    pl["U1"] = (x, c + 3.5, 0, b)                    # off the waist: its thermal vias clear the ring LEDs
-    for n, r in enumerate(("R1", "R2", "R3", "R4")):
-        pl[r] = (x - 3.6 + 2.4 * n, 2.2, 90, b)
-    for n, r in enumerate(("R5", "R6", "C2", "C3")):
-        pl[r] = (x - 3.6 + 2.4 * n, 5.0, 90, b)
-    pl["C4"], pl["C1"] = (x - 2.4, H - 3.4, 90, b), (x + 1.2, H - 3.0, 90, b)
+    pl["U1"] = (x, 8.5, 180, b)                       # rear strip, behind the rings: room to fan out 60 pins
+    # its passives beside it in the rear strip, out of the way of the pins that go to the rings
+    for r, px, py in (("R1", 104.6, 2.0), ("R2", 104.6, 4.2), ("R3", 104.6, 6.4), ("R4", 102.4, 2.0),
+                      ("R5", 102.4, 4.2), ("R6", 102.4, 6.4), ("C2", 119.4, 2.0), ("C3", 119.4, 4.2),
+                      ("C4", 119.4, 6.4)):
+        pl[r] = (px, py, 0, b)
+    pl["C1"] = (121.8, 3.2, 90, b)
     # touch controller (gap 5)
     x = GAP[5]
     pl["U2"] = (x, c, 0, b)

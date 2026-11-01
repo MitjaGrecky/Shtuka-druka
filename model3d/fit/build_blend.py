@@ -140,6 +140,17 @@ def build(out_dir, render=False):
         if p.name in bad and p.group != "shell":
             key = "issue" if bad[p.name] < -0.05 else "tight"
         objs[p.name] = add_part(p, coll, key)
+    # M1 light guide (R126) from its STL, sitting on the M1 board
+    stl = os.path.join(F.REPO, "hardware", "m1-screen-knobs", "mech", "m1_light_guide.stl")
+    if os.path.exists(stl):
+        bpy.ops.wm.stl_import(filepath=stl)
+        lg = bpy.context.selected_objects[0]
+        lg.name = "M1 light guide"
+        lg.location = (F.M1.X0, F.M1.Y1, F.PCB_TOP)
+        lg.data.materials.append(material("knob"))
+        for c in lg.users_collection:
+            c.objects.unlink(lg)
+        collection(GROUP_NAMES["m1"], root).objects.link(lg)
     fc = collection("Findings", root)
     for n in bad:
         if n in objs and objs[n].name not in fc.objects:

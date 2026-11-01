@@ -12,9 +12,12 @@ License: AGPL-3.0-or-later (code), CERN-OHL-S-2.0 (the generated board).
 import os
 import re
 import subprocess
+import time
 import sys
 
 import pcbnew
+
+import json
 
 import design as D
 
@@ -24,6 +27,8 @@ OUT = os.path.join(PROJ, D.NAME + ".kicad_pcb")
 KFP = os.environ.get("KICAD_FOOTPRINT_DIR", "/usr/share/kicad/footprints")
 ORG = (40.0, 40.0)                      # where the board sits on the drawing sheet, mm
 POWER_NETS = ("+5V", "GND")
+# JLCPCB 4-layer capability: 0.09 mm track/space, 0.2 mm via drill, 0.254 mm via hole to track. The LED driver is QFN-60 with 0.4 mm pitch.
+TRACK, CLEAR, VIA, POWER_TRACK = 0.12, 0.13, (0.45, 0.2), 0.3   # 0.13 + ring 0.125 = 0.255 via hole to track
 mm = pcbnew.FromMM
 
 
@@ -45,13 +50,13 @@ def build():
     b.SetCopperLayerCount(D.LAYERS)
     b.SetLayerType(pcbnew.In1_Cu, pcbnew.LT_POWER)
     ds = b.GetDesignSettings()
-    ds.m_TrackMinWidth, ds.m_MinClearance, ds.m_ViasMinSize, ds.m_MinThroughDrill = mm(0.127), mm(0.127), mm(0.45), mm(0.25)
+    ds.m_TrackMinWidth, ds.m_MinClearance, ds.m_ViasMinSize, ds.m_MinThroughDrill = mm(0.1), mm(0.1), mm(0.4), mm(0.2)
     ds.m_CopperEdgeClearance = mm(0.3)
     nc = ds.m_NetSettings.m_DefaultNetClass
-    nc.SetTrackWidth(mm(0.15))
-    nc.SetClearance(mm(0.15))
-    nc.SetViaDiameter(mm(0.6))
-    nc.SetViaDrill(mm(0.3))
+    nc.SetTrackWidth(mm(TRACK))
+    nc.SetClearance(mm(CLEAR))
+    nc.SetViaDiameter(mm(VIA[0]))
+    nc.SetViaDrill(mm(VIA[1]))
     tb = b.GetTitleBlock()
     tb.SetTitle(D.TITLE)
     tb.SetRevision(D.REV)
@@ -73,6 +78,8 @@ def build():
         b.Add(fp)                                # flipping needs the board
         fp.SetReference(p["ref"])
         fp.SetValue(p["value"])
+        if p["ref"].startswith("D"):              # 104 LED references would not fit; they are in the fab drawing
+            fp.Reference().SetVisible(False)
         x, y, r, side = pl[p["ref"]]
         fp.SetPosition(P(x, y))
         if p["ref"].startswith("ENC"):          # footprint origin is pin A; put the shaft at (x, y)
@@ -87,6 +94,9 @@ def build():
             ys = [pd.GetPosition().y for pd in fp.Pads()]
             t = P(x, y)
             fp.Move(pcbnew.VECTOR2I(t.x - (min(xs) + max(xs)) // 2, t.y - (min(ys) + max(ys)) // 2))
+        if p["ref"].startswith("H"):             # mounting holes: keep copper 0.35 mm away (JLCPCB: NPTH to copper 0.254)
+            for pad in fp.Pads():
+                pad.SetLocalClearance(mm(0.35))
         if p["fields"].get("DNP") == "yes":
             fp.SetAttributes(fp.GetAttributes() | pcbnew.FP_EXCLUDE_FROM_BOM | pcbnew.FP_EXCLUDE_FROM_POS_FILES)
         for pad in fp.Pads():
@@ -103,18 +113,55 @@ def build():
     e.SetWidth(mm(0.1))
     b.Add(e)
 
+    # no tracks or vias under the encoder bodies: the frame is a touch electrode
+    for k in range(8):
+        x, y = D.knob_xy(k)
+        z = pcbnew.ZONE(b)
+        z.SetIsRuleArea(True)
+        z.SetLayerSet(pcbnew.LSET.AllCuMask(D.LAYERS))
+        z.SetDoNotAllowTracks(True)
+        z.SetDoNotAllowVias(True)
+        z.SetDoNotAllowCopperPour(True)
+        z.SetDoNotAllowPads(False)
+        z.SetDoNotAllowFootprints(False)
+        z.SetZoneName(f"under_encoder_{k + 1}")
+        o = z.Outline()
+        o.NewOutline()
+        for hx, hy in ((x - 6.2, y - 4.4), (x + 6.2, y - 4.4), (x + 6.2, y + 4.4), (x - 6.2, y + 4.4)):
+            q = P(hx, hy)
+            o.Append(q.x, q.y)
+        b.Add(z)
+    # a 0.35 mm strip along the edges: the router does not know the copper-to-edge rule
+    e = 0.35
+    for x0, y0, x1, y1 in ((0, 0, D.W, e), (0, D.H - e, D.W, D.H), (0, 0, e, D.H), (D.W - e, 0, D.W, D.H)):
+        z = pcbnew.ZONE(b)
+        z.SetIsRuleArea(True)
+        z.SetLayerSet(pcbnew.LSET.AllCuMask(D.LAYERS))
+        z.SetDoNotAllowTracks(True)
+        z.SetDoNotAllowVias(True)
+        z.SetDoNotAllowCopperPour(False)
+        z.SetDoNotAllowPads(False)
+        z.SetDoNotAllowFootprints(False)
+        z.SetZoneName("edge")
+        o = z.Outline()
+        o.NewOutline()
+        for hx, hy in ((x0, y0), (x1, y0), (x1, y1), (x0, y1)):
+            q = P(hx, hy)
+            o.Append(q.x, q.y)
+        b.Add(z)
     gnd_zone(b, pcbnew.In1_Cu, 0)               # the plane: the router connects GND to it with vias
 
     # silkscreen notes
-    for txt, x, y, layer in ((f"{D.NAME} rev {D.REV}  CERN-OHL-S-2.0", D.W / 2 + 2, D.H - 1.2, pcbnew.B_SilkS),
-                             ("Shtuka Druka M1  Param 1-8", D.W / 2, 1.2, pcbnew.B_SilkS)):
+    for txt, x in ((f"M1 rev {D.REV}  CERN-OHL-S-2.0", D.GAP[7] - 1.6),
+                   ("Shtuka Druka M1  Param 1-8", D.GAP[7] + 1.6)):     # gap 7 is free on the bottom
         t = pcbnew.PCB_TEXT(b)
         t.SetText(txt)
-        t.SetPosition(P(x, y))
-        t.SetLayer(layer)
+        t.SetPosition(P(x, D.H / 2))
+        t.SetLayer(pcbnew.B_SilkS)
         t.SetTextSize(pcbnew.VECTOR2I(mm(0.8), mm(0.8)))
         t.SetTextThickness(mm(0.12))
-        t.SetMirrored(layer == pcbnew.B_SilkS)
+        t.SetTextAngleDegrees(90)
+        t.SetMirrored(True)
         b.Add(t)
     return b
 
@@ -130,7 +177,7 @@ def gnd_zone(b, layer, prio):
         x, y = D.knob_xy(k)
         hole = pcbnew.SHAPE_POLY_SET()
         hole.NewOutline()
-        for hx, hy in ((x - 9.5, y - 8.0), (x + 9.5, y - 8.0), (x + 9.5, y + 8.0), (x - 9.5, y + 8.0)):
+        for hx, hy in ((x - 6.0, y - 8.0), (x + 6.0, y - 8.0), (x + 6.0, y + 8.0), (x - 6.0, y + 8.0)):   # frame +-6; GND pins C, S2 stay on the plane
             p = P(hx, hy)
             hole.Append(p.x, p.y)
         poly.BooleanSubtract(hole, pcbnew.SHAPE_POLY_SET.PM_FAST)
@@ -139,52 +186,192 @@ def gnd_zone(b, layer, prio):
     z.SetNet(b.FindNet("GND"))
     z.SetAssignedPriority(prio) if hasattr(z, "SetAssignedPriority") else z.SetPriority(prio)
     z.SetMinThickness(mm(0.2))
-    z.SetLocalClearance(mm(0.25))
-    z.SetPadConnection(pcbnew.ZONE_CONNECTION_THERMAL)
+    z.SetLocalClearance(mm(0.3))
+    z.SetPadConnection(pcbnew.ZONE_CONNECTION_FULL)       # GND pins and thermal vias: solid
+    z.SetIslandRemovalMode(pcbnew.ISLAND_REMOVAL_MODE_ALWAYS)   # no floating copper
     poly.thisown = False                         # the zone takes ownership of the outline
     z.SetOutline(poly)
     b.Add(z)
     return z
 
 
+def _sexpr(txt):
+    """Minimal s-expression reader: nested lists of strings (linear, no regex backtracking)."""
+    stack, cur = [], []
+    for t in re.findall(r'\(|\)|"[^"]*"|[^\s()]+', txt):
+        if t == "(":
+            stack.append(cur)
+            cur = []
+        elif t == ")":
+            done, cur = cur, stack.pop()
+            cur.append(done)
+        else:
+            cur.append(t.strip('"'))
+    return cur[0]
+
+
+def _kids(node, key):
+    return [c for c in node if isinstance(c, list) and c and c[0] == key]
+
+
 def import_ses(b, path):
     """Add the wires and vias of a Specctra session file (pcbnew's own importer needs the GUI)."""
-    txt = open(path).read()
-    r = re.search(r'\(routes\s*\(resolution (\w+) (\d+)\)', txt)
-    unit = {"um": 1e-3, "mm": 1.0, "mil": 0.0254, "inch": 25.4}[r.group(1)] / int(r.group(2))
+    routes = _kids(_sexpr(open(path).read()), "routes")[0]
+    res = _kids(routes, "resolution")[0]
+    unit = {"um": 1e-3, "mm": 1.0, "mil": 0.0254, "inch": 25.4}[res[1]] / int(res[2])
     to = lambda v: pcbnew.FromMM(float(v) * unit)
     layers = {b.GetLayerName(l): l for l in range(pcbnew.PCB_LAYER_ID_COUNT) if pcbnew.IsCopperLayer(l)}
-    pads = {m.group(1): m.group(2) for m in re.finditer(r'\(padstack "?([^"\s]+)"?\s*\(shape \(circle \S+ (\d+)', txt)}
+    vdia = {ps[1]: c[2] for lib in _kids(routes, "library_out") for ps in _kids(lib, "padstack")
+            for sh in _kids(ps, "shape") for c in _kids(sh, "circle")}
     n = 0
-    for net_m in re.finditer(r'\(net "?([^"\s)]+)"?\s*((?:\((?:wire|via)[^()]*(?:\([^()]*(?:\([^()]*\))*[^()]*\))*[^()]*\)\s*)+)\)', txt):
-        net = b.FindNet(net_m.group(1))
-        body = net_m.group(2)
-        for lay, w, pts in re.findall(r'\(path (\S+) (\d+)((?:\s+-?\d+)+)', body):
-            v = [int(x) for x in pts.split()]
-            xy = [(to(v[i]), -to(v[i + 1])) for i in range(0, len(v) - 1, 2)]
-            for (x0, y0), (x1, y1) in zip(xy, xy[1:]):
-                t = pcbnew.PCB_TRACK(b)
-                t.SetStart(pcbnew.VECTOR2I(x0, y0))
-                t.SetEnd(pcbnew.VECTOR2I(x1, y1))
-                t.SetWidth(to(w))
-                t.SetLayer(layers[lay])
-                t.SetNet(net)
-                b.Add(t)
+    for no in _kids(routes, "network_out"):
+        for nt in _kids(no, "net"):
+            net = b.FindNet(nt[1])
+            for w in _kids(nt, "wire"):
+                for pth in _kids(w, "path"):
+                    v = [int(x) for x in pth[3:] if not isinstance(x, list)]
+                    xy = [(to(v[i]), -to(v[i + 1])) for i in range(0, len(v) - 1, 2)]
+                    for (x0, y0), (x1, y1) in zip(xy, xy[1:]):
+                        t = pcbnew.PCB_TRACK(b)
+                        t.SetStart(pcbnew.VECTOR2I(x0, y0))
+                        t.SetEnd(pcbnew.VECTOR2I(x1, y1))
+                        t.SetWidth(to(pth[2]))
+                        t.SetLayer(layers[pth[1]])
+                        t.SetNet(net)
+                        b.Add(t)
+                        n += 1
+            for v in _kids(nt, "via"):
+                via = pcbnew.PCB_VIA(b)
+                via.SetPosition(pcbnew.VECTOR2I(to(v[2]), -to(v[3])))
+                via.SetWidth(to(vdia.get(v[1], 6000)))
+                via.SetDrill(pcbnew.FromMM(VIA[1]))
+                via.SetNet(net)
+                b.Add(via)
                 n += 1
-        for ps, x, y in re.findall(r'\(via "?([^"\s]+)"? (-?\d+) (-?\d+)', body):
-            v = pcbnew.PCB_VIA(b)
-            v.SetPosition(pcbnew.VECTOR2I(to(x), -to(y)))
-            v.SetWidth(to(pads.get(ps, 6000)))
-            v.SetDrill(pcbnew.FromMM(0.3))
-            v.SetNet(net)
-            b.Add(v)
-            n += 1
     return n
+
+
+def copy_tracks(b, path, rip=None):
+    """Take tracks and vias from an earlier routed board with the same placement and nets.
+    rip = (x0, y0, x1, y1) board mm: leave out everything touching that box, the router redoes it."""
+    src = pcbnew.LoadBoard(path)
+    n = 0
+    lo, hi = P(0.45, 0.45), P(D.W - 0.45, D.H - 0.45)
+    for t in src.GetTracks():
+        bb = t.GetBoundingBox()
+        if bb.GetLeft() < lo.x or bb.GetTop() < lo.y or bb.GetRight() > hi.x or bb.GetBottom() > hi.y:
+            continue                             # too close to the edge: let the router redo it
+        if rip:
+            r0, r1 = P(rip[0], rip[1]), P(rip[2], rip[3])
+            if bb.GetRight() > r0.x and bb.GetLeft() < r1.x and bb.GetBottom() > r0.y and bb.GetTop() < r1.y:
+                continue
+        c = t.Duplicate()
+        c.SetParent(b)
+        c.SetNet(b.FindNet(t.GetNetname()))
+        b.Add(c)
+        n += 1
+    return n
+
+
+def write_project():
+    """Design rules and net classes live in the project file (KiCad 7 and newer)."""
+    cls = dict(clearance=CLEAR, track_width=TRACK, via_diameter=VIA[0], via_drill=VIA[1], microvia_diameter=0.3,
+               microvia_drill=0.1, diff_pair_gap=0.25, diff_pair_width=0.2, diff_pair_via_gap=0.25,
+               wire_width=6, bus_width=12, line_style=0)
+    pro = {
+        "board": {"design_settings": {"meta": {"version": 2}, "rules": {
+            "min_clearance": 0.1, "min_track_width": 0.1, "min_via_diameter": 0.4, "min_via_annular_width": 0.1,
+            "min_through_hole_diameter": 0.2, "min_hole_clearance": 0.254, "min_hole_to_hole": 0.25,
+            "min_copper_edge_clearance": 0.3, "min_silk_clearance": 0.0, "min_text_height": 0.8,
+            "min_text_thickness": 0.08}}},
+        "net_settings": {"meta": {"version": 3},
+                         "classes": [dict(cls, name="Default"), dict(cls, name="Power", track_width=POWER_TRACK)],
+                         "netclass_patterns": [{"netclass": "Power", "pattern": n} for n in POWER_NETS]},
+        "meta": {"filename": D.NAME + ".kicad_pro", "version": 1},
+    }
+    json.dump(pro, open(os.path.join(PROJ, D.NAME + ".kicad_pro"), "w"), indent=2)
 
 
 def fill(b):
     filler = pcbnew.ZONE_FILLER(b)
     filler.Fill(b.Zones())
+
+
+def stitch(b, pitch=2.0, margin=0.55):
+    """GND vias wherever the bottom pour has room: they tie every piece of the pour (and the SMD ground
+    pads in it) to the In1 plane. A via goes through all layers, so F.Cu and In2 must be free there too."""
+    gnd = b.FindNet("GND")
+    r_via = VIA[0] / 2
+    obst = []                                    # (kind, data) of other-net copper on F.Cu / In2 / through
+    for t in b.GetTracks():
+        if t.Type() == pcbnew.PCB_VIA_T and t.GetNetCode() == gnd.GetNetCode():
+            p = t.GetPosition()                  # own-net vias: keep holes 0.3 apart (hole_near_hole)
+            obst.append(("c", (p.x, p.y, mm(0.5) - mm(CLEAR) - mm(r_via) + mm(0.45))))
+            continue
+        if t.GetNetCode() == gnd.GetNetCode():
+            continue
+        if t.Type() == pcbnew.PCB_VIA_T:
+            p = t.GetPosition()
+            obst.append(("c", (p.x, p.y, t.GetWidth() / 2)))
+        elif t.GetLayer() in (pcbnew.F_Cu, pcbnew.In2_Cu):
+            s, e = t.GetStart(), t.GetEnd()
+            obst.append(("s", (s.x, s.y, e.x, e.y, t.GetWidth() / 2)))
+    for fp in b.GetFootprints():
+        for pad in fp.Pads():
+            on = pad.GetLayerSet()
+            if pad.GetNetCode() == gnd.GetNetCode() and not pad.HasHole():
+                continue
+            if on.Contains(pcbnew.F_Cu) or on.Contains(pcbnew.In2_Cu) or pad.HasHole():
+                bb = pad.GetBoundingBox()
+                obst.append(("r", (bb.GetLeft(), bb.GetTop(), bb.GetRight(), bb.GetBottom())))
+    keep_out = [z for z in b.Zones() if z.GetIsRuleArea() and z.GetDoNotAllowVias()]
+    clear = mm(CLEAR) + mm(r_via)
+
+    def free(x, y):
+        for k, d in obst:
+            if k == "c":
+                if (x - d[0]) ** 2 + (y - d[1]) ** 2 < (d[2] + clear) ** 2:
+                    return False
+            elif k == "r":
+                if d[0] - clear < x < d[2] + clear and d[1] - clear < y < d[3] + clear:
+                    return False
+            else:
+                x0, y0, x1, y1, w = d
+                dx, dy = x1 - x0, y1 - y0
+                L = dx * dx + dy * dy
+                u = 0 if L == 0 else max(0, min(1, ((x - x0) * dx + (y - y0) * dy) / L))
+                px, py = x0 + u * dx, y0 + u * dy
+                if (x - px) ** 2 + (y - py) ** 2 < (w + clear) ** 2:
+                    return False
+        for z in keep_out:
+            if z.Outline().Contains(pcbnew.VECTOR2I(int(x), int(y))):
+                return False
+        return True
+
+    pour = [z for z in b.Zones() if not z.GetIsRuleArea() and z.GetLayer() == pcbnew.B_Cu][0]
+    polys = pour.GetFilledPolysList(pcbnew.B_Cu)
+    placed, n = [], 0
+    step, m = mm(pitch), mm(margin)
+    x0, y0 = P(0, 0).x, P(0, 0).y
+    for i in range(int(D.W / pitch) + 1):
+        for j in range(int(D.H / pitch) + 1):
+            x, y = x0 + i * step + step // 2, y0 + j * step + step // 2
+            v = pcbnew.VECTOR2I(x, y)
+            ring = [pcbnew.VECTOR2I(int(x + m * c), int(y + m * s)) for c, s in
+                    ((1, 0), (-1, 0), (0, 1), (0, -1), (0.7, 0.7), (-0.7, 0.7), (0.7, -0.7), (-0.7, -0.7))]
+            if not polys.Contains(v) or not all(polys.Contains(q) for q in ring):
+                continue
+            if not free(x, y):
+                continue
+            via = pcbnew.PCB_VIA(b)
+            via.SetPosition(v)
+            via.SetWidth(mm(VIA[0]))
+            via.SetDrill(mm(VIA[1]))
+            via.SetNet(gnd)
+            b.Add(via)
+            obst.append(("c", (x, y, mm(0.8) - mm(CLEAR) - mm(r_via))))     # next stitching via >= 0.8 away
+            n += 1
+    return n
 
 
 def route(b, jar, passes):
@@ -200,28 +387,62 @@ def route(b, jar, passes):
             body = re.sub(r'(?<=\s)"?' + re.escape(n) + r'"?(?=\s)', " ", body)
         cls = s[m.start():m.end()].replace(m.group(1), body)
         via = re.search(r'\(use_via ([^)]+)\)', s[m.end():]).group(1)
-        power = f'(class power {" ".join(POWER_NETS)} (circuit (use_via {via})) (rule (width 400) (clearance 150)))\n    '
+        power = f'(class power {" ".join(POWER_NETS)} (circuit (use_via {via})) (rule (width {int(POWER_TRACK * 1000)}) (clearance {int(CLEAR * 1000)})))\n    '
         s = s[:m.start()] + power + cls + s[m.end():]
         open(dsn, "w").write(s)
-    cmd = ["java", "-jar", jar, "-de", dsn, "-do", ses, "-mp", str(passes), "--gui.enabled=false"]
+    # Freerouting 1.9 (2.x routed this board much worse); it needs a display, xvfb-run gives one
+    cmd = ["xvfb-run", "-a", "java", "-jar", jar, "-de", dsn, "-do", ses, "-mp", str(passes)]
     print(" ".join(cmd), flush=True)
-    subprocess.run(cmd, check=False)
+    proc = subprocess.Popen(cmd)
+    while proc.poll() is None:                   # 1.9 sometimes keeps running after it saved the session
+        if os.path.exists(ses) and time.time() - os.path.getmtime(ses) > 20:
+            proc.terminate()
+            subprocess.run(["pkill", "-x", "java"], check=False)
+            break
+        time.sleep(5)
     assert os.path.exists(ses), "no SES from Freerouting"
-    n = import_ses(b, ses)
-    print("imported", n, "tracks and vias")
     os.remove(dsn)
-    os.remove(ses)
+    keep = os.path.join(PROJ, "gen", "last_route.ses")   # git-ignored; reuse with --ses
+    os.replace(ses, keep)
+    return keep
 
 
 if __name__ == "__main__":
     board = build()
+    if "--tracks-from" in sys.argv:
+        rip = None
+        if "--rip" in sys.argv:
+            rip = tuple(float(v) for v in sys.argv[sys.argv.index("--rip") + 1].split(","))
+        print("copied", copy_tracks(board, sys.argv[sys.argv.index("--tracks-from") + 1], rip), "tracks and vias")
     if "--route" in sys.argv:
         jar = sys.argv[sys.argv.index("--route") + 1]
         passes = int(sys.argv[sys.argv.index("--passes") + 1]) if "--passes" in sys.argv else 60
-        route(board, jar, passes)
-    gnd_zone(board, pcbnew.B_Cu, 1)             # bottom pour after routing (not an obstacle for the router)
+        ses = route(board, jar, passes)
+        board = build()                          # the session holds all wiring, old and new
+        print("imported", import_ses(board, ses), "tracks and vias")
+    if "--ses" in sys.argv:                      # a session routed earlier for the same placement
+        print("imported", import_ses(board, sys.argv[sys.argv.index("--ses") + 1]), "tracks and vias")
     board.Save(OUT)
+    write_project()
     board = pcbnew.LoadBoard(OUT)            # a loaded board has project settings; the filler needs them
+    if "--finish" in sys.argv:                   # last connections the autorouter left: local maze router
+        import finish_route
+        # free room around the LED driver: drop bare GND vias there (stitching comes again later)
+        ux, uy = D.placement()["U1"][:2]
+        ends = {(t.GetStart().x, t.GetStart().y) for t in board.GetTracks() if t.Type() != pcbnew.PCB_VIA_T} | \
+               {(t.GetEnd().x, t.GetEnd().y) for t in board.GetTracks() if t.Type() != pcbnew.PCB_VIA_T}
+        lo, hi = P(ux - 10, 0), P(ux + 10, uy + 9)
+        drop = [t for t in board.GetTracks() if t.Type() == pcbnew.PCB_VIA_T and t.GetNetname() == "GND"
+                and (t.GetPosition().x, t.GetPosition().y) not in ends
+                and lo.x < t.GetPosition().x < hi.x and lo.y < t.GetPosition().y < hi.y]
+        for t in drop:
+            board.Remove(t)
+        print("dropped", len(drop), "bare GND vias around U1")
+        print("finished", finish_route.run(board, TRACK, CLEAR, VIA), "connections")
+    gnd_zone(board, pcbnew.B_Cu, 1)             # bottom pour after routing (not an obstacle for the router)
+    fill(board)
+    print("stitching vias", stitch(board))
     fill(board)
     board.Save(OUT)
+    write_project()                              # after Save: pcbnew rewrites the project file
     print("ok", OUT, len(board.GetFootprints()), "footprints", len(board.GetTracks()), "tracks/vias")

@@ -560,7 +560,7 @@
     (property "Value" "EC11E smooth, switch" (at 0 -6.604 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "Rotary_Encoder:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm" (at -3.81 4.064 0)
+    (property "Footprint" "ShtukaDruka:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm_Ring" (at -3.81 4.064 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (at 0 6.604 0)

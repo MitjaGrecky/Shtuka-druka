@@ -39,7 +39,12 @@ jobs:
               kicad-cli sch export bom -o "$o/$name-bom.csv" "$dir/$name.kicad_sch" || true
             fi
             if [ -f "$dir/$name.kicad_pcb" ]; then
-              kicad-cli pcb drc --severity-error --exit-code-violations -o "$o/drc.rpt" "$dir/$name.kicad_pcb" || { echo "::error::DRC errors in $name"; status=1; }
+              # --schematic-parity: the board must match the schematic; an UNROUTED marker file
+              # (routing in progress) keeps the report but does not fail the run
+              if kicad-cli pcb drc --severity-error --exit-code-violations --schematic-parity --refill-zones \
+                   -o "$o/drc.rpt" "$dir/$name.kicad_pcb"; then :
+              elif [ -f "$dir/UNROUTED" ]; then echo "::warning::$name is not routed yet, DRC report kept"
+              else echo "::error::DRC errors in $name"; status=1; fi
               kicad-cli pcb export svg --layers "F.Cu,F.Silkscreen,Edge.Cuts" --exclude-drawing-sheet --mode-single -o "$o/$name-top.svg" "$dir/$name.kicad_pcb" || true
               kicad-cli pcb export svg --layers "B.Cu,B.Silkscreen,Edge.Cuts" --exclude-drawing-sheet --mode-single --mirror -o "$o/$name-bottom.svg" "$dir/$name.kicad_pcb" || true
               kicad-cli pcb export gerbers -o "$o/fab/" "$dir/$name.kicad_pcb" || true

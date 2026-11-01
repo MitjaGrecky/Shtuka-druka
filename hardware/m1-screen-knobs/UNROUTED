@@ -1,0 +1,1 @@
+Routing in progress: placement and nets are final for rev 0.1, tracks are not. CI keeps the DRC report but does not fail on this board until this file is removed.

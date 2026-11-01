@@ -1,0 +1,11 @@
+(kicad_sch (version 20211014) (generator kiutils)
+
+  (uuid 5c4be8ea-8511-46bb-a0e8-849ed0aaf0b5)
+
+  (paper "A4")
+  (lib_symbols)
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)

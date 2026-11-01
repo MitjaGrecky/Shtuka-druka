@@ -1,0 +1,57 @@
+# KiCad checks for every project under hardware/: ERC, DRC, schematic PDF, BOM,
+# board pictures, Gerbers, drill and placement files for the factory.
+# Results: the "kicad-out" artifact of each run. A run fails on ERC/DRC errors.
+# License: AGPL-3.0-or-later.
+name: KiCad checks
+
+on:
+  push:
+    paths: ['hardware/**', '.github/workflows/kicad.yml']
+  pull_request:
+    paths: ['hardware/**']
+  workflow_dispatch:
+
+jobs:
+  kicad:
+    runs-on: ubuntu-latest
+    container:
+      image: kicad/kicad:10.0
+      options: --user root
+    env:
+      HOME: /tmp/home
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check and export
+        shell: bash
+        run: |
+          set -u
+          mkdir -p "$HOME" out
+          kicad-cli version | tee out/kicad-version.txt
+          status=0
+          # one project = one .kicad_pro; its root sheet and board have the same name
+          while IFS= read -r pro; do
+            dir=$(dirname "$pro"); name=$(basename "${pro%.kicad_pro}")
+            o="out/$name"; mkdir -p "$o/fab"
+            if [ -f "$dir/$name.kicad_sch" ]; then
+              kicad-cli sch erc --severity-error --exit-code-violations -o "$o/erc.rpt" "$dir/$name.kicad_sch" || { echo "::error::ERC errors in $name"; status=1; }
+              kicad-cli sch export pdf -o "$o/$name-schematic.pdf" "$dir/$name.kicad_sch" || true
+              kicad-cli sch export bom -o "$o/$name-bom.csv" "$dir/$name.kicad_sch" || true
+            fi
+            if [ -f "$dir/$name.kicad_pcb" ]; then
+              kicad-cli pcb drc --severity-error --exit-code-violations -o "$o/drc.rpt" "$dir/$name.kicad_pcb" || { echo "::error::DRC errors in $name"; status=1; }
+              kicad-cli pcb export svg --layers "F.Cu,F.Silkscreen,Edge.Cuts" --exclude-drawing-sheet -o "$o/$name-top.svg" "$dir/$name.kicad_pcb" || true
+              kicad-cli pcb export svg --layers "B.Cu,B.Silkscreen,Edge.Cuts" --exclude-drawing-sheet --mirror -o "$o/$name-bottom.svg" "$dir/$name.kicad_pcb" || true
+              kicad-cli pcb export gerbers -o "$o/fab/" "$dir/$name.kicad_pcb" || true
+              kicad-cli pcb export drill -o "$o/fab/" "$dir/$name.kicad_pcb" || true
+              kicad-cli pcb export pos --format csv --units mm -o "$o/fab/$name-positions.csv" "$dir/$name.kicad_pcb" || true
+            fi
+          done < <(find hardware -name '*.kicad_pro' -not -path '*/backups/*' | sort)
+          ls -R out
+          exit $status
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kicad-out
+          path: out

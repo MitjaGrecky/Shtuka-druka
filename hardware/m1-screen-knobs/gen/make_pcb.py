@@ -147,6 +147,41 @@ def gnd_zone(b, layer, prio):
     return z
 
 
+def import_ses(b, path):
+    """Add the wires and vias of a Specctra session file (pcbnew's own importer needs the GUI)."""
+    txt = open(path).read()
+    r = re.search(r'\(routes\s*\(resolution (\w+) (\d+)\)', txt)
+    unit = {"um": 1e-3, "mm": 1.0, "mil": 0.0254, "inch": 25.4}[r.group(1)] / int(r.group(2))
+    to = lambda v: pcbnew.FromMM(float(v) * unit)
+    layers = {b.GetLayerName(l): l for l in range(pcbnew.PCB_LAYER_ID_COUNT) if pcbnew.IsCopperLayer(l)}
+    pads = {m.group(1): m.group(2) for m in re.finditer(r'\(padstack "?([^"\s]+)"?\s*\(shape \(circle \S+ (\d+)', txt)}
+    n = 0
+    for net_m in re.finditer(r'\(net "?([^"\s)]+)"?\s*((?:\((?:wire|via)[^()]*(?:\([^()]*(?:\([^()]*\))*[^()]*\))*[^()]*\)\s*)+)\)', txt):
+        net = b.FindNet(net_m.group(1))
+        body = net_m.group(2)
+        for lay, w, pts in re.findall(r'\(path (\S+) (\d+)((?:\s+-?\d+)+)', body):
+            v = [int(x) for x in pts.split()]
+            xy = [(to(v[i]), -to(v[i + 1])) for i in range(0, len(v) - 1, 2)]
+            for (x0, y0), (x1, y1) in zip(xy, xy[1:]):
+                t = pcbnew.PCB_TRACK(b)
+                t.SetStart(pcbnew.VECTOR2I(x0, y0))
+                t.SetEnd(pcbnew.VECTOR2I(x1, y1))
+                t.SetWidth(to(w))
+                t.SetLayer(layers[lay])
+                t.SetNet(net)
+                b.Add(t)
+                n += 1
+        for ps, x, y in re.findall(r'\(via "?([^"\s]+)"? (-?\d+) (-?\d+)', body):
+            v = pcbnew.PCB_VIA(b)
+            v.SetPosition(pcbnew.VECTOR2I(to(x), -to(y)))
+            v.SetWidth(to(pads.get(ps, 6000)))
+            v.SetDrill(pcbnew.FromMM(0.3))
+            v.SetNet(net)
+            b.Add(v)
+            n += 1
+    return n
+
+
 def fill(b):
     filler = pcbnew.ZONE_FILLER(b)
     filler.Fill(b.Zones())
@@ -172,7 +207,8 @@ def route(b, jar, passes):
     print(" ".join(cmd), flush=True)
     subprocess.run(cmd, check=False)
     assert os.path.exists(ses), "no SES from Freerouting"
-    assert pcbnew.ImportSpecctraSES(b, ses), "SES import failed"
+    n = import_ses(b, ses)
+    print("imported", n, "tracks and vias")
     os.remove(dsn)
     os.remove(ses)
 

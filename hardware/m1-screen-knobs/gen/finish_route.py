@@ -173,7 +173,7 @@ def run(b, track, clear, via, max_conn=40, log=print):
         hits = re.findall(r"@\(([-\d.]+) mm, ([-\d.]+) mm\): .*?\[([^\]]+)\]", blk.split("\n[")[0])
         if len(hits) >= 2 and hits[0][2] == hits[1][2] and hits[0][2] != "GND":
             pairs.append((hits[0][2], float(hits[0][0]), float(hits[0][1]), float(hits[1][0]), float(hits[1][1])))
-    added = 0
+    added, failed = 0, []
     for name, sx, sy, tx, ty in pairs[:max_conn]:
         net = b.FindNet(name)
         code = net.GetNetCode()
@@ -223,10 +223,12 @@ def run(b, track, clear, via, max_conn=40, log=print):
             dst = [d for d in dst if abs(d[1] - si[0]) + abs(d[2] - si[1]) > 4 or d[0] not in [s_[0] for s_ in src]]
             if not src or not dst:
                 log(f"  {net.GetNetname()}: no start/end layer found")
+                failed.append((name, sx, sy))
                 continue
             path = g.route(src, dst)
             if not path:
                 log(f"  {net.GetNetname()}: no path in the local window")
+                failed.append((name, sx, sy))
                 continue
             # path -> tracks and vias (merge straight runs)
             pts = [(L, *g.xy(i, j)) for L, i, j in path]
@@ -252,7 +254,30 @@ def run(b, track, clear, via, max_conn=40, log=print):
                     run_start = (L1, x1, y1)
             added += 1
             log(f"  {net.GetNetname()}: routed ({len(path)} cells)")
-    return added
+    return added, failed
+
+
+def rip_and_finish(b, track, clear, via, rounds=6, radius=1.0, log=print):
+    """Local rip-up and reroute: when a connection finds no path, take out the other nets' copper
+    right around its stuck end and route again; the nets taken out are routed in the next round."""
+    total = 0
+    for r in range(rounds):
+        n, failed = run(b, track, clear, via, log=log)
+        total += n
+        if not failed:
+            break
+        rad = radius * (1 + 0.5 * r)
+        for name, x, y in failed:
+            p = pcbnew.VECTOR2I(pcbnew.FromMM(x), pcbnew.FromMM(y))
+            gone = []
+            for t in list(b.GetTracks()):
+                if t.GetNetname() in (name, "GND"):
+                    continue
+                if t.HitTest(p, pcbnew.FromMM(rad)):
+                    gone.append(t.GetNetname())
+                    b.Remove(t)
+            log(f"  round {r + 1}: ripped {len(gone)} pieces of {sorted(set(gone))} around {name}")
+    return total
 
 
 def _track(b, net, a, c, w):

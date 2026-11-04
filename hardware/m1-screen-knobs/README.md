@@ -30,5 +30,6 @@ python3 gen/make_light_guide.py mech             # light guide STL (needs bpy)
 ```
 
 `UNROUTED` marks the board as not routed yet: CI keeps the DRC report but does not fail.
+`QUILTER.md` - rules for handing the board to an external layout service; the parts fixed by the panel are locked.
 
 License: CERN-OHL-S-2.0 (hardware), AGPL-3.0-or-later (scripts).

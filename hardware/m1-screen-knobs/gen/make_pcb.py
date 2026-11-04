@@ -94,6 +94,8 @@ def build():
             ys = [pd.GetPosition().y for pd in fp.Pads()]
             t = P(x, y)
             fp.Move(pcbnew.VECTOR2I(t.x - (min(xs) + max(xs)) // 2, t.y - (min(ys) + max(ys)) // 2))
+        if p["ref"][0] in "DH" or p["ref"].startswith(("ENC", "J")):
+            fp.SetLocked(True)                   # set by the panel: knobs, ring LEDs, bus connector, holes
         if p["ref"].startswith("H"):             # mounting holes: keep copper 0.35 mm away (JLCPCB: NPTH to copper 0.254)
             for pad in fp.Pads():
                 pad.SetLocalClearance(mm(0.35))
@@ -438,7 +440,7 @@ if __name__ == "__main__":
         for t in drop:
             board.Remove(t)
         print("dropped", len(drop), "bare GND vias around U1")
-        print("finished", finish_route.run(board, TRACK, CLEAR, VIA), "connections")
+        print("finished", finish_route.run(board, TRACK, CLEAR, VIA)[0], "connections")   # rip_and_finish() made things worse here
     gnd_zone(board, pcbnew.B_Cu, 1)             # bottom pour after routing (not an obstacle for the router)
     fill(board)
     print("stitching vias", stitch(board))

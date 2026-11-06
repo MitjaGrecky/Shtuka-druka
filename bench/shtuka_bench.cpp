@@ -1,6 +1,7 @@
 // Shtuka Druka DSP benchmark: how many reference tracks a CPU can run.
 // License: AGPL-3.0-or-later (project decision R20/P27).
 // Build: g++ -O2 -march=native -std=c++20 -pthread shtuka_bench.cpp -o shtuka_bench
+// Windows (cross): x86_64-w64-mingw32-g++-posix -O2 -march=haswell -std=c++20 -static shtuka_bench.cpp -o shtuka_bench.exe -lwinmm
 #include <algorithm>
 #include <atomic>
 #include <barrier>
@@ -14,9 +15,13 @@
 #include <string>
 #include <thread>
 #include <vector>
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <pthread.h>
 #include <sched.h>
 #include <sys/mman.h>
+#endif
 
 static int SR = 48000;
 static int BLOCK = 128;
@@ -187,10 +192,20 @@ static Result run(int ntr, int nthr, double seconds, bool realtime) {
 }
 
 static void try_realtime_priority() {
+#ifdef _WIN32
+  // Windows: highest priority class a normal user may set, plus 1 ms timer resolution
+  timeBeginPeriod(1);
+  if (SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS) &&
+      SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL))
+    std::printf("# realtime priority: on (Windows HIGH_PRIORITY_CLASS, TIME_CRITICAL)\n");
+  else std::printf("# realtime priority: off\n");
+  std::printf("# memory locked: no (Windows)\n");
+#else
   sched_param sp{}; sp.sched_priority = 80;
   if (pthread_setschedparam(pthread_self(), SCHED_FIFO, &sp) == 0) std::printf("# realtime priority: on (SCHED_FIFO 80)\n");
   else std::printf("# realtime priority: off (run with sudo or audio group limits for SCHED_FIFO)\n");
   if (mlockall(MCL_CURRENT | MCL_FUTURE) == 0) std::printf("# memory locked: yes\n"); else std::printf("# memory locked: no\n");
+#endif
 }
 
 int main(int argc, char** argv) {

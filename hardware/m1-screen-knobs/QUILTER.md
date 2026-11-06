@@ -15,5 +15,5 @@ unlocked parts (U1-U5, resistors, capacitors) and must keep these rules:
 | Touch lines | TOUCH0-7 from R7-R14 to each encoder MP pin: short, away from SW/CS lines where possible |
 | LED driver U1 | IS31FL3741A, QFN-60 0.4 mm; thermal vias in the exposed pad; keep its decoupling (C1-C4) close |
 
-Inputs: `m1-screen-knobs.kicad_sch`, `m1-screen-knobs.kicad_pcb`, `m1-screen-knobs.kicad_pro`, `lib/`.
+Inputs: run `gen/make_quilter.py OUT` - two jobs: `A_route_only` (our placement, routing only) and `B_place_and_route` (only panel-fixed parts inside the outline). Upload the three files of one job: `.kicad_pcb`, `.kicad_sch`, `.kicad_pro` (no zip).
 Output wanted: the routed `.kicad_pcb` (same nets), which CI then checks with KiCad 10 (DRC with schematic parity).

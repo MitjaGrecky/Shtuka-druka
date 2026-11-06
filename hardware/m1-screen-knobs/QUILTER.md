@@ -38,6 +38,9 @@ and 0.8 mm board edge are blocked. U1 (7 x 7 mm QFN) and the 74HC165 (legs 6.4 m
 Top and bottom regions are a union for the parts assigned to both (Quilter: two-sided region).
 
 Job A result (Nov 6, 1h 28m): 1 candidate, 12 incomplete nets, 8 of 13 bypass capacitors flagged.
+Job C result (Nov 6): cancelled after 2 h, 6 placements, router stuck at 33/39 steps, no routed candidate.
+Root cause is the board, not Quilter: one LED driver for 104 LEDs puts up to 44 signal nets through one gap
+between encoders (`gen/cut_count.py`). Next step: two identical 4-knob cells (decision P98).
 
 ## What we learned on app.quilter.ai (November 2026)
 

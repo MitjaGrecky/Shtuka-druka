@@ -1,5 +1,11 @@
 # Handing M1 to an external layout service (Quilter or similar)
 
+> **Rev 0.2 (Nov 6, 2026):** two LED drivers (U1 cell A rings 1-4, 0x30; U6 cell B rings 5-8, 0x31), CS triples
+> stay on their rings, cathode arcs and ring vias are drawn by `make_pcb.ring_arcs()` and locked (2 vias per LED),
+> decoupling capacitors sit at their pins (`design.HUG`), all other bottom parts in the rear strip (y 0-7),
+> 8 mounting holes (corners + gaps 1, 3, 5, 7), net class LED_SW 0.25 mm for `*_SW*`. Job: `D_rev02_route_only`.
+> The tables below describe rev 0.1 where they differ (one driver, 4 holes).
+
 Everything that the panel fixes is **locked** in the board file. A service may move only the
 unlocked parts (U1-U5, resistors, capacitors) and must keep these rules:
 

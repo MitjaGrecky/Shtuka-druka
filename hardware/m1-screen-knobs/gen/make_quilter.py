@@ -11,7 +11,8 @@
                        next to their ICs: on the bottom, or on the top inside two free strips only
                        (see TOP_STRIPS). Encoders, ring LEDs, J1, holes and ICs stay fixed.
 
-No tracks, no bottom pour. The In1 plane is renamed "GND" so Quilter recognises it.
+Rev 0.2 (job D, route only): the cathode arcs and vias of the LED rings are drawn by make_pcb and locked,
+Quilter routes the rest. No other tracks, no bottom pour. The In1 plane is renamed "GND" so Quilter recognises it.
 Keep-outs under the encoder bodies (touch electrodes) are rule areas Quilter respects.
 Run with KiCad's Python: python3 make_quilter.py OUT_DIR
 License: AGPL-3.0-or-later.
@@ -112,12 +113,14 @@ def rect(z, m=0.5):
 
 # Circuit Comprehension tables for Quilter (upload with "Upload CSV" instead of editing its grid).
 # Column names follow Quilter's own CSV export; capacitance in nF, current in mA.
-BYPASS = [  # capacitor, bypassed component, pin, nF
+BYPASS = [  # capacitor, bypassed component, pin, nF (rev 0.2: two LED drivers U1, U6)
     ("C1", "U1", 15, 4700), ("C2", "U1", 15, 1000), ("C3", "U1", 14, 100), ("C4", "U1", 25, 100),
+    ("C14", "U6", 15, 4700), ("C15", "U6", 15, 1000), ("C16", "U6", 14, 100), ("C17", "U6", 25, 100),
     ("C5", "U2", 3, 2.2), ("C6", "U2", 4, 100), ("C7", "U2", 5, 1000), ("C8", "U2", 6, 100),
     ("C9", "U3", 16, 100), ("C10", "U4", 16, 100), ("C11", "U5", 16, 100),
     ("C12", "J1", 1, 10000), ("C13", "J1", 5, 1000)]
-POWER = [("+5V", 800), ("GND", 800), ("+3V3", 100), ("VREG", 50)]   # LED driver peak ~0.7 A
+POWER = [("+5V", 800), ("GND", 800), ("+3V3", 100), ("VREG", 50)] + \
+        [(f"{c}_SW{k}", 350) for c in ("A", "B") for k in range(1, 10)]   # anode rows: 18 CS x 19 mA per cell
 
 
 def write_csv(d):
@@ -133,8 +136,11 @@ def write_csv(d):
             f.write("\n".join(lines) + "\n")
 
 
+JOBS = ("D_rev02_route_only",)            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
+
+
 def main(out):
-    for job in ("A_route_only", "B_place_and_route", "C_small_parts_free"):
+    for job in JOBS:
         d = os.path.join(out, job)
         os.makedirs(d, exist_ok=True)
         b = M.build()

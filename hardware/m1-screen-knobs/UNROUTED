@@ -1,1 +1,1 @@
-Routing nearly done: 4 connections around the LED driver U1 (SW5 pin 20, CS29 pin 56, SW3 to D57, C4 ground) are still open. CI keeps the DRC report but does not fail on this board until this file is removed.
+Rev 0.2 (P98, two LED driver cells): placement, ring cathode arcs and vias are generated; the rest is not routed yet (Quilter job D). CI keeps the DRC report but does not fail on this board until this file is removed.

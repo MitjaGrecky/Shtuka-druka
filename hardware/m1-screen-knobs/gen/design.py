@@ -176,12 +176,12 @@ GAP = {g: PITCH * g for g in range(1, 8)}
 # Mounting (P97, adjusted): M2 heat-set inserts in the light guide, screws from below. Corners plus one
 # hole every second knob in the rear strip: gaps 1, 3, 5, 7 (gaps 2 and 6 hold the LED drivers).
 HOLES = [(2.6, 2.6), (W - 2.6, 2.6), (2.6, H - 2.6), (W - 2.6, H - 2.6)] + [(GAP[g], 2.6) for g in (1, 3, 5, 7)]
-STRIP_Y = 3.7                        # centre line of the rear strip parts
-# Decoupling capacitors that make_pcb puts right at their pins: (cap, ic, pin, row); row 1, 2 sit
+STRIP_Y = 4.2                        # centre line of the rear strip parts
+# Bulk capacitors C1, C14 (4.7u) stay beside the driver; decoupling capacitors that make_pcb puts right at their pins: (cap, ic, pin, row); row 1, 2 sit
 # further out than row 0. Pins: IS31FL3741A VCC 14, 15, 25; CY8CMBR3108 CMOD 3, VREG 4, VDD 5, 6;
 # 74HC165 VCC 16.
-HUG = [("C3", "U1", "14", 0), ("C2", "U1", "15", 1), ("C4", "U1", "25", 0), ("C1", "U1", "15", 2),
-       ("C16", "U6", "14", 0), ("C15", "U6", "15", 1), ("C17", "U6", "25", 0), ("C14", "U6", "15", 2),
+HUG = [("C3", "U1", "14", 0), ("C2", "U1", "15", 1), ("C4", "U1", "25", 0),
+       ("C16", "U6", "14", 0), ("C15", "U6", "15", 1), ("C17", "U6", "25", 0),
        ("C5", "U2", "3", 0), ("C6", "U2", "4", 1), ("C8", "U2", "6", 0), ("C7", "U2", "5", 1),
        ("C9", "U3", "16", 0), ("C10", "U4", "16", 0), ("C11", "U5", "16", 0)]
 

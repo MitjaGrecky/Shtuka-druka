@@ -27,6 +27,7 @@ OUT = os.path.join(PROJ, D.NAME + ".kicad_pcb")
 KFP = os.environ.get("KICAD_FOOTPRINT_DIR", "/usr/share/kicad/footprints")
 ORG = (40.0, 40.0)                      # where the board sits on the drawing sheet, mm
 POWER_NETS = ("+5V", "GND")
+SW_TRACK = 0.25                         # LED anode rows (SW): up to ~0.35 A per cell; 0.25 mm still enters the 0.4 mm QFN pads
 # JLCPCB 4-layer capability: 0.09 mm track/space, 0.2 mm via drill, 0.254 mm via hole to track. The LED driver is QFN-60 with 0.4 mm pitch.
 TRACK, CLEAR, VIA, POWER_TRACK = 0.12, 0.13, (0.45, 0.2), 0.3   # 0.13 + ring 0.125 = 0.255 via hole to track
 mm = pcbnew.FromMM
@@ -152,6 +153,8 @@ def build():
             o.Append(q.x, q.y)
         b.Add(z)
     gnd_zone(b, pcbnew.In1_Cu, 0)               # the plane: the router connects GND to it with vias
+    hug(b)
+    ring_arcs(b)
 
     # silkscreen notes
     for txt, x in ((f"M1 rev {D.REV}  CERN-OHL-S-2.0", D.GAP[7] - 1.6),
@@ -166,6 +169,99 @@ def build():
         t.SetMirrored(True)
         b.Add(t)
     return b
+
+
+def hug(b):
+    """Decoupling capacitors right at their pins (D.HUG): the capacitor lies parallel to the IC edge,
+    just outside the pad row, its pin 1 (supply) in line with the IC pin; rows 1, 2 sit further out."""
+    for cap, ic, pin, row in D.HUG:
+        u = b.FindFootprintByReference(ic)
+        c = b.FindFootprintByReference(cap)
+        pad = [p for p in u.Pads() if p.GetNumber() == pin][0]
+        uc, pp = u.GetPosition(), pad.GetPosition()
+        dx, dy = pp.x - uc.x, pp.y - uc.y
+        along_x = abs(dy) >= abs(dx)              # pin on a top/bottom edge: capacitor lies along x
+        c.SetOrientationDegrees(0 if along_x else 90)
+        pb = pad.GetBoundingBox()
+        cb = c.GetBoundingBox(False, False) if hasattr(c, "GetBoundingBox") else None
+        half = (cb.GetHeight() if along_x else cb.GetWidth()) / 2
+        gap = mm(0.25)
+        off = sum(mm(1.0) for _ in range(row))     # each row ~1 mm further out
+        if along_x:
+            edge = pb.GetBottom() if dy > 0 else pb.GetTop()
+            y = edge + (1 if dy > 0 else -1) * (gap + half + off)
+            c.SetPosition(pcbnew.VECTOR2I(pp.x, int(y)))
+        else:
+            edge = pb.GetRight() if dx > 0 else pb.GetLeft()
+            x = edge + (1 if dx > 0 else -1) * (gap + half + off)
+            c.SetPosition(pcbnew.VECTOR2I(int(x), pp.y))
+        p1 = [q for q in c.Pads() if q.GetNumber() == "1"][0].GetPosition()   # supply pad in line with the pin
+        shift = pcbnew.VECTOR2I(pp.x - p1.x, 0) if along_x else pcbnew.VECTOR2I(0, pp.y - p1.y)
+        c.Move(shift)
+
+
+RING_G, RING_B, VIA_SIDE = 13.10, 10.90, 1.30   # mm: outer G arc, inner B arc, via offset beside a pad
+
+
+def ring_arcs(b):
+    """Cathode arcs of every LED ring, drawn here instead of by a router (doc 33; tried on ring 1 with DRC):
+    G on F.Cu outside the ring, B on F.Cu inside, R through a via beside its pad to an arc on In2.Cu;
+    the anode (SW) gets one via beside its pad and goes down to the SW rows. 2 vias per LED. Locked."""
+    import math
+    W = mm(TRACK)
+
+    def add(t, layer, net):
+        t.SetWidth(W)
+        t.SetLayer(layer)
+        t.SetNet(net)
+        t.SetLocked(True)
+        b.Add(t)
+
+    for k in range(8):
+        kx, ky = D.knob_xy(k)
+        C = P(kx, ky)
+        to_mm = pcbnew.ToMM
+
+        def polar(v):
+            x, y = to_mm(v.x - C.x), to_mm(v.y - C.y)
+            return math.hypot(x, y), math.atan2(y, x)
+
+        def pt(r, a):
+            return pcbnew.VECTOR2I(C.x + mm(r * math.cos(a)), C.y + mm(r * math.sin(a)))
+
+        info = []
+        for i in range(D.RING_N):
+            fp = b.FindFootprintByReference(f"D{k * D.RING_N + i + 1}")
+            ac = polar(fp.GetPosition())[1]
+            d = {}
+            for pad in fp.Pads():
+                r, a = polar(pad.GetPosition())
+                d[pad.GetNumber()] = dict(r=r, a=a, pos=pad.GetPosition(), net=pad.GetNet())
+            for num, q in d.items():
+                if num == "3":
+                    t = pcbnew.PCB_TRACK(b); t.SetStart(q["pos"]); t.SetEnd(pt(RING_G, q["a"])); add(t, pcbnew.F_Cu, q["net"])
+                elif num == "4":
+                    t = pcbnew.PCB_TRACK(b); t.SetStart(q["pos"]); t.SetEnd(pt(RING_B, q["a"])); add(t, pcbnew.F_Cu, q["net"])
+                else:                              # "1" R, "2" anode: via beside the pad, away from the LED centre
+                    side = math.copysign(1, (q["a"] - ac + math.pi) % (2 * math.pi) - math.pi)
+                    q["va"] = q["a"] + side * VIA_SIDE / q["r"]
+                    vp = pt(q["r"], q["va"])
+                    t = pcbnew.PCB_TRACK(b); t.SetStart(q["pos"]); t.SetEnd(vp); add(t, pcbnew.F_Cu, q["net"])
+                    v = pcbnew.PCB_VIA(b); v.SetPosition(vp); v.SetWidth(mm(VIA[0])); v.SetDrill(mm(VIA[1]))
+                    v.SetNet(q["net"]); v.SetLocked(True); b.Add(v)
+            info.append(d)
+        for d1, d2 in zip(info, info[1:]):
+            for num, layer in (("3", pcbnew.F_Cu), ("4", pcbnew.F_Cu), ("1", pcbnew.In2_Cu)):
+                if d1[num]["net"].GetNetCode() != d2[num]["net"].GetNetCode():
+                    continue
+                if num == "1":
+                    r, a1, a2 = (d1["1"]["r"] + d2["1"]["r"]) / 2, d1["1"]["va"], d2["1"]["va"]
+                else:
+                    r, a1, a2 = (RING_G if num == "3" else RING_B), d1[num]["a"], d2[num]["a"]
+                dd = (a2 - a1 + math.pi) % (2 * math.pi) - math.pi
+                t = pcbnew.PCB_ARC(b)
+                t.SetStart(pt(r, a1)); t.SetMid(pt(r, a1 + dd / 2)); t.SetEnd(pt(r, a1 + dd))
+                add(t, layer, d1[num]["net"])
 
 
 def gnd_zone(b, layer, prio):
@@ -287,8 +383,10 @@ def write_project():
             "min_copper_edge_clearance": 0.3, "min_silk_clearance": 0.0, "min_text_height": 0.8,
             "min_text_thickness": 0.08}}},
         "net_settings": {"meta": {"version": 3},
-                         "classes": [dict(cls, name="Default"), dict(cls, name="Power", track_width=POWER_TRACK)],
-                         "netclass_patterns": [{"netclass": "Power", "pattern": n} for n in POWER_NETS]},
+                         "classes": [dict(cls, name="Default"), dict(cls, name="Power", track_width=POWER_TRACK),
+                                     dict(cls, name="LED_SW", track_width=SW_TRACK)],
+                         "netclass_patterns": [{"netclass": "Power", "pattern": n} for n in POWER_NETS] +
+                                              [{"netclass": "LED_SW", "pattern": "*_SW*"}]},
         "meta": {"filename": D.NAME + ".kicad_pro", "version": 1},
     }
     json.dump(pro, open(os.path.join(PROJ, D.NAME + ".kicad_pro"), "w"), indent=2)
@@ -317,6 +415,10 @@ def stitch(b, pitch=2.0, margin=0.55):
             obst.append(("c", (p.x, p.y, t.GetWidth() / 2)))
         elif t.GetLayer() in (pcbnew.F_Cu, pcbnew.In2_Cu):
             s, e = t.GetStart(), t.GetEnd()
+            if t.Type() == pcbnew.PCB_ARC_T:          # an arc as two chords through its middle
+                mid = t.GetMid()
+                obst.append(("s", (s.x, s.y, mid.x, mid.y, t.GetWidth() / 2)))
+                s = mid
             obst.append(("s", (s.x, s.y, e.x, e.y, t.GetWidth() / 2)))
     for fp in b.GetFootprints():
         for pad in fp.Pads():

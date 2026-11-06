@@ -60,7 +60,7 @@ def build(out_dir, render=False):
             lx, ly, _ = D.led_xy(k, i)
             cyl(bm, lx, -ly, LED_HOLE, T + 2)
     pl = D.placement()
-    for h in range(4):
+    for h in range(len(D.HOLES)):
         x, y = pl[f"H{h + 1}"][:2]
         cyl(bm, x, -y, HOLE_M2, T + 2)
     x, y = pl["J1"][:2]

@@ -5,10 +5,10 @@
                        and Quilter keeps parts inside the outline where they are)
   B_place_and_route  - only what the panel fixes is inside the outline (encoders, ring LEDs, J1,
                        mounting holes); ICs and passives wait below the board for Quilter to place
-  C_small_parts_free - A plus the placement filter: ICs and passives start where our layout put them
-                       (inside the outline, bottom side) and may move, but only on the bottom side
-                       (F.Cu footprint keep-out + B.Cu placement region). Encoders, ring LEDs, J1 and
-                       mounting holes stay locked. Use this when A is too hard to route.
+  C_small_parts_free - A plus placement filters: ICs and passives start where our layout put them and
+                       may move: anywhere on the bottom, and on the top only inside two free strips
+                       (rear and front, see TOP_STRIPS). Encoders, ring LEDs, J1 and mounting holes
+                       stay locked. Use this when A is too hard to route.
 
 No tracks, no bottom pour. The In1 plane is renamed "GND" so Quilter recognises it.
 Keep-outs under the encoder bodies (touch electrodes) are rule areas Quilter respects.
@@ -27,7 +27,7 @@ import make_pcb as M
 FIXED = ("ENC", "D", "J", "H")
 
 
-def placement_region(b):
+def placement_region(b, top_keepout=True):
     """Quilter placement region: a KiCad rule area with every keep-out item off,
     linked to the bottom copper. ICs and passives are assigned to it in Quilter by
     reference, so they stay on the back (the top belongs to encoders and LEDs)."""
@@ -42,6 +42,8 @@ def placement_region(b):
     b.Add(z)
     # Quilter did not pick the region up from our KiCad 7 file, so the top side also gets a
     # footprint keep-out: nothing new may be placed there (the locked encoders and LEDs stay)
+    if not top_keepout:
+        return
     z = pcbnew.ZONE(b)
     z.SetIsRuleArea(True)
     z.SetLayer(pcbnew.F_Cu)
@@ -52,6 +54,51 @@ def placement_region(b):
     z.SetZoneName("Top no new parts")
     rect(z)
     b.Add(z)
+
+
+# Top-side strips where small SMD parts may sit (job C). Found from the free-space map: rings (LED +
+# 2 mm guide wall), encoder cut-outs (+0.8 mm) and screw heads (r 3.5 mm) are blocked, the rest of the
+# top is free. The light guide gets a groove from below over these strips; every part there is <= 1.2 mm
+# (0402, 0805, TSSOP-16) and the guide is 6.4 mm thick. 7 x 7 mm U1 and TSSOP legs (6.4 mm) do not fit
+# the 5.1 mm rear strip, so ICs stay on the back.
+TOP_STRIPS = {"Top strip rear": (6.3, 0.8, D.W - 6.3, 5.9), "Top strip front": (6.3, 30.8, D.W - 6.3, D.H - 0.8)}
+
+
+def top_filter(b):
+    """F.Cu: footprints are forbidden everywhere except the two strips (board rectangle minus strips),
+    and the strips themselves are placement regions."""
+    z = pcbnew.ZONE(b)
+    z.SetIsRuleArea(True)
+    z.SetLayer(pcbnew.F_Cu)
+    for allow in (z.SetDoNotAllowTracks, z.SetDoNotAllowVias, z.SetDoNotAllowCopperPour,
+                  z.SetDoNotAllowPads):
+        allow(False)
+    z.SetDoNotAllowFootprints(True)
+    z.SetZoneName("Top: locked parts only")
+    rect(z)
+    o = z.Outline()
+    cut = pcbnew.SHAPE_POLY_SET()
+    for x0, y0, x1, y1 in TOP_STRIPS.values():
+        cut.NewOutline()
+        for x, y in ((x0, y0), (x1, y0), (x1, y1), (x0, y1)):
+            q = M.P(x, y)
+            cut.Append(q.x, q.y)
+    o.BooleanSubtract(cut, pcbnew.SHAPE_POLY_SET.PM_FAST)
+    b.Add(z)
+    for name, (x0, y0, x1, y1) in TOP_STRIPS.items():
+        r = pcbnew.ZONE(b)
+        r.SetIsRuleArea(True)
+        r.SetLayer(pcbnew.F_Cu)
+        for allow in (r.SetDoNotAllowTracks, r.SetDoNotAllowVias, r.SetDoNotAllowCopperPour,
+                      r.SetDoNotAllowPads, r.SetDoNotAllowFootprints):
+            allow(False)
+        r.SetZoneName(name)
+        o = r.Outline()
+        o.NewOutline()
+        for x, y in ((x0, y0), (x1, y0), (x1, y1), (x0, y1)):
+            q = M.P(x, y)
+            o.Append(q.x, q.y)
+        b.Add(r)
 
 
 def rect(z, m=0.5):
@@ -100,7 +147,8 @@ def main(out):
                 fp.SetPosition(M.P(x, y))
             placement_region(b)
         if job.startswith("C"):
-            placement_region(b)      # parts keep our positions; the filter only keeps them on the back
+            placement_region(b, top_keepout=False)   # parts keep our positions, may move on the back ...
+            top_filter(b)                            # ... or into the two top strips
         path = os.path.join(d, D.NAME + ".kicad_pcb")
         b.Save(path)
         for ext in (".kicad_sch", ".kicad_pro"):

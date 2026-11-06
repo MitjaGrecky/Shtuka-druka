@@ -15,7 +15,7 @@ unlocked parts (U1-U5, resistors, capacitors) and must keep these rules:
 | Touch lines | TOUCH0-7 from R7-R14 to each encoder MP pin: short, away from SW/CS lines where possible |
 | LED driver U1 | IS31FL3741A, QFN-60 0.4 mm; thermal vias in the exposed pad; keep its decoupling (C1-C4) close |
 
-Inputs: run `gen/make_quilter.py OUT` - three jobs: `A_route_only` (our placement, routing only), `B_place_and_route` (only panel-fixed parts inside the outline) and `C_small_parts_free` (our placement, ICs and passives may move, bottom side only). Upload the three files of one job: `.kicad_pcb`, `.kicad_sch`, `.kicad_pro` (no zip).
+Inputs: run `gen/make_quilter.py OUT` - three jobs: `A_route_only` (our placement, routing only), `B_place_and_route` (only panel-fixed parts inside the outline) and `C_small_parts_free` (our placement, ICs and passives may move: anywhere on the bottom, on the top only inside two free strips). Upload the three files of one job: `.kicad_pcb`, `.kicad_sch`, `.kicad_pro` (no zip).
 Output wanted: the routed `.kicad_pcb` (same nets), which CI then checks with KiCad 10 (DRC with schematic parity).
 
 Each job folder also gets `bypass_capacitors.csv`, `high_current_nets.csv` and `ground_nets.csv` for the
@@ -26,12 +26,18 @@ Circuit Comprehension step ("Upload CSV"); column names follow Quilter's own CSV
 | Group | Parts | Rule |
 |---|---|---|
 | Locked (the panel decides) | ENC1-8, D1-D104, J1, H1-H4 (117 parts) | never move |
-| Movable | U1-U5, R1-R18, RN1-RN6, C1-C13 (42 parts) | Quilter may move them, bottom side only |
-| Top side filter (job C) | rule area "Top no new parts" (F.Cu, footprints disallowed) | nothing new on the top |
-| Bottom region (job C) | rule area "Bottom parts" (B.Cu, everything allowed) | where movable parts may go |
+| Movable | U1-U5, R1-R18, RN1-RN6, C1-C13 (42 parts) | Quilter may move them |
+| Bottom (job C) | rule area "Bottom parts" (B.Cu, everything allowed) | all movable parts |
+| Top (job C) | strips "Top strip rear" 211 x 5.1 mm (y 0.8-5.9) and "Top strip front" 211 x 2.4 mm (y 30.8-33.2) | small SMD only (0402, 0805, RN) |
+| Top, everything else | rule area "Top: locked parts only" (footprints disallowed) | nothing new |
 
-Job A result (Nov 6, 1h 28m): 1 candidate, 12 incomplete nets, 8 of 13 bypass capacitors flagged. Job C gives the placer room to
-fix exactly that, without touching the top.
+Why the top is free in the strips: the light guide is 6.4 mm thick and every movable part is at most 1.2 mm high
+(0402, 0805, TSSOP-16). The guide gets a groove from below over the strips (like the J1 pocket), made from the final
+placement. The strips follow from a free-space map: ring LED + 2 mm wall, encoder cut-out + 0.8 mm, screw head r 3.5 mm
+and 0.8 mm board edge are blocked. U1 (7 x 7 mm QFN) and the 74HC165 (legs 6.4 mm) do not fit the 5.1 mm strip: ICs stay on the back.
+Top and bottom regions are a union for the parts assigned to both (Quilter: two-sided region).
+
+Job A result (Nov 6, 1h 28m): 1 candidate, 12 incomplete nets, 8 of 13 bypass capacitors flagged.
 
 ## What we learned on app.quilter.ai (November 2026)
 

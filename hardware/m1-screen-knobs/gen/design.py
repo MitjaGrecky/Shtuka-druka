@@ -10,7 +10,7 @@ import math
 
 NAME = "m1-screen-knobs"
 TITLE = "M1 - screen knobs module (8 encoders, touch, 13-LED RGB rings)"
-REV = "0.1"
+REV = "0.2"
 
 # ------------------------------------------------------------------ geometry (mm)
 PITCH = 28.0
@@ -61,13 +61,23 @@ def cs_pin(i):
     return str(25 + i if i <= 10 else 26 + i if i <= 28 else 27 + i if i <= 33 else i - 33)
 
 
+CELLS = ("A", "B")                  # P98: two identical cells of 4 knobs, each with its own LED driver
+DRIVER = {"A": "U1", "B": "U6"}
+
+
 def led_matrix(k, i):
-    """(SW, first CS) of LED i of ring k. LEDs are numbered along the board, n = 13 k + i, and fill
-    the matrix nine at a time: triple n // 9 (CS 3t+1..3t+3), SW n % 9 + 1. So all 9 SW lines run along
-    the board, while each CS triple serves 9 neighbouring LEDs in one or two rings: the CS bus thins out
-    towards the ends of the board instead of 39 lines crossing all of it (ring k -> SW k needs that)."""
-    n = RING_N * k + i
-    return n % 9 + 1, 3 * (n // 9) + 1
+    """(cell, SW, first CS) of LED i of ring k. Ring k belongs to cell k // 4; its driver serves 52 RGB
+    on SW1-9 and CS1-18. Inside a cell the rings go in pairs (k % 4 // 2); a pair has three CS triples
+    and every triple stays on the rings it lights (cathode arcs drawn by the generator, doc 33):
+      first ring:  dots 0-8  -> triple 0, SW1-9;  dots 9-12 -> triple 2, SW1-4
+      second ring: dots 0-3  -> triple 2, SW5-8;  dots 4-12 -> triple 1, SW1-9"""
+    cell = CELLS[k // 4]
+    t0 = 3 * ((k % 4) // 2)
+    if k % 2 == 0:
+        t, sw = (t0, i + 1) if i <= 8 else (t0 + 2, i - 8)
+    else:
+        t, sw = (t0 + 2, i + 5) if i <= 3 else (t0 + 1, i - 3)
+    return cell, sw, 3 * t + 1
 
 
 def parts():
@@ -81,26 +91,27 @@ def parts():
     add("J1", "Connector_Generic:Conn_02x07_Odd_Even", "Module bus 2x7 1.27",
         "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical", {str(p): n for p, n in CONN.items()},
         Side="bottom")
-    # LED driver
-    cs = {cs_pin(i): f"CS{i}" for i in range(1, 40)}
-    u1 = {"14": "+5V", "15": "+5V", "25": "+5V", "9": "SDA", "10": "SCL", "7": "~{INT}", "11": "SDB",
-          "8": "ADDR", "13": "REXT", "12": "GND", "36": "GND", "55": "GND", "61": "GND"}
-    u1.update({str(15 + k): f"SW{k}" for k in range(1, 10)})
-    u1.update(cs)
-    for i in (37, 38, 39):                                 # CS37-39 unused (12 triples are enough)
-        u1[cs_pin(i)] = None
-    add("U1", "ShtukaDruka:IS31FL3741A", "IS31FL3741A-QFLS4-TR",
-        "ShtukaDruka:QFN-60-1EP_7x7mm_P0.4mm_EP5.25x5.25mm", u1, LCSC="C2940604")
-    add("R1", "Device:R", "20k 1%", R0402, {"1": "REXT", "2": "GND"}, Note="I_peak = 383/20k = 19 mA max per CS")
-    add("R2", "Device:R", "10k", R0402, {"1": "SDB", "2": "+3V3"})
-    add("R3", "Device:R", "0", R0402, {"1": "ADDR", "2": "GND"}, Note="I2C address 0x30 (ADDR=GND)")
-    add("R4", "Device:R", "0", R0402, {"1": "ADDR", "2": "SCL"}, DNP="yes", Note="0x31")
-    add("R5", "Device:R", "0", R0402, {"1": "ADDR", "2": "SDA"}, DNP="yes", Note="0x32")
-    add("R6", "Device:R", "0", R0402, {"1": "ADDR", "2": "+5V"}, DNP="yes", Note="0x33")
-    add("C1", "Device:C", "4.7u", C0805, {"1": "+5V", "2": "GND"})
-    add("C2", "Device:C", "1u", C0402, {"1": "+5V", "2": "GND"})
-    add("C3", "Device:C", "100n", C0402, {"1": "+5V", "2": "GND"})
-    add("C4", "Device:C", "100n", C0402, {"1": "+5V", "2": "GND"})
+    # LED drivers, one per cell (P98); cell B repeats cell A with its own references and address
+    cell_refs = {"A": dict(rext="R1", sdb="R2", addr=("R3", "R4", "R5", "R6"), caps=("C1", "C2", "C3", "C4"), fit=0),
+                 "B": dict(rext="R19", sdb="R20", addr=("R21", "R22", "R23", "R24"), caps=("C14", "C15", "C16", "C17"), fit=1)}
+    for cell in CELLS:
+        c = cell_refs[cell]
+        u = {"14": "+5V", "15": "+5V", "25": "+5V", "9": "SDA", "10": "SCL", "7": "~{INT}", "11": f"{cell}_SDB",
+             "8": f"{cell}_ADDR", "13": f"{cell}_REXT", "12": "GND", "36": "GND", "55": "GND", "61": "GND"}
+        u.update({str(15 + k): f"{cell}_SW{k}" for k in range(1, 10)})
+        u.update({cs_pin(i): f"{cell}_CS{i}" for i in range(1, 19)})
+        u.update({cs_pin(i): None for i in range(19, 40)})    # 6 triples per cell are enough
+        add(DRIVER[cell], "ShtukaDruka:IS31FL3741A", "IS31FL3741A-QFLS4-TR",
+            "ShtukaDruka:QFN-60-1EP_7x7mm_P0.4mm_EP5.25x5.25mm", u, LCSC="C2940604", Cell=cell)
+        add(c["rext"], "Device:R", "20k 1%", R0402, {"1": f"{cell}_REXT", "2": "GND"}, Note="I_peak = 383/20k = 19 mA max per CS")
+        add(c["sdb"], "Device:R", "10k", R0402, {"1": f"{cell}_SDB", "2": "+3V3"})
+        for n, (to, adr) in enumerate((("GND", "0x30"), ("SCL", "0x31"), ("SDA", "0x32"), ("+5V", "0x33"))):
+            f = dict(Note=f"I2C address {adr}")
+            if n != c["fit"]:
+                f["DNP"] = "yes"
+            add(c["addr"][n], "Device:R", "0", R0402, {"1": f"{cell}_ADDR", "2": to}, **f)
+        for ref, val, fp in zip(c["caps"], ("4.7u", "1u", "100n", "100n"), (C0805, C0402, C0402, C0402)):
+            add(ref, "Device:C", val, fp, {"1": "+5V", "2": "GND"})
     # touch controller
     u2 = {"1": "TR0", "2": "TR1", "12": "TR2", "13": "TR3", "8": "TR4", "9": "TR5", "10": "TR6", "11": "TR7",
           "3": "CMOD", "4": "VREG", "5": "+3V3", "6": "+3V3", "7": "GND", "14": "SDA", "15": "SCL",
@@ -146,25 +157,38 @@ def parts():
     for k in range(8):
         for i in range(RING_N):
             n += 1
+            cell, sw, cs = led_matrix(k, i)
             add(f"D{n}", "ShtukaDruka:XL-1615RGBC-RF", "XL-1615RGBC-RF",
                 "ShtukaDruka:LED_RGB_XL-1615RGBC_1.6x1.5mm",
-                {"2": f"SW{led_matrix(k, i)[0]}", "1": f"CS{led_matrix(k, i)[1]}",
-                 "3": f"CS{led_matrix(k, i)[1] + 1}", "4": f"CS{led_matrix(k, i)[1] + 2}"},
+                {"2": f"{cell}_SW{sw}", "1": f"{cell}_CS{cs}", "3": f"{cell}_CS{cs + 1}", "4": f"{cell}_CS{cs + 2}"},
                 LCSC="C965840", Ring=str(k + 1), Dot=str(i + 1))
-    for h in range(4):
+    for h in range(len(HOLES)):
         add(f"H{h + 1}", "Mechanical:MountingHole", "M2", "MountingHole:MountingHole_2.2mm_M2", {})
     return P
 
 
 # ------------------------------------------------------------------ placement on the board
 # Top side: only the 8 encoders and the 104 LEDs (clean for the light guide under the panel).
-# Bottom side: all ICs, passives and the bus connector, in the 11 mm gaps between encoders
-# (gap g centre x = 28 g, g = 1..7), where no encoder pins are.
+# Bottom side: everything else in the rear strip (y 0-7), where no ring via can land (ring vias sit at
+# r 11.5-12.5 around y 20, the top of a ring is at y 7.5), plus the two drivers in gaps 2 and 6 and J1
+# with its bulk capacitors in gap 2 at the front. Gap g centre x = 28 g.
 GAP = {g: PITCH * g for g in range(1, 8)}
+# Mounting (P97, adjusted): M2 heat-set inserts in the light guide, screws from below. Corners plus one
+# hole every second knob in the rear strip: gaps 1, 3, 5, 7 (gaps 2 and 6 hold the LED drivers).
+HOLES = [(2.6, 2.6), (W - 2.6, 2.6), (2.6, H - 2.6), (W - 2.6, H - 2.6)] + [(GAP[g], 2.6) for g in (1, 3, 5, 7)]
+STRIP_Y = 3.7                        # centre line of the rear strip parts
+# Decoupling capacitors that make_pcb puts right at their pins: (cap, ic, pin, row); row 1, 2 sit
+# further out than row 0. Pins: IS31FL3741A VCC 14, 15, 25; CY8CMBR3108 CMOD 3, VREG 4, VDD 5, 6;
+# 74HC165 VCC 16.
+HUG = [("C3", "U1", "14", 0), ("C2", "U1", "15", 1), ("C4", "U1", "25", 0), ("C1", "U1", "15", 2),
+       ("C16", "U6", "14", 0), ("C15", "U6", "15", 1), ("C17", "U6", "25", 0), ("C14", "U6", "15", 2),
+       ("C5", "U2", "3", 0), ("C6", "U2", "4", 1), ("C8", "U2", "6", 0), ("C7", "U2", "5", 1),
+       ("C9", "U3", "16", 0), ("C10", "U4", "16", 0), ("C11", "U5", "16", 0)]
 
 
 def placement():
-    """ref -> (x, y, rotation, side); board coordinates, rotation in degrees (KiCad)."""
+    """ref -> (x, y, rotation, side); board coordinates, rotation in degrees (KiCad).
+    Capacitors listed in HUG get a provisional spot here; make_pcb moves them to their pins."""
     pl = {}
     for k in range(8):
         cx, cy = knob_xy(k)
@@ -172,44 +196,34 @@ def placement():
         for i in range(RING_N):
             x, y, a = led_xy(k, i)
             pl[f"D{k * RING_N + i + 1}"] = (x, y, a, "top")
-    c = H / 2
-    b = "bottom"
-
-    def col(x, refs, y0, dy, rot=90):
-        for n, r in enumerate(refs):
-            pl[r] = (x, y0 + n * dy, rot, b)
-
-    # shift registers with their pull-up packs (gaps 1, 3, 6)
-    for u, g, rn in (("U3", 1, ("RN1", "RN2")), ("U4", 3, ("RN3", "RN4")), ("U5", 6, ("RN5", "RN6"))):
-        x = GAP[g]
-        pl[u] = (x, c, 0, b)
-        pl[rn[0]], pl[rn[1]] = (x, 4.0, 0, b), (x, H - 4.0, 0, b)
-    pl["C9"], pl["C10"], pl["C11"] = (GAP[1], 7.6, 0, b), (GAP[3], 7.6, 0, b), (GAP[6], 7.6, 0, b)
-    pl["R18"] = (GAP[6], H - 7.6, 0, b)
-    # bus connector (gap 2), bulk capacitors, optional pull-ups
-    # J1 lies along the front edge, below the waist between rings 2 and 3 (make_pcb centres its pads here)
+    b, y = "bottom", STRIP_Y
+    # shift registers with their pull-up packs, rear strip
+    for u, x, rn in (("U3", 15.0, ("RN1", "RN2")), ("U4", 95.0, ("RN3", "RN4")), ("U5", 209.0, ("RN5", "RN6"))):
+        pl[u] = (x, y, 0, b)
+        pl[rn[0]], pl[rn[1]] = (x - 6.0, y, 90, b), (x + 6.0, y, 90, b)
+    pl["R18"] = (215.0, 6.3, 0, b)
+    # bus connector at the front of gap 2, its bulk capacitors just behind it
     pl["J1"] = (GAP[2], H - 3.0, 90, b)
-    pl["C12"], pl["C13"] = (GAP[2], 3.0, 0, b), (GAP[2], 6.0, 0, b)
-    for n, r in enumerate(("R15", "R16", "R17")):
-        pl[r] = (GAP[2] - 2.4 + 2.4 * n, 9.5, 90, b)
-    # LED driver (gap 4)
-    x = GAP[4]
-    pl["U1"] = (x, 8.5, 180, b)                       # rear strip, behind the rings: room to fan out 60 pins
-    # its passives beside it in the rear strip, out of the way of the pins that go to the rings
-    for r, px, py in (("R1", 104.6, 2.0), ("R2", 104.6, 4.2), ("R3", 104.6, 6.4), ("R4", 102.4, 2.0),
-                      ("R5", 102.4, 4.2), ("R6", 102.4, 6.4), ("C2", 119.4, 2.0), ("C3", 119.4, 4.2),
-                      ("C4", 119.4, 6.4)):
-        pl[r] = (px, py, 0, b)
-    pl["C1"] = (121.8, 3.2, 90, b)
-    # touch controller (gap 5)
-    x = GAP[5]
-    pl["U2"] = (x, c, 0, b)
-    for n in range(4):
-        pl[f"R{7 + n}"] = (x - 3.6 + 2.4 * n, 2.2, 90, b)
-        pl[f"R{11 + n}"] = (x - 3.6 + 2.4 * n, H - 2.2, 90, b)
-    for n, r in enumerate(("C5", "C6", "C7", "C8")):
-        pl[r] = (x - 3.6 + 2.4 * n, 5.4, 90, b)
-    for n, (hx, hy) in enumerate(((2.6, 2.6), (W - 2.6, 2.6), (2.6, H - 2.6), (W - 2.6, H - 2.6))):
+    pl["C12"], pl["C13"] = (GAP[2], H - 6.7, 0, b), (GAP[2], H - 8.8, 0, b)
+    for n, r in enumerate(("R15", "R16", "R17")):      # optional bus pull-ups (normally on the host)
+        pl[r] = (124.0, 1.6 + 2.0 * n, 0, b)
+    # LED drivers in gaps 2 and 6, rear strip; their resistors on the left, capacitors at the pins
+    for u, g, rs, cs in (("U1", 2, ("R1", "R2", "R3", "R4", "R5", "R6"), ("C1", "C2", "C3", "C4")),
+                         ("U6", 6, ("R19", "R20", "R21", "R22", "R23", "R24"), ("C14", "C15", "C16", "C17"))):
+        x = GAP[g]
+        pl[u] = (x, 8.5, 180, b)
+        for n, r in enumerate(rs):
+            pl[r] = (x - 7.4 - 2.2 * (n // 3), 2.0 + 2.2 * (n % 3), 0, b)
+        for n, c in enumerate(cs):
+            pl[c] = (x + 7.4, 2.0 + 2.2 * n, 0, b)
+    # touch controller near the middle (gap 4), its series resistors in a row beside it
+    pl["U2"] = (118.0, 4.0, 0, b)
+    for n in range(8):
+        pl[f"R{7 + n}"] = (104.5 + 1.2 * n, 4.0, 90, b)
+    for n, c in enumerate(("C5", "C6", "C7", "C8")):
+        pl[c] = (121.5, 1.6 + 1.6 * n, 0, b)
+    pl["C9"], pl["C10"], pl["C11"] = (15.0, 6.5, 0, b), (95.0, 6.5, 0, b), (209.0, 6.5, 0, b)
+    for n, (hx, hy) in enumerate(HOLES):
         pl[f"H{n + 1}"] = (hx, hy, 0, "top")
     return pl
 

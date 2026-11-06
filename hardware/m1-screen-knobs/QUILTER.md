@@ -17,3 +17,19 @@ unlocked parts (U1-U5, resistors, capacitors) and must keep these rules:
 
 Inputs: run `gen/make_quilter.py OUT` - two jobs: `A_route_only` (our placement, routing only) and `B_place_and_route` (only panel-fixed parts inside the outline). Upload the three files of one job: `.kicad_pcb`, `.kicad_sch`, `.kicad_pro` (no zip).
 Output wanted: the routed `.kicad_pcb` (same nets), which CI then checks with KiCad 10 (DRC with schematic parity).
+
+Each job folder also gets `bypass_capacitors.csv`, `high_current_nets.csv` and `ground_nets.csv` for the
+Circuit Comprehension step ("Upload CSV"); column names follow Quilter's own CSV export.
+
+## What we learned on app.quilter.ai (November 2026)
+
+- No public API, SDK, CLI or MCP: the web app is the only way in.
+- Settings of a step are saved only by its **Continue** button; jumping to another step by URL drops them.
+- "Replace Files" makes a new draft and offers to copy settings from the old one. Copying **Floorplan**
+  overwrote the placement regions parsed from the new file; stack-up and fab limits were not copied at all.
+- KiCad placement region: a rule area on B.Cu with every keep-out item allowed. It shows up in Floorplan,
+  parts are added to it by reference.
+- A rule area on F.Cu with only footprints disallowed is read as a top-side component keep-out.
+- "Prefer single-sided layouts" means **top side only**.
+- Job B (parts to be placed on the back only) failed after 8 minutes: "one of your components is too large
+  for Quilter to place within this board area". Quilter did not try the back side, so for M1 use job A.

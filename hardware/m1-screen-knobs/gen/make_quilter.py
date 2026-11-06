@@ -58,6 +58,29 @@ def rect(z, m=0.5):
         o.Append(q.x, q.y)
 
 
+# Circuit Comprehension tables for Quilter (upload with "Upload CSV" instead of editing its grid).
+# Column names follow Quilter's own CSV export; capacitance in nF, current in mA.
+BYPASS = [  # capacitor, bypassed component, pin, nF
+    ("C1", "U1", 15, 4700), ("C2", "U1", 15, 1000), ("C3", "U1", 14, 100), ("C4", "U1", 25, 100),
+    ("C5", "U2", 3, 2.2), ("C6", "U2", 4, 100), ("C7", "U2", 5, 1000), ("C8", "U2", 6, 100),
+    ("C9", "U3", 16, 100), ("C10", "U4", 16, 100), ("C11", "U5", 16, 100),
+    ("C12", "J1", 1, 10000), ("C13", "J1", 5, 1000)]
+POWER = [("+5V", 800), ("GND", 800), ("+3V3", 100), ("VREG", 50)]   # LED driver peak ~0.7 A
+
+
+def write_csv(d):
+    rows = {
+        "bypass_capacitors.csv": ["capacitor,bypassed_component,bypassed_pin,capacitance"] +
+                                 [f"{c},{u},{p},{nf:g}" for c, u, p, nf in BYPASS],
+        "high_current_nets.csv": ["net_name,max_current,use_power_pour"] +
+                                 [f"{n},{ma},false" for n, ma in POWER],
+        "ground_nets.csv": ["net_name,is_primary,use_region_pour", "GND,true,false"],
+    }
+    for name, lines in rows.items():
+        with open(os.path.join(d, name), "w", newline="\n") as f:
+            f.write("\n".join(lines) + "\n")
+
+
 def main(out):
     for job in ("A_route_only", "B_place_and_route"):
         d = os.path.join(out, job)
@@ -76,6 +99,7 @@ def main(out):
         b.Save(path)
         for ext in (".kicad_sch", ".kicad_pro"):
             shutil.copy(os.path.join(M.PROJ, D.NAME + ext), os.path.join(d, D.NAME + ext))
+        write_csv(d)
         print("ok", path)
 
 

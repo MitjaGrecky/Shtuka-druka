@@ -2,3 +2,6 @@ bench/shtuka_bench
 __pycache__/
 *.pyc
 .DS_Store
+
+# Local per-machine Claude Code MCP config (absolute PC paths)
+/.mcp.json

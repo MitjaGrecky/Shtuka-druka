@@ -23,6 +23,25 @@ import make_pcb as M
 FIXED = ("ENC", "D", "J", "H")
 
 
+def placement_region(b):
+    """Quilter placement region: a KiCad rule area with every keep-out item off,
+    linked to the bottom copper. ICs and passives are assigned to it in Quilter by
+    reference, so they stay on the back (the top belongs to encoders and LEDs)."""
+    z = pcbnew.ZONE(b)
+    z.SetIsRuleArea(True)
+    z.SetLayer(pcbnew.B_Cu)
+    for allow in (z.SetDoNotAllowTracks, z.SetDoNotAllowVias, z.SetDoNotAllowCopperPour,
+                  z.SetDoNotAllowPads, z.SetDoNotAllowFootprints):
+        allow(False)
+    z.SetZoneName("Bottom parts")
+    o = z.Outline()
+    o.NewOutline()
+    for x, y in ((0.5, 0.5), (D.W - 0.5, 0.5), (D.W - 0.5, D.H - 0.5), (0.5, D.H - 0.5)):
+        q = M.P(x, y)
+        o.Append(q.x, q.y)
+    b.Add(z)
+
+
 def main(out):
     for job in ("A_route_only", "B_place_and_route"):
         d = os.path.join(out, job)
@@ -36,6 +55,7 @@ def main(out):
                 fp.SetLocked(False)
                 x, y = 4 + 8 * (n % 26), D.H + 8 + 8 * (n // 26)   # rows under the board
                 fp.SetPosition(M.P(x, y))
+            placement_region(b)
         path = os.path.join(d, D.NAME + ".kicad_pcb")
         b.Save(path)
         for ext in (".kicad_sch", ".kicad_pro"):

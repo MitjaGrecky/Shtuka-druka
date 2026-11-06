@@ -19,6 +19,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.join(HERE, "..", "..")
 sys.path.insert(0, os.path.join(REPO, "hardware", "m1-screen-knobs", "gen"))
 import design as M1  # noqa: E402
+import importlib.util  # noqa: E402
+
+_spec = importlib.util.spec_from_file_location("w1_design", os.path.join(REPO, "hardware", "w1-levels", "gen", "design.py"))
+W1 = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(W1)
 
 W, D = 515.0, 460.0
 FOLD_Y, FOLD_Z, SHELF_Y, TOP_Z, BACK_Z = 300.0, 68.0, 430.0, 68.0, 143.0
@@ -113,11 +118,50 @@ def usb_receptacle(v):
     return out, n0 + hgt
 
 
+def w1_parts():
+    """W1 Levels from its own design data (hardware/w1-levels/gen/design.py, doc 31): board with the
+    window for M5, the pots, the bottom parts and both bus plugs, and the M5 module in the window."""
+    out = []
+    bs = lambda by: W1.S1 - by                                  # board y -> slope s
+    bx = lambda x: W1.X0 + x
+    n1 = -SKIN - W1.BELOW_SKIN
+    n0 = n1 - PCB
+    wx0, wy0, wx1, wy1 = W1.window()
+    out += slope_frame("W1 Levels", "slope", W1.X0, W1.X1, W1.S0, W1.S1, n0, n1,
+                       (bx(wx0), bx(wx1), bs(wy1), bs(wy0)), color="pcb", note="doc 31, 2 layers")
+    pl = W1.placement()
+    for n, (nm, px, py) in enumerate(W1.POTS):
+        s = W1.s_of(py)
+        out.append(slope_box(f"W1 {nm} pot", "slope", px - 4.9, px + 4.9, s - 5.5, s + 5.5, n1, n1 + 7.4,
+                             color="metal", est=True, note="Alps RK09K: 9.8 wide (Alps); 7.4 high from the drawing, to confirm"))
+        out.append(slope_box(f"W1 {nm} pot pins", "slope", px - 9, px - 6, s - 3, s + 3, n0 - 2.5, n0, color="metal",
+                             est=True, note="THT pins under the board"))
+    for ref, size, h in (("U1", (3, 3), 1.1), ("U2", (5, 6.4), 1.2), ("U3", (4, 4), 0.9)):
+        x, y = pl[ref][:2]
+        out.append(slope_box(f"W1 {ref}", "slope", bx(x) - size[0] / 2, bx(x) + size[0] / 2, bs(y) - size[1] / 2,
+                             bs(y) + size[1] / 2, n0 - h, n0, color="chip"))
+    for ref in ("J1", "J2"):
+        x, y = pl[ref][:2]
+        out.append(slope_box(f"W1 {ref} + IDC plug", "slope", bx(x) - 5.75, bx(x) + 5.75, bs(y) - 2.25, bs(y) + 2.25,
+                             n0 - 7.5, n0, color="plastic", est=True, note="2x7 1.27 mm header and the ribbon plug"))
+    # M5 Gain module in the window, in the plane of the encoder modules (6.5 mm under the skin), estimate
+    gs = W1.s_of(W1.GAIN[0][2])
+    out.append(slope_box("M5 module board", "slope", bx(W1.M5_X[0]), bx(W1.M5_X[1]), gs - 17, gs + 17, WZ0, WZ1,
+                         color="pcb", est=True, note="Gain 1 + 2, not designed yet; outline assumed in doc 31"))
+    for nm, px, _ in W1.GAIN:
+        out.append(slope_box(f"M5 {nm} encoder", "slope", px - 6.2, px + 6.2, gs - 6.7, gs + 6.7, WZ1, -SKIN,
+                             color="metal", note="Alps EC11E body"))
+    out.append(slope_box("M5 parts below", "slope", bx(W1.M5_X[0]) + 2, bx(W1.M5_X[1]) - 2, gs - 15, gs + 15, WZ0 - 4,
+                         WZ0, color="parts", est=True))
+    return out
+
+
 def slope_boards_and_pocket(usb):
     """W1-W3 with their component envelopes; W3 gets the pocket parts of the chosen USB-A variant."""
     out = []
     sp = (POCKET[2] + POCKET[3]) / 2
-    for nm, x0, x1 in (("W1 Levels", 10, 102), ("W2 Meters", 355, 390), ("W3 System", 413, 505)):
+    out += w1_parts()
+    for nm, x0, x1 in (("W2 Meters", 355, 390), ("W3 System", 413, 505)):
         if nm.startswith("W3") and USB_VARIANTS[usb][0] == "sub":
             cut = (USB_X - 8.5, USB_X + 8.5, sp - 4.5, sp + 4.5)            # receptacle passes through W3
             keep = (USB_X - 16, USB_X + 16, sp - 11, sp + 11)               # no W3 parts over the pocket board
@@ -278,9 +322,7 @@ def parts(usb=None):
     # slope: screen and the three slope boards
     P += screen_parts()
     P += slope_boards_and_pocket(usb)
-    for nm, x, y in (("Main pot", 32, 323), ("Cue Mix pot", 80, 323), ("Phones 1 pot", 32, 351), ("Phones 2 pot", 80, 351)):
-        a(slope_box(nm, "slope", x - 4.9, x + 4.9, s_of(y) - 5.5, s_of(y) + 5.5, WZ1, -SKIN, color="metal", est=True,
-                    note="9 mm pot class Alps RK09K: width 9.8 mm (Alps), depth and height to confirm"))
+    # the volume pots stand on W1: see w1_parts()
 
     # under the slope and the rear wall (doc 27 section 6, doc 29)
     a(box("A1 audio board", "rear", 20, 160, 315, 405, 6, 28, color="pcb"))
@@ -328,7 +370,7 @@ ALLOWED = {               # parts that are meant to touch (mounted on each other
     ("Battery bay", "Floor"), ("Rear jacks", "Rear wall"), ("Rear jacks", "rear board"),
     ("Phones", "Front wall"), ("Phones", "F1 headphone"), ("Crossfader", "P4 Right"), ("Crossfader", "Top skin"),
     ("Wheel bearing housing", "Top skin"), ("Wheel magnet", "P4 Right"), ("Wheel AS5600", "P4 Right"),
-    ("receptacle", "Pocket board"), ("SD socket", "W3 System"), ("Screen ", "Screen "),
+    ("receptacle", "Pocket board"), ("M5 Gain", "Slope skin"), ("M5 module", "M5 Gain"), ("W1 Levels", "W1 "), ("SD socket", "W3 System"), ("Screen ", "Screen "),
     ("Trill Bar", "P2 Grid"), ("Front wall", ""), ("Rear wall", ""), ("Floor", ""), ("Side", ""),
 }
 

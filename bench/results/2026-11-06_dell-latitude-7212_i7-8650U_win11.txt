@@ -1,0 +1,109 @@
+=== Shtuka Druka benchmark, Windows, Fri 11/06/2026  8:57:17.61 ===
+CPU: Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz
+Cores/threads: 4/8
+Max clock MHz: 2101
+RAM GB: 15.9
+Model: Latitude 7212 Rugged Extreme Tablet
+OS: Microsoft Windows 11 Pro
+Power: battery status 2 2 (2 = on AC), charge 100 100%
+Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)
+--- 1. Sweep, 8 voices per track ---
+# Shtuka Druka DSP benchmark. 48000 Hz, block 128 (2.67 ms). Reference track: 8 voices with filter+envelope (odd = wavetable synth, 2 osc/voice; even = sampler), track filter, drive, chorus, compressor, 4 sends; buses: 2 reverbs, 2 delays.
+# Load = processing time / block time. Capacity: p99 < 70% (offline sweep). Stability: overruns in the 30 s realtime check (depends on kernel and system noise).
+# realtime priority: on (Windows HIGH_PRIORITY_CLASS, TIME_CRITICAL)
+# memory locked: no (Windows)
+threads  tracks  avg%     p99%     max%     overruns  verdict
+1        4       7.2      13.4     78.9     0         pass
+1        8       13.3     19.3     27.1     0         pass
+1        12      19.8     29.1     38.0     0         pass
+1        16      26.5     40.8     56.1     0         pass
+1        20      32.3     39.9     51.1     0         pass
+1        24      40.6     64.0     219.9    3         pass
+1        28      45.9     67.9     80.4     0         pass
+1        32      56.1     98.8     115.2    14        FAIL
+# threads=1: max reference tracks that pass = 28
+# realtime check 30 s, 28 tracks, 1 threads: avg=50.1% p99=88.0% max=196.1% overruns=5380/11250
+8        4       6.8      10.9     12.6     0         pass
+8        8       7.9      11.6     13.7     0         pass
+8        12      11.8     17.5     41.7     0         pass
+8        16      14.4     19.2     22.6     0         pass
+8        20      18.9     28.4     40.5     0         pass
+8        24      19.4     28.7     106.8    1         pass
+8        28      22.8     31.1     112.9    1         pass
+8        32      23.1     32.8     107.6    1         pass
+8        40      30.7     45.3     129.7    3         pass
+8        48      34.7     52.8     104.5    1         pass
+8        56      39.5     53.2     175.5    6         pass
+8        64      45.3     68.9     155.8    5         pass
+8        80      57.7     80.3     215.9    5         FAIL
+# threads=8: max reference tracks that pass = 64
+# realtime check 30 s, 64 tracks, 8 threads: avg=46.0% p99=107.5% max=168.4% overruns=5376/11250
+
+--- 2. Target 16 tracks (R11), all threads, 60 s realtime ---
+# Shtuka Druka DSP benchmark. 48000 Hz, block 128 (2.67 ms). Reference track: 8 voices with filter+envelope (odd = wavetable synth, 2 osc/voice; even = sampler), track filter, drive, chorus, compressor, 4 sends; buses: 2 reverbs, 2 delays.
+# Load = processing time / block time. Capacity: p99 < 70% (offline sweep). Stability: overruns in the 30 s realtime check (depends on kernel and system noise).
+# realtime priority: on (Windows HIGH_PRIORITY_CLASS, TIME_CRITICAL)
+# memory locked: no (Windows)
+tracks=16 threads=8 mode=realtime avg=22.3% p99=47.4% max=201.9% overruns=11234/22500
+
+--- 3. Heavy synths: 16 voices per track, sweep ---
+# Shtuka Druka DSP benchmark. 48000 Hz, block 128 (2.67 ms). Reference track: 16 voices with filter+envelope (odd = wavetable synth, 2 osc/voice; even = sampler), track filter, drive, chorus, compressor, 4 sends; buses: 2 reverbs, 2 delays.
+# Load = processing time / block time. Capacity: p99 < 70% (offline sweep). Stability: overruns in the 30 s realtime check (depends on kernel and system noise).
+# realtime priority: on (Windows HIGH_PRIORITY_CLASS, TIME_CRITICAL)
+# memory locked: no (Windows)
+threads  tracks  avg%     p99%     max%     overruns  verdict
+1        4       7.3      9.1      14.5     0         pass
+1        8       15.0     23.0     36.5     0         pass
+1        12      25.5     53.9     63.9     0         pass
+1        16      28.9     38.8     56.4     0         pass
+1        20      36.3     50.0     70.5     0         pass
+1        24      43.6     63.9     83.2     0         pass
+1        28      51.2     70.6     92.6     0         FAIL
+# threads=1: max reference tracks that pass = 24
+# realtime check 30 s, 24 tracks, 1 threads: avg=62.9% p99=131.7% max=196.8% overruns=5315/11250
+8        4       7.7      12.2     43.1     0         pass
+8        8       8.9      12.4     14.3     0         pass
+8        12      13.5     17.5     77.5     0         pass
+8        16      12.3     16.3     77.4     0         pass
+8        20      17.0     22.4     66.5     0         pass
+8        24      18.2     25.4     140.0    1         pass
+8        28      21.9     25.3     180.3    1         pass
+8        32      24.9     33.1     184.7    1         pass
+8        40      31.2     43.2     145.9    1         pass
+8        48      34.5     47.0     78.6     0         pass
+8        56      41.9     55.9     233.4    3         pass
+8        64      43.6     63.6     200.6    6         pass
+8        80      55.8     79.0     199.3    3         FAIL
+# threads=8: max reference tracks that pass = 64
+# realtime check 30 s, 64 tracks, 8 threads: avg=77.0% p99=103.7% max=214.2% overruns=3820/11250
+
+--- 4. 96 kHz, block 256 (same 2.67 ms), sweep ---
+# Shtuka Druka DSP benchmark. 96000 Hz, block 256 (2.67 ms). Reference track: 8 voices with filter+envelope (odd = wavetable synth, 2 osc/voice; even = sampler), track filter, drive, chorus, compressor, 4 sends; buses: 2 reverbs, 2 delays.
+# Load = processing time / block time. Capacity: p99 < 70% (offline sweep). Stability: overruns in the 30 s realtime check (depends on kernel and system noise).
+# realtime priority: on (Windows HIGH_PRIORITY_CLASS, TIME_CRITICAL)
+# memory locked: no (Windows)
+threads  tracks  avg%     p99%     max%     overruns  verdict
+1        4       9.6      16.3     24.2     0         pass
+1        8       17.4     26.2     37.8     0         pass
+1        12      26.2     38.5     43.7     0         pass
+1        16      34.3     51.3     64.9     0         pass
+1        20      43.0     63.6     80.9     0         pass
+1        24      51.1     70.8     101.7    1         FAIL
+# threads=1: max reference tracks that pass = 20
+# realtime check 30 s, 20 tracks, 1 threads: avg=62.3% p99=131.9% max=194.0% overruns=5240/11250
+8        4       9.4      14.0     78.7     0         pass
+8        8       12.3     15.1     58.5     0         pass
+8        12      14.4     19.1     21.3     0         pass
+8        16      14.4     19.1     129.9    1         pass
+8        20      19.8     26.5     81.8     0         pass
+8        24      20.5     26.2     29.8     0         pass
+8        28      25.4     35.0     106.3    2         pass
+8        32      26.3     38.8     97.3     0         pass
+8        40      33.1     47.5     154.7    2         pass
+8        48      38.9     58.5     181.0    3         pass
+8        56      46.7     66.9     193.2    6         pass
+8        64      48.7     72.9     137.2    3         FAIL
+# threads=8: max reference tracks that pass = 56
+# realtime check 30 s, 56 tracks, 8 threads: avg=76.8% p99=111.5% max=211.9% overruns=3786/11250
+
+=== done ===

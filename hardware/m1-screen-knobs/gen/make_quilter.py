@@ -17,6 +17,7 @@ Keep-outs under the encoder bodies (touch electrodes) are rule areas Quilter res
 Run with KiCad's Python: python3 make_quilter.py OUT_DIR
 License: AGPL-3.0-or-later.
 """
+import math
 import os
 import shutil
 import sys
@@ -136,7 +137,25 @@ def write_csv(d):
             f.write("\n".join(lines) + "\n")
 
 
-JOBS = ("D_rev02_route_only",)            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
+
+def arcs_to_chords(b, n=8):
+    """Quilter failed on PCB_ARC objects (jobs D, 06.11); replace each locked arc by n straight chords."""
+    for t in list(b.GetTracks()):
+        if t.Type() != pcbnew.PCB_ARC_T:
+            continue
+        c, r = t.GetCenter(), t.GetRadius()
+        a0 = t.GetArcAngleStart().AsRadians()
+        da = t.GetAngle().AsRadians()
+        net, layer, w = t.GetNet(), t.GetLayer(), t.GetWidth()
+        pts = [pcbnew.VECTOR2I(int(c.x + r * math.cos(a0 + da * i / n)), int(c.y + r * math.sin(a0 + da * i / n))) for i in range(n + 1)]
+        pts[0], pts[-1] = t.GetStart(), t.GetEnd()
+        b.Remove(t)
+        for p1, p2 in zip(pts, pts[1:]):
+            s = pcbnew.PCB_TRACK(b)
+            s.SetStart(p1); s.SetEnd(p2); s.SetLayer(layer); s.SetNet(net); s.SetWidth(w); s.SetLocked(True)
+            b.Add(s)
+
+JOBS = ("D_rev02_route_only", "F_chords_route_only", "G_chords_place_and_route")            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
 
 
 def main(out):
@@ -146,7 +165,7 @@ def main(out):
         b = M.build()
         b.SetLayerName(pcbnew.In1_Cu, "GND")
         b.SetLayerName(pcbnew.In2_Cu, "Signal")
-        if job.startswith("B"):
+        if job[0] in "BG":
             free = [fp for fp in b.GetFootprints() if not fp.GetReference().startswith(FIXED)]
             for n, fp in enumerate(sorted(free, key=lambda f: f.GetReference())):
                 fp.SetLocked(False)
@@ -164,6 +183,8 @@ def main(out):
                 if fp.GetReference().startswith("U"):
                     fp.SetLocked(True)
             top_filter(b)                            # top side: only the two free strips
+        if job[0] in "FG":
+            arcs_to_chords(b)
         path = os.path.join(d, D.NAME + ".kicad_pcb")
         b.Save(path)
         for ext in (".kicad_sch", ".kicad_pro"):

@@ -26,8 +26,8 @@ Circuit Comprehension step ("Upload CSV"); column names follow Quilter's own CSV
 | Group | Parts | Rule |
 |---|---|---|
 | Locked (the panel decides) | ENC1-8, D1-D104, J1, H1-H4 (117 parts) | never move |
-| Movable | U1-U5, R1-R18, RN1-RN6, C1-C13 (42 parts) | Quilter may move them |
-| Bottom (job C) | rule area "Bottom parts" (B.Cu, everything allowed) | all movable parts |
+| Movable (job C) | R1-R18, RN1-RN6, C1-C13 (37 parts), start below the board | Quilter places them next to their ICs |
+| Anchors (job C) | U1-U5 | locked inside the outline; parts inside the outline are pre-placed for Quilter |
 | Top (job C) | strips "Top strip rear" 211 x 5.1 mm (y 0.8-5.9) and "Top strip front" 211 x 2.4 mm (y 30.8-33.2) | small SMD only (0402, 0805, RN) |
 | Top, everything else | rule area "Top: locked parts only" (footprints disallowed) | nothing new |
 

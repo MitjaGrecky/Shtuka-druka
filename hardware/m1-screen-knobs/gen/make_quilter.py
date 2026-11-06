@@ -5,10 +5,11 @@
                        and Quilter keeps parts inside the outline where they are)
   B_place_and_route  - only what the panel fixes is inside the outline (encoders, ring LEDs, J1,
                        mounting holes); ICs and passives wait below the board for Quilter to place
-  C_small_parts_free - A plus placement filters: ICs and passives start where our layout put them and
-                       may move: anywhere on the bottom, and on the top only inside two free strips
-                       (rear and front, see TOP_STRIPS). Encoders, ring LEDs, J1 and mounting holes
-                       stay locked. Use this when A is too hard to route.
+  C_small_parts_free - ICs (U1-U5) stay where we put them, inside the outline: Quilter treats parts
+                       inside the outline as pre-placed and they anchor their passives. Resistors,
+                       capacitors and arrays (37 parts) wait below the board and Quilter places them
+                       next to their ICs: on the bottom, or on the top inside two free strips only
+                       (see TOP_STRIPS). Encoders, ring LEDs, J1, holes and ICs stay fixed.
 
 No tracks, no bottom pour. The In1 plane is renamed "GND" so Quilter recognises it.
 Keep-outs under the encoder bodies (touch electrodes) are rule areas Quilter respects.
@@ -147,8 +148,16 @@ def main(out):
                 fp.SetPosition(M.P(x, y))
             placement_region(b)
         if job.startswith("C"):
-            placement_region(b, top_keepout=False)   # parts keep our positions, may move on the back ...
-            top_filter(b)                            # ... or into the two top strips
+            # ICs stay where we put them (anchors, inside the outline); only resistors, capacitors and
+            # arrays wait below the board and are placed by Quilter next to their ICs (schematic clustering)
+            passives = [fp for fp in b.GetFootprints() if fp.GetReference().rstrip("0123456789") in ("R", "C", "RN")]
+            for n, fp in enumerate(sorted(passives, key=lambda f: f.GetReference())):
+                fp.SetLocked(False)
+                fp.SetPosition(M.P(4 + 8 * (n % 26), D.H + 8 + 8 * (n // 26)))
+            for fp in b.GetFootprints():
+                if fp.GetReference().startswith("U"):
+                    fp.SetLocked(True)
+            top_filter(b)                            # top side: only the two free strips
         path = os.path.join(d, D.NAME + ".kicad_pcb")
         b.Save(path)
         for ext in (".kicad_sch", ".kicad_pro"):

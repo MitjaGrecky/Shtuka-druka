@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Input files for Quilter (quilter.ai), two jobs:
+"""Input files for Quilter (quilter.ai), three jobs:
 
   A_route_only       - our placement; Quilter only routes (every part sits inside the outline,
                        and Quilter keeps parts inside the outline where they are)
   B_place_and_route  - only what the panel fixes is inside the outline (encoders, ring LEDs, J1,
                        mounting holes); ICs and passives wait below the board for Quilter to place
+  C_small_parts_free - A plus the placement filter: ICs and passives start where our layout put them
+                       (inside the outline, bottom side) and may move, but only on the bottom side
+                       (F.Cu footprint keep-out + B.Cu placement region). Encoders, ring LEDs, J1 and
+                       mounting holes stay locked. Use this when A is too hard to route.
 
 No tracks, no bottom pour. The In1 plane is renamed "GND" so Quilter recognises it.
 Keep-outs under the encoder bodies (touch electrodes) are rule areas Quilter respects.
@@ -82,7 +86,7 @@ def write_csv(d):
 
 
 def main(out):
-    for job in ("A_route_only", "B_place_and_route"):
+    for job in ("A_route_only", "B_place_and_route", "C_small_parts_free"):
         d = os.path.join(out, job)
         os.makedirs(d, exist_ok=True)
         b = M.build()
@@ -95,6 +99,8 @@ def main(out):
                 x, y = 4 + 8 * (n % 26), D.H + 8 + 8 * (n // 26)   # rows under the board
                 fp.SetPosition(M.P(x, y))
             placement_region(b)
+        if job.startswith("C"):
+            placement_region(b)      # parts keep our positions; the filter only keeps them on the back
         path = os.path.join(d, D.NAME + ".kicad_pcb")
         b.Save(path)
         for ext in (".kicad_sch", ".kicad_pro"):

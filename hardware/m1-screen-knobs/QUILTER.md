@@ -15,11 +15,23 @@ unlocked parts (U1-U5, resistors, capacitors) and must keep these rules:
 | Touch lines | TOUCH0-7 from R7-R14 to each encoder MP pin: short, away from SW/CS lines where possible |
 | LED driver U1 | IS31FL3741A, QFN-60 0.4 mm; thermal vias in the exposed pad; keep its decoupling (C1-C4) close |
 
-Inputs: run `gen/make_quilter.py OUT` - two jobs: `A_route_only` (our placement, routing only) and `B_place_and_route` (only panel-fixed parts inside the outline). Upload the three files of one job: `.kicad_pcb`, `.kicad_sch`, `.kicad_pro` (no zip).
+Inputs: run `gen/make_quilter.py OUT` - three jobs: `A_route_only` (our placement, routing only), `B_place_and_route` (only panel-fixed parts inside the outline) and `C_small_parts_free` (our placement, ICs and passives may move, bottom side only). Upload the three files of one job: `.kicad_pcb`, `.kicad_sch`, `.kicad_pro` (no zip).
 Output wanted: the routed `.kicad_pcb` (same nets), which CI then checks with KiCad 10 (DRC with schematic parity).
 
 Each job folder also gets `bypass_capacitors.csv`, `high_current_nets.csv` and `ground_nets.csv` for the
 Circuit Comprehension step ("Upload CSV"); column names follow Quilter's own CSV export.
+
+## Fixed and movable (map: `mech/m1_fixed_vs_movable.png`)
+
+| Group | Parts | Rule |
+|---|---|---|
+| Locked (the panel decides) | ENC1-8, D1-D104, J1, H1-H4 (117 parts) | never move |
+| Movable | U1-U5, R1-R18, RN1-RN6, C1-C13 (42 parts) | Quilter may move them, bottom side only |
+| Top side filter (job C) | rule area "Top no new parts" (F.Cu, footprints disallowed) | nothing new on the top |
+| Bottom region (job C) | rule area "Bottom parts" (B.Cu, everything allowed) | where movable parts may go |
+
+Job A result (Nov 6, 1h 28m): 1 candidate, 12 incomplete nets, 8 of 13 bypass capacitors flagged. Job C gives the placer room to
+fix exactly that, without touching the top.
 
 ## What we learned on app.quilter.ai (November 2026)
 

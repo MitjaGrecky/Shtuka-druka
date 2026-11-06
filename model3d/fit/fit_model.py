@@ -75,7 +75,7 @@ def slope_frame(name, group, x0, x1, s0, s1, n0, n1, hole, **kw):
 # ------------------------------------------------------------------ real parts (doc 32)
 SCREEN_SHIFT = -1.0       # screen 1 mm down the slope: 1.04 mm to the shelf instead of 0.37 (P92)
 POCKET = (413.0, 505.0, s_of(365) - 12 / math.cos(SLOPE), s_of(365) + 12 / math.cos(SLOPE))   # 92 x 24 (top view)
-USB_X = 440.5             # centre of the USB-A receptacle in the pocket
+USB_X = 428.0             # USB-A at the left end of the pocket: 36 mm free for a full-size SD card (32 mm)
 USB_VARIANTS = {
     # name: (where, height above its board, note)
     "A": ("W3", 13.7, "standard vertical USB-A, 13.7 mm (LCSC C456015, SHOU HAN AF 180° ZJB13.7)"),
@@ -86,6 +86,7 @@ USB_VARIANTS = {
 USB_VARIANT = "C"          # proposal P93
 USB_RECESS = 1.5           # variant C: top of the receptacle this far below the outer surface
 WZ0, WZ1 = -SKIN - 6.5 - PCB, -SKIN - 6.5     # slope boards: bottom and top face (n)
+SD_X0 = 474.0             # mouth of the SD socket (card goes in towards +x)
 
 
 def usb_receptacle(v):
@@ -129,9 +130,48 @@ def slope_boards_and_pocket(usb):
                                  color="parts", est=True))
     rec, _ = usb_receptacle(usb)
     out += rec
-    # SD slot (R81): microSD push-push socket, 1.9 mm class (Hirose DM3AT); full-size SD is an open question
-    out.append(slope_box("microSD socket", "slope", 470, 485, sp - 7.5, sp + 7.5, WZ1, WZ1 + 1.9, color="metal",
-                         est=True, note="height of the DM3 class, to confirm with the chosen socket"))
+    # SD slot (R81, full-size SD): push-push socket lying on W3 at the right end of the pocket, mouth facing -x.
+    # Socket class Hirose DM1AA / Kyocera 5638: about 29 x 29 x 3 mm (estimate until the part is chosen);
+    # it reaches under the skin on both sides of the 27.7 mm pocket, the 24 mm card goes in along x.
+    out.append(slope_box("SD socket (full size)", "slope", SD_X0, SD_X0 + 29, sp - 14.5, sp + 14.5, WZ1, WZ1 + 3.0,
+                         color="metal", est=True, note="full-size SD push-push, 29 x 29 x 3 class"))
+    out.append(slope_box("SD card (inserted)", "slope", SD_X0 - 2.5, SD_X0 + 29.5, sp - 12, sp + 12, WZ1 + 0.6,
+                         WZ1 + 2.7, color="plastic", check=False, note="24 x 32 x 2.1 mm, 2.5 mm out for the push"))
+    return out
+
+
+def screen_parts():
+    """Waveshare 10.1DP-CAPLCD from its 3D model (STP from the Waveshare wiki, not kept in the repo:
+    licence unclear). Bounding boxes read with OpenCascade, in the STP frame: x across the glass (147),
+    y along it (239), z out of the glass (front at z = 4.81). Mounted with the connector edge of the
+    driver board (STP -x) facing down the slope, towards the fold (P95):
+        s = gs + x,   device x = gx - y,   n = z - 4.81 - SKIN   (glass front against the skin)."""
+    gx, gs = 220.75, s_of(365) + SCREEN_SHIFT
+
+    def stp(name, x0, x1, y0, y1, z0, z1, **kw):
+        return slope_box(name, "screen", gx - y1, gx - y0, gs + x0, gs + x1, z0 - 4.81 - SKIN, z1 - 4.81 - SKIN, **kw)
+
+    out = [
+        stp("Screen glass", -73.5, 73.5, -119.5, 119.5, 2.81, 4.81, color="glass",
+            note="239 x 147 x 2 lens (wiki, STP)"),
+        stp("Screen LCM", -71.5, 71.5, -117.08, 111.52, -2.61, 2.81, color="lcd",
+            note="228.6 x 143 panel behind the lens, offset 2.4 mm towards STP +y: back 7.4 mm behind the glass front"),
+        stp("Screen driver board", -33.04, 38.98, -54.88, 53.14, -8.88, -0.47, color="pcb",
+            note="108 x 72 board on 4 mm posts, parts up to 8.9 mm below the glass front (STP, 2D drawing)"),
+        stp("Screen LCD flex", -6.3, 32.39, -103.72, -50.42, -3.55, -0.64, color="lcd",
+            note="flat cable from the board to the LCD"),
+    ]
+    # cables: both leave the board edge at STP x = -27 towards the fold. A straight HDMI plug does not fit:
+    # the socket axis is 2.1 mm from the LCD back (z -4.7 vs -2.61), a normal moulded plug is 8-11 mm thick.
+    # So: 90-degree adapters turning away from the screen, then the cables bend down to the Mini-ITX.
+    for nm, y0, y1, w in (("HDMI", -21.4, -5.6, 22.0), ("USB-C", 4.6, 12.0, 14.0)):
+        yc = (y0 + y1) / 2
+        out.append(stp(f"Screen {nm} 90° plug", -27 - 20, -27, yc - w / 2, yc + w / 2, -8.88 - 22, -2.61 - 0.5,
+                       color="plastic", est=True,
+                       note=f"{nm} right-angle plug/adapter, cable leaves away from the screen"))
+        out.append(stp(f"Screen {nm} cable bend", -27 - 20 - 25, -27, yc - w / 2, yc + w / 2, -8.88 - 22 - 30,
+                       -8.88 - 22, color="plastic", est=True, check=True,
+                       note="room for the cable to turn down to the Mini-ITX, bend radius about 25 mm"))
     return out
 
 
@@ -236,14 +276,7 @@ def parts(usb=None):
     a(box("F1 headphone board", "front", 15, 100, 35, 36.6, 6, 50, color="pcb"))
 
     # slope: screen and the three slope boards
-    gx, gs = 220.75, s_of(365) + SCREEN_SHIFT
-    a(slope_box("Screen glass", "screen", gx - 119.5, gx + 119.5, gs - 73.5, gs + 73.5, -SKIN - 2, -SKIN,
-                color="glass", note="Waveshare 10.1DP-CAPLCD, 239 x 147 x 2 (R110), wiki parameters table"))
-    a(slope_box("Screen LCD", "screen", gx - 114.3, gx + 114.3, gs - 71.5, gs + 71.5, -SKIN - 4.6,
-                -SKIN - 2, color="lcd", note="228.6 x 143.0 x 2.6, wiki parameters table"))
-    a(slope_box("Screen driver board", "screen", gx - 60, gx + 60, gs - 30, gs + 30, -SKIN - 4.6 - 12,
-                -SKIN - 4.6, color="pcb", est=True,
-                note="HDMI and USB board on the back of the LCD: size not in the wiki text, take it from the STP"))
+    P += screen_parts()
     P += slope_boards_and_pocket(usb)
     for nm, x, y in (("Main pot", 32, 323), ("Cue Mix pot", 80, 323), ("Phones 1 pot", 32, 351), ("Phones 2 pot", 80, 351)):
         a(slope_box(nm, "slope", x - 4.9, x + 4.9, s_of(y) - 5.5, s_of(y) + 5.5, WZ1, -SKIN, color="metal", est=True,
@@ -295,7 +328,7 @@ ALLOWED = {               # parts that are meant to touch (mounted on each other
     ("Battery bay", "Floor"), ("Rear jacks", "Rear wall"), ("Rear jacks", "rear board"),
     ("Phones", "Front wall"), ("Phones", "F1 headphone"), ("Crossfader", "P4 Right"), ("Crossfader", "Top skin"),
     ("Wheel bearing housing", "Top skin"), ("Wheel magnet", "P4 Right"), ("Wheel AS5600", "P4 Right"),
-    ("receptacle", "Pocket board"),
+    ("receptacle", "Pocket board"), ("SD socket", "W3 System"), ("Screen ", "Screen "),
     ("Trill Bar", "P2 Grid"), ("Front wall", ""), ("Rear wall", ""), ("Floor", ""), ("Side", ""),
 }
 

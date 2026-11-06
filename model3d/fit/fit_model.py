@@ -61,8 +61,83 @@ def s_of(y):
     return (y - FOLD_Y) / math.cos(SLOPE)
 
 
+def slope_frame(name, group, x0, x1, s0, s1, n0, n1, hole, **kw):
+    """A slope box with a rectangular hole (hx0, hx1, hs0, hs1) cut through it: up to four boxes."""
+    hx0, hx1, hs0, hs1 = hole
+    out = []
+    for nm, a, b, c, d in (("below", x0, x1, s0, hs0), ("above", x0, x1, hs1, s1),
+                           ("left", x0, hx0, hs0, hs1), ("right", hx1, x1, hs0, hs1)):
+        if b - a > 0.01 and d - c > 0.01:
+            out.append(slope_box(f"{name} ({nm} the cut-out)", group, a, b, c, d, n0, n1, **kw))
+    return out
+
+
+# ------------------------------------------------------------------ real parts (doc 32)
+SCREEN_SHIFT = -1.0       # screen 1 mm down the slope: 1.04 mm to the shelf instead of 0.37 (P92)
+POCKET = (413.0, 505.0, s_of(365) - 12 / math.cos(SLOPE), s_of(365) + 12 / math.cos(SLOPE))   # 92 x 24 (top view)
+USB_X = 440.5             # centre of the USB-A receptacle in the pocket
+USB_VARIANTS = {
+    # name: (where, height above its board, note)
+    "A": ("W3", 13.7, "standard vertical USB-A, 13.7 mm (LCSC C456015, SHOU HAN AF 180° ZJB13.7)"),
+    "B": ("W3", 10.0, "low-profile vertical USB-A, 10 mm (Kycon KUSBVLPX-AS1N; LCSC C2681562, SHOU HAN 10.0 180°)"),
+    "C": ("sub", 13.7, "standard vertical USB-A 13.7 mm on a small pocket board under a cut-out in W3"),
+    "D": ("W3h", 7.0, "horizontal through-hole USB-A, about 7 mm high (typical, estimate); the stick lies in the pocket"),
+}
+USB_VARIANT = "C"          # proposal P93
+USB_RECESS = 1.5           # variant C: top of the receptacle this far below the outer surface
+WZ0, WZ1 = -SKIN - 6.5 - PCB, -SKIN - 6.5     # slope boards: bottom and top face (n)
+
+
+def usb_receptacle(v):
+    """The USB-A receptacle of variant v (and its pocket board for C): list of boxes, top n of the receptacle."""
+    where, hgt, note = USB_VARIANTS[v]
+    sp = (POCKET[2] + POCKET[3]) / 2
+    out = []
+    if where == "W3":                       # vertical on W3: 14.5 x 7.0 footprint (USB-A shell 12 x 4.5 + tabs)
+        n0 = WZ1
+        out.append(slope_box(f"USB-A receptacle ({v})", "slope", USB_X - 7.25, USB_X + 7.25, sp - 3.5, sp + 3.5,
+                             n0, n0 + hgt, color="metal", note=note))
+    elif where == "W3h":                    # lying on W3, opening towards +x, the stick lies in the pocket
+        n0 = WZ1
+        out.append(slope_box(f"USB-A receptacle ({v})", "slope", 415, 429, sp - 6.6, sp + 6.6, n0, n0 + hgt,
+                             color="metal", est=True, note=note))
+    else:                                   # sub-board: receptacle top USB_RECESS under the outer surface
+        n0 = -USB_RECESS - hgt
+        out.append(slope_box(f"USB-A receptacle ({v})", "slope", USB_X - 7.25, USB_X + 7.25, sp - 3.5, sp + 3.5,
+                             n0, n0 + hgt, color="metal", note=note))
+        out.append(slope_box("Pocket board", "slope", USB_X - 15, USB_X + 15, sp - 10, sp + 10, n0 - PCB, n0,
+                             color="pcb", note="small board for the USB-A, cable to the Mini-ITX USB header"))
+        out.append(slope_box("Pocket board pins", "slope", USB_X - 13, USB_X + 13, sp - 8, sp + 8, n0 - PCB - 3,
+                             n0 - PCB, color="parts", est=True, note="THT pins and the cable plug"))
+    return out, n0 + hgt
+
+
+def slope_boards_and_pocket(usb):
+    """W1-W3 with their component envelopes; W3 gets the pocket parts of the chosen USB-A variant."""
+    out = []
+    sp = (POCKET[2] + POCKET[3]) / 2
+    for nm, x0, x1 in (("W1 Levels", 10, 102), ("W2 Meters", 355, 390), ("W3 System", 413, 505)):
+        if nm.startswith("W3") and USB_VARIANTS[usb][0] == "sub":
+            cut = (USB_X - 8.5, USB_X + 8.5, sp - 4.5, sp + 4.5)            # receptacle passes through W3
+            keep = (USB_X - 16, USB_X + 16, sp - 11, sp + 11)               # no W3 parts over the pocket board
+            out += slope_frame(nm, "slope", x0, x1, 12, 138, WZ0, WZ1, cut, color="pcb")
+            out += slope_frame(nm + " parts below", "slope", x0 + 2, x1 - 2, 14, 136, WZ0 - 4, WZ0, keep,
+                               color="parts", est=True)
+        else:
+            out.append(slope_box(nm, "slope", x0, x1, 12, 138, WZ0, WZ1, color="pcb"))
+            out.append(slope_box(nm + " parts below", "slope", x0 + 2, x1 - 2, 14, 136, WZ0 - 4, WZ0,
+                                 color="parts", est=True))
+    rec, _ = usb_receptacle(usb)
+    out += rec
+    # SD slot (R81): microSD push-push socket, 1.9 mm class (Hirose DM3AT); full-size SD is an open question
+    out.append(slope_box("microSD socket", "slope", 470, 485, sp - 7.5, sp + 7.5, WZ1, WZ1 + 1.9, color="metal",
+                         est=True, note="height of the DM3 class, to confirm with the chosen socket"))
+    return out
+
+
 # ------------------------------------------------------------------ the model
-def parts():
+def parts(usb=None):
+    usb = usb or USB_VARIANT
     P = []
     a = P.append
     # shell
@@ -73,7 +148,8 @@ def parts():
     a(box("Side left", "shell", 0, SKIN, SKIN, D - SKIN, SKIN, TOP_Z, **sh))
     a(box("Side right", "shell", W - SKIN, W, SKIN, D - SKIN, SKIN, TOP_Z, **sh))
     a(box("Top skin", "shell", SKIN, W - SKIN, SKIN, FOLD_Y, TOP_Z - SKIN, TOP_Z, **sh))
-    a(slope_box("Slope skin", "shell", SKIN, W - SKIN, 0, SLOPE_LEN, -SKIN, 0, **sh))
+    # slope skin with the USB-A + SD pocket open down to W3 (R81); the pocket walls are left out
+    P += slope_frame("Slope skin", "shell", SKIN, W - SKIN, 0, SLOPE_LEN, -SKIN, 0, POCKET, **sh)
     a(box("Shelf", "shell", SKIN, W - SKIN, SHELF_Y, D - SKIN, BACK_Z - SKIN, BACK_Z, **sh))
 
     # panel boards under the flat part (doc 29); component envelope 4 mm under each
@@ -85,10 +161,23 @@ def parts():
               note="envelope of the components under the board"))
     a(box("Trill Bar x2", "panel", 130, 311.5, 13, 31, PCB_TOP, TOP_Z - SKIN, color="pcb",
           note="touch strip sensors right under the skin (R113)"))
-    a(box("Crossfader body", "panel", 429, 489, 17.5, 26.5, PCB_TOP, PCB_TOP + 6.5, color="metal", est=True,
-          note="60 mm low-profile fader, height to be checked against the chosen part"))
-    a(Box("Wheel bearing", "panel", (459, 277, PCB_TOP + 3.25), (26, 26, 6.5), color="metal", shape="cyl", est=True))
-    a(Box("Wheel", "top", (459, 277, TOP_Z + 4.5), (38, 38, 8), color="knob", shape="cyl", check=False))
+    # crossfader: Bourns PTA4543 (45 mm travel), body 60 x 9 x 6.5 mm; two M2 threads on top screw it to
+    # the skin, so the body touches the skin by design (Bourns PTA drawing: A = 60, 9.0, 6.5, M2 x 2 places)
+    a(box("Crossfader body", "panel", 429, 489, 17.5, 26.5, PCB_TOP, PCB_TOP + 6.5, color="metal",
+          note="Bourns PTA4543-2015CPB103 (LCSC C17328789 is the DP lever version); panel-mounted with 2 x M2"))
+    # wheel (R74): AS5600 under P4 (bottom side), 6 x 2.5 mm diametric magnet 0.5 mm above the board,
+    # 6700ZZ bearing (10 x 15 x 4) in a printed housing screwed under the skin. AS5600 datasheet:
+    # magnet 6 mm, air gap 0.5-3 mm, SOIC-8 max 1.75 mm; here magnet -> die about 0.5 + 1.6 + 0.4 = 2.5 mm
+    wx, wy = 459.0, 277.0
+    a(Box("Wheel bearing housing", "panel", (wx, wy, 63.25), (21, 21, 3.5), color="plastic", shape="cyl",
+          note="printed, holds the 6700ZZ bearing, screwed to the skin"))
+    a(Box("Wheel bearing 6700ZZ", "panel", (wx, wy, 63.5), (15, 15, 4), color="metal", shape="cyl", check=False,
+          note="10 x 15 x 4 mm; sits 0.5 mm into a counterbore of the skin"))
+    a(Box("Wheel magnet", "panel", (wx, wy, PCB_TOP + 0.5 + 1.25), (6, 6, 2.5), color="metal", shape="cyl",
+          note="6 x 2.5 mm diametric, on the shaft end; 0.5 mm above P4 by design"))
+    a(Box("Wheel AS5600", "panel", (wx, wy, PCB_TOP - PCB - 0.875), (4.9, 6.0, 1.75), color="chip",
+          note="SOIC-8 on the bottom of P4, under the magnet"))
+    a(Box("Wheel", "top", (wx, wy, TOP_Z + 4.5), (38, 38, 8), color="knob", shape="cyl", check=False))
 
     # everything on top of the panel, from panel v7 (visual only)
     J = json.load(open(os.path.join(REPO, "mockup", "layout", "layout_v7.json")))
@@ -147,24 +236,18 @@ def parts():
     a(box("F1 headphone board", "front", 15, 100, 35, 36.6, 6, 50, color="pcb"))
 
     # slope: screen and the three slope boards
-    gx = 220.75
-    a(slope_box("Screen glass", "screen", gx - 119.5, gx + 119.5, s_of(365) - 73.5, s_of(365) + 73.5, -SKIN - 2, -SKIN,
-                color="glass", note="Waveshare 10.1DP-CAPLCD, 239 x 147 x 2 (R110)"))
-    a(slope_box("Screen LCD", "screen", gx - 114.3, gx + 114.3, s_of(365) - 71.5, s_of(365) + 71.5, -SKIN - 4.6,
-                -SKIN - 2, color="lcd"))
-    a(slope_box("Screen driver board", "screen", gx - 60, gx + 60, s_of(365) - 30, s_of(365) + 30, -SKIN - 4.6 - 12,
-                -SKIN - 4.6, color="pcb", est=True, note="HDMI and USB board on the back of the LCD, size estimated"))
-    wz0, wz1 = -SKIN - 6.5 - PCB, -SKIN - 6.5
-    for nm, x0, x1 in (("W1 Levels", 10, 102), ("W2 Meters", 355, 390), ("W3 System", 413, 505)):
-        a(slope_box(nm, "slope", x0, x1, 12, 138, wz0, wz1, color="pcb"))
-        a(slope_box(nm + " parts below", "slope", x0 + 2, x1 - 2, 14, 136, wz0 - 4, wz0, color="parts", est=True))
+    gx, gs = 220.75, s_of(365) + SCREEN_SHIFT
+    a(slope_box("Screen glass", "screen", gx - 119.5, gx + 119.5, gs - 73.5, gs + 73.5, -SKIN - 2, -SKIN,
+                color="glass", note="Waveshare 10.1DP-CAPLCD, 239 x 147 x 2 (R110), wiki parameters table"))
+    a(slope_box("Screen LCD", "screen", gx - 114.3, gx + 114.3, gs - 71.5, gs + 71.5, -SKIN - 4.6,
+                -SKIN - 2, color="lcd", note="228.6 x 143.0 x 2.6, wiki parameters table"))
+    a(slope_box("Screen driver board", "screen", gx - 60, gx + 60, gs - 30, gs + 30, -SKIN - 4.6 - 12,
+                -SKIN - 4.6, color="pcb", est=True,
+                note="HDMI and USB board on the back of the LCD: size not in the wiki text, take it from the STP"))
+    P += slope_boards_and_pocket(usb)
     for nm, x, y in (("Main pot", 32, 323), ("Cue Mix pot", 80, 323), ("Phones 1 pot", 32, 351), ("Phones 2 pot", 80, 351)):
-        a(slope_box(nm, "slope", x - 5, x + 5, s_of(y) - 5.5, s_of(y) + 5.5, wz1, -SKIN, color="metal", est=True))
-    # hot-swap pocket (R81): a recess down to W3; receptacles stand on W3 (sizes: typical parts, to confirm)
-    sp = s_of(365)
-    a(slope_box("USB-A receptacle (vertical)", "slope", 440, 455, sp - 3.5, sp + 3.5, wz1, wz1 + 15.5,
-                color="metal", est=True, note="typical vertical USB-A: about 15.5 mm above the board"))
-    a(slope_box("microSD socket", "slope", 470, 485, sp - 7.5, sp + 7.5, wz1, wz1 + 1.9, color="metal", est=True))
+        a(slope_box(nm, "slope", x - 4.9, x + 4.9, s_of(y) - 5.5, s_of(y) + 5.5, WZ1, -SKIN, color="metal", est=True,
+                    note="9 mm pot class Alps RK09K: width 9.8 mm (Alps), depth and height to confirm"))
 
     # under the slope and the rear wall (doc 27 section 6, doc 29)
     a(box("A1 audio board", "rear", 20, 160, 315, 405, 6, 28, color="pcb"))
@@ -210,7 +293,9 @@ ALLOWED = {               # parts that are meant to touch (mounted on each other
     ("Trill Bar", "Top skin"), ("Screen glass", "Slope skin"), ("Screen glass", "Screen LCD"),
     ("Screen LCD", "Screen driver"), ("pot", "Slope skin"), ("pot", "W1 Levels"), ("receptacle", "W3 System"), ("microSD", "W3 System"),
     ("Battery bay", "Floor"), ("Rear jacks", "Rear wall"), ("Rear jacks", "rear board"),
-    ("Phones", "Front wall"), ("Phones", "F1 headphone"), ("Crossfader", "P4 Right"), ("Wheel bearing", "P4 Right"),
+    ("Phones", "Front wall"), ("Phones", "F1 headphone"), ("Crossfader", "P4 Right"), ("Crossfader", "Top skin"),
+    ("Wheel bearing housing", "Top skin"), ("Wheel magnet", "P4 Right"), ("Wheel AS5600", "P4 Right"),
+    ("receptacle", "Pocket board"),
     ("Trill Bar", "P2 Grid"), ("Front wall", ""), ("Rear wall", ""), ("Floor", ""), ("Side", ""),
 }
 
@@ -253,9 +338,24 @@ def report(P, res):
     return "\n".join(L)
 
 
+def usb_table():
+    """Every USB-A variant: where the top of the receptacle ends up and what it hits."""
+    L = ["## USB-A in the System pocket: variants", "",
+         "| Variant | Part | Top vs. outer surface, mm | Collisions / gaps < 1 mm |", "|---|---|---|---|"]
+    for v, (where, hgt, note) in USB_VARIANTS.items():
+        P = parts(v)
+        _, top = usb_receptacle(v)
+        mine = [r for r in check(P) if "USB-A" in r[1] or "USB-A" in r[2] or "Pocket board" in r[1] + r[2]]
+        hits = "; ".join(f"{a} / {b}: {g:g}" for g, a, b, e in mine) or "none"
+        pos = f"+{top:.1f} (sticks out)" if top > 0.05 else f"{top:.1f} (inside)"
+        L.append(f"| {v} | {note} | {pos} | {hits} |")
+    return "\n".join(L)
+
+
 if __name__ == "__main__":
     P = parts()
     res = check(P)
     print(report(P, res))
+    print(usb_table())
     if "--json" in sys.argv:
         json.dump([p.dict() for p in P], open(os.path.join(HERE, "fit_parts.json"), "w"), ensure_ascii=False, indent=0)

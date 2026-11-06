@@ -157,7 +157,7 @@ def build(out_dir, render=False):
             fc.objects.link(objs[n])
 
     # report as a text block inside the .blend and next to it
-    rep = F.report(parts, res)
+    rep = F.report(parts, res) + "\n" + F.usb_table()
     t = bpy.data.texts.new("fit_report.md")
     t.write(rep)
     open(os.path.join(out_dir, "fit_report.md"), "w").write(rep + "\n")
@@ -207,7 +207,7 @@ def build(out_dir, render=False):
         except Exception:
             pass
         top = {o.name for o in bpy.data.collections[GROUP_NAMES["top"]].objects}
-        skins = {"Top skin", "Slope skin", "Shelf", "Side left"}
+        skins = {"Top skin", "Shelf", "Side left"} | {o.name for o in bpy.data.objects if o.name.startswith("Slope skin")}
         shots = (("fit_iso.png", "Cam iso", set()),
                  ("fit_iso_open.png", "Cam iso", skins | top),
                  ("fit_side_section.png", "Cam side", {"Side right"}))

@@ -11,6 +11,9 @@ blender -b -P build_blend.py -- OUT_DIR    # the same inside Blender
 
 In the .blend: one collection per group, collisions in red, gaps under 1 mm in orange, all of them also in the
 "Findings" collection. Parts marked `estimate` are guesses to replace with datasheet sizes.
+Real part sizes and their sources are in doc 32 (`docs/ru/32_fit_real_parts.md`): crossfader Bourns PTA4543,
+wheel on AS5600 + 6700ZZ bearing, Waveshare 10.1DP-CAPLCD. `fit_model.py` also prints a table of the USB-A
+variants for the System pocket (A-D, `USB_VARIANT` picks the one in the model).
 Units are millimetres; x from the left side, y from the front edge, z from the floor.
 
 License: AGPL-3.0-or-later (code), CERN-OHL-S-2.0 (data).

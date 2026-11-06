@@ -34,12 +34,28 @@ def placement_region(b):
                   z.SetDoNotAllowPads, z.SetDoNotAllowFootprints):
         allow(False)
     z.SetZoneName("Bottom parts")
+    rect(z)
+    b.Add(z)
+    # Quilter did not pick the region up from our KiCad 7 file, so the top side also gets a
+    # footprint keep-out: nothing new may be placed there (the locked encoders and LEDs stay)
+    z = pcbnew.ZONE(b)
+    z.SetIsRuleArea(True)
+    z.SetLayer(pcbnew.F_Cu)
+    for allow in (z.SetDoNotAllowTracks, z.SetDoNotAllowVias, z.SetDoNotAllowCopperPour,
+                  z.SetDoNotAllowPads):
+        allow(False)
+    z.SetDoNotAllowFootprints(True)
+    z.SetZoneName("Top no new parts")
+    rect(z)
+    b.Add(z)
+
+
+def rect(z, m=0.5):
     o = z.Outline()
     o.NewOutline()
-    for x, y in ((0.5, 0.5), (D.W - 0.5, 0.5), (D.W - 0.5, D.H - 0.5), (0.5, D.H - 0.5)):
+    for x, y in ((m, m), (D.W - m, m), (D.W - m, D.H - m), (m, D.H - m)):
         q = M.P(x, y)
         o.Append(q.x, q.y)
-    b.Add(z)
 
 
 def main(out):

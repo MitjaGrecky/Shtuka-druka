@@ -1,0 +1,937 @@
+** Drc report for /tmp/drc_J2_rev031_cand5_1/m1-screen-knobs.kicad_pcb **
+** Created on 2026-11-08 00:07:35 **
+
+** Found 278 DRC violations **
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(142.6870 mm, 72.6994 mm): Reference 'R8'
+    @(143.6820 mm, 71.9412 mm): Reference 'R13'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(153.1870 mm, 72.6994 mm): Reference 'R11'
+    @(155.8120 mm, 73.5712 mm): Reference 'R12'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(149.6570 mm, 67.5122 mm): Reference 'RN4'
+    @(151.4370 mm, 68.6158 mm): Reference 'R14'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(-1.6100 mm, 1.6100 mm): Polygon on Board Layer Stack Bottom Overlay
+    @(148.6270 mm, 64.9868 mm): Reference 'C6'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(145.9820 mm, 70.9994 mm): Reference 'RN3'
+    @(145.3120 mm, 70.0840 mm): Reference 'R9'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(127.0017 mm, 67.8094 mm): Reference 'U4'
+    @(126.2867 mm, 67.8094 mm): Line on Board Layer Stack Bottom Overlay
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(146.6260 mm, 46.0343 mm): Circle on Board Layer Stack Bottom Overlay
+    @(146.0220 mm, 44.9156 mm): Reference 'R15'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(208.4320 mm, 51.9099 mm): Reference 'C11'
+    @(207.1970 mm, 50.8728 mm): Reference 'U5'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(96.0720 mm, 51.7446 mm): Reference 'U3'
+    @(97.3070 mm, 52.7817 mm): Reference 'C9'
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; Severity: warning
+    @(151.4370 mm, 68.6158 mm): Reference 'R14'
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; Severity: warning
+    @(145.3120 mm, 70.0840 mm): Reference 'R9'
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; Severity: warning
+    @(143.6820 mm, 71.9412 mm): Reference 'R13'
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; Severity: warning
+    @(91.9070 mm, 50.0763 mm): Reference 'RN1'
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(75.8000 mm, 55.6000 mm): Rule Area on Top Layer and 31 more
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(40.0000 mm, 73.6500 mm): Rule Area on Top Layer and 31 more
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(40.0000 mm, 40.0000 mm): Rule Area on Top Layer and 31 more
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(263.6500 mm, 40.0000 mm): Rule Area on Top Layer and 31 more
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(47.8000 mm, 55.6000 mm): Rule Area on Top Layer and 31 more
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(131.8000 mm, 55.6000 mm): Rule Area on Top Layer and 31 more
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(40.0000 mm, 40.0000 mm): Rule Area on Top Layer and 31 more
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(103.8000 mm, 55.6000 mm): Rule Area on Top Layer and 31 more
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(215.8000 mm, 55.6000 mm): Rule Area on Top Layer and 31 more
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(243.8000 mm, 55.6000 mm): Rule Area on Top Layer and 31 more
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(187.8000 mm, 55.6000 mm): Rule Area on Top Layer and 31 more
+[item_on_disabled_layer]: Item on a disabled copper layer (layer In3.Cu)
+    Local override; Severity: error
+    @(159.8000 mm, 55.6000 mm): Rule Area on Top Layer and 31 more
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(102.5000 mm, 57.5000 mm): Footprint ENC3
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(45.5147 mm, 68.4853 mm): Footprint D1
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(194.0000 mm, 48.0000 mm): Footprint D72
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(77.4078 mm, 48.9134 mm): Footprint D19
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(234.0000 mm, 60.0000 mm): Footprint D89
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(65.0866 mm, 55.4078 mm): Footprint D10
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(238.0000 mm, 60.0000 mm): Footprint D94
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(82.0000 mm, 48.0000 mm): Footprint D20
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(101.5147 mm, 51.5147 mm): Footprint D31
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(202.4853 mm, 51.5147 mm): Footprint D74
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(205.0866 mm, 64.5922 mm): Footprint D77
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(129.5147 mm, 68.4853 mm): Footprint D40
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(118.4853 mm, 68.4853 mm): Footprint D39
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(90.4853 mm, 68.4853 mm): Footprint D26
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(185.5147 mm, 68.4853 mm): Footprint D66
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(54.0000 mm, 48.0000 mm): Footprint D7
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(261.0866 mm, 55.4078 mm): Footprint D101
+[lib_footprint_issues]: The current configuration does not include the library 'MountingHole'.
+    Local override; Severity: warning
+    @(180.0000 mm, 42.6000 mm): Footprint H7
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(205.0866 mm, 55.4078 mm): Footprint D75
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(258.4853 mm, 51.5147 mm): Footprint D100
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(245.4078 mm, 48.9134 mm): Footprint D97
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(230.4853 mm, 51.5147 mm): Footprint D87
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(42.0000 mm, 60.0000 mm): Footprint D3
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(154.0000 mm, 60.0000 mm): Footprint D55
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(58.5922 mm, 48.9134 mm): Footprint D8
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(98.0000 mm, 60.0000 mm): Footprint D29
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(241.5147 mm, 51.5147 mm): Footprint D96
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(222.0000 mm, 48.0000 mm): Footprint D85
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(182.9134 mm, 64.5922 mm): Footprint D67
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(93.0866 mm, 64.5922 mm): Footprint D25
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(261.0866 mm, 64.5922 mm): Footprint D103
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(94.0000 mm, 60.0000 mm): Footprint D24
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(146.4853 mm, 68.4853 mm): Footprint D52
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(90.4853 mm, 51.5147 mm): Footprint D22
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(178.0000 mm, 60.0000 mm): Footprint D63
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(182.9134 mm, 55.4078 mm): Footprint D69
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(202.4853 mm, 68.4853 mm): Footprint D78
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(74.5000 mm, 57.5000 mm): Footprint ENC2
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(101.5147 mm, 68.4853 mm): Footprint D27
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(146.4853 mm, 51.5147 mm): Footprint D48
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(250.0000 mm, 48.0000 mm): Footprint D98
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(93.0866 mm, 55.4078 mm): Footprint D23
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(198.5922 mm, 48.9134 mm): Footprint D73
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(213.5147 mm, 51.5147 mm): Footprint D83
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(42.9134 mm, 55.4078 mm): Footprint D4
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(214.5000 mm, 57.5000 mm): Footprint ENC7
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(45.5147 mm, 51.5147 mm): Footprint D5
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(150.0000 mm, 60.0000 mm): Footprint D50
+[lib_footprint_issues]: The current configuration does not include the library 'MountingHole'.
+    Local override; Severity: warning
+    @(42.6000 mm, 42.6000 mm): Footprint H1
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(118.4853 mm, 51.5147 mm): Footprint D35
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(65.0866 mm, 64.5922 mm): Footprint D12
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(86.5922 mm, 48.9134 mm): Footprint D21
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(186.5000 mm, 57.5000 mm): Footprint ENC6
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(230.4853 mm, 68.4853 mm): Footprint D91
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(185.5147 mm, 51.5147 mm): Footprint D70
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(149.0866 mm, 55.4078 mm): Footprint D49
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(130.5000 mm, 57.5000 mm): Footprint ENC4
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(238.9134 mm, 55.4078 mm): Footprint D95
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(210.9134 mm, 55.4078 mm): Footprint D82
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(210.0000 mm, 60.0000 mm): Footprint D81
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(226.5922 mm, 48.9134 mm): Footprint D86
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(177.0866 mm, 64.5922 mm): Footprint D64
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(98.9134 mm, 64.5922 mm): Footprint D28
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(70.9134 mm, 55.4078 mm): Footprint D17
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(166.0000 mm, 48.0000 mm): Footprint D59
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(189.4078 mm, 48.9134 mm): Footprint D71
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(98.9134 mm, 55.4078 mm): Footprint D30
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(114.5922 mm, 48.9134 mm): Footprint D34
+[lib_footprint_issues]: The current configuration does not include the library 'MountingHole'.
+    Local override; Severity: warning
+    @(236.0000 mm, 42.6000 mm): Footprint H8
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(254.5922 mm, 48.9134 mm): Footprint D99
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(217.4078 mm, 48.9134 mm): Footprint D84
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(62.4853 mm, 68.4853 mm): Footprint D13
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(70.9134 mm, 64.5922 mm): Footprint D15
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(46.5000 mm, 57.5000 mm): Footprint ENC1
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(242.5000 mm, 57.5000 mm): Footprint ENC8
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(122.0000 mm, 60.0000 mm): Footprint D37
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(129.5147 mm, 51.5147 mm): Footprint D44
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(213.5147 mm, 68.4853 mm): Footprint D79
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(241.5147 mm, 68.4853 mm): Footprint D92
+[lib_footprint_issues]: The current configuration does not include the library 'MountingHole'.
+    Local override; Severity: warning
+    @(261.4000 mm, 71.4000 mm): Footprint H4
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(174.4853 mm, 68.4853 mm): Footprint D65
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(105.4078 mm, 48.9134 mm): Footprint D32
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(62.4853 mm, 51.5147 mm): Footprint D9
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(154.9134 mm, 64.5922 mm): Footprint D54
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(142.5922 mm, 48.9134 mm): Footprint D47
+[lib_footprint_issues]: The current configuration does not include the library 'MountingHole'.
+    Local override; Severity: warning
+    @(42.6000 mm, 71.4000 mm): Footprint H3
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(110.0000 mm, 48.0000 mm): Footprint D33
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(126.9134 mm, 55.4078 mm): Footprint D43
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(70.0000 mm, 60.0000 mm): Footprint D16
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(154.9134 mm, 55.4078 mm): Footprint D56
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(158.5000 mm, 57.5000 mm): Footprint ENC5
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(49.4078 mm, 48.9134 mm): Footprint D6
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(161.4078 mm, 48.9134 mm): Footprint D58
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(121.0866 mm, 55.4078 mm): Footprint D36
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(233.0866 mm, 64.5922 mm): Footprint D90
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(149.0866 mm, 64.5922 mm): Footprint D51
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(133.4078 mm, 48.9134 mm): Footprint D45
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(170.5922 mm, 48.9134 mm): Footprint D60
+[lib_footprint_issues]: The current configuration does not include the library 'MountingHole'.
+    Local override; Severity: warning
+    @(68.0000 mm, 42.6000 mm): Footprint H5
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(126.9134 mm, 64.5922 mm): Footprint D41
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(174.4853 mm, 51.5147 mm): Footprint D61
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(177.0866 mm, 55.4078 mm): Footprint D62
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(206.0000 mm, 60.0000 mm): Footprint D76
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(157.5147 mm, 68.4853 mm): Footprint D53
+[lib_footprint_issues]: The current configuration does not include the library 'MountingHole'.
+    Local override; Severity: warning
+    @(124.0000 mm, 42.6000 mm): Footprint H6
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(66.0000 mm, 60.0000 mm): Footprint D11
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(262.0000 mm, 60.0000 mm): Footprint D102
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(182.0000 mm, 60.0000 mm): Footprint D68
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(73.5147 mm, 51.5147 mm): Footprint D18
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(210.9134 mm, 64.5922 mm): Footprint D80
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(157.5147 mm, 51.5147 mm): Footprint D57
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(73.5147 mm, 68.4853 mm): Footprint D14
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(258.4853 mm, 68.4853 mm): Footprint D104
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(238.9134 mm, 64.5922 mm): Footprint D93
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(233.0866 mm, 55.4078 mm): Footprint D88
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(138.0000 mm, 48.0000 mm): Footprint D46
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(126.0000 mm, 60.0000 mm): Footprint D42
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(42.9134 mm, 64.5922 mm): Footprint D2
+[lib_footprint_issues]: The current configuration does not include the library 'MountingHole'.
+    Local override; Severity: warning
+    @(261.4000 mm, 42.6000 mm): Footprint H2
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(121.0866 mm, 64.5922 mm): Footprint D38
+[lib_footprint_issues]: The current configuration does not include the library 'Package_DFN_QFN'.
+    Local override; Severity: warning
+    @(150.8870 mm, 67.2540 mm): Footprint U2
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(151.8420 mm, 63.2433 mm): Footprint C5
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(142.6870 mm, 71.5294 mm): Footprint R8
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(154.4670 mm, 44.9356 mm): Footprint C2
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(151.4370 mm, 69.7858 mm): Footprint R14
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(127.3420 mm, 64.1151 mm): Footprint C10
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(149.2270 mm, 70.1976 mm): Footprint R10
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(157.5620 mm, 51.4781 mm): Footprint R4
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(143.8820 mm, 70.9994 mm): Footprint RN3
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(151.7570 mm, 67.5122 mm): Footprint RN4
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(145.3120 mm, 68.9140 mm): Footprint R9
+[lib_footprint_issues]: The current configuration does not include the library 'Package_SO'.
+    Local override; Severity: warning
+    @(96.0720 mm, 48.2946 mm): Footprint U3
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(155.8120 mm, 72.4012 mm): Footprint R12
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(147.4670 mm, 64.9868 mm): Footprint C6
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(152.3120 mm, 51.4781 mm): Footprint R3
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(159.2070 mm, 42.2502 mm): Footprint C1
+[lib_footprint_issues]: The current configuration does not include the library 'ShtukaDruka'.
+    Local override; Severity: warning
+    @(152.0000 mm, 46.6000 mm): Footprint U1
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(144.4370 mm, 46.2474 mm): Footprint R1
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(148.3520 mm, 46.6592 mm): Footprint R16
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(152.2920 mm, 43.6420 mm): Footprint C3
+[lib_footprint_issues]: The current configuration does not include the library 'Package_SO'.
+    Local override; Severity: warning
+    @(123.5517 mm, 67.8094 mm): Footprint U4
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(149.6870 mm, 72.4012 mm): Footprint R7
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(103.2070 mm, 71.8912 mm): Footprint C12
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(96.7170 mm, 67.6022 mm): Footprint C13
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(208.6320 mm, 46.5892 mm): Footprint RN5
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(154.9170 mm, 48.0009 mm): Footprint C4
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(154.9170 mm, 68.0522 mm): Footprint C8
+[lib_footprint_issues]: The current configuration does not include the library 'Connector_PinHeader_1.27mm'.
+    Local override; Severity: warning
+    @(99.8100 mm, 71.6350 mm): Footprint J1
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(153.1870 mm, 71.5294 mm): Footprint R11
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(144.8520 mm, 71.9412 mm): Footprint R13
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(209.5920 mm, 51.9099 mm): Footprint C11
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(94.0070 mm, 50.0763 mm): Footprint RN1
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(144.4370 mm, 47.1192 mm): Footprint R17
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(146.6020 mm, 42.3002 mm): Footprint R5
+[lib_footprint_issues]: The current configuration does not include the library 'Package_SO'.
+    Local override; Severity: warning
+    @(207.1970 mm, 47.4228 mm): Footprint U5
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(159.3120 mm, 47.9909 mm): Footprint R6
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(144.8520 mm, 44.9156 mm): Footprint R15
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(154.4670 mm, 64.9868 mm): Footprint C7
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(157.5620 mm, 41.8884 mm): Footprint R2
+[lib_footprint_issues]: The current configuration does not include the library 'Capacitor_SMD'.
+    Local override; Severity: warning
+    @(98.4670 mm, 52.7817 mm): Footprint C9
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(99.8820 mm, 48.0827 mm): Footprint RN2
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(96.3120 mm, 63.6833 mm): Footprint R18
+[lib_footprint_issues]: The current configuration does not include the library 'Resistor_SMD'.
+    Local override; Severity: warning
+    @(204.2570 mm, 45.7174 mm): Footprint RN6
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(40.0000 mm, 40.0000 mm): Rect on Edge.Cuts
+    @(155.8120 mm, 73.5712 mm): Reference 'R12'
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(40.0000 mm, 40.0000 mm): Rect on Edge.Cuts
+    @(159.2070 mm, 40.5702 mm): Reference 'C1'
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; Severity: warning
+    @(40.0000 mm, 40.0000 mm): Rect on Edge.Cuts
+    @(149.6870 mm, 73.5712 mm): Reference 'R7'
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.1407 mm)
+    Local override; Severity: error
+    @(92.3548 mm, 43.8916 mm): Track [/A_CS35] on Top Layer, length 40.2505 mm
+    @(124.0000 mm, 42.6000 mm): NPTH pad of H6
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.2228 mm)
+    Local override; Severity: error
+    @(117.1234 mm, 41.2264 mm): Track [/A_CS31] on Ground Layer 2, length 9.5700 mm
+    @(124.0000 mm, 42.6000 mm): NPTH pad of H6
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.3273 mm)
+    Local override; Severity: error
+    @(180.0570 mm, 44.7474 mm): Track [/A_CS3] on Ground Layer 2, length 3.2403 mm
+    @(180.0000 mm, 42.6000 mm): NPTH pad of H7
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.1707 mm)
+    Local override; Severity: error
+    @(117.7138 mm, 41.2785 mm): Track [/A_CS37] on Bottom Layer, length 7.0678 mm
+    @(124.0000 mm, 42.6000 mm): NPTH pad of H6
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.3363 mm)
+    Local override; Severity: error
+    @(124.7816 mm, 41.2785 mm): Track [/A_CS37] on Bottom Layer, length 1.9851 mm
+    @(124.0000 mm, 42.6000 mm): NPTH pad of H6
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.1365 mm)
+    Local override; Severity: error
+    @(180.0000 mm, 42.6000 mm): NPTH pad of H7
+    @(40.3069 mm, 40.3069 mm): Zone [GND] on Ground Layer 1
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.1365 mm)
+    Local override; Severity: error
+    @(42.6000 mm, 42.6000 mm): NPTH pad of H1
+    @(40.3069 mm, 40.3069 mm): Zone [GND] on Ground Layer 1
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.1365 mm)
+    Local override; Severity: error
+    @(236.0000 mm, 42.6000 mm): NPTH pad of H8
+    @(40.3069 mm, 40.3069 mm): Zone [GND] on Ground Layer 1
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.1365 mm)
+    Local override; Severity: error
+    @(261.4000 mm, 71.4000 mm): NPTH pad of H4
+    @(40.3069 mm, 40.3069 mm): Zone [GND] on Ground Layer 1
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.1365 mm)
+    Local override; Severity: error
+    @(42.6000 mm, 71.4000 mm): NPTH pad of H3
+    @(40.3069 mm, 40.3069 mm): Zone [GND] on Ground Layer 1
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.1365 mm)
+    Local override; Severity: error
+    @(68.0000 mm, 42.6000 mm): NPTH pad of H5
+    @(40.3069 mm, 40.3069 mm): Zone [GND] on Ground Layer 1
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.1365 mm)
+    Local override; Severity: error
+    @(124.0000 mm, 42.6000 mm): NPTH pad of H6
+    @(40.3069 mm, 40.3069 mm): Zone [GND] on Ground Layer 1
+[hole_clearance]: Hole clearance violation (pad clearance 0.3500 mm; actual 0.1365 mm)
+    Local override; Severity: error
+    @(261.4000 mm, 42.6000 mm): NPTH pad of H2
+    @(40.3069 mm, 40.3069 mm): Zone [GND] on Ground Layer 1
+[via_dangling]: Via is not connected or connected on only one layer
+    Local override; Severity: warning
+    @(156.0305 mm, 42.5695 mm): Via [/A_SW8] on Top Layer - Bottom Layer
+[via_dangling]: Via is not connected or connected on only one layer
+    Local override; Severity: warning
+    @(155.1961 mm, 50.4042 mm): Via [/A_CS13] on Top Layer - Bottom Layer
+[via_dangling]: Via is not connected or connected on only one layer
+    Local override; Severity: warning
+    @(149.4120 mm, 42.1877 mm): Via [/A_SDB] on Top Layer - Bottom Layer
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(114.0421 mm, 52.6500 mm): Track [/A_SW9] on Bottom Layer, length 2.9036 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(102.2295 mm, 54.1094 mm): Track [/A_SW7] on Bottom Layer, length 2.0639 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(103.8846 mm, 52.6500 mm): Track [/A_SW7] on Bottom Layer, length 5.7017 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(170.9830 mm, 52.6500 mm): Track [/A_SW9] on Bottom Layer, length 4.6918 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(132.2496 mm, 53.8458 mm): Track [/A_SW6] on Bottom Layer, length 3.2379 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(133.6457 mm, 67.3500 mm): Track [/E3_A] on Bottom Layer, length 0.5486 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(171.7121 mm, 52.6500 mm): Track [/A_SW8] on Bottom Layer, length 0.0628 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(105.8560 mm, 52.6500 mm): Track [/A_SW9] on Bottom Layer, length 7.8624 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(104.0519 mm, 67.3500 mm): Track [/A_SW3] on Bottom Layer, length 3.7624 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(146.3785 mm, 58.4335 mm): Track [/A_CS23] on Bottom Layer, length 0.0688 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(146.7500 mm, 57.9000 mm): Track [/A_SW5] on Bottom Layer, length 4.2497 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(111.7095 mm, 67.3500 mm): Track [/A_SW4] on Bottom Layer, length 2.4194 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(133.0481 mm, 53.6601 mm): Track [/A_SW6] on Bottom Layer, length 0.7510 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_2_In2')
+    Rule: keepout area 'under_encoder_2_In2'; Severity: error
+    @(75.5000 mm, 57.5000 mm): Track [/E1_A] on Ground Layer 2, length 0.3195 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_2_In2')
+    Rule: keepout area 'under_encoder_2_In2'; Severity: error
+    @(75.8195 mm, 57.5000 mm): Track [/E1_A] on Ground Layer 2, length 7.4357 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_7_In2')
+    Rule: keepout area 'under_encoder_7_In2'; Severity: error
+    @(229.9369 mm, 60.1519 mm): Track [/E6_SW] on Ground Layer 2, length 4.3586 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_7_In2')
+    Rule: keepout area 'under_encoder_7_In2'; Severity: error
+    @(226.8550 mm, 57.0699 mm): Track [/E6_SW] on Ground Layer 2, length 0.7919 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_7_In2')
+    Rule: keepout area 'under_encoder_7_In2'; Severity: error
+    @(226.8550 mm, 56.2780 mm): Track [/E6_SW] on Ground Layer 2, length 4.4464 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(136.3219 mm, 66.7857 mm): Track [/E3_B] on Ground Layer 2, length 4.7350 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(132.9737 mm, 63.4375 mm): Track [/E3_B] on Ground Layer 2, length 1.5362 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_3_In2')
+    Rule: keepout area 'under_encoder_3_In2'; Severity: error
+    @(102.5023 mm, 53.8629 mm): Track [/SR_Q3] on Ground Layer 2, length 19.6728 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(130.6256 mm, 53.9213 mm): Track [/A_CS22] on Ground Layer 2, length 2.3480 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(132.2859 mm, 55.5816 mm): Track [/A_CS22] on Ground Layer 2, length 12.9251 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(131.5611 mm, 56.3219 mm): Track [/A_CS28] on Ground Layer 2, length 7.2881 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(138.8493 mm, 56.3219 mm): Track [/A_CS28] on Ground Layer 2, length 3.8421 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(141.5661 mm, 59.0387 mm): Track [/A_CS28] on Ground Layer 2, length 4.1835 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_2_In2')
+    Rule: keepout area 'under_encoder_2_In2'; Severity: error
+    @(75.4375 mm, 61.5625 mm): Track [/E1_B] on Ground Layer 2, length 3.0063 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_2_In2')
+    Rule: keepout area 'under_encoder_2_In2'; Severity: error
+    @(77.5633 mm, 59.4367 mm): Track [/E1_B] on Ground Layer 2, length 2.2618 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_2_In2')
+    Rule: keepout area 'under_encoder_2_In2'; Severity: error
+    @(79.8252 mm, 59.4367 mm): Track [/E1_B] on Ground Layer 2, length 8.5360 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_2_In2')
+    Rule: keepout area 'under_encoder_2_In2'; Severity: error
+    @(89.0000 mm, 61.1741 mm): Track [/E1_SW] on Ground Layer 2, length 2.1264 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_2_In2')
+    Rule: keepout area 'under_encoder_2_In2'; Severity: error
+    @(87.4964 mm, 59.6705 mm): Track [/E1_SW] on Ground Layer 2, length 8.5334 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(175.9097 mm, 56.6005 mm): Track [/E5_A] on Ground Layer 2, length 7.9398 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(170.2955 mm, 62.2148 mm): Track [/E5_A] on Ground Layer 2, length 4.6760 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(165.6195 mm, 62.2148 mm): Track [/E5_A] on Ground Layer 2, length 3.3013 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_6_In2')
+    Rule: keepout area 'under_encoder_6_In2'; Severity: error
+    @(194.0000 mm, 55.4000 mm): Track [/TOUCH5] on Ground Layer 2, length 0.3195 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_6_In2')
+    Rule: keepout area 'under_encoder_6_In2'; Severity: error
+    @(194.0000 mm, 55.7195 mm): Track [/TOUCH5] on Ground Layer 2, length 5.5343 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_6_In2')
+    Rule: keepout area 'under_encoder_6_In2'; Severity: error
+    @(190.0867 mm, 59.6329 mm): Track [/TOUCH5] on Ground Layer 2, length 7.9810 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_2_In2')
+    Rule: keepout area 'under_encoder_2_In2'; Severity: error
+    @(74.5334 mm, 64.3310 mm): Track [/TOUCH0] on Ground Layer 2, length 2.7050 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_2_In2')
+    Rule: keepout area 'under_encoder_2_In2'; Severity: error
+    @(77.2384 mm, 64.3310 mm): Track [/TOUCH0] on Ground Layer 2, length 5.8000 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_8_In2')
+    Rule: keepout area 'under_encoder_8_In2'; Severity: error
+    @(250.0000 mm, 55.4000 mm): Track [/TOUCH7] on Ground Layer 2, length 0.3195 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_8_In2')
+    Rule: keepout area 'under_encoder_8_In2'; Severity: error
+    @(250.0000 mm, 55.7195 mm): Track [/TOUCH7] on Ground Layer 2, length 0.9771 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_8_In2')
+    Rule: keepout area 'under_encoder_8_In2'; Severity: error
+    @(250.0000 mm, 56.6967 mm): Track [/TOUCH7] on Ground Layer 2, length 12.7544 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(130.5114 mm, 54.6556 mm): Track [/A_CS20] on Ground Layer 2, length 1.8895 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(131.8475 mm, 55.9917 mm): Track [/A_CS20] on Ground Layer 2, length 9.5899 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(141.4373 mm, 55.9917 mm): Track [/A_CS20] on Ground Layer 2, length 3.8321 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(144.1471 mm, 58.7014 mm): Track [/A_CS20] on Ground Layer 2, length 1.4014 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(146.8014 mm, 59.3001 mm): Track [/E4_B] on Ground Layer 2, length 5.6251 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(141.1763 mm, 59.3001 mm): Track [/E4_B] on Ground Layer 2, length 2.7576 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(139.2264 mm, 61.2500 mm): Track [/E4_B] on Ground Layer 2, length 9.4513 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(172.6442 mm, 62.8558 mm): Track [/E4_SW] on Ground Layer 2, length 0.8227 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(172.0625 mm, 63.4375 mm): Track [/E4_SW] on Ground Layer 2, length 5.9058 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_6_In2')
+    Rule: keepout area 'under_encoder_6_In2'; Severity: error
+    @(198.0296 mm, 64.4522 mm): Track [/~{SR_LOAD}] on Ground Layer 2, length 12.0189 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_6_In2')
+    Rule: keepout area 'under_encoder_6_In2'; Severity: error
+    @(195.6863 mm, 49.8558 mm): Track [/SR_Q4] on Ground Layer 2, length 8.1188 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_6_In2')
+    Rule: keepout area 'under_encoder_6_In2'; Severity: error
+    @(189.9455 mm, 55.5967 mm): Track [/SR_Q4] on Ground Layer 2, length 2.6977 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_6_In2')
+    Rule: keepout area 'under_encoder_6_In2'; Severity: error
+    @(189.9455 mm, 58.2944 mm): Track [/SR_Q4] on Ground Layer 2, length 4.2036 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(130.7412 mm, 64.4314 mm): Track [/TOUCH2] on Ground Layer 2, length 2.4576 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_4_In2')
+    Rule: keepout area 'under_encoder_4_In2'; Severity: error
+    @(133.1988 mm, 64.4314 mm): Track [/TOUCH2] on Ground Layer 2, length 4.7075 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_7_In2')
+    Rule: keepout area 'under_encoder_7_In2'; Severity: error
+    @(231.4676 mm, 60.5791 mm): Track [/A_CS18] on Ground Layer 2, length 9.1062 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_7_In2')
+    Rule: keepout area 'under_encoder_7_In2'; Severity: error
+    @(222.3614 mm, 60.5791 mm): Track [/A_CS18] on Ground Layer 2, length 7.2790 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(171.2484 mm, 54.9315 mm): Track [/A_CS9] on Ground Layer 2, length 0.9388 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(170.5846 mm, 55.5954 mm): Track [/A_CS9] on Ground Layer 2, length 16.3042 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_1_In2')
+    Rule: keepout area 'under_encoder_1_In2'; Severity: error
+    @(47.5063 mm, 62.5000 mm): Track [/E0_B] on Ground Layer 2, length 0.3195 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_1_In2')
+    Rule: keepout area 'under_encoder_1_In2'; Severity: error
+    @(47.8259 mm, 62.5000 mm): Track [/E0_B] on Ground Layer 2, length 4.5182 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_1_In2')
+    Rule: keepout area 'under_encoder_1_In2'; Severity: error
+    @(51.0207 mm, 59.3052 mm): Track [/E0_B] on Ground Layer 2, length 17.3071 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(175.0048 mm, 52.5993 mm): Track [/A_CS10] on Ground Layer 2, length 4.7183 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(171.6685 mm, 55.9357 mm): Track [/A_CS10] on Ground Layer 2, length 17.3912 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(155.2459 mm, 63.7034 mm): Track [+3V3] on Ground Layer 2, length 6.5759 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(161.8217 mm, 63.7034 mm): Track [+3V3] on Ground Layer 2, length 6.7080 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(166.5650 mm, 58.9601 mm): Track [+3V3] on Ground Layer 2, length 2.8598 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5_In2')
+    Rule: keepout area 'under_encoder_5_In2'; Severity: error
+    @(169.4248 mm, 58.9601 mm): Track [+3V3] on Ground Layer 2, length 8.4467 mm
+[items_not_allowed]: Items not allowed (keepout area 'under_encoder_5')
+    Rule: keepout area 'under_encoder_5'; Severity: error
+    @(40.3069 mm, 40.3069 mm): Zone [GND] on Ground Layer 1
+
+** Found 17 unconnected pads **
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(151.3740 mm, 43.7113 mm): Track [GND] on Bottom Layer, length 1.3948 mm
+    @(151.8120 mm, 43.6420 mm): Pad 2 [GND] of C3 on Top Layer
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(148.9058 mm, 49.7501 mm): Track [+3V3] on Top Layer, length 3.0972 mm
+    @(157.0520 mm, 41.8884 mm): Pad 2 [+3V3] of R2 on Bottom Layer
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(149.4245 mm, 67.5040 mm): Pad 14 [/SDA] of U2 on Bottom Layer
+    @(136.8322 mm, 49.5881 mm): Track [/SDA] on Bottom Layer, length 2.1281 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(149.4245 mm, 67.0040 mm): Pad 15 [/SCL] of U2 on Bottom Layer
+    @(149.4813 mm, 52.9157 mm): Track [/SCL] on Bottom Layer, length 2.9688 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(210.0595 mm, 45.7978 mm): Pad 10 [/SR_IN] of U5 on Bottom Layer
+    @(96.8220 mm, 64.0041 mm): Track [/SR_IN] on Bottom Layer, length 0.3209 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(133.0481 mm, 53.6601 mm): Track [/A_SW6] on Bottom Layer, length 0.7510 mm
+    @(132.2496 mm, 53.8458 mm): Track [/A_SW6] on Bottom Layer, length 3.2379 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(103.8846 mm, 52.6500 mm): Track [/A_SW7] on Bottom Layer, length 5.7017 mm
+    @(102.2295 mm, 54.1094 mm): Track [/A_SW7] on Bottom Layer, length 2.0639 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(159.8220 mm, 47.9909 mm): Pad 1 [/A_ADDR] of R6 on Bottom Layer
+    @(158.0720 mm, 51.4781 mm): Pad 1 [/A_ADDR] of R4 on Bottom Layer
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(157.3069 mm, 56.3453 mm): Track [/A_SW8] on Bottom Layer, length 4.4527 mm
+    @(154.4395 mm, 44.1605 mm): Track [/A_SW8] on Bottom Layer, length 0.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(114.0421 mm, 52.6500 mm): Track [/A_SW9] on Bottom Layer, length 2.9036 mm
+    @(105.8560 mm, 52.6500 mm): Track [/A_SW9] on Bottom Layer, length 7.8624 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(239.9165 mm, 52.6285 mm): Track [/A_CS13] on Ground Layer 2, length 4.6636 mm
+    @(154.8426 mm, 50.0507 mm): Track [/A_CS13] on Bottom Layer, length 0.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(150.4090 mm, 43.3120 mm): Track [/A_SDB] on Bottom Layer, length 0.5000 mm
+    @(158.0720 mm, 41.8884 mm): Pad 1 [/A_SDB] of R2 on Bottom Layer
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(143.1970 mm, 71.5294 mm): Pad 1 [/TR1] of R8 on Top Layer
+    @(150.6370 mm, 65.7915 mm): Pad 2 [/TR1] of U2 on Bottom Layer
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(152.3495 mm, 68.0040 mm): Pad 8 [/TR4] of U2 on Bottom Layer
+    @(153.6970 mm, 71.5294 mm): Pad 1 [/TR4] of R11 on Top Layer
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(150.6370 mm, 68.7165 mm): Pad 11 [/TR7] of U2 on Bottom Layer
+    @(150.9270 mm, 69.7858 mm): Pad 1 [/TR7] of R14 on Top Layer
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(149.2270 mm, 70.7076 mm): Pad 1 [/TR3] of R10 on Top Layer
+    @(149.4245 mm, 68.0040 mm): Pad 13 [/TR3] of U2 on Bottom Layer
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(151.5070 mm, 68.0122 mm): Pad 2 [/E4_B] of RN4 on Top Layer
+    @(158.5000 mm, 62.5000 mm): Track [/E4_B] on Ground Layer 2, length 0.5032 mm
+
+** Found 0 Footprint errors **
+
+** End of Report **

@@ -186,13 +186,18 @@ BYPASS = [  # capacitor, bypassed component, pin, nF (rev 0.2: two LED drivers U
     ("C9", "U3", 16, 100), ("C10", "U4", 16, 100), ("C11", "U5", 16, 100),
     ("C12", "J1", 1, 10000), ("C13", "J1", 5, 1000)]
 POWER = [("+5V", 800), ("GND", 800), ("+3V3", 100), ("/VREG", 50)] + \
-        [(f"/{c}_SW{k}", 350) for c in ("A", "B") for k in range(1, 10)]   # anode rows: 18 CS x 19 mA per cell
+        [(f"/{c}_SW{k}", 700 if D.ONE_CHIP else 350) for c in D.CELLS for k in range(1, 10)]   # anode rows: CS x 19 mA (18 per cell, 36 for one chip)
+
+
+def bypass():
+    have = {p["ref"] for p in D.parts()}
+    return [r for r in BYPASS if r[0] in have and r[1] in have]
 
 
 def write_csv(d):
     rows = {
         "bypass_capacitors.csv": ["capacitor,bypassed_component,bypassed_pin,capacitance"] +
-                                 [f"{c},{u},{p},{nf:g}" for c, u, p, nf in BYPASS],
+                                 [f"{c},{u},{p},{nf:g}" for c, u, p, nf in bypass()],
         "high_current_nets.csv": ["net_name,max_current,use_power_pour"] +
                                  [f"{n},{ma},false" for n, ma in POWER],
         "ground_nets.csv": ["net_name,is_primary,use_region_pour", "GND,true,false"],
@@ -220,7 +225,7 @@ def arcs_to_chords(b, n=8):
             s.SetStart(p1); s.SetEnd(p2); s.SetLayer(layer); s.SetNet(net); s.SetWidth(w); s.SetLocked(True)
             b.Add(s)
 
-JOBS = ("I_rev03_fanout_free",)  # rev 0.3; earlier H_free_any_side (U2 landed under ENC4), D/F/G  # earlier: D_rev02_route_only, F_chords_route_only, G_chords_place_and_route            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
+JOBS = ("J_rev03_one_chip_diamond",) if D.ONE_CHIP else ("I_rev03_fanout_free",)  # rev 0.3; earlier H_free_any_side (U2 landed under ENC4), D/F/G  # earlier: D_rev02_route_only, F_chords_route_only, G_chords_place_and_route            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
 
 
 def main(out):
@@ -248,24 +253,28 @@ def main(out):
                 if fp.GetReference().startswith("U"):
                     fp.SetLocked(True)
             top_filter(b)                            # top side: only the two free strips
-        if job[0] in "HI":
+        if job[0] in "HIJ":
             # 07.11, user: everything except the panel parts may move, on either side; Quilter decides
-            keep = FIXED + (tuple(D.DRIVER.values()) if job[0] == "I" else ())   # rev 0.3: drivers stay with their fan-out
+            keep = FIXED + (tuple(D.DRIVER.values()) if job[0] in "IJ" else ())   # rev 0.3: drivers stay with their fan-out
             free = [fp for fp in b.GetFootprints() if not fp.GetReference().startswith(keep)
                     or (fp.GetReference().startswith("U") and fp.GetReference() not in keep)]
             for n, fp in enumerate(sorted(free, key=lambda f: f.GetReference())):
                 fp.SetLocked(False)
                 fp.SetPosition(M.P(4 + 8 * (n % 26), D.H + 8 + 8 * (n // 26)))
             offboard_region(b, D.H + 4, D.H + 8 + 8 * (len(free) // 26 + 1))
-        if job[0] == "I":
+        if job[0] in "IJ":
             encoder_part_keepouts(b)
             inner_track_keepouts(b)
-        if job[0] in "FGHI":
+        if job[0] in "FGHIJ":
             arcs_to_chords(b)
         path = os.path.join(d, D.NAME + ".kicad_pcb")
         M.save(b, path)
         for ext in (".kicad_sch", ".kicad_pro"):
             shutil.copy(os.path.join(M.PROJ, D.NAME + ext), os.path.join(d, D.NAME + ext))
+        if D.ONE_CHIP:                                   # its own schematic (one driver), not the repo's
+            import make_sch
+            make_sch.OUT = os.path.join(d, D.NAME + ".kicad_sch")
+            make_sch.main()
         write_csv(d)
         print("ok", path)
 

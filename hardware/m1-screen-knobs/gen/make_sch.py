@@ -160,12 +160,14 @@ def main():
     for i, ref in enumerate(("C12", "C13")):
         put(ref, (14 + 6 * i) * g, 42 * g)
     # LED driver
-    S.text("LED drivers (P98): IS31FL3741A, U1 cell A 0x30, U6 cell B 0x31", 66 * g, 4 * g)
+    S.text("LED driver (experiment J): one IS31FL3741A U1 0x30 for all 8 rings" if D.ONE_CHIP else
+           "LED drivers (P98): IS31FL3741A, U1 cell A 0x30, U6 cell B 0x31", 66 * g, 4 * g)
     put("U1", 62 * g, 60 * g)
     for i, ref in enumerate(("R1", "R2", "R3", "R4", "R5", "R6", "C1", "C2", "C3", "C4")):
         put(ref, (80 + 5 * i) * g, 14 * g)
-    put("U6", 262 * g, 60 * g)
-    for i, ref in enumerate(("R19", "R20", "R21", "R22", "R23", "R24", "C14", "C15", "C16", "C17")):
+    if not D.ONE_CHIP:
+        put("U6", 262 * g, 60 * g)
+    for i, ref in enumerate(() if D.ONE_CHIP else ("R19", "R20", "R21", "R22", "R23", "R24", "C14", "C15", "C16", "C17")):
         put(ref, (210 + 5 * i) * g, 14 * g)
     # touch
     S.text("Touch: CY8CMBR3108, electrode = encoder frame and shaft (MP)", 80 * g, 26 * g)

@@ -213,7 +213,7 @@ def hug(b):
         c.Move(shift)
 
 
-FAN_ROT = 225          # deg after the flip: side 2 (SW, CS1-5) faces front-right, side 3 (CS6-18) front-left
+FAN_ROT = D.FAN_ROT    # deg after the flip (design.py: 225 two drivers, 315 one driver)
 FAN_PITCH, FAN_B, FAN_D0, FAN_D1 = 0.86, 4.45, 4.95, 5.70   # mm: via pitch along a side; bend, via rows 0 and 1 (distance from the centre)
 
 

@@ -46,6 +46,18 @@ def load_fp(fpid):
     return fp
 
 
+_PIN_NAMES = {}
+
+
+def pin_name(lib_id, num):
+    """Pin name of a symbol (for KiCad's unconnected-(REF-NAME-PadN) nets)."""
+    if lib_id not in _PIN_NAMES:
+        import make_sch
+        txt = make_sch.lib_block(lib_id)[0]
+        _PIN_NAMES[lib_id] = {n: nm for nm, n in re.findall(r'\(name "([^"]*)".*?\(number "([^"]+)"', txt, re.S)}
+    return _PIN_NAMES[lib_id].get(num, "")
+
+
 def save(b, path):
     """Board.Save. Not-fitted parts are marked like in the schematic: excluded from BOM and position files
     (the KiCad 8+ "dnp" flag cannot be written by KiCad 7's API, and KiCad 7/Quilter reject it in a KiCad 7 file)."""
@@ -92,7 +104,7 @@ def build():
         x, y, r, side = pl[p["ref"]]
         fp.SetPosition(P(x, y))
         if p["ref"].startswith("ENC"):          # footprint origin is pin A; put the shaft at (x, y)
-            mps = [pd.GetPosition() for pd in fp.Pads() if pd.GetNumber() == "MP"]
+            mps = [pd.GetPosition() for pd in fp.Pads() if pd.GetNumber() in ("MP", "")]   # both frame lugs (the front one has no number, rev 0.3)
             cx, cy = sum(v.x for v in mps) // 2, sum(v.y for v in mps) // 2
             fp.SetPosition(pcbnew.VECTOR2I(2 * P(x, y).x - cx, 2 * P(x, y).y - cy))
         fp.SetOrientationDegrees(r)
@@ -114,9 +126,16 @@ def build():
             if k not in ("DNP", "Side"):
                 fp.SetProperty(k, v)
         for pad in fp.Pads():
-            n = p["pins"].get(pad.GetNumber())
+            num = pad.GetNumber()
+            n = p["pins"].get(num)
             if n:
                 pad.SetNet(net(n))
+            elif num in p["pins"]:                # unconnected pin: KiCad's implicit net (schematic parity)
+                nn = f"unconnected-({p['ref']}-{pin_name(p['lib'], num)}-Pad{num})"
+                if nn not in nets:
+                    nets[nn] = pcbnew.NETINFO_ITEM(b, nn)
+                    b.Add(nets[nn])
+                pad.SetNet(nets[nn])
 
     # outline
     e = pcbnew.PCB_SHAPE(b)
@@ -223,7 +242,7 @@ def driver_fanout(b):
     0.12 mm stub straight out of the pad, a short bend (to FAN_B) onto its lane, then straight to its via; even pads
     of a side end in row 0, odd pads in row 1, whose lanes run midway between the row-0 vias (pitch 0.86: 0.43 to a
     via centre, 0.406 needed for 0.13 clearance).
-    Supply pins (+5V, GND) and unused pins stay free for the decoupling capacitors."""
+    GND and unused pins stay free; +5V pins get a via too (job I: pin 25 was boxed in by the stubs of 24 and 26)."""
     import math
     for u in D.DRIVER.values():
         fp = b.FindFootprintByReference(u)
@@ -232,7 +251,7 @@ def driver_fanout(b):
         c = fp.GetPosition()
         for pad in fp.Pads():
             num = pad.GetNumber()
-            if not num.isdigit() or int(num) > 60 or pad.GetNetname() in ("", "+5V", "GND"):
+            if not num.isdigit() or int(num) > 60 or pad.GetNetname() == "GND" or pad.GetNetname().startswith(("unconnected", "Net-")) or not pad.GetNetname():
                 continue
             n = int(num) - 1
             side, i = n // 15, n % 15                      # 0..3, position along the side

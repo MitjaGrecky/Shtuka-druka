@@ -104,6 +104,24 @@ def top_filter(b):
         b.Add(r)
 
 
+def offboard_region(b, y0, y1):
+    """Quilter placement region OFF the board (job H): parts assigned to it form a group that Quilter
+    places anywhere, on the top OR the bottom (an off-board region has no side). Shape is ignored."""
+    z = pcbnew.ZONE(b)
+    z.SetIsRuleArea(True)
+    z.SetLayer(pcbnew.B_Cu)
+    for allow in (z.SetDoNotAllowTracks, z.SetDoNotAllowVias, z.SetDoNotAllowCopperPour,
+                  z.SetDoNotAllowPads, z.SetDoNotAllowFootprints):
+        allow(False)
+    z.SetZoneName("Free parts any side")
+    o = z.Outline()
+    o.NewOutline()
+    for x, y in ((0, y0), (D.W, y0), (D.W, y1), (0, y1)):
+        q = M.P(x, y)
+        o.Append(q.x, q.y)
+    b.Add(z)
+
+
 def rect(z, m=0.5):
     o = z.Outline()
     o.NewOutline()
@@ -155,7 +173,7 @@ def arcs_to_chords(b, n=8):
             s.SetStart(p1); s.SetEnd(p2); s.SetLayer(layer); s.SetNet(net); s.SetWidth(w); s.SetLocked(True)
             b.Add(s)
 
-JOBS = ("D_rev02_route_only", "F_chords_route_only", "G_chords_place_and_route")            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
+JOBS = ("H_free_any_side",)  # earlier: D_rev02_route_only, F_chords_route_only, G_chords_place_and_route            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
 
 
 def main(out):
@@ -183,7 +201,14 @@ def main(out):
                 if fp.GetReference().startswith("U"):
                     fp.SetLocked(True)
             top_filter(b)                            # top side: only the two free strips
-        if job[0] in "FG":
+        if job[0] == "H":
+            # 07.11, user: everything except the panel parts may move, on either side; Quilter decides
+            free = [fp for fp in b.GetFootprints() if not fp.GetReference().startswith(FIXED)]
+            for n, fp in enumerate(sorted(free, key=lambda f: f.GetReference())):
+                fp.SetLocked(False)
+                fp.SetPosition(M.P(4 + 8 * (n % 26), D.H + 8 + 8 * (n // 26)))
+            offboard_region(b, D.H + 4, D.H + 8 + 8 * (len(free) // 26 + 1))
+        if job[0] in "FGH":
             arcs_to_chords(b)
         path = os.path.join(d, D.NAME + ".kicad_pcb")
         b.Save(path)

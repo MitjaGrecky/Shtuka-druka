@@ -122,6 +122,32 @@ def offboard_region(b, y0, y1):
     b.Add(z)
 
 
+def encoder_part_keepouts(b, m=0.5):
+    """B.Cu rule areas that forbid footprints under each encoder (job I). Job H put U2 and its passives
+    under ENC4 on the back: inside the track keep-out (touch electrode), so its pads could not be reached.
+    Quilter respects keep-outs on F.Cu/B.Cu. Area = encoder courtyard (the body and its THT pins) + m."""
+    for fp in b.GetFootprints():
+        if not fp.GetReference().startswith("ENC"):
+            continue
+        bb = fp.GetCourtyard(pcbnew.F_CrtYd).BBox()
+        z = pcbnew.ZONE(b)
+        z.SetIsRuleArea(True)
+        ls = pcbnew.LSET()
+        ls.AddLayer(pcbnew.B_Cu)
+        z.SetLayerSet(ls)
+        for allow in (z.SetDoNotAllowTracks, z.SetDoNotAllowVias, z.SetDoNotAllowCopperPour, z.SetDoNotAllowPads):
+            allow(False)
+        z.SetDoNotAllowFootprints(True)
+        z.SetZoneName(f"no_parts_under_{fp.GetReference()}")
+        o = z.Outline()
+        o.NewOutline()
+        d = pcbnew.FromMM(m)
+        for x, y in ((bb.GetLeft() - d, bb.GetTop() - d), (bb.GetRight() + d, bb.GetTop() - d),
+                     (bb.GetRight() + d, bb.GetBottom() + d), (bb.GetLeft() - d, bb.GetBottom() + d)):
+            o.Append(int(x), int(y))
+        b.Add(z)
+
+
 def rect(z, m=0.5):
     o = z.Outline()
     o.NewOutline()
@@ -173,7 +199,7 @@ def arcs_to_chords(b, n=8):
             s.SetStart(p1); s.SetEnd(p2); s.SetLayer(layer); s.SetNet(net); s.SetWidth(w); s.SetLocked(True)
             b.Add(s)
 
-JOBS = ("H_free_any_side",)  # earlier: D_rev02_route_only, F_chords_route_only, G_chords_place_and_route            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
+JOBS = ("I_free_no_parts_under_encoders",)  # H_free_any_side: U2 landed under ENC4  # earlier: D_rev02_route_only, F_chords_route_only, G_chords_place_and_route            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
 
 
 def main(out):
@@ -201,14 +227,16 @@ def main(out):
                 if fp.GetReference().startswith("U"):
                     fp.SetLocked(True)
             top_filter(b)                            # top side: only the two free strips
-        if job[0] == "H":
+        if job[0] in "HI":
             # 07.11, user: everything except the panel parts may move, on either side; Quilter decides
             free = [fp for fp in b.GetFootprints() if not fp.GetReference().startswith(FIXED)]
             for n, fp in enumerate(sorted(free, key=lambda f: f.GetReference())):
                 fp.SetLocked(False)
                 fp.SetPosition(M.P(4 + 8 * (n % 26), D.H + 8 + 8 * (n // 26)))
             offboard_region(b, D.H + 4, D.H + 8 + 8 * (len(free) // 26 + 1))
-        if job[0] in "FGH":
+        if job[0] == "I":
+            encoder_part_keepouts(b)
+        if job[0] in "FGHI":
             arcs_to_chords(b)
         path = os.path.join(d, D.NAME + ".kicad_pcb")
         b.Save(path)

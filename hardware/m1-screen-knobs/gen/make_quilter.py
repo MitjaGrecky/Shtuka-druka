@@ -225,7 +225,7 @@ def arcs_to_chords(b, n=8):
             s.SetStart(p1); s.SetEnd(p2); s.SetLayer(layer); s.SetNet(net); s.SetWidth(w); s.SetLocked(True)
             b.Add(s)
 
-JOBS = ("J_rev03_one_chip_diamond",) if D.ONE_CHIP else ("I_rev03_fanout_free",)  # rev 0.3; earlier H_free_any_side (U2 landed under ENC4), D/F/G  # earlier: D_rev02_route_only, F_chords_route_only, G_chords_place_and_route            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
+JOBS = ("J2_rev031_one_chip",) if D.ONE_CHIP else ("I2_rev031_two_chips",)   # rev 0.3.1 (07.11 evening); before: I_rev03_fanout_free, J_rev03_one_chip_diamond  # rev 0.3; earlier H_free_any_side (U2 landed under ENC4), D/F/G  # earlier: D_rev02_route_only, F_chords_route_only, G_chords_place_and_route            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
 
 
 def main(out):

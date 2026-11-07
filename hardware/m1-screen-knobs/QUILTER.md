@@ -1,5 +1,22 @@
 # Handing M1 to an external layout service (Quilter or similar)
 
+> **Rev 0.3 (Nov 7, 2026), job `I_rev03_fanout_free`:** what the earlier jobs taught, in one input.
+> - Locked copper is straight segments only (job D failed on PCB_ARC; F with chords routed 97%).
+> - U1/U6 stand as a diamond (45 deg) on the back at gap 2 / gap 6, y 6 mm, and their fan-out is drawn by
+>   `make_pcb.driver_fanout()` and locked: every signal pad -> 0.12 mm stub -> via (0.45/0.2) in two staggered rows,
+>   0.43 mm from a lane to the neighbouring via. Job F left 17 CS lines stuck at the pad columns; Freerouting too.
+>   Picture: `mech/m1_r03_driver_fanout.png`. CS map turned so side 2 (SW, CS1-5) faces the right ring pair (CS1-9)
+>   and side 3 (CS6-18) the left pair (CS10-18).
+> - Everything else that the panel does not fix (51 parts) waits below the board without a region: Quilter places it
+>   on either side (user, 07.11). B.Cu rule areas `no_parts_under_ENC*` forbid parts under the encoders (job H put U2
+>   and its passives there, inside the track keep-out). Extra In2-only copies of the track keep-outs (`*_In2`):
+>   job F routed 61 tracks on In2 under the encoders.
+> - Wizard: stack-up JLCPCB 4-layer 4/4 mil, inner layer 2 = Signal; fabricator: clearance 0.13 (0.13 + 0.125 via
+>   ring = 0.255 via hole to track), via 0.45/0.2. Duplicates do not carry these over.
+> - Net names follow the schematic (`/NAME` for labels): the CSV tables use them. Schematic parity: symbol fields
+>   on the footprints, holes out of BOM, not-fitted parts out of BOM (no DNP flag: KiCad 7 cannot write it).
+> - Local DRC of the input (KiCad 7 engine, project rules): no clearance or hole errors.
+
 > **Rev 0.2 (Nov 6, 2026):** two LED drivers (U1 cell A rings 1-4, 0x30; U6 cell B rings 5-8, 0x31), CS triples
 > stay on their rings, cathode arcs and ring vias are drawn by `make_pcb.ring_arcs()` and locked (2 vias per LED),
 > decoupling capacitors sit at their pins (`design.HUG`), all other bottom parts in the rear strip (y 0-7),

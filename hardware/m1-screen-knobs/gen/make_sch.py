@@ -148,8 +148,8 @@ def main():
     def put(ref, x, y, r=0):
         p = P[ref]
         f = {k: v for k, v in p["fields"].items() if k not in ("DNP", "Side")}
-        S.symbol(ref, p["lib"], p["value"], x, y, r, p["fp"], f, p["pins"], dnp=p["fields"].get("DNP") == "yes",
-                 in_bom=p["fields"].get("DNP") != "yes")
+        S.symbol(ref, p["lib"], p["value"], x, y, r, p["fp"], f, p["pins"], dnp=False,   # not fitted = out of BOM (parity)
+                 in_bom=p["fields"].get("DNP") != "yes" and not ref.startswith("H"))
 
     g = 2.54
     # power entry and flags

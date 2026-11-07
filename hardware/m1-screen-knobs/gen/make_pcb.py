@@ -46,6 +46,12 @@ def load_fp(fpid):
     return fp
 
 
+def save(b, path):
+    """Board.Save. Not-fitted parts are marked like in the schematic: excluded from BOM and position files
+    (the KiCad 8+ "dnp" flag cannot be written by KiCad 7's API, and KiCad 7/Quilter reject it in a KiCad 7 file)."""
+    b.Save(path)
+
+
 def build():
     b = pcbnew.BOARD()
     b.SetCopperLayerCount(D.LAYERS)
@@ -67,6 +73,8 @@ def build():
     nets = {}
 
     def net(name):
+        if name not in ("+5V", "+3V3", "GND"):
+            name = "/" + name                      # schematic local label (parity with KiCad's net names)
         if name not in nets:
             ni = pcbnew.NETINFO_ITEM(b, name)
             b.Add(ni)
@@ -102,6 +110,9 @@ def build():
                 pad.SetLocalClearance(mm(0.35))
         if p["fields"].get("DNP") == "yes":
             fp.SetAttributes(fp.GetAttributes() | pcbnew.FP_EXCLUDE_FROM_BOM | pcbnew.FP_EXCLUDE_FROM_POS_FILES)
+        for k, v in p["fields"].items():          # symbol fields on the footprint too (schematic parity)
+            if k not in ("DNP", "Side"):
+                fp.SetProperty(k, v)
         for pad in fp.Pads():
             n = p["pins"].get(pad.GetNumber())
             if n:
@@ -154,6 +165,8 @@ def build():
         b.Add(z)
     gnd_zone(b, pcbnew.In1_Cu, 0)               # the plane: the router connects GND to it with vias
     hug(b)
+    side_normals(b)
+    driver_fanout(b)
     ring_arcs(b)
 
     # silkscreen notes
@@ -198,6 +211,76 @@ def hug(b):
         p1 = [q for q in c.Pads() if q.GetNumber() == "1"][0].GetPosition()   # supply pad in line with the pin
         shift = pcbnew.VECTOR2I(pp.x - p1.x, 0) if along_x else pcbnew.VECTOR2I(0, pp.y - p1.y)
         c.Move(shift)
+
+
+FAN_ROT = 225          # deg after the flip: side 2 (SW, CS1-5) faces front-right, side 3 (CS6-18) front-left
+FAN_PITCH, FAN_B, FAN_D0, FAN_D1 = 0.86, 4.45, 4.95, 5.70   # mm: via pitch along a side; bend, via rows 0 and 1 (distance from the centre)
+
+
+def driver_fanout(b):
+    """Rev 0.3: fan-out of the LED drivers (QFN-60, 0.4 mm pitch) drawn here and locked, as the rings are.
+    Quilter (job F) and Freerouting both left 17 CS lines stuck at the pad columns. Every signal pad gets a
+    0.12 mm stub straight out of the pad, a short bend (to FAN_B) onto its lane, then straight to its via; even pads
+    of a side end in row 0, odd pads in row 1, whose lanes run midway between the row-0 vias (pitch 0.86: 0.43 to a
+    via centre, 0.406 needed for 0.13 clearance).
+    Supply pins (+5V, GND) and unused pins stay free for the decoupling capacitors."""
+    import math
+    for u in D.DRIVER.values():
+        fp = b.FindFootprintByReference(u)
+        fp.SetOrientationDegrees(FAN_ROT)
+        fp.SetLocked(True)
+        c = fp.GetPosition()
+        for pad in fp.Pads():
+            num = pad.GetNumber()
+            if not num.isdigit() or int(num) > 60 or pad.GetNetname() in ("", "+5V", "GND"):
+                continue
+            n = int(num) - 1
+            side, i = n // 15, n % 15                      # 0..3, position along the side
+            # local frame of the footprint (before rotation, after the flip x is mirrored by pcbnew itself):
+            # use the real pad position to find the outward normal
+            px, py = pcbnew.ToMM(pad.GetPosition().x - c.x), pcbnew.ToMM(pad.GetPosition().y - c.y)
+            sx, sy = (side_vec := SIDE_NORMALS[fp.GetReference()][side])
+            tx, ty = -sy, sx                               # along the side
+            t_pad = px * tx + py * ty
+            if i % 2 == 0:
+                d, t = FAN_D0, (i // 2 - 3.5) * FAN_PITCH
+            else:
+                d, t = FAN_D1, ((i - 1) // 2 - 3) * FAN_PITCH
+            # pad index runs the same way as t? choose the sign that keeps t close to the pad
+            if abs(t - t_pad) > abs(-t - t_pad):
+                t = -t
+            out = 3.95
+            e1 = (sx * out + tx * t_pad, sy * out + ty * t_pad)
+            e2 = (sx * FAN_B + tx * t, sy * FAN_B + ty * t)
+            v = (sx * d + tx * t, sy * d + ty * t)
+            def V(q):
+                return pcbnew.VECTOR2I(c.x + mm(q[0]), c.y + mm(q[1]))
+            for s0, s1 in ((pad.GetPosition(), V(e1)), (V(e1), V(e2)), (V(e2), V(v))):
+                tr = pcbnew.PCB_TRACK(b)
+                tr.SetStart(s0); tr.SetEnd(s1); tr.SetWidth(mm(TRACK)); tr.SetLayer(pcbnew.B_Cu)
+                tr.SetNet(pad.GetNet()); tr.SetLocked(True); b.Add(tr)
+            via = pcbnew.PCB_VIA(b)
+            via.SetPosition(V(v)); via.SetWidth(mm(VIA[0])); via.SetDrill(mm(VIA[1]))
+            via.SetNet(pad.GetNet()); via.SetLocked(True); b.Add(via)
+
+
+SIDE_NORMALS = {}
+
+
+def side_normals(b):
+    """Outward unit normal of each pad side (1-15, 16-30, 31-45, 46-60) of every driver, from the pad positions."""
+    for u in D.DRIVER.values():
+        fp = b.FindFootprintByReference(u)
+        fp.SetOrientationDegrees(FAN_ROT)
+        c = fp.GetPosition()
+        res = []
+        for side in range(4):
+            ps = [p.GetPosition() for p in fp.Pads() if p.GetNumber().isdigit() and side * 15 < int(p.GetNumber()) <= side * 15 + 15]
+            x = sum(pcbnew.ToMM(p.x - c.x) for p in ps) / len(ps)
+            y = sum(pcbnew.ToMM(p.y - c.y) for p in ps) / len(ps)
+            r = (x * x + y * y) ** 0.5
+            res.append((x / r, y / r))
+        SIDE_NORMALS[u] = res
 
 
 RING_G, RING_B, VIA_SIDE = 13.10, 10.90, 1.30   # mm: outer G arc, inner B arc, via offset beside a pad
@@ -547,6 +630,6 @@ if __name__ == "__main__":
     fill(board)
     print("stitching vias", stitch(board))
     fill(board)
-    board.Save(OUT)
+    save(board, OUT)
     write_project()                              # after Save: pcbnew rewrites the project file
     print("ok", OUT, len(board.GetFootprints()), "footprints", len(board.GetTracks()), "tracks/vias")

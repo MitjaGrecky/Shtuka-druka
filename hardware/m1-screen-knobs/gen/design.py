@@ -10,7 +10,7 @@ import math
 
 NAME = "m1-screen-knobs"
 TITLE = "M1 - screen knobs module (8 encoders, touch, 13-LED RGB rings)"
-REV = "0.2"
+REV = "0.3"
 
 # ------------------------------------------------------------------ geometry (mm)
 PITCH = 28.0
@@ -72,7 +72,7 @@ def led_matrix(k, i):
       first ring:  dots 0-8  -> triple 0, SW1-9;  dots 9-12 -> triple 2, SW1-4
       second ring: dots 0-3  -> triple 2, SW5-8;  dots 4-12 -> triple 1, SW1-9"""
     cell = CELLS[k // 4]
-    t0 = 3 * ((k % 4) // 2)
+    t0 = 3 * (1 - (k % 4) // 2)        # rev 0.3: right pair on CS1-9 (driver side 2 faces it), left pair on CS10-18
     if k % 2 == 0:
         t, sw = (t0, i + 1) if i <= 8 else (t0 + 2, i - 8)
     else:
@@ -176,13 +176,13 @@ GAP = {g: PITCH * g for g in range(1, 8)}
 # Mounting (P97, adjusted): M2 heat-set inserts in the light guide, screws from below. Corners plus one
 # hole every second knob in the rear strip: gaps 1, 3, 5, 7 (gaps 2 and 6 hold the LED drivers).
 HOLES = [(2.6, 2.6), (W - 2.6, 2.6), (2.6, H - 2.6), (W - 2.6, H - 2.6)] + [(GAP[g], 2.6) for g in (1, 3, 5, 7)]
+DRIVER_Y = 6.0                       # LED driver centre (diamond, rev 0.3); checked by make_pcb.driver_fanout()
 STRIP_Y = 4.2                        # centre line of the rear strip parts
 # Bulk capacitors C1, C14 (4.7u) stay beside the driver; decoupling capacitors that make_pcb puts right at their pins: (cap, ic, pin, row); row 1, 2 sit
 # further out than row 0. Pins: IS31FL3741A VCC 14, 15, 25; CY8CMBR3108 CMOD 3, VREG 4, VDD 5, 6;
 # 74HC165 VCC 16.
-HUG = [("C3", "U1", "14", 0), ("C2", "U1", "15", 1), ("C4", "U1", "25", 0),
-       ("C16", "U6", "14", 0), ("C15", "U6", "15", 1), ("C17", "U6", "25", 0),
-       ("C5", "U2", "3", 0), ("C6", "U2", "4", 1), ("C8", "U2", "6", 0), ("C7", "U2", "5", 1),
+# Rev 0.3: the LED drivers stand as a diamond (45 deg) with a scripted fan-out, their capacitors are left to the placer.
+HUG = [("C5", "U2", "3", 0), ("C6", "U2", "4", 1), ("C8", "U2", "6", 0), ("C7", "U2", "5", 1),
        ("C9", "U3", "16", 0), ("C10", "U4", "16", 0), ("C11", "U5", "16", 0)]
 
 
@@ -211,7 +211,7 @@ def placement():
     for u, g, rs, cs in (("U1", 2, ("R1", "R2", "R3", "R4", "R5", "R6"), ("C1", "C2", "C3", "C4")),
                          ("U6", 6, ("R19", "R20", "R21", "R22", "R23", "R24"), ("C14", "C15", "C16", "C17"))):
         x = GAP[g]
-        pl[u] = (x, 8.5, 180, b)
+        pl[u] = (x, DRIVER_Y, 0, b)            # make_pcb.driver_fanout() turns it to the diamond and fans out
         for n, r in enumerate(rs):
             pl[r] = (x - 7.4 - 2.2 * (n // 3), 2.0 + 2.2 * (n % 3), 0, b)
         for n, c in enumerate(cs):

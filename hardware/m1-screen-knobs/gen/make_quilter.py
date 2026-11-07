@@ -148,6 +148,27 @@ def encoder_part_keepouts(b, m=0.5):
         b.Add(z)
 
 
+def inner_track_keepouts(b):
+    """Job F routed 61 tracks on In2 under the encoders although the all-layer rule areas forbid it (F and B
+    were respected). Job I adds a copy of each area on In2 alone, in case Quilter reads only one layer of a rule area."""
+    for z0 in list(b.Zones()):
+        if not z0.GetZoneName().startswith("under_encoder_"):
+            continue
+        z = pcbnew.ZONE(b)
+        z.SetIsRuleArea(True)
+        ls = pcbnew.LSET()
+        ls.AddLayer(pcbnew.In2_Cu)
+        z.SetLayerSet(ls)
+        z.SetDoNotAllowTracks(True)
+        z.SetDoNotAllowVias(True)
+        z.SetDoNotAllowCopperPour(True)
+        z.SetDoNotAllowPads(False)
+        z.SetDoNotAllowFootprints(False)
+        z.SetZoneName(z0.GetZoneName() + "_In2")
+        z.Outline().Append(z0.Outline())
+        b.Add(z)
+
+
 def rect(z, m=0.5):
     o = z.Outline()
     o.NewOutline()
@@ -164,8 +185,8 @@ BYPASS = [  # capacitor, bypassed component, pin, nF (rev 0.2: two LED drivers U
     ("C5", "U2", 3, 2.2), ("C6", "U2", 4, 100), ("C7", "U2", 5, 1000), ("C8", "U2", 6, 100),
     ("C9", "U3", 16, 100), ("C10", "U4", 16, 100), ("C11", "U5", 16, 100),
     ("C12", "J1", 1, 10000), ("C13", "J1", 5, 1000)]
-POWER = [("+5V", 800), ("GND", 800), ("+3V3", 100), ("VREG", 50)] + \
-        [(f"{c}_SW{k}", 350) for c in ("A", "B") for k in range(1, 10)]   # anode rows: 18 CS x 19 mA per cell
+POWER = [("+5V", 800), ("GND", 800), ("+3V3", 100), ("/VREG", 50)] + \
+        [(f"/{c}_SW{k}", 350) for c in ("A", "B") for k in range(1, 10)]   # anode rows: 18 CS x 19 mA per cell
 
 
 def write_csv(d):
@@ -199,7 +220,7 @@ def arcs_to_chords(b, n=8):
             s.SetStart(p1); s.SetEnd(p2); s.SetLayer(layer); s.SetNet(net); s.SetWidth(w); s.SetLocked(True)
             b.Add(s)
 
-JOBS = ("I_free_no_parts_under_encoders",)  # H_free_any_side: U2 landed under ENC4  # earlier: D_rev02_route_only, F_chords_route_only, G_chords_place_and_route            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
+JOBS = ("I_rev03_fanout_free",)  # rev 0.3; earlier H_free_any_side (U2 landed under ENC4), D/F/G  # earlier: D_rev02_route_only, F_chords_route_only, G_chords_place_and_route            # rev 0.2 (P98): our placement, ring arcs pre-drawn and locked; A-C were rev 0.1
 
 
 def main(out):
@@ -229,17 +250,20 @@ def main(out):
             top_filter(b)                            # top side: only the two free strips
         if job[0] in "HI":
             # 07.11, user: everything except the panel parts may move, on either side; Quilter decides
-            free = [fp for fp in b.GetFootprints() if not fp.GetReference().startswith(FIXED)]
+            keep = FIXED + (tuple(D.DRIVER.values()) if job[0] == "I" else ())   # rev 0.3: drivers stay with their fan-out
+            free = [fp for fp in b.GetFootprints() if not fp.GetReference().startswith(keep)
+                    or (fp.GetReference().startswith("U") and fp.GetReference() not in keep)]
             for n, fp in enumerate(sorted(free, key=lambda f: f.GetReference())):
                 fp.SetLocked(False)
                 fp.SetPosition(M.P(4 + 8 * (n % 26), D.H + 8 + 8 * (n // 26)))
             offboard_region(b, D.H + 4, D.H + 8 + 8 * (len(free) // 26 + 1))
         if job[0] == "I":
             encoder_part_keepouts(b)
+            inner_track_keepouts(b)
         if job[0] in "FGHI":
             arcs_to_chords(b)
         path = os.path.join(d, D.NAME + ".kicad_pcb")
-        b.Save(path)
+        M.save(b, path)
         for ext in (".kicad_sch", ".kicad_pro"):
             shutil.copy(os.path.join(M.PROJ, D.NAME + ext), os.path.join(d, D.NAME + ext))
         write_csv(d)

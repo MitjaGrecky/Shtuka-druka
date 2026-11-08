@@ -217,7 +217,11 @@ def tmask_of(items, win):
                     a0 = max(0, int((mm(bb.GetLeft()) + 0.05 - wx0) / G)); a1 = min(W, int((mm(bb.GetRight()) - 0.05 - wx0) / G) + 1)
                     c0 = max(0, int((mm(bb.GetTop()) + 0.05 - wy0) / G)); c1 = min(H, int((mm(bb.GetBottom()) - 0.05 - wy0) / G) + 1)
                     if a0 < a1 and c0 < c1:
-                        tm[l][c0:c1, a0:a1] = True
+                        # exact pad shape (rotated pads have a loose bounding box)
+                        for cy in range(c0, c1):
+                            for cx in range(a0, a1):
+                                if it.HitTest(pcbnew.VECTOR2I(IU(wx0 + (cx + 0.5) * G), IU(wy0 + (cy + 0.5) * G)), -IU(0.03)):
+                                    tm[l][cy, cx] = True
     return tm
 
 
@@ -248,48 +252,44 @@ pairs = [u["items"] for u in drc["unconnected_items"]]
 report = []
 for k, its in enumerate(pairs, 1):
     try:
-        pads = [i for i in its if i["description"].startswith("Pad")]
-        trs = [i for i in its if i["description"].startswith("Track")]
-        if os.environ.get("REVERSE"): trs = trs[::-1]
-        def tinfo(it):
-            nm = re.search(r"\[(.*?)\]", it["description"]).group(1)
-            ln = re.search(r" on (.*?)(?:,|$)", it["description"]).group(1)
-            return nm, ln
-        if pads:
-            padobj, net = find_pad(pads[0]["description"])
-        else:
-            net, _ = tinfo(trs[0])
-            padobj = None
+        its = list(its)
+        # prefer a pad or via as the start: the router starts from one point
+        its.sort(key=lambda i: 0 if re.search(r"[Pp]ad \S+ \[", i["description"]) else (1 if i["description"].startswith("Via") else 2))
+        if os.environ.get("REVERSE"): its = its[::-1]
+        def resolve(it):
+            dsc = it["description"]; nm = re.search(r"\[(.*?)\]", dsc).group(1)
+            m = re.search(r"[Pp]ad (\S+) \[(.*?)\] of (\S+)", dsc)
+            if m:
+                f = b.FindFootprintByReference(m.group(3))
+                return "pad", f.FindPadByNumber(m.group(1)), nm
+            if dsc.startswith("Via"):
+                best = None
+                for t in b.GetTracks():
+                    if t.Type() == pcbnew.PCB_VIA_T and t.GetNetname() == nm:
+                        d = math.hypot(mm(t.GetPosition().x) - it["pos"]["x"], mm(t.GetPosition().y) - it["pos"]["y"])
+                        if best is None or d < best[0]: best = (d, t)
+                return "via", (best[1] if best and best[0] < 0.1 else None), nm
+            ln = re.search(r" on (.*?)(?:,|$)", dsc).group(1)
+            return "track", find_track(nm, (it["pos"]["x"], it["pos"]["y"]), ln), nm
+        k0, sobj, net = resolve(its[0])
         if os.environ.get("ONLY") and net not in os.environ["ONLY"].split(","):
             continue
-        rest = trs if pads else trs[1:]
-        if rest:
-            _, lname = tinfo(rest[0])
-            tgt = find_track(net, (rest[0]["pos"]["x"], rest[0]["pos"]["y"]), lname)
-            if tgt is None:
-                report.append((k, net, "FAIL", "target track not found")); print(report[-1], flush=True); continue
-            titems = cluster(tgt)
-        else:
-            p2, _ = find_pad(pads[1]["description"])
-            titems = cluster(p2)
-        if padobj is not None:
-            sp = padobj.GetPosition()
+        k1, tobj, _ = resolve(its[1])
+        if sobj is None or tobj is None:
+            report.append((k, net, "FAIL", "item not found")); print(report[-1], flush=True); continue
+        titems = cluster(tobj)
+        padobj = sobj
+        if k0 in ("pad", "via"):
+            sp = sobj.GetPosition()
             sx_, sy_ = mm(sp.x), mm(sp.y)
-            sl = [l for l in LAY if padobj.IsOnLayer(l)][0]
+            sl = [l for l in LAY if sobj.IsOnLayer(l)][-1] if k0 == "pad" else pcbnew.B_Cu
         else:
-            _, ln0 = tinfo(trs[0])
-            st = find_track(net, (trs[0]["pos"]["x"], trs[0]["pos"]["y"]), ln0)
-            if st is None:
-                report.append((k, net, "FAIL", "start track not found")); print(report[-1], flush=True); continue
-            tids = set(id(x) for x in titems)
-            # start at the end of the start track that is farther from its own cluster's other items = the loose end;
-            # pick the end nearest to the target cluster
+            st = sobj
             tp = [(mm(x.GetPosition().x), mm(x.GetPosition().y)) for x in titems if x.GetClass() != "PCB_TRACK"] + \
                  [(mm(v.x), mm(v.y)) for x in titems if x.GetClass() == "PCB_TRACK" for v in (x.GetStart(), x.GetEnd())]
             ends = [(mm(st.GetStart().x), mm(st.GetStart().y)), (mm(st.GetEnd().x), mm(st.GetEnd().y))]
             sx_, sy_ = min(ends, key=lambda e: min(math.hypot(e[0] - p[0], e[1] - p[1]) for p in tp))
             sl = st.GetLayer()
-            padobj = st
 
         def pos_of(i):
             if i.GetClass() == "PCB_TRACK":

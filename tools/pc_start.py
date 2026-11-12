@@ -4,7 +4,8 @@
 Usage: pc_start.py [--no-pull]
 (1) git pull --rebase; branch, last commits, uncommitted files.
 (2) Open tasks for the PC from notes/handoff.md: unchecked items addressed to it ("- [ ] #N ПК: ...").
-(3) Tools: kicad-cli version, EasyEDA bridge (and whether EasyEDA is connected), markitdown.
+(3) The last night check report (tools/night_check.py, logs/night/).
+(4) Tools: kicad-cli version, EasyEDA bridge (and whether EasyEDA is connected), markitdown.
 Read-only apart from the pull. License: AGPL-3.0-or-later.
 """
 import json
@@ -55,6 +56,11 @@ def main():
             print(f"  line {i} [{section[:60]}]\n    {line.strip()[:220]}")
     if not found:
         print("  none")
+
+    night = sorted((ROOT / "logs" / "night").glob("20*.md"))
+    if night:
+        print(f"\nLast night check: {night[-1].relative_to(ROOT)}")
+        print("\n".join("  " + l for l in night[-1].read_text(encoding="utf-8").splitlines()[1:40] if l.strip()))
 
     print("\nTools:")
     cli = next((c for c in (os.environ.get("KICAD_CLI"), shutil.which("kicad-cli"),

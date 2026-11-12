@@ -551,3 +551,10 @@ unconnected остался 20, hole_clearance упал с 199 до 81, друг�
   Для сверки с CI нужен `kicad-cli`.
 
 ## Архив
+
+## 2026-11-12: K (rev 0.4, 4 драйвера) — кандидаты скачаны (облако)
+- Скачаны 1.1, 2.1, 4.1, 5.1 → quilter/results/K_rev04/cand_*. Файлы попарно идентичны (1.1=4.1, 2.1=5.1 по md5), уникальных платы две.
+- Quilter: 1.1 — 98% routed; 2.1 — 99%, Incomplete Net Routing 7.
+- board_stats (1.1 / 2.1): LED CS детур 1.37/1.36, LED SW 1.27/1.27 (I2 fixed: 1.46), vias 581/580 (I2: 584), unrouted у I2 было 5.
+- DRC/parity не запускался (kicad-cli 7 в облаке). ЗАДАЧА ДЛЯ ПК: KiCad 10 DRC --schematic-parity для cand_2_1 и cand_1_1 (инсталлятор kicad-10.0.8 лежит в Downloads), затем сравнить число unrouted с I2 fixed.
+- Job L (LP5864, rev 0.5) идёт, id 6af571a705fb406688265f0a.

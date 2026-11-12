@@ -60,6 +60,38 @@ def lcsc_of(p):
     return DEFAULT_LCSC.get(key, "")
 
 
+def strip_pwr_flags(text):
+    """Remove PWR_FLAG instances (and their library symbol) from a .kicad_sch text.
+    EasyEDA Pro imports every PWR_FLAG as a net flag named "power_PWR_FLAG"; one name = one net, so the flags on
+    +5V, +3V3 and GND short the three rails in the imported schematic (PC check 12.11.2026). PWR_FLAG only matters
+    for KiCad ERC, so the EasyEDA copy goes without it."""
+    def drop(s, opener):
+        out, i = [], 0
+        while True:
+            j = s.find(opener, i)
+            if j < 0:
+                return "".join(out) + s[i:]
+            depth, k = 0, j
+            while True:
+                c = s[k]
+                if c == "(":
+                    depth += 1
+                elif c == ")":
+                    depth -= 1
+                    if depth == 0:
+                        break
+                elif c == '"':
+                    k = s.index('"', k + 1)
+                k += 1
+            ls = s.rfind("\n", 0, j) + 1                    # drop the whole line block incl. indentation
+            out.append(s[i:ls])
+            i = k + 1
+            if s[i:i + 1] == "\n":
+                i += 1
+    text = drop(text, '(symbol (lib_id "power:PWR_FLAG")')
+    return drop(text, '(symbol "power:PWR_FLAG"')
+
+
 def write_bom(d, out):
     groups = OrderedDict()
     for p in d.parts():
@@ -135,9 +167,13 @@ def main():
     # package for EasyEDA Pro: KiCad 7 file format (EasyEDA Pro reads KiCad below 10)
     zp = os.path.join(out, f"{ident}_kicad7.zip")
     with zipfile.ZipFile(zp, "w", zipfile.ZIP_DEFLATED) as z:
-        for f in (pcb, sch, pro, os.path.join(proj, "fp-lib-table"), os.path.join(proj, "sym-lib-table")):
+        for f in (pcb, pro, os.path.join(proj, "fp-lib-table"), os.path.join(proj, "sym-lib-table")):
             if os.path.exists(f):
                 z.write(f, os.path.basename(f))
+        sch_text = open(sch, encoding="utf-8").read()
+        clean = strip_pwr_flags(sch_text)
+        print("PWR_FLAG removed for EasyEDA:", sch_text.count('(lib_id "power:PWR_FLAG")'), "->", clean.count("PWR_FLAG"))
+        z.writestr(os.path.basename(sch), clean)
         lib = os.path.join(proj, "lib")
         if not os.path.isdir(lib):
             lib = os.path.join(proj, "..", "m1-screen-knobs", "lib")        # W1 uses the M1 project library

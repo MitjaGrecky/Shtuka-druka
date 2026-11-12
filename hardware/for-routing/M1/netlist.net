@@ -1,7 +1,7 @@
 (export (version "E")
   (design
-    (source "/tmp/forrouting_mvga4ii0/m1-screen-knobs/m1-screen-knobs.kicad_sch")
-    (date "Thu Nov 12 09:50:46 2026")
+    (source "/tmp/forrouting_m07vyyrq/m1-screen-knobs/m1-screen-knobs.kicad_sch")
+    (date "Thu Nov 12 20:55:50 2026")
     (tool "Eeschema 7.0.11+dfsg-1build4")
     (sheet (number "1") (name "/") (tstamps "/")
       (title_block
@@ -2647,7 +2647,7 @@
         (pin (num "4") (name "BK") (type "passive")))))
   (libraries
     (library (logical "ShtukaDruka")
-      (uri "/tmp/forrouting_mvga4ii0/m1-screen-knobs/lib/ShtukaDruka.kicad_sym")))
+      (uri "/tmp/forrouting_m07vyyrq/m1-screen-knobs/lib/ShtukaDruka.kicad_sym")))
   (nets
     (net (code "1") (name "+3V3")
       (node (ref "C10") (pin "1") (pintype "passive"))

@@ -1,0 +1,1 @@
+Rev 0.1: schematic and placed board with mounts; routing will be done in EasyEDA Pro (hardware/for-routing/M5). CI keeps the DRC report but does not fail on this board until this file is removed.

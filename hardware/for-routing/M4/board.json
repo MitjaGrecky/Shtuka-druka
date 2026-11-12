@@ -1,0 +1,39 @@
+{
+ "id": "M4",
+ "name": "m4-fx-filter",
+ "title": "M4 - FX Mix + Filter module (2 encoders, 12-LED RGB rings)",
+ "rev": "0.1",
+ "w": 66.0,
+ "h": 34.0,
+ "layers": 2,
+ "parts": 46,
+ "holes": [
+  [
+   2.6,
+   2.6
+  ],
+  [
+   2.6,
+   31.4
+  ],
+  [
+   33.0,
+   2.6
+  ],
+  [
+   63.4,
+   2.6
+  ],
+  [
+   63.4,
+   31.4
+  ]
+ ],
+ "connectors": [
+  [
+   "J1",
+   "Module bus 2x7 1.27"
+  ]
+ ],
+ "bom_lines": 12
+}

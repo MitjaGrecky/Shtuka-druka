@@ -1,0 +1,39 @@
+{
+ "id": "M5",
+ "name": "m5-gain",
+ "title": "M5 - Gain 1 + 2 module on the slope (2 encoders, 11-LED rings, Clip LEDs)",
+ "rev": "0.1",
+ "w": 82.0,
+ "h": 34.0,
+ "layers": 2,
+ "parts": 46,
+ "holes": [
+  [
+   2.6,
+   2.6
+  ],
+  [
+   2.6,
+   31.4
+  ],
+  [
+   41.0,
+   2.6
+  ],
+  [
+   79.4,
+   2.6
+  ],
+  [
+   79.4,
+   31.4
+  ]
+ ],
+ "connectors": [
+  [
+   "J1",
+   "Module bus 2x7 1.27"
+  ]
+ ],
+ "bom_lines": 12
+}

@@ -3,4 +3,6 @@ On the PC (KiCad 10) package with tools/pack_easyeda.py instead. License: AGPL-3
 """
 BOARDS = {
     "M3": ("m3-tempo-swing", {}, ["make_sch.py", "make_pcb.py"]),
+    "M4": ("m4-fx-filter", {}, ["make_sch.py", "make_pcb.py"]),
+    "M5": ("m5-gain", {}, ["make_sch.py", "make_pcb.py"]),
 }

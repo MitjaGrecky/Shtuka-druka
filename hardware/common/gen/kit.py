@@ -118,6 +118,38 @@ def encoder(add, ref, k, mp="GND", note=""):
 ENC_SHAFT = (7.5, 2.5)          # shaft relative to pad A in the encoder footprint
 
 
+def knob_pair(add, names, ring_n=12, clips=(), holes=5):
+    """Parts of a two-encoder module on the module bus (M3, M4, M5): J1, bulk caps C1 C2, bus pull-ups R1 R2 (DNP),
+    chain-end pull-up R3, LP5864 U1 with C3-C6, LEDs D1.. (left ring on CS9-17, right ring on CS0-8; a ring with
+    11 LEDs takes its clip LED as 12th dot), 74HC165 U2 + C7, pull-up packs RN1 RN2, ENC1 ENC2 (MP on GND), holes.
+    Returns the shift-register bit list (host reads D7..D0)."""
+    bus(add, "J1", "Module bus 2x7 1.27")
+    rc(add, "C1", "10u", "+5V", "GND", C0805)
+    rc(add, "C2", "1u", "+3V3", "GND")
+    rc(add, "R1", "4.7k", "SDA", "+3V3", DNP="yes")           # bus pull-ups live on the host (P2)
+    rc(add, "R2", "4.7k", "SCL", "+3V3", DNP="yes")
+    rc(add, "R3", "10k", "SR_IN", "+3V3", Note="end of the chain reads 1s when nothing follows")
+    lp5864(add, "U1", "A", ("C3", "C4", "C5", "C6"), addr=(0, 0))
+    n = 0
+    for k in range(2):
+        for i in range(ring_n):
+            n += 1
+            sw, cs = ring_matrix("A", k, i)
+            rgb(add, f"D{n}", sw, cs, Ring=names[k], Dot=str(i + 1))
+    for k, clip in enumerate(clips):                       # 12th position of ring k's CS triples
+        n += 1
+        sw, cs = ring_matrix("A", k, ring_n)
+        rgb(add, f"D{n}", sw, cs, Note=clip)
+    bits = [f"E{k}_{s}" for k in range(2) for s in ("A", "B", "SW")]
+    sr165(add, "U2", bits, "SR_IN", "SR_OUT", "C7")
+    pullups(add, 1, bits)
+    for k in range(2):
+        encoder(add, f"ENC{k + 1}", k, mp="GND", note=f"{names[k]}: Alps EC11E1834403 or another smooth EC11 with switch")
+    for h in range(holes):
+        hole(add, f"H{h + 1}")
+    return bits
+
+
 def hole(add, ref):
     add(ref, "Mechanical:MountingHole", "M2", "MountingHole:MountingHole_2.2mm_M2", {})
 

@@ -38,6 +38,31 @@
 ## Отчёты
 (новые записи сверху: дата, кто, что сделано, где результат)
 
+### 2026-11-12 ночь, ПК: скрипты для рутинных проверок; #13 и DRC кандидатов K
+Новые скрипты (Python, только стандартная библиотека; на ПК запускать `C:\Program Files\KiCad\10.0\bin\python.exe`):
+- `tools/pc_check.py BOARD... [--sch-from DIR] [--details] [--md OUT]`: DRC KiCad 10 + parity + длина меди и via одной таблицей.
+  Плата не меняется (DRC во временной папке, заливки перезаливаются там). `--sch-from`: схема и `.kicad_pro` проекта, для результатов Quilter.
+  Полные JSON-отчёты в `logs/pc_check/` (в git не идут).
+- `tools/quilter_intake.py JOB --match TEXT [--sch-from DIR]`: архивы Quilter из «Загрузок» → `hardware/<board>/quilter/results/<JOB>_cand<a>_<b>/`
+  (только .kicad_pcb и .kicad_pro), одинаковые кандидаты отсеиваются по md5, затем `pc_check`.
+- `tools/eda/eda_check.py ID [--project ИМЯ]`: сверка открытого проекта EasyEDA (схема и плата) с `hardware/for-routing/<ID>/netlist.net`
+  одной командой, сам запускает мост. Как пользоваться и что делать при «no connection sees them»: `tools/eda/README.md`.
+  Проверено: W1_v2 35/35 и 35/35; старый M1_kicad7 даёт склейку 140 выводов и 3 `PWR_FLAG`, ровно как .tel облака (143/146).
+- `.gitignore`: `~*.lck`, `.history/`, `/logs/`.
+
+Результаты, полученные попутно (KiCad 10.0.8, перезаливка зон):
+
+| Плата | Ошибки | Неразведено | Parity | Медь, мм | Via |
+|---|---|---|---|---|---|
+| L_rev05 вход Quilter (#13), своя схема | 0 | 365 (вход, не разведён) | 0 | 1725 | 320 |
+| I2 fixed (схема I2_two_chips) | 0 | 5 | 0 | 9529 | 584 |
+| K cand1_1 (= 4_1), схема K_rev04 | 86 (84 items_not_allowed, 2 hole_clearance) | 12 | 0 | 9106 | 551 |
+| K cand2_1 (= 5_1), схема K_rev04 | 117 (114 items_not_allowed, 3 hole_clearance) | 8 | 0 | 9208 | 550 |
+
+- #13 закрыт: parity 0, ошибок 0.
+- K: обе платы хуже I2 fixed по неразведённым (12 и 8 против 5) и с ошибками `items_not_allowed` (медь в запретных зонах; какие зоны, не разбирал).
+  Кандидаты 1_1 и 2_1 сохранены в `hardware/m1-screen-knobs/quilter/results/K_rev04_cand*` (4_1 и 5_1 побайтно те же).
+
 ### 2026-11-12 вечер, ПК: архивы без PWR_FLAG импортированы как M1_v2 и W1_v2, склейки нет
 Архивы из `for_routing\` (md5 совпадают с `hardware/for-routing/<ID>/`). Импорт по умолчанию («Import Document»), новые проекты M1_v2 и W1_v2;
 старые M1_kicad7 и W1_kicad7 не тронуты. В проектах ничего не менялось и не сохранялось. Проверка та же: плата по площадкам через API,
@@ -88,7 +113,7 @@
   Входы: `quilter_inputs/L_rev05/` на ПК. Проверка вокруг драйверов: нарушений зазора нет; полный DRC KiCad 10 и parity пока не гонялись.
 - Job L запущен 12.11 в 10:03 (Riga): id 6af571a705fb406688265f0a, проект «Shtuka Druka M1 one chip» (перенос сэкономил 546 выводов биллинга), полный режим, 816 выводов (546 на разводку), 163 детали, 47 на расстановку.
   Настройки: JLCPCB 4-Layer 4/4 мил, In2 = Signal, зазор 0,13, via 0,45/0,2, поля 0,3; таблицы токов (20 строк) и обходных конденсаторов (25 строк, уверенность полная) из CSV. Жду кандидатов (1–10 часов).
-- [ ] #13 ПК: прогнать `kicad-cli pcb drc --schematic-parity` на `quilter_inputs/L_rev05/m1-screen-knobs.kicad_pcb` (KiCad 10); ждём 0 ошибок parity и осмысленный остаток (нераспаянные связи).
+- [x] #13 (ПК, 12.11): parity 0, ошибок 0, неразведено 365 (вход). Отчёт «2026-11-12 ночь, ПК: скрипты». Было: ПК: прогнать `kicad-cli pcb drc --schematic-parity` на `quilter_inputs/L_rev05/m1-screen-knobs.kicad_pcb` (KiCad 10); ждём 0 ошибок parity и осмысленный остаток (нераспаянные связи).
 
 ### 2026-11-08, ПК: #11 доводка Quilter I2 1.1 (rev 0.3.1) → `quilter/results/I2_rev031_cand1_1/fixed.kicad_pcb`
 Оригинал не тронут, `almost/` не менял. Проверки: KiCad 10.0, `kicad-cli pcb drc --schematic-parity`, схема и `.kicad_pro` из

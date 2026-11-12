@@ -2,6 +2,11 @@ bench/shtuka_bench
 __pycache__/
 *.pyc
 .DS_Store
+# KiCad lock files and local history
+~*.lck
+.history/
+# local reports of tools/pc_check.py, tools/eda/
+/logs/
 
 # Local per-machine Claude Code MCP config (absolute PC paths)
 /.mcp.json

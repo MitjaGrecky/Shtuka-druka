@@ -14,10 +14,11 @@ from collections import defaultdict
 
 def read_kicad_net(path):
     txt = open(path, encoding="utf-8").read()
-    refs = set(re.findall(r'\(comp \(ref "([^"]+)"\)', txt))
+    refs = set(re.findall(r'\(comp\s+\(ref\s+"([^"]+)"\)', txt))
     nets = {}
-    for m in re.finditer(r'\(net \(code "?\d+"?\) \(name "((?:[^"\\]|\\.)*)"\)(.*?)(?=\(net \(code|\Z)', txt, re.S):
-        nets[m.group(1)] = {f"{r}.{p}" for r, p in re.findall(r'\(node \(ref "([^"]+)"\) \(pin "([^"]+)"\)', m.group(2))}
+    # KiCad 7 writes one line per node, KiCad 10 one token per line: whitespace-tolerant patterns
+    for m in re.finditer(r'\(net\s+\(code\s+"?\d+"?\)\s+\(name\s+"((?:[^"\\]|\\.)*)"\)(.*?)(?=\(net\s+\(code|\Z)', txt, re.S):
+        nets[m.group(1)] = {f"{r}.{p}" for r, p in re.findall(r'\(node\s+\(ref\s+"([^"]+)"\)\s+\(pin\s+"([^"]+)"\)', m.group(2))}
     return refs, nets
 
 

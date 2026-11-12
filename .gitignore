@@ -7,6 +7,8 @@ __pycache__/
 .history/
 # local reports of tools/pc_check.py, tools/eda/
 /logs/
+# KiCad-7-format symbols rebuilt on machines with a newer KiCad (hardware/common/gen/sym7.py)
+/hardware/common/sym7/
 
 # Local per-machine Claude Code MCP config (absolute PC paths)
 /.mcp.json

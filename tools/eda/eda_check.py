@@ -34,8 +34,14 @@ import netcompare  # noqa: E402
 def http(url, body=None, timeout=10):
     req = urllib.request.Request(url, data=None if body is None else json.dumps(body).encode(),
                                  headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return json.loads(r.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return json.loads(r.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:             # the bridge answers errors with a JSON body
+        try:
+            return json.loads(e.read().decode("utf-8"))
+        except ValueError:
+            raise e from None
 
 
 def find_bridge():

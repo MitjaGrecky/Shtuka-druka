@@ -1,0 +1,16 @@
+Designator,Value,Footprint,LCSC,Status of the LCSC number
+J1,Bus to P1 2x7 1.27,PinHeader_2x07_P1.27mm_Vertical,C3975190,проверить в EasyEDA
+J2,Bus to M5 2x7 1.27,PinHeader_2x07_P1.27mm_Vertical,C3975190,проверить в EasyEDA
+C1,10u,C_0805_2012Metric,C15850,проверить в EasyEDA
+"C2,C9",1u,C_0402_1005Metric,C52923,проверить в EasyEDA
+"RV1,RV2,RV3,RV4","10k lin, end stops",Potentiometer_Alps_RK09K_Single_Vertical,C209770,проверено 06.11.2026 (док. 31)
+"R1,R2,R3,R4",1k,R_0402_1005Metric,C11702,проверить в EasyEDA
+"C3,C4,C5,C6,C7,C8,C10",100n,C_0402_1005Metric,C1525,проверить в EasyEDA
+U1,ADS1115IDGSR,TSSOP-10_3x3mm_P0.5mm,C37593,проверено 06.11.2026 (док. 31)
+"SW1,SW2",TS-1187A-B-A-B,SW_Push_1P1T_XKB_TS-1187A,C318884,проверено 06.11.2026 (док. 31)
+RN1,4x10k,R_Array_Convex_4x0402,C25725,проверено 06.11.2026 (док. 31)
+U2,74HC165PW,TSSOP-16_4.4x5mm_P0.65mm,C80696,проверено 06.11.2026 (док. 31)
+U3,IS31FL3218-QFLS2-TR,QFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm,C2940546,проверено 06.11.2026 (док. 31)
+R5,4.7k,R_0402_1005Metric,C25900,проверить в EasyEDA
+R6,10k,R_0402_1005Metric,C25744,проверить в EasyEDA
+"D1,D2,D3,D4",XL-1615RGBC-RF,LED_RGB_XL-1615RGBC_1.6x1.5mm,C965840,проверено 01.11.2026 (док. 30)

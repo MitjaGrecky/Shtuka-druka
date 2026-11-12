@@ -1,0 +1,47 @@
+{
+ "id": "W1",
+ "name": "w1-levels",
+ "title": "W1 - Levels (slope, left): 4 volume pots, 2 P48 buttons, window for M5 Gain",
+ "rev": "0.1",
+ "w": 92.0,
+ "h": 126.0,
+ "layers": 2,
+ "parts": 38,
+ "holes": [
+  [
+   2.6,
+   2.6
+  ],
+  [
+   2.6,
+   123.4
+  ],
+  [
+   46.0,
+   5.0
+  ],
+  [
+   46.0,
+   113.0
+  ],
+  [
+   89.4,
+   2.6
+  ],
+  [
+   89.4,
+   123.4
+  ]
+ ],
+ "connectors": [
+  [
+   "J1",
+   "Bus to P1 2x7 1.27"
+  ],
+  [
+   "J2",
+   "Bus to M5 2x7 1.27"
+  ]
+ ],
+ "bom_lines": 15
+}

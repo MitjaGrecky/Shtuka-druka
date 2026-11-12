@@ -1,0 +1,47 @@
+{
+ "id": "M1",
+ "name": "m1-screen-knobs",
+ "title": "M1 - screen knobs module (8 encoders, touch, 12-LED RGB rings)",
+ "rev": "0.5",
+ "w": 224.0,
+ "h": 34.0,
+ "layers": 4,
+ "parts": 163,
+ "holes": [
+  [
+   2.6,
+   2.6
+  ],
+  [
+   2.6,
+   31.4
+  ],
+  [
+   56.0,
+   2.6
+  ],
+  [
+   112.0,
+   2.6
+  ],
+  [
+   168.0,
+   2.6
+  ],
+  [
+   221.4,
+   2.6
+  ],
+  [
+   221.4,
+   31.4
+  ]
+ ],
+ "connectors": [
+  [
+   "J1",
+   "Module bus 2x7 1.27"
+  ]
+ ],
+ "bom_lines": 15
+}

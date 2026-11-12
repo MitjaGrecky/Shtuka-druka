@@ -74,6 +74,40 @@ def is31fl3741a():
     return s
 
 
+# ---------------------------------------------------------------- LP5864
+# Pin numbers: TI LP5864 datasheet SNVSC52A, table 5-1 (RSM package, 32-pin VQFN), EP = pin 33 = GND.
+def lp5864():
+    left = [("1", "VCC", "power_in"), ("15", "VLED", "power_in"), ("32", "VIO_EN", "input"), ("25", "VCAP", "passive"), None,
+            ("26", "IFS", "input"), ("27", "VSYNC", "input"), ("28", "SCL_SCLK", "input"), ("29", "SDA_MOSI", "bidirectional"),
+            ("30", "ADDR0_MISO", "input"), ("31", "ADDR1_SS", "input"), None, ("33", "GND", "power_in")]
+    right = [(str(11 + k), f"SW{k}", "passive") for k in range(4)] + [None] + \
+            [(str(2 + n), f"CS{n}", "passive") for n in range(9)] + [(str(16 + n), f"CS{9 + n}", "passive") for n in range(9)]
+    h = len(right) * 2.54
+    top = h / 2 + 2.54
+    s = '  (symbol "LP5864" (pin_names (offset 1.016)) (in_bom yes) (on_board yes)\n'
+    s += prop("Reference", "U", -10.16, top + 1.27, justify="left")
+    s += prop("Value", "LP5864RSMR", -10.16, -top - 1.27, justify="left")
+    s += prop("Footprint", "ShtukaDruka:VQFN-32-1EP_4x4mm_P0.4mm_EP2.8x2.8mm", 0, 0, hide=True)
+    s += prop("Datasheet", "https://www.ti.com/lit/gpn/lp5864", 0, 0, hide=True)
+    s += prop("ki_description", "24 RGB (4 x 18) LED matrix driver, I2C/SPI, 125 kHz PWM, VQFN-32 4x4", 0, 0, hide=True)
+    s += prop("LCSC", "C5220564", 0, 0, hide=True)
+    s += '    (symbol "LP5864_0_1"\n'
+    s += f'      (rectangle (start -10.16 {top:g}) (end 10.16 {-top:g}) (stroke (width 0.254) (type default)) (fill (type background)))\n'
+    s += '    )\n    (symbol "LP5864_1_1"\n'
+    y = top - 2.54
+    for p in left:
+        if p:
+            s += pin(p[2], -12.7, round(y, 2), 0, p[1], p[0])
+        y -= 2.54
+    y = top - 2.54
+    for p in right:
+        if p:
+            s += pin(p[2], 12.7, round(y, 2), 180, p[1], p[0])
+        y -= 2.54
+    s += '    )\n  )\n'
+    return s
+
+
 def stock(lib, name):
     """Return the text of a stock KiCad symbol block (top level, two-space indent)."""
     txt = open(os.path.join(KICAD_SYMBOLS, lib + ".kicad_sym")).read()
@@ -119,7 +153,7 @@ def encoder():
 
 def write_symbols():
     out = "(kicad_symbol_lib (version 20220914) (generator shtuka_druka_make_lib)\n"
-    out += is31fl3741a() + xl1615() + encoder() + ")\n"
+    out += is31fl3741a() + lp5864() + xl1615() + encoder() + ")\n"
     os.makedirs(LIB, exist_ok=True)
     open(os.path.join(LIB, "ShtukaDruka.kicad_sym"), "w").write(out)
 
@@ -191,6 +225,31 @@ def qfn60():
     return n, s
 
 
+def vqfn32():
+    # TI RSM0032B land pattern: 8 pads per side, 0.4 mm pitch, pad 0.2 x 0.55, pad rows 3.85 mm apart, exposed pad 2.8 x 2.8.
+    n = "VQFN-32-1EP_4x4mm_P0.4mm_EP2.8x2.8mm"
+    s = fp_head(n, "VQFN-32 4x4 mm, 0.4 mm pitch, exposed pad 2.8 mm (TI LP5864, RSM0032B land pattern)", "VQFN 32 0.4")
+    s += fp_text("reference", "REF**", 0, -3.0, "F.SilkS", 0.8) + fp_text("value", n, 0, 3.0, "F.Fab", 0.5)
+    c, L, W = 1.925, 0.55, 0.2
+    for k in range(8):
+        o = -1.4 + 0.4 * k
+        s += smd_pad(str(1 + k), -c, o, L, W)            # left, top to bottom
+        s += smd_pad(str(9 + k), o, c, W, L)             # bottom, left to right
+        s += smd_pad(str(17 + k), c, -o, L, W)           # right, bottom to top
+        s += smd_pad(str(25 + k), -o, -c, W, L)          # top, right to left
+    s += smd_pad("33", 0, 0, 2.8, 2.8, shape="rect", layers='"F.Cu" "F.Mask"')
+    for i in (-0.8, 0.8):                                # 2 x 2 paste windows, ~37 % of the pad (small pad, thin stencil)
+        for j in (-0.8, 0.8):
+            s += smd_pad("", i, j, 0.9, 0.9, shape="roundrect", layers='"F.Paste"')
+    for x, y in ((0, -0.8), (0, 0.8), (-0.8, 0), (0.8, 0)):
+        s += f'  (pad "33" thru_hole circle (at {x:g} {y:g}) (size 0.6 0.6) (drill 0.3) (layers "*.Cu"))\n'
+    s += fp_rect(-2.0, -2.0, 2.0, 2.0, "F.Fab", 0.1)
+    s += fp_line(-2.15, -2.15, -1.55, -2.15, "F.SilkS", 0.12) + fp_line(-2.15, -2.15, -2.15, -1.55, "F.SilkS", 0.12)
+    s += f'  (fp_circle (center -2.7 -1.9) (end -2.55 -1.9) (stroke (width 0.3) (type solid)) (fill solid) (layer "F.SilkS"))\n'
+    s += fp_rect(-2.5, -2.5, 2.5, 2.5, "F.CrtYd", 0.05)
+    return n, s
+
+
 def encoder_ring():
     """Stock Alps EC11E footprint with a courtyard that follows the body and the pins: the stock
     rectangle also covers the empty corners where the ring LEDs stand (false DRC overlaps)."""
@@ -214,7 +273,7 @@ def encoder_ring():
 def write_footprints():
     d = os.path.join(LIB, "ShtukaDruka.pretty")
     os.makedirs(d, exist_ok=True)
-    for n, s in (led1615(), qfn60(), encoder_ring()):
+    for n, s in (led1615(), qfn60(), vqfn32(), encoder_ring()):
         open(os.path.join(d, n + ".kicad_mod"), "w").write(s + ")\n")
 
 

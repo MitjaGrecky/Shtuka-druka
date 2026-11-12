@@ -11,7 +11,8 @@ import os
 
 NAME = "m1-screen-knobs"
 TITLE = "M1 - screen knobs module (8 encoders, touch, 13-LED RGB rings)"
-REV = "0.3"
+LP = os.environ.get("M1_LP") == "1"               # rev 0.5 (job L, 11.11): one TI LP5864 (24 RGB) per pair of rings, 12 LEDs per ring
+REV = "0.5" if LP else "0.3"
 
 # ------------------------------------------------------------------ geometry (mm)
 PITCH = 28.0
@@ -21,7 +22,7 @@ Y0, Y1 = 263.0, 297.0                # board edges in panel y (34 mm): P2 ends b
                                      # the 6 mm behind the rings give the LED driver room to fan out
 W, H = X1 - X0, Y1 - Y0
 RING_R = 12.0                        # LED ring radius (ring 24 mm in layout_v7)
-RING_N = 13                          # LEDs per ring (P76: 13 = one SW line of IS31FL3741A)
+RING_N = 12 if LP else 13            # LEDs per ring (P76: 13 = one SW line of IS31FL3741A; rev 0.5: 12 = 24 RGB per LP5864 for a pair)
 ARC_START, ARC_SPAN = 225.0, 270.0   # degrees, counter-clockwise from +x, as in the 3D model
 BOARD_THICK = 1.6
 LAYERS = 4
@@ -63,7 +64,14 @@ def cs_pin(i):
 
 
 ONE_CHIP = os.environ.get("M1_ONE_CHIP") == "1"   # experiment (job J, 07.11): one driver for all 8 rings
-if ONE_CHIP:
+FOUR = os.environ.get("M1_FOUR") == "1" or LP     # rev 0.4 experiment (job K, 11.11): one driver per pair of rings
+if FOUR:
+    CELLS = ("A", "B", "C", "D")    # cell = 2 rings; driver in the rear gap between its two rings (gaps 1, 3, 5, 7)
+    DRIVER = {"A": "U1", "B": "U6", "C": "U7", "D": "U8"}
+    FAN_ROT = 180 if LP else 225     # IS31FL3741A: side 2 (SW1-7, CS1-5) faces the right ring, side 3 (CS6-12) the left ring
+                                    # LP5864 (bottom side, KiCad orientation 180 = pin 1 bottom left in the board view): side 0 (CS0-6) faces the right ring, side 2 (CS10-17) the left ring,
+                                    # side 1 (SW0-3) the front, side 3 (control pins) the rear edge
+elif ONE_CHIP:
     CELLS = ("A",)
     DRIVER = {"A": "U1"}
     FAN_ROT = 315                   # sides 2+3 (CS1-19) face the right half, sides 4+1 (CS20-39) the left half
@@ -73,12 +81,31 @@ else:
     FAN_ROT = 225                   # side 2 (SW, CS1-5) faces the right pair, side 3 (CS6-18) the left pair
 
 
+# reference designators of the passives of each LED driver cell
+CELL_REFS = {"A": dict(rext="R1", sdb="R2", addr=("R3", "R4", "R5", "R6"), caps=("C1", "C2", "C3", "C4"), fit=0),
+             "B": dict(rext="R19", sdb="R20", addr=("R21", "R22", "R23", "R24"), caps=("C14", "C15", "C16", "C17"), fit=1),
+             "C": dict(rext="R25", sdb="R26", addr=("R27", "R28", "R29", "R30"), caps=("C18", "C19", "C20", "C21"), fit=2),
+             "D": dict(rext="R31", sdb="R32", addr=("R33", "R34", "R35", "R36"), caps=("C22", "C23", "C24", "C25"), fit=3)}
+
+
 def led_matrix(k, i):
     """(cell, SW, first CS) of LED i of ring k. Ring k belongs to cell k // 4; its driver serves 52 RGB
     on SW1-9 and CS1-18. Inside a cell the rings go in pairs (k % 4 // 2); a pair has three CS triples
     and every triple stays on the rings it lights (cathode arcs drawn by the generator, doc 33):
       first ring:  dots 0-8  -> triple 0, SW1-9;  dots 9-12 -> triple 2, SW1-4
       second ring: dots 0-3  -> triple 2, SW5-8;  dots 4-12 -> triple 1, SW1-9"""
+    if LP:            # rev 0.5: LP5864 = 4 SW x 18 CS. Left ring (r 0) on CS9-17 (side 2 of the flipped chip), right ring (r 1) on CS0-8.
+        # runs of 4 consecutive dots share a CS triple (cathode arcs drawn by make_pcb); inside a run SW0-3 in turn,
+        # every second run reversed (serpentine): dots 3|4 and 7|8 share an SW and sit next to each other
+        cell, r = CELLS[k // 2], k % 2
+        j, p = i // 4, i % 4
+        sw = p if j % 2 == 0 else 3 - p
+        return cell, sw, 3 * ((3 if r == 0 else 0) + j)
+    if FOUR:          # rev 0.4: model in doc 34 - matrix copper 4250 -> 3600 mm, 27 -> 19 lines per driver
+        cell, r = CELLS[k // 2], k % 2
+        t = (0 if r else 2) + (i >= 7)          # right ring CS1-6 (side 2), left ring CS7-12 (side 3); runs of 7 and 6 dots
+        sw = i + 1 if i < 7 else i - 6          # SW1-7, each SW joins 2 dots of each ring of the pair
+        return cell, sw, 3 * t + 1
     if ONE_CHIP:      # one driver: right half (pairs 2, 3) on CS1-18, left half (pairs 1, 0) on CS20-37 (CS19 unused)
         cell, t0 = "A", {0: 9, 1: 6, 2: 0, 3: 3}[k // 2]
     else:
@@ -103,14 +130,29 @@ def parts():
         "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical", {str(p): n for p, n in CONN.items()},
         Side="bottom")
     # LED drivers, one per cell (P98); cell B repeats cell A with its own references and address
-    cell_refs = {"A": dict(rext="R1", sdb="R2", addr=("R3", "R4", "R5", "R6"), caps=("C1", "C2", "C3", "C4"), fit=0),
-                 "B": dict(rext="R19", sdb="R20", addr=("R21", "R22", "R23", "R24"), caps=("C14", "C15", "C16", "C17"), fit=1)}
+    cell_refs = CELL_REFS
     for cell in CELLS:
         c = cell_refs[cell]
+        if LP:
+            cv, cvled, cvcap, cvio = c["caps"]
+            a1, a0 = divmod(CELLS.index(cell), 2)         # I2C address: A = 0 0, B = 0 1, C = 1 0, D = 1 1 (ADDR1 ADDR0)
+            u = {"1": "+5V", "15": "+5V", "25": f"{cell}_VCAP", "26": "GND", "27": "GND", "28": "SCL", "29": "SDA",
+                 "30": "+3V3" if a0 else "GND", "31": "+3V3" if a1 else "GND", "32": "+3V3", "33": "GND"}
+            u.update({str(2 + n): f"{cell}_CS{n}" for n in range(9)})            # CS0-8 -> pins 2-10
+            u.update({str(16 + n): f"{cell}_CS{9 + n}" for n in range(9)})       # CS9-17 -> pins 16-24
+            u.update({str(11 + n): f"{cell}_SW{n}" for n in range(4)})           # SW0-3 -> pins 11-14
+            add(DRIVER[cell], "ShtukaDruka:LP5864", "LP5864RSMR", "ShtukaDruka:VQFN-32-1EP_4x4mm_P0.4mm_EP2.8x2.8mm", u,
+                LCSC="C5220564", Cell=cell, Note=f"I2C chip address 10 0 {a1} {a0} (ADDR1 ADDR0 tied on the board); internal current set, no REXT")
+            add(cv, "Device:C", "1u", C0402, {"1": "+5V", "2": "GND"}, Note="VCC (pin 1)")
+            add(cvled, "Device:C", "4.7u", C0805, {"1": "+5V", "2": "GND"}, Note="VLED (pin 15), SW lines up to ~0.3 A")
+            add(cvcap, "Device:C", "1u", C0402, {"1": f"{cell}_VCAP", "2": "GND"}, Note="internal LDO (pin 25)")
+            add(cvio, "Device:C", "1n", C0402, {"1": "+3V3", "2": "GND"}, Note="VIO_EN (pin 32)")
+            continue
         u = {"14": "+5V", "15": "+5V", "25": "+5V", "9": "SDA", "10": "SCL", "7": "~{INT}", "11": f"{cell}_SDB",
              "8": f"{cell}_ADDR", "13": f"{cell}_REXT", "12": "GND", "36": "GND", "55": "GND", "61": "GND"}
-        u.update({str(15 + k): f"{cell}_SW{k}" for k in range(1, 10)})
-        used = set(range(1, 19)) | (set(range(20, 38)) if ONE_CHIP else set())   # one chip: 12 triples, CS19 skipped
+        nsw = 7 if FOUR else 9
+        u.update({str(15 + k): (f"{cell}_SW{k}" if k <= nsw else None) for k in range(1, 10)})
+        used = set(range(1, 13)) if FOUR else set(range(1, 19)) | (set(range(20, 38)) if ONE_CHIP else set())   # one chip: 12 triples, CS19 skipped
         u.update({cs_pin(i): (f"{cell}_CS{i}" if i in used else None) for i in range(1, 40)})
         add(DRIVER[cell], "ShtukaDruka:IS31FL3741A", "IS31FL3741A-QFLS4-TR",
             "ShtukaDruka:QFN-60-1EP_7x7mm_P0.4mm_EP5.25x5.25mm", u, LCSC="C2940604", Cell=cell)
@@ -186,7 +228,8 @@ def parts():
 GAP = {g: PITCH * g for g in range(1, 8)}
 # Mounting (P97, adjusted): M2 heat-set inserts in the light guide, screws from below. Corners plus one
 # hole every second knob in the rear strip: gaps 1, 3, 5, 7 (gaps 2 and 6 hold the LED drivers).
-HOLES = [(2.6, 2.6), (W - 2.6, 2.6), (2.6, H - 2.6), (W - 2.6, H - 2.6)] + [(GAP[g], 2.6) for g in (1, 3, 5, 7)]
+HOLES = [(2.6, 2.6), (W - 2.6, 2.6), (2.6, H - 2.6), (W - 2.6, H - 2.6)] + [(GAP[g], 2.6) for g in ((2, 4, 6) if FOUR else (1, 3, 5, 7))]
+# rev 0.4 (FOUR): drivers take gaps 1, 3, 5, 7, so the holes go to gaps 2, 4, 6 (P97 as first proposed)
 DRIVER_Y = 6.6 if ONE_CHIP else 6.0   # one chip: its SW side faces the rear edge
 STRIP_Y = 4.2                        # centre line of the rear strip parts
 # Bulk capacitors C1, C14 (4.7u) stay beside the driver; decoupling capacitors that make_pcb puts right at their pins: (cap, ic, pin, row); row 1, 2 sit
@@ -219,14 +262,18 @@ def placement():
     for n, r in enumerate(("R15", "R16", "R17")):      # optional bus pull-ups (normally on the host)
         pl[r] = (124.0, 1.6 + 2.0 * n, 0, b)
     # LED drivers in gaps 2 and 6, rear strip; their resistors on the left, capacitors at the pins
-    for u, g, rs, cs in (("U1", 4 if ONE_CHIP else 2, ("R1", "R2", "R3", "R4", "R5", "R6"), ("C1", "C2", "C3", "C4")),
-                         ("U6", 6, ("R19", "R20", "R21", "R22", "R23", "R24"), ("C14", "C15", "C16", "C17")))[:len(CELLS)]:
+    drv = (("U1", 4 if ONE_CHIP else 2, ("R1", "R2", "R3", "R4", "R5", "R6"), ("C1", "C2", "C3", "C4")),
+           ("U6", 6, ("R19", "R20", "R21", "R22", "R23", "R24"), ("C14", "C15", "C16", "C17")))[:len(CELLS)]
+    if FOUR:
+        drv = tuple((DRIVER[c], g, () if LP else (CELL_REFS[c]["rext"], CELL_REFS[c]["sdb"]) + CELL_REFS[c]["addr"], CELL_REFS[c]["caps"])
+                    for c, g in zip(CELLS, (1, 3, 5, 7)))
+    for u, g, rs, cs in drv:
         x = GAP[g]
         pl[u] = (x, DRIVER_Y, 0, b)            # make_pcb.driver_fanout() turns it to the diamond and fans out
         for n, r in enumerate(rs):
             pl[r] = (x - 7.4 - 2.2 * (n // 3), 2.0 + 2.2 * (n % 3), 0, b)
         for n, c in enumerate(cs):
-            pl[c] = (x + 7.4, 2.0 + 2.2 * n, 0, b)
+            pl[c] = (x + (6.6 if LP else 7.4), 2.0 + 2.2 * n, 0, b)
     # touch controller near the middle (gap 4), its series resistors in a row beside it
     pl["U2"] = (118.0, 4.0, 0, b)
     for n in range(8):

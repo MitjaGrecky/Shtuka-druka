@@ -234,6 +234,9 @@ def hug(b):
 
 FAN_ROT = D.FAN_ROT    # deg after the flip (design.py: 225 two drivers, 315 one driver)
 FAN_PITCH, FAN_B, FAN_D0, FAN_D1 = 0.86, 4.45, 4.95, 5.70   # mm: via pitch along a side; bend, via rows 0 and 1 (distance from the centre)
+FAN_NS, FAN_OUT = 15, 3.95                                  # pads per side; end of the straight stub (pad outer edge + 0.1)
+if D.LP:                                                    # rev 0.5: VQFN-32, 8 pads per side, pad rows 3.85 apart, pad outer edge 2.2
+    FAN_NS, FAN_OUT, FAN_B, FAN_D0, FAN_D1 = 8, 2.3, 2.8, 3.3, 4.05
 
 
 def driver_fanout(b):
@@ -251,10 +254,11 @@ def driver_fanout(b):
         c = fp.GetPosition()
         for pad in fp.Pads():
             num = pad.GetNumber()
-            if not num.isdigit() or int(num) > 60 or pad.GetNetname() == "GND" or pad.GetNetname().startswith(("unconnected", "Net-")) or not pad.GetNetname():
-                continue
+            if not num.isdigit() or int(num) > 4 * FAN_NS or (pad.GetNetname() == "GND" and not D.LP) \
+                    or pad.GetNetname().startswith(("unconnected", "Net-")) or not pad.GetNetname():
+                continue                                   # LP5864: GND pins (IFS, VSYNC, ADDR) get a via too: boxed in by the stubs otherwise
             n = int(num) - 1
-            side, i = n // 15, n % 15                      # 0..3, position along the side
+            side, i = n // FAN_NS, n % FAN_NS              # 0..3, position along the side
             # local frame of the footprint (before rotation, after the flip x is mirrored by pcbnew itself):
             # use the real pad position to find the outward normal
             px, py = pcbnew.ToMM(pad.GetPosition().x - c.x), pcbnew.ToMM(pad.GetPosition().y - c.y)
@@ -262,13 +266,13 @@ def driver_fanout(b):
             tx, ty = -sy, sx                               # along the side
             t_pad = px * tx + py * ty
             if i % 2 == 0:
-                d, t = FAN_D0, (i // 2 - 3.5) * FAN_PITCH
+                d, t = FAN_D0, (i // 2 - (3.5 if FAN_NS == 15 else 1.5)) * FAN_PITCH
             else:
-                d, t = FAN_D1, ((i - 1) // 2 - 3) * FAN_PITCH
+                d, t = FAN_D1, ((i - 1) // 2 - (3 if FAN_NS == 15 else 1)) * FAN_PITCH
             # pad index runs the same way as t? choose the sign that keeps t close to the pad
             if abs(t - t_pad) > abs(-t - t_pad):
                 t = -t
-            out = 3.95
+            out = FAN_OUT
             e1 = (sx * out + tx * t_pad, sy * out + ty * t_pad)
             e2 = (sx * FAN_B + tx * t, sy * FAN_B + ty * t)
             v = (sx * d + tx * t, sy * d + ty * t)
@@ -287,14 +291,14 @@ SIDE_NORMALS = {}
 
 
 def side_normals(b):
-    """Outward unit normal of each pad side (1-15, 16-30, 31-45, 46-60) of every driver, from the pad positions."""
+    """Outward unit normal of each pad side (QFN-60: 1-15, 16-30, ...; VQFN-32: 1-8, 9-16, ...) of every driver, from the pad positions."""
     for u in D.DRIVER.values():
         fp = b.FindFootprintByReference(u)
         fp.SetOrientationDegrees(FAN_ROT)
         c = fp.GetPosition()
         res = []
         for side in range(4):
-            ps = [p.GetPosition() for p in fp.Pads() if p.GetNumber().isdigit() and side * 15 < int(p.GetNumber()) <= side * 15 + 15]
+            ps = [p.GetPosition() for p in fp.Pads() if p.GetNumber().isdigit() and side * FAN_NS < int(p.GetNumber()) <= side * FAN_NS + FAN_NS]
             x = sum(pcbnew.ToMM(p.x - c.x) for p in ps) / len(ps)
             y = sum(pcbnew.ToMM(p.y - c.y) for p in ps) / len(ps)
             r = (x * x + y * y) ** 0.5
@@ -488,7 +492,7 @@ def write_project():
                          "classes": [dict(cls, name="Default"), dict(cls, name="Power", track_width=POWER_TRACK),
                                      dict(cls, name="LED_SW", track_width=SW_TRACK)],
                          "netclass_patterns": [{"netclass": "Power", "pattern": n} for n in POWER_NETS] +
-                                              [{"netclass": "LED_SW", "pattern": "*_SW*"}]},
+                                              [{"netclass": "LED_SW", "pattern": p} for p in ("/?_SW*", "?_SW*")]},   # LED anode rows only: *_SW* also caught E*_SW
         "meta": {"filename": D.NAME + ".kicad_pro", "version": 1},
     }
     json.dump(pro, open(os.path.join(PROJ, D.NAME + ".kicad_pro"), "w"), indent=2)

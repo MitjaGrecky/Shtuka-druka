@@ -28,7 +28,7 @@ import kit as K  # noqa: E402
 NAME = "p3-tracks"
 ID = "P3"
 TITLE = "P3 - Tracks deck + Level knobs: 21 buttons with 2 RGB, 8 encoders with rings and touch, I2C mux, buses to P2, M4, W2"
-REV = "0.3"                                  # 0.2: Level knobs on this board (R128); 0.3: Level rings r = 10.5 (V2)
+REV = "0.4"                                  # 0.2: Level knobs on this board (R128); 0.3: Level rings r 10.5 (V2); 0.4: LED drivers U7-U10 centred in the gap between rings (EasyEDA DRC: vias at ring LEDs)
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("J1 deck bus 2x8 to P2 (P100); TCA9546A 0x71 (P99): ch0 own LEDs, ch1 Level block (4 LP5864, touch), "
             "ch2 J3 -> M4, ch3 J4 -> W2; chain P3 buttons -> Level knobs -> M4")

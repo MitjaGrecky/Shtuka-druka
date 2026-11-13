@@ -117,8 +117,12 @@ def placement():
         for i in range(RING_N):
             x, y, a = K.ring_xy(cx, cy, RING_R, RING_N, i)
             pl[f"D{k * RING_N + i + 1}"] = (x, y, a, t)
-    for c, (cell, u, caps, addr) in enumerate(CELLS):              # band between ring 2c and 2c + 1
-        y = band_y(2 * c)
+    # drivers in the band between ring 2c and 2c + 1, centred in the LED-free gap on the TOP side: their exposed-pad vias go
+    # through. With rings r 10.5 the top LEDs of ring 2c reach y_k - 10.26 (+0.8 body) and the bottom LEDs of ring 2c + 1
+    # y_k - 17.58 (-0.8): the gap is y_k - 11.06 ... y_k - 16.78, its middle y_k - 13.9 (EasyEDA DRC 13.11: vias at y_k - 12.5
+    # touched D48, D72, D96, D120)
+    for c, (cell, u, caps, addr) in enumerate(CELLS):
+        y = knob_xy(2 * c)[1] - 13.9
         pl[u] = (mx - 2.5, y, 0, b)
         for n, cap in enumerate(caps):
             pl[cap] = (mx + 3.5 + 3.0 * (n // 2), y - 1.5 + 3.0 * (n % 2), 90, b)

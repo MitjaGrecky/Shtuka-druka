@@ -2,7 +2,7 @@
  "id": "P3",
  "name": "p3-tracks",
  "title": "P3 - Tracks deck + Level knobs: 21 buttons with 2 RGB, 8 encoders with rings and touch, I2C mux, buses to P2, M4, W2",
- "rev": "0.3",
+ "rev": "0.4",
  "w": 67.5,
  "h": 258.0,
  "layers": 4,

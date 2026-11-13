@@ -94,6 +94,21 @@ def strip_pwr_flags(text):
     return drop(text, '(symbol "power:PWR_FLAG"')
 
 
+def easyeda_sch(text):
+    """EasyEDA Pro names the net of a KiCad power symbol after its library id: "power:+5V" -> net "power_+5V",
+    while the board calls it "+5V" (PC check 13.11.2026, M3). Without the "power:" nickname the net is "+5V"."""
+    return text.replace('(symbol "power:', '(symbol "').replace('(lib_id "power:', '(lib_id "')
+
+
+def easyeda_pcb(text):
+    """Board net names as EasyEDA's imported schematic has them (PC check 13.11.2026, M3): local labels without
+    KiCad's sheet prefix "/" (/SDA -> SDA), and no nets on single unconnected pins (KiCad names them
+    "unconnected-(...)", the EasyEDA schematic leaves those pins without a net). Then EasyEDA's DRC shows no
+    "Netlist Error" and "Import Changes from Schematic" touches only part properties, not nets."""
+    text = re.sub(r'(\((?:net \d+|net_name) ")/', r"\1", text)
+    return re.sub(r'\s*\(net \d+ "unconnected-[^"]*"\)', "", text)
+
+
 def write_bom(d, out):
     groups = OrderedDict()
     for p in d.parts():
@@ -169,13 +184,14 @@ def main():
     # package for EasyEDA Pro: KiCad 7 file format (EasyEDA Pro reads KiCad below 10)
     zp = os.path.join(out, f"{ident}_kicad7.zip")
     with zipfile.ZipFile(zp, "w", zipfile.ZIP_DEFLATED) as z:
-        for f in (pcb, pro, os.path.join(proj, "fp-lib-table"), os.path.join(proj, "sym-lib-table")):
+        for f in (pro, os.path.join(proj, "fp-lib-table"), os.path.join(proj, "sym-lib-table")):
             if os.path.exists(f):
                 z.write(f, os.path.basename(f))
+        z.writestr(os.path.basename(pcb), easyeda_pcb(open(pcb, encoding="utf-8").read()))
         sch_text = open(sch, encoding="utf-8").read()
         clean = strip_pwr_flags(sch_text)
         print("PWR_FLAG removed for EasyEDA:", sch_text.count('(lib_id "power:PWR_FLAG")'), "->", clean.count("PWR_FLAG"))
-        z.writestr(os.path.basename(sch), clean)
+        z.writestr(os.path.basename(sch), easyeda_sch(clean))
         lib = os.path.join(proj, "lib")
         if not os.path.isdir(lib):
             lib = os.path.join(proj, "..", "m1-screen-knobs", "lib")        # W1 uses the M1 project library

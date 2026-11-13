@@ -38,7 +38,14 @@ def blocks(sch_text):
 
 
 # Symbols that no KiCad 7 schematic of the repository contains yet: converted from the installed (newer) KiCad library.
-EXTRA = {"Interface_Expansion": ["TCA9546APW"], "Connector_Generic": ["Conn_02x08_Odd_Even", "Conn_01x02"]}
+EXTRA = {"Interface_Expansion": ["TCA9546APW"],
+         "Connector_Generic": ["Conn_02x08_Odd_Even", "Conn_01x02", "Conn_01x03", "Conn_01x04", "Conn_01x05", "Conn_02x05_Odd_Even"],
+         # R2 control board (13.11.2026)
+         "MCU_RaspberryPi": ["RP2350A"], "Interface_USB": ["USB2514B_Bi"], "Analog_DAC": ["DAC80504"],
+         "Amplifier_Operational": ["OPA4197xD"], "Isolator": ["TLP2361"], "Memory_Flash": ["W25Q16JVSS"],
+         "Connector": ["DIN-5", "Barrel_Jack_Switch", "USB_C_Receptacle_USB2.0_14P", "USB_A"],
+         "Connector_Audio": ["AudioJack3"], "Regulator_Linear": ["AP2112K-3.3"], "Power_Protection": ["USBLC6-2SC6"],
+         "Transistor_BJT": ["MMBT3904"], "Diode": ["BAT54S", "1N4148W"], "Device": ["Crystal_GND24", "L", "LED"]}
 KSYM10 = os.environ.get("KICAD10_SYMBOL_DIR", r"C:\Program Files\KiCad\10.0\share\kicad\symbols")
 DROP = {"exclude_from_sim", "in_pos_files", "duplicate_pin_numbers_are_jumpers", "show_name", "do_not_autoplace",
         "embedded_fonts", "embedded_files", "unit_name", "body_styles"}

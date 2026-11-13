@@ -36,26 +36,73 @@ BIG = {"ShtukaDruka:LP5864": (16, 26), "74xx:74HC165": (12, 16), "Connector_Gene
        "ShtukaDruka:RotaryEncoder_Switch_Touch": (12, 12)}   # pins at +-3 grid: a 6-wide cell would join neighbours
 
 
+def _units(M, lib_id):
+    """{unit: [pin numbers]} of a library symbol; unit 0 holds pins common to all units. Single-unit symbols: {1: all}."""
+    import re
+    b, pins, _ = M.lib_block(lib_id)
+    name = lib_id.split(":", 1)[1]
+    heads = list(re.finditer(r'\(symbol "' + re.escape(name) + r'_(\d+)_\d+"', b))
+    out = {}
+    for n, m in enumerate(heads):
+        seg = b[m.start():heads[n + 1].start() if n + 1 < len(heads) else len(b)]
+        nums = re.findall(r'\(number "([^"]+)"', seg)
+        if nums:
+            out.setdefault(int(m.group(1)), []).extend(nums)
+    common = out.pop(0, [])
+    if len(out) <= 1:
+        return {1: list(pins)}
+    return {u: nums + common for u, nums in sorted(out.items())}
+
+
+def _cell(M, lib_id, nums):
+    """Grid cell (w, h) in 2.54 mm units around the pin ends of the given pins, with room for net labels."""
+    _, pins, _ = M.lib_block(lib_id)
+    xs = [pins[n][0] for n in nums if n in pins] or [0]
+    ys = [pins[n][1] for n in nums if n in pins] or [0]
+    if (max(xs) - min(xs)) / 2.54 < 3 and (max(ys) - min(ys)) / 2.54 <= 4:
+        return 6, 10                                     # small vertical 2-3 pin parts: the cell all boards used so far
+    w = (max(xs) - min(xs)) / 2.54 + 12                 # labels stick out ~5 grid on both sides
+    h = (max(ys) - min(ys)) / 2.54 + 4
+    return max(6, round(w)), max(8, round(h))
+
+
 def write_grid(D, ns, comment2, here, notes=()):
     """Any board: J1 and the power flags top left, then every part in rows (ICs and connectors in a wider grid).
-    The drawing is a parts sheet: every pin carries its net label, so the netlist is exact."""
+    The drawing is a parts sheet: every pin carries its net label, so the netlist is exact.
+    Multi-unit symbols (op-amp packs ...) are placed unit by unit, each with its own pins (unit 0 pins with every unit).
+    Cell sizes come from BIG or, if the symbol is not listed there, from its pin extent."""
     M, S = _writer(D, ns, comment2, here)
     g = 2.54
     for i, t in enumerate(notes or (getattr(D, "BUS_NOTE", ""),)):
         S.text(t, 10 * g, (6 + 3 * i) * g)
-    for net, x in (("+5V", 10), ("+3V3", 14), ("GND", 18)):
-        S.power(net, x * g, 20 * g, 90 if net != "GND" else 270, flag=True)
+    for net, x in (("+5V", 10), ("+3V3", 14), ("GND", 18)):    # D.NO_PWR_FLAG: rails driven by a regulator on the board
+        S.power(net, x * g, 20 * g, 90 if net != "GND" else 270, flag=net not in getattr(D, "NO_PWR_FLAG", ()))
+    for i, net in enumerate(getattr(D, "PWR_FLAG_NETS", ())):  # rails that come in through a connector or an inductor
+        S.npwr += 1
+        S.symbol(f"#FLG{S.npwr:03d}", "power:PWR_FLAG", "PWR_FLAG", (10 + 6 * i) * g, 26 * g, 0, nets={"1": net}, in_bom=False)
     P = D.parts()
     x, y, row_h = 26, 20, 0
-    big = [p for p in P if p["lib"] in BIG]
-    small = [p for p in P if p["lib"] not in BIG]
-    for p in big + small:
-        w, h = BIG.get(p["lib"], (6, 10))
+    cells = []
+    for p in P:
+        units = _units(M, p["lib"])
+        for u, nums in units.items():
+            w, h = BIG.get(p["lib"]) if (p["lib"] in BIG and len(units) == 1) else _cell(M, p["lib"], nums)
+            cells.append((p, u, nums, len(units) > 1, w, h))
+    cells.sort(key=lambda c: 0 if (c[0]["lib"] in BIG or c[4] * c[5] > 240) else 1)   # big symbols first (stable order)
+    for p, u, nums, multi, w, h in cells:
         if x + w > 150:
             x, y, row_h = 10, y + row_h, 0
         f = {k: v for k, v in p["fields"].items() if k not in ("DNP", "Side")}
-        S.symbol(p["ref"], p["lib"], p["value"], (x + w / 2) * g, (y + h / 2) * g, 0, p["fp"], f, p["pins"],
+        nets = p["pins"] if not multi else {k: v for k, v in p["pins"].items() if k in nums}
+        start = len(S.items)
+        S.symbol(p["ref"], p["lib"], p["value"], (x + w / 2) * g, (y + h / 2) * g, 0, p["fp"], f, nets,
                  dnp=p["fields"].get("DNP") == "yes", in_bom=not p["ref"].startswith("H"))
+        if multi:                                          # this instance is unit u with only its own pins
+            s = S.items[start].replace("(unit 1)", f"(unit {u})")
+            s = s.replace(f"(uuid {M.uid('sym', p['ref'])})", f"(uuid {M.uid('sym', p['ref'], u)})")
+            s = "".join(l for l in s.splitlines(True)
+                        if not l.lstrip().startswith("(pin ") or any(f'(pin "{n}" ' in l for n in nums))
+            S.items[start] = s
         x += w
         row_h = max(row_h, h)
     out = os.path.join(here, "..", D.NAME + ".kicad_sch")

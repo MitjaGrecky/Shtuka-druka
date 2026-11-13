@@ -1,5 +1,9 @@
 # M2 - Level 1-8 (module, 8 knobs, touch)
 
+**Merged into P3 (decision R128, 13.11.2026): the Level knobs are on the P3 board (`hardware/p3-tracks`, rev 0.2).**
+This folder stays as the source of the Level block: P3's `gen/design.py` takes the parts and the placement from
+`gen/design.py` here. The standalone board below (rev 0.1, EasyEDA project M2_v2) is not to be made.
+
 Eight Level knobs with 12-LED RGB rings and touch sensing on the knob frames. Spec: `hardware/for-routing/SPEC_boards.md`, section M2.
 Status: rev 0.1 - schematic and placed board, not routed (`UNROUTED`). Package: `hardware/for-routing/M2/`.
 

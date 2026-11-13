@@ -5,7 +5,8 @@
 
 --no-cli: do not call kicad-cli (it crashes the PC): zip, BOM and board.json are rebuilt, netlist.net, schematic.pdf
 and outline.dxf stay from the last full build - use it only when the connections and the outline did not change.
-On a new board (no netlist.net yet) the reference netlist is written from design.py; schematic.pdf and outline.dxf
+On a new board (no netlist.net yet), or when netlist.net was itself written from design.py, the reference netlist is
+(re)written from design.py; schematic.pdf and outline.dxf
 are then missing until a machine with a working kicad-cli (or CI) makes them.
 
 Differences from pack_for_routing.py (whose code it reuses unchanged):
@@ -95,7 +96,9 @@ def main():
     finally:
         shutil.rmtree(work, ignore_errors=True)
     netf = os.path.join(root, ident, "netlist.net")
-    if not os.path.exists(netf):                 # --no-cli on a new board: reference netlist from design.py
+    # --no-cli on a new board, or a netlist this script wrote before (it would be stale after a design change, as P3 rev 0.2):
+    # reference netlist from design.py; a netlist exported by kicad-cli (CI, cloud) is kept
+    if not os.path.exists(netf) or "design_netlist" in open(netf, encoding="utf-8").read(400):
         design_netlist(PK.load_design(proj), netf)
         print("netlist.net written from design.py")
     if os.path.isdir(dxf):                       # KiCad 9+ writes a folder with <name>-Edge_Cuts.dxf

@@ -1,4 +1,4 @@
-"""Extra boards for tools/build_for_routing.py (SPEC_boards.md): id -> (project dir under hardware/, env, generators in gen/).
+﻿"""Extra boards for tools/build_for_routing.py (SPEC_boards.md): id -> (project dir under hardware/, env, generators in gen/).
 On the PC (KiCad 10) package with tools/pack_easyeda.py instead. License: AGPL-3.0-or-later.
 """
 BOARDS = {
@@ -10,4 +10,5 @@ BOARDS = {
     "P1": ("p1-left", {}, ["make_sch.py", "make_pcb.py"]),
     "P4": ("p4-right", {}, ["make_sch.py", "make_pcb.py"]),
     "P3": ("p3-tracks", {}, ["make_sch.py", "make_pcb.py"]),
+    "M2": ("m2-levels", {}, ["make_sch.py", "make_pcb.py"]),
 }

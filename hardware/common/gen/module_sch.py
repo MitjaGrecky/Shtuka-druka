@@ -1,4 +1,4 @@
-"""Schematic writer for the two-encoder modules built with kit.knob_pair (M4, M5; M3 has its own copy).
+﻿"""Schematic writer for the two-encoder modules built with kit.knob_pair (M4, M5; M3 has its own copy).
 Uses M1's writer (m1compat). Every pin gets a label or power symbol at its end.
 License: AGPL-3.0-or-later (code), CERN-OHL-S-2.0 (the generated schematic).
 """
@@ -31,7 +31,9 @@ def _writer(D, ns, comment2, here):
 
 BIG = {"ShtukaDruka:LP5864": (16, 26), "74xx:74HC165": (12, 16), "Connector_Generic:Conn_02x07_Odd_Even": (12, 14),
        "Connector_Generic:Conn_02x08_Odd_Even": (12, 16), "Interface_Expansion:TCA9546APW": (18, 22),
-       "Analog_ADC:ADS1115IDGS": (16, 14), "Common:AS5600": (14, 12), "Connector_Generic:Conn_01x02": (8, 8)}
+       "Analog_ADC:ADS1115IDGS": (16, 14), "Common:AS5600": (14, 12), "Connector_Generic:Conn_01x02": (8, 8),
+       "Sensor_Touch:CY8CMBR3108": (14, 16),
+       "ShtukaDruka:RotaryEncoder_Switch_Touch": (12, 12)}   # pins at +-3 grid: a 6-wide cell would join neighbours
 
 
 def write_grid(D, ns, comment2, here, notes=()):

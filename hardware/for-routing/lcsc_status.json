@@ -15,6 +15,7 @@
  "C1779": {"status": "найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL21A475KAQNNNE 4,7 мкФ 25 В X5R 0805, Basic; наличие и цена не смотрелись"},
  "C1523": {"status": "найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): FH 0402B102K500NT 1 нФ 50 В X7R 0402, Basic; наличие и цена не смотрелись"},
  "C17168": {"status": "найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF0000TCE 0 Ом 0402, Basic; наличие и цена не смотрелись"},
+ "C1531": {"status": "найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): FH 0402B222K500NT 2,2 нФ 50 В X7R 0402, Extended; наличие и цена не смотрелись"},
  "C25126": {"status": "найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF5600TCE 560 Ом 1% 0402, Extended; наличие и цена не смотрелись"},
  "C15850": {"status": "найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL21A106KAYNNNE 10 мкФ 25 В X5R 0805, Basic; наличие и цена не смотрелись"},
  "C52923": {"status": "найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05A105KA5NQNC 1 мкФ 25 В X5R 0402, Basic; наличие и цена не смотрелись"},

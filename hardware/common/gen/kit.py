@@ -35,14 +35,15 @@ def rc(add, ref, value, a, b, fp=None, **f):
 
 
 # ------------------------------------------------------------------ LED driver TI LP5864 (4 SW x 18 CS = 24 RGB)
-def lp5864(add, ref, cell, caps, addr=(0, 0)):
+def lp5864(add, ref, cell, caps, addr=(0, 0), cs_used=18):
     """LP5864RSMR with its four capacitors (VCC 1u, VLED 4.7u, VCAP 1u, VIO_EN 1n). Nets <cell>_CS0..17,
-    <cell>_SW0..3, <cell>_VCAP. addr = (ADDR1, ADDR0): I2C chip address 1 0 0 ADDR1 ADDR0."""
+    <cell>_SW0..3, <cell>_VCAP. addr = (ADDR1, ADDR0): I2C chip address 1 0 0 ADDR1 ADDR0.
+    CS lines from cs_used on are left open (no-connect)."""
     a1, a0 = addr
     u = {"1": "+5V", "15": "+5V", "25": f"{cell}_VCAP", "26": "GND", "27": "GND", "28": "SCL", "29": "SDA",
          "30": "+3V3" if a0 else "GND", "31": "+3V3" if a1 else "GND", "32": "+3V3", "33": "GND"}
-    u.update({str(2 + n): f"{cell}_CS{n}" for n in range(9)})            # CS0-8 -> pins 2-10
-    u.update({str(16 + n): f"{cell}_CS{9 + n}" for n in range(9)})       # CS9-17 -> pins 16-24
+    u.update({str(2 + n): f"{cell}_CS{n}" if n < cs_used else None for n in range(9)})            # CS0-8 -> pins 2-10
+    u.update({str(16 + n): f"{cell}_CS{9 + n}" if 9 + n < cs_used else None for n in range(9)})   # CS9-17 -> pins 16-24
     u.update({str(11 + n): f"{cell}_SW{n}" for n in range(4)})           # SW0-3 -> pins 11-14
     add(ref, "ShtukaDruka:LP5864", "LP5864RSMR", "ShtukaDruka:VQFN-32-1EP_4x4mm_P0.4mm_EP2.8x2.8mm", u,
         LCSC="C5220564", Cell=cell, Note=f"I2C chip address 1 0 0 {a1} {a0} (ADDR1 ADDR0 tied on the board); internal current set")

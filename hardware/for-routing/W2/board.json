@@ -1,0 +1,43 @@
+{
+ "id": "W2",
+ "name": "w2-meters",
+ "title": "W2 - Meters (slope): 2 x 14 RGB LED level meters",
+ "rev": "0.1",
+ "w": 35.0,
+ "h": 126.0,
+ "layers": 2,
+ "parts": 49,
+ "holes": [
+  [
+   2.6,
+   2.6
+  ],
+  [
+   2.6,
+   63.0
+  ],
+  [
+   2.6,
+   123.4
+  ],
+  [
+   32.4,
+   2.6
+  ],
+  [
+   32.4,
+   63.0
+  ],
+  [
+   32.4,
+   123.4
+  ]
+ ],
+ "connectors": [
+  [
+   "J1",
+   "Module bus 2x7 1.27"
+  ]
+ ],
+ "bom_lines": 7
+}

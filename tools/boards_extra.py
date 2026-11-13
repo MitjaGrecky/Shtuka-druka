@@ -5,4 +5,5 @@ BOARDS = {
     "M3": ("m3-tempo-swing", {}, ["make_sch.py", "make_pcb.py"]),
     "M4": ("m4-fx-filter", {}, ["make_sch.py", "make_pcb.py"]),
     "M5": ("m5-gain", {}, ["make_sch.py", "make_pcb.py"]),
+    "W2": ("w2-meters", {}, ["make_sch.py", "make_pcb.py"]),
 }

@@ -57,7 +57,11 @@
   Это касается `tools/pc_check.py`, `night_check.py`, `pack_easyeda.py`, `run_board.ps1` и ночной задачи Планировщика.
 - **W2** `hardware/w2-meters/` (35 × 126 по наклону, 49 деталей, 2 × LP5864 0x40/0x41, 2 × 14 огней): ERC 0 ошибок, `check_netlist` 204/204.
   DRC/parity локально не прошли (падение) — ждём CI. Пакет `for-routing/W2/` собран до падения; `BOM.csv` при падении обнулился — переписан из `design.py`
-  (функция упаковщика, без KiCad), остальные файлы проверены на целостность. Импорт в EasyEDA — следующим шагом.
+  (функция упаковщика, без KiCad), остальные файлы проверены на целостность. EasyEDA **W2_v1**: плата 40/40, схема 40/40, 49/49 деталей.
+- **CI красный с ab00aed, но не из-за новых плат**: M3, M4, M5, W2 дают предупреждение «not routed yet, DRC report kept» (UNROUTED).
+  Падают проекты-результаты Quilter (`hardware/m1-screen-knobs/quilter/results/*`, в каждой папке `.kicad_pro`): «DRC errors in m1-screen-knobs / fixed / quilter_I_cand2_1».
+  Предложение облаку (workflow не правлю): в `kicad.yml` исключить `*/quilter/*` из поиска проектов, как `*/backups/*`.
+- Импорт через API (`SYS_FileManager.importProjectByProjectFile`, бета) молча не создаёт проект — оставил `tools/eda/eda_import.py` как заготовку, импорт пока через окно.
 - Вопросы: В3 (W2 по наклону 126 мм, шаг 8,58) — в стопке выше.
 
 ### 2026-11-13 ночь, ПК: M4 и M5 готовы и проверены в EasyEDA

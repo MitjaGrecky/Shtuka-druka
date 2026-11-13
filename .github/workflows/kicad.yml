@@ -35,6 +35,8 @@ jobs:
             o="out/$name"; mkdir -p "$o/fab"
             if [ -f "$dir/$name.kicad_sch" ]; then
               kicad-cli sch erc --severity-error --exit-code-violations -o "$o/erc.rpt" "$dir/$name.kicad_sch" || { echo "::error::ERC errors in $name"; status=1; }
+              kicad-cli sch erc --severity-all -o "$o/erc-all.rpt" "$dir/$name.kicad_sch" >/dev/null 2>&1 || true
+              echo "::group::ERC $name (all severities)"; head -300 "$o/erc-all.rpt" 2>/dev/null; echo "::endgroup::"
               kicad-cli sch export pdf -o "$o/$name-schematic.pdf" "$dir/$name.kicad_sch" || true
               kicad-cli sch export bom -o "$o/$name-bom.csv" "$dir/$name.kicad_sch" || true
             fi
@@ -45,13 +47,20 @@ jobs:
                    -o "$o/drc.rpt" "$dir/$name.kicad_pcb"; then :
               elif [ -f "$dir/UNROUTED" ]; then echo "::warning::$name is not routed yet, DRC report kept"
               else echo "::error::DRC errors in $name"; status=1; fi
+              # full report (warnings too) printed into the log without the unconnected items: readable without the artifact
+              kicad-cli pcb drc --severity-all --schematic-parity --refill-zones -o "$o/drc-all.rpt" "$dir/$name.kicad_pcb" >/dev/null 2>&1 || true
+              echo "::group::DRC $name (all severities, unconnected items left out)"
+              awk '/^\*\* Found [0-9]+ unconnected/{skip=1} /^\*\* Found [0-9]+ (DRC|Footprint|errors)/{skip=0} !skip' "$o/drc-all.rpt" 2>/dev/null | head -400
+              grep -E '^\*\* Found' "$o/drc-all.rpt" 2>/dev/null
+              echo "::endgroup::"
               kicad-cli pcb export svg --layers "F.Cu,F.Silkscreen,Edge.Cuts" --exclude-drawing-sheet --mode-single -o "$o/$name-top.svg" "$dir/$name.kicad_pcb" || true
               kicad-cli pcb export svg --layers "B.Cu,B.Silkscreen,Edge.Cuts" --exclude-drawing-sheet --mode-single --mirror -o "$o/$name-bottom.svg" "$dir/$name.kicad_pcb" || true
               kicad-cli pcb export gerbers -o "$o/fab/" "$dir/$name.kicad_pcb" || true
               kicad-cli pcb export drill -o "$o/fab/" "$dir/$name.kicad_pcb" || true
               kicad-cli pcb export pos --format csv --units mm -o "$o/fab/$name-positions.csv" "$dir/$name.kicad_pcb" || true
             fi
-          done < <(find hardware -name '*.kicad_pro' -not -path '*/backups/*' | sort)
+          # quilter/, quilter_raw/: downloaded routing candidates kept for comparison, not projects under work
+          done < <(find hardware -name '*.kicad_pro' -not -path '*/backups/*' -not -path '*/quilter/*' -not -path '*/quilter_raw/*' | sort)
           ls -R out
           exit $status
 

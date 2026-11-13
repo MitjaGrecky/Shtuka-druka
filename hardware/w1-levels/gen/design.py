@@ -18,7 +18,7 @@ import os
 
 NAME = "w1-levels"
 TITLE = "W1 - Levels (slope, left): 4 volume pots, 2 P48 buttons, window for M5 Gain"
-REV = "0.1"
+REV = "0.2"                          # 0.2: M5 window to x 89.5 (V1, M5 rev 0.2)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 M1_LIB = os.path.join(HERE, "..", "..", "m1-screen-knobs", "lib")   # shared project library (LED 1615)
@@ -31,7 +31,7 @@ W, H = X1 - X0, S1 - S0              # 92 x 126
 LAYERS = 2
 BELOW_SKIN = 8.5                     # board top face under the skin's inner face: pot body <= 7.4 + 1 mm air
 # window for the M5 module (its own board in the plane of the encoder modules, 6.5 mm under the skin)
-M5_X = (5.0, 87.0)                   # board x of the module outline (82 mm: 2 encoders 48 apart, rings, Clip LEDs)
+M5_X = (5.0, 89.0)                   # board x of the module outline (84 mm, M5 rev 0.2 to panel x 99; V1 answer (a), 13.11)
 WIN_GAP = 0.5
 
 

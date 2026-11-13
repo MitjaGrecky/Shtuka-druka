@@ -2,7 +2,7 @@
  "id": "W1",
  "name": "w1-levels",
  "title": "W1 - Levels (slope, left): 4 volume pots, 2 P48 buttons, window for M5 Gain",
- "rev": "0.1",
+ "rev": "0.2",
  "w": 92.0,
  "h": 126.0,
  "layers": 2,

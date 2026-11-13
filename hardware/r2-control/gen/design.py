@@ -32,7 +32,7 @@ LAYERS = 4
 R0402, C0402, C0805 = K.R0402, K.C0402, K.C0805
 SOT23, SOD123 = "Package_TO_SOT_SMD:SOT-23", "Diode_SMD:D_SOD-123"
 JACK35 = "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
-DIN5 = "ShtukaDruka:DIN-5_CUI_SDS-50J"                     # to draw with the board (rear panel layout)
+DIN5 = ""   # footprint for CUI SDS-50J is drawn with the board (EasyEDA has CONN-TH_SDS-50J); empty keeps ERC clean
 PH = "Connector_JST:JST_PH_B{n}B-PH-K_1x0{n}_P2.00mm_Vertical"
 
 # GPIO map of the RP2350A (30 GPIO, all used)

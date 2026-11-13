@@ -1,7 +1,7 @@
 (export (version "E")
   (design
-    (source "/tmp/forrouting_flvrdcr0/w1-levels/w1-levels.kicad_sch")
-    (date "Fri Nov 13 18:49:21 2026")
+    (source "/tmp/forrouting_wokd2n92/w1-levels/w1-levels.kicad_sch")
+    (date "Fri Nov 13 18:57:54 2026")
     (tool "Eeschema 7.0.11+dfsg-1build4")
     (sheet (number "1") (name "/") (tstamps "/")
       (title_block
@@ -730,7 +730,7 @@
         (pin (num "2") (name "2") (type "passive")))))
   (libraries
     (library (logical "ShtukaDruka")
-      (uri "/tmp/forrouting_flvrdcr0/w1-levels/../m1-screen-knobs/lib/ShtukaDruka.kicad_sym")))
+      (uri "/tmp/forrouting_wokd2n92/w1-levels/../m1-screen-knobs/lib/ShtukaDruka.kicad_sym")))
   (nets
     (net (code "1") (name "+3V3")
       (node (ref "C2") (pin "1") (pintype "passive"))

@@ -1,4 +1,0 @@
-(sym_lib_table
-  (version 7)
-  (lib (name "ShtukaDruka")(type "KiCad")(uri "${KIPRJMOD}/lib/ShtukaDruka.kicad_sym")(options "")(descr "Shtuka Druka project symbols"))
-)

@@ -18,3 +18,5 @@ __pycache__/
 hardware/*/experiments/
 hardware/*/quilter/results/
 /quilter/
+# local hand-work copies (the user plays with them in KiCad; never pushed)
+hardware/*/almost/

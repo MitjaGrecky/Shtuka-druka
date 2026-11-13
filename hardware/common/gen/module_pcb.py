@@ -103,16 +103,29 @@ def build(D, silk):
             elif num in p["pins"]:                         # pin left open: KiCad's name for it, so parity is clean
                 pad.SetNet(net_raw(f"unconnected-({p['ref']}-{B.pin_name(p['lib'], num)}-Pad{num})"))
 
-    e = pcbnew.PCB_SHAPE(b)
-    e.SetShape(pcbnew.SHAPE_T_RECT)
-    e.SetStart(P(0, 0))
-    e.SetEnd(P(D.W, D.H))
-    e.SetLayer(pcbnew.Edge_Cuts)
-    e.SetWidth(mm(0.1))
-    b.Add(e)
     g = 0.35                                               # copper-to-edge keep-out for the router
-    for x0, y0, x1, y1 in ((0, 0, D.W, g), (0, D.H - g, D.W, D.H), (0, 0, g, D.H), (D.W - g, 0, D.W, D.H)):
-        rule_area(D, b, "edge", x0, y0, x1, y1)
+    outline = getattr(D, "OUTLINE", None)                  # polygon (board mm) for boards with a notch; else the W x H rectangle
+    if outline:
+        pts = list(outline) + [outline[0]]
+        for (x0, y0), (x1, y1) in zip(pts, pts[1:]):
+            e = pcbnew.PCB_SHAPE(b)
+            e.SetShape(pcbnew.SHAPE_T_SEGMENT)
+            e.SetStart(P(x0, y0))
+            e.SetEnd(P(x1, y1))
+            e.SetLayer(pcbnew.Edge_Cuts)
+            e.SetWidth(mm(0.1))
+            b.Add(e)
+            rule_area(D, b, "edge", min(x0, x1) - g, min(y0, y1) - g, max(x0, x1) + g, max(y0, y1) + g)
+    else:
+        e = pcbnew.PCB_SHAPE(b)
+        e.SetShape(pcbnew.SHAPE_T_RECT)
+        e.SetStart(P(0, 0))
+        e.SetEnd(P(D.W, D.H))
+        e.SetLayer(pcbnew.Edge_Cuts)
+        e.SetWidth(mm(0.1))
+        b.Add(e)
+        for x0, y0, x1, y1 in ((0, 0, D.W, g), (0, D.H - g, D.W, D.H), (0, 0, g, D.H), (D.W - g, 0, D.W, D.H)):
+            rule_area(D, b, "edge", x0, y0, x1, y1)
     for txt, (x, y) in silk:                              # English only (R45), bottom silkscreen
         t = pcbnew.PCB_TEXT(b)
         t.SetText(txt)

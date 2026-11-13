@@ -10,7 +10,8 @@ JOB      short job name used for folders, e.g. K_rev04 -> results/K_rev04_cand1_
 Steps: (1) find the zips, (2) take only *.kicad_pcb and *.kicad_pro from each (nothing else is
 extracted), (3) skip candidates whose board is byte-identical to an earlier one (md5) and say so,
 (4) run tools/pc_check.py on the unique boards (DRC, unconnected, parity with --sch-from).
-Existing result folders are never overwritten.
+Existing result folders are never overwritten. The results folder is local (.gitignore, CLAUDE.md
+"Версии"): only the chosen candidate goes into git, in place of the board's own .kicad_pcb.
 License: AGPL-3.0-or-later.
 """
 import argparse

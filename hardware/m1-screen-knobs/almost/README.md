@@ -33,7 +33,7 @@
 
 | Файл | Что |
 |---|---|
-| `m1-screen-knobs.kicad_pcb` | доведённая плата (из `quilter/results/I_rev03_cand2_1/fixed.kicad_pcb`) |
+| `m1-screen-knobs.kicad_pcb` | доведённая плата (из `quilter/results/I_rev03_cand2_1/fixed.kicad_pcb`; папка удалена 13.11.2026, есть в истории git до коммита 55b40b0) |
 | `m1-screen-knobs.kicad_sch`, `.kicad_pro` | схема и правила проекта (схема та же, что в rev 0.3.1) |
 | `lib/`, `fp-lib-table`, `sym-lib-table` | библиотеки на момент платы (коммит 53f2958; энкодер ещё с двумя лапками MP) |
 | `quilter_raw/` | как выдал Quilter, до доводки |

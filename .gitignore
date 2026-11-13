@@ -12,3 +12,9 @@ __pycache__/
 
 # Local per-machine Claude Code MCP config (absolute PC paths)
 /.mcp.json
+
+# CLAUDE.md "Версии": experiments, Quilter candidates and raw downloads stay local;
+# only the chosen result replaces the board's own file (files already tracked are not affected)
+hardware/*/experiments/
+hardware/*/quilter/results/
+/quilter/

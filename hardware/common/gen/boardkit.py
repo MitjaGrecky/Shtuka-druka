@@ -42,7 +42,8 @@ def pin_name(lib_id, num):
         import m1compat
         txt = m1compat.load("make_sch").lib_block(lib_id)[0]
         _PIN_NAMES[lib_id] = {n: nm for nm, n in re.findall(r'\(name "([^"]*)".*?\(number "([^"]+)"', txt, re.S)}
-    return _PIN_NAMES[lib_id].get(num, "")
+    # KiCad escapes "/" in net names as {slash} (#16: ADS1115 pin ALERT/RDY -> unconnected-(U7-ALERT{slash}RDY-Pad2))
+    return _PIN_NAMES[lib_id].get(num, "").replace("/", "{slash}")
 
 
 def copy_fields(fp, fields):

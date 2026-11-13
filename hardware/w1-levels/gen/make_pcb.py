@@ -176,6 +176,42 @@ def gnd_pour(b, layer, prio):
     b.Add(z)
 
 
+def parity_fix(b):
+    """Make the board agree with the schematic the way KiCad 10's parity check reads it (CI, 13.11.2026: 127 warnings):
+    net names as the schematic netlist writes them (local labels get "/": AIN0 -> /AIN0), the LCSC field on every
+    footprint whose symbol has one, mounting holes excluded from the BOM like their symbols."""
+    import re
+    import subprocess
+    import tempfile
+    sch = os.path.join(HERE, "..", D.NAME + ".kicad_sch")
+    net = os.path.join(tempfile.mkdtemp(), "w1.net")
+    subprocess.run(["kicad-cli", "sch", "export", "netlist", "--format", "kicadsexpr", "-o", net, sch], check=True,
+                   capture_output=True)
+    pin_net = {}
+    for m in re.finditer(r'\(net \(code "?\d+"?\) \(name "([^"]*)"\)(.*?)(?=\n\s*\(net \(code|\Z)', open(net).read(), re.S):
+        for ref, pin in re.findall(r'\(node \(ref "?([^")\s]+)"?\) \(pin "?([^")\s]+)"?\)', m.group(2)):
+            pin_net[(ref, pin)] = m.group(1)
+    rename = {}
+    for fp in b.GetFootprints():
+        for p in fp.Pads():
+            want = pin_net.get((fp.GetReference(), p.GetNumber()))
+            have = p.GetNetname()
+            if want and have and want != have and not have.startswith("unconnected-"):
+                rename[have] = want
+    for old, new in rename.items():
+        n = b.FindNet(old)
+        if n:
+            n.SetNetname(new)
+    lcsc = {p["ref"]: p["fields"]["LCSC"] for p in D.parts() if p["fields"].get("LCSC")}
+    for fp in b.GetFootprints():
+        ref = fp.GetReference()
+        if ref in lcsc:
+            fp.SetProperty("LCSC", lcsc[ref])
+        if ref.startswith("H"):
+            fp.SetAttributes(fp.GetAttributes() | pcbnew.FP_EXCLUDE_FROM_BOM)
+    return len(rename), len(lcsc)
+
+
 if __name__ == "__main__":
     board = build()
     if "--route" in sys.argv:
@@ -195,6 +231,7 @@ if __name__ == "__main__":
         M.fill(board)
         print("stitching vias", M.stitch(board, pitch=4.0, margin=0.7))
         M.fill(board)
+    print("parity fix: nets renamed %d, LCSC fields %d" % parity_fix(board))
     board.Save(OUT)
     M.write_project()
     print("ok", OUT, len(board.GetFootprints()), "footprints", len(board.GetTracks()), "tracks/vias")

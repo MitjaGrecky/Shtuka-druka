@@ -19,8 +19,14 @@ def layout_elements():
     return {e["name"]: e for e in json.load(open(LAYOUT, encoding="utf-8"))["elements"]}
 
 R0402, C0402, C0805 = "Resistor_SMD:R_0402_1005Metric", "Capacitor_SMD:C_0402_1005Metric", "Capacitor_SMD:C_0805_2012Metric"
-# only numbers already used in the project (W1, M1); 4.7u 0805, 1n 0402, 560 0402 have none yet ("choose a part" in M1's BOM_notes)
-LCSC = {"100n": "C1525", "1u": "C52923", "10u": "C15850", "10k": "C25744", "4.7k": "C25900", "1k": "C11702"}
+# LCSC numbers, all found in EasyEDA Pro's system library on 13.11.2026 (tools/eda/eda_parts.py; class = JLCPCB part class):
+# 100n C1525 CL05B104KO5NNNC 16V X7R, 1u C52923 CL05A105KA5NQNC 25V X5R, 10u C15850 CL21A106KAYNNNE 25V X5R,
+# 4.7u C1779 CL21A475KAQNNNE 25V X5R, 1n C1523 0402B102K500NT 50V X7R - all Basic; 10k C25744, 4.7k C25900, 1k C11702,
+# 0R C17168 (0402WGF0000TCE) - Basic; 560R C25126 (0402WGF5600TCE) - Extended.
+LCSC = {"100n": "C1525", "1u": "C52923", "10u": "C15850", "4.7u": "C1779", "1n": "C1523", "10k": "C25744", "4.7k": "C25900",
+        "1k": "C11702", "0": "C17168", "560": "C25126"}
+# 1.27 mm headers: the footprint is through-hole, so the THT parts (C3975190 / C3975191 are the SMD variants -S of the same series)
+BUS_LCSC, DECK_LCSC = "C5372811", "C5372812"      # HCTL PZ127-2-07-Z, PZ127-2-08-Z (Extended)
 
 # ------------------------------------------------------------------ module bus (R123), 2 x 7, 1.27 mm
 CONN = {1: "+5V", 2: "+5V", 3: "GND", 4: "GND", 5: "+3V3", 6: "GND", 7: "SDA", 8: "SCL",
@@ -30,7 +36,7 @@ BUS_FP = "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical"
 
 def bus(add, ref, value, conn=CONN):
     add(ref, "Connector_Generic:Conn_02x07_Odd_Even", value, BUS_FP,
-        {str(p): n for p, n in conn.items()}, LCSC="C3975190", Side="bottom")
+        {str(p): n for p, n in conn.items()}, LCSC=BUS_LCSC, Side="bottom")
 
 
 def rc(add, ref, value, a, b, fp=None, **f):
@@ -119,7 +125,7 @@ def encoder(add, ref, k, mp="GND", note=""):
     """Alps EC11E smooth with switch: A, B, push S1 -> E<k>_A, E<k>_B, E<k>_SW; C and S2 on GND; MP (frame) on mp."""
     add(ref, "ShtukaDruka:RotaryEncoder_Switch_Touch", "EC11E smooth, switch",
         "ShtukaDruka:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm_Ring",
-        {"A": f"E{k}_A", "B": f"E{k}_B", "C": "GND", "S1": f"E{k}_SW", "S2": "GND", "MP": mp},
+        {"A": f"E{k}_A", "B": f"E{k}_B", "C": "GND", "S1": f"E{k}_SW", "S2": "GND", "MP": mp}, LCSC="C361165",
         Note=note or "Alps EC11E1834403 or another smooth EC11 with switch and metal shaft")
 
 
@@ -166,7 +172,7 @@ DECK_CONN = {**CONN, 15: None, 16: "GND"}
 
 def deck_bus(add, ref, value):
     add(ref, "Connector_Generic:Conn_02x08_Odd_Even", value, DECK_FP,
-        {str(p): n for p, n in DECK_CONN.items()}, Side="bottom", Note="P100: deck bus to P2, pin 15 AUX not used")
+        {str(p): n for p, n in DECK_CONN.items()}, LCSC=DECK_LCSC, Side="bottom", Note="P100: deck bus to P2, pin 15 AUX not used")
 
 
 def i2c_mux(add, ref, addr, chans, caps, res_first):
@@ -180,8 +186,8 @@ def i2c_mux(add, ref, addr, chans, caps, res_first):
     a = [(addr >> b) & 1 for b in range(3)]
     for b, pin in zip(range(3), ("1", "2", "13")):
         u[pin] = f"MUX_A{b}"
-    add(ref, "Interface_Expansion:TCA9546APW", "TCA9546APWR", "Package_SO:TSSOP-16_4.4x5mm_P0.65mm", u,
-        Note=f"P99: I2C address 0x{0x70 + addr:02X} (A2 A1 A0 = {a[2]} {a[1]} {a[0]}); LCSC number to choose")
+    add(ref, "Interface_Expansion:TCA9546APW", "TCA9546APWR", "Package_SO:TSSOP-16_4.4x5mm_P0.65mm", u, LCSC="C201653",
+        Note=f"P99: I2C address 0x{0x70 + addr:02X} (A2 A1 A0 = {a[2]} {a[1]} {a[0]}); TI TCA9546APWR (EasyEDA library, Extended)")
     rc(add, caps, "100n", "+3V3", "GND")
     r = res_first
     rc(add, f"R{r}", "10k", "MUX_RST", "+3V3"); r += 1

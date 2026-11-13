@@ -1,14 +1,14 @@
 Designator,Value,Footprint,LCSC,Status of the LCSC number
-J1,Module bus 2x7 1.27,PinHeader_2x07_P1.27mm_Vertical,C3975190,проверить в EasyEDA
-C1,10u,C_0805_2012Metric,C15850,проверить в EasyEDA
-"C2,C3,C5",1u,C_0402_1005Metric,C52923,проверить в EasyEDA
+J1,Module bus 2x7 1.27,PinHeader_2x07_P1.27mm_Vertical,C5372811,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-07-Z, штыри 2x7 1,27 выводные, Extended; наличие и цена не смотрелись"
+C1,10u,C_0805_2012Metric,C15850,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL21A106KAYNNNE 10 мкФ 25 В X5R 0805, Basic; наличие и цена не смотрелись"
+"C2,C3,C5",1u,C_0402_1005Metric,C52923,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05A105KA5NQNC 1 мкФ 25 В X5R 0402, Basic; наличие и цена не смотрелись"
 "R1,R2",4.7k,R_0402_1005Metric,не ставить (DNP),
-R3,10k,R_0402_1005Metric,C25744,проверить в EasyEDA
+R3,10k,R_0402_1005Metric,C25744,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1002TCE 10 кОм 1% 0402, Basic; наличие и цена не смотрелись"
 U1,LP5864RSMR,VQFN-32-1EP_4x4mm_P0.4mm_EP2.8x2.8mm,C5220564,"проверено 12.11.2026: 55 шт., 0,92 $ (LCSC)"
-C4,4.7u,C_0805_2012Metric,,номера нет: выбрать деталь
-C6,1n,C_0402_1005Metric,,номера нет: выбрать деталь
+C4,4.7u,C_0805_2012Metric,C1779,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL21A475KAQNNNE 4,7 мкФ 25 В X5R 0805, Basic; наличие и цена не смотрелись"
+C6,1n,C_0402_1005Metric,C1523,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): FH 0402B102K500NT 1 нФ 50 В X7R 0402, Basic; наличие и цена не смотрелись"
 "D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16,D17,D18,D19,D20,D21,D22,D23,D24",XL-1615RGBC-RF,LED_RGB_XL-1615RGBC_1.6x1.5mm,C965840,проверено 01.11.2026 (док. 30)
 U2,74HC165PW,TSSOP-16_4.4x5mm_P0.65mm,C80696,проверено 06.11.2026 (док. 31)
-C7,100n,C_0402_1005Metric,C1525,проверить в EasyEDA
+C7,100n,C_0402_1005Metric,C1525,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05B104KO5NNNC 100 нФ 16 В X7R 0402, Basic; наличие и цена не смотрелись"
 "RN1,RN2",4x10k,R_Array_Convex_4x0402,C25725,проверено 06.11.2026 (док. 31)
-"ENC1,ENC2","EC11E smooth, switch",RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm_Ring,,номера нет: выбрать деталь
+"ENC1,ENC2","EC11E smooth, switch",RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm_Ring,C361165,"найден в библиотеке EasyEDA 13.11.2026 (ПК): Alps EC11E1834403, гладкий 0/18, с кнопкой, Extended; наличие и цена не смотрелись"

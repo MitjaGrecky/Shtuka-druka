@@ -20,7 +20,7 @@ import kit as K  # noqa: E402
 NAME = "w2-meters"
 ID = "W2"
 TITLE = "W2 - Meters (slope): 2 x 14 RGB LED level meters"
-REV = "0.1b"                                 # 0.1b: drivers under their columns (placement only, same netlist)
+REV = "0.1c"                                 # 0.1b: drivers under their columns; 0.1c: drivers between two LEDs (#15); same netlist
 M1_LIB = K.M1_LIB
 BUS_NOTE = "Module bus (R123): J1 to P3 over the fold (I2C channel 3 of P3's TCA9546A, P99); SR_IN tied to SR_OUT (no buttons)"
 
@@ -87,7 +87,9 @@ def placement():
     mx = W / 2                                   # 17.5, between the two columns
     # rev 0.1b (13.11): each driver right under its own column on the bottom side, at mid-height, its capacitors towards
     # the board centre. Each column is then a self-contained bus (no crossings between L and R), the same pattern twice.
-    ymid = H / 2 - 6.0                           # 57: clear of the middle mounting holes (y 63) and between LED rows
+    # rev 0.1c (#15 from the cloud): the exposed-pad vias of the QFN go through to the top, so the driver sits exactly between
+    # two LEDs of its column (LED 7 and 8 from the bottom: step 8.58 mm, QFN 4 mm) - no via under an LED
+    ymid = (led_xy(0, 6)[1] + led_xy(0, 7)[1]) / 2   # 62.95
     for u, m, caps, side in (("U1", 0, ("C3", "C4", "C5", "C6"), +1), ("U2", 1, ("C7", "C8", "C9", "C10"), -1)):
         cx = METERS[m][1] - X0                   # under the column: x 9 (L) and 25 (R)
         pl[u] = (cx, ymid, 0, b)

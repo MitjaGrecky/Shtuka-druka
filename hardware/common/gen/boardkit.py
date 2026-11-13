@@ -18,6 +18,19 @@ def P(x, y):
     return pcbnew.VECTOR2I(pcbnew.FromMM(ORG[0] + x), pcbnew.FromMM(ORG[1] + y))
 
 
+def flip_bottom(fp):
+    """Put a footprint on the bottom side the same way in every KiCad version (task #15 from the cloud).
+    Reference: KiCad 9/10, Flip(pos, FLIP_DIRECTION_TOP_BOTTOM) - what the PC builds and EasyEDA checks.
+    KiCad 7 only mirrors left-right (Flip(pos, True)); a left-right mirror turned by 180 degrees is the top-bottom mirror."""
+    import pcbnew
+    pos = fp.GetPosition()
+    if hasattr(pcbnew, "FLIP_DIRECTION_TOP_BOTTOM"):
+        fp.Flip(pos, pcbnew.FLIP_DIRECTION_TOP_BOTTOM)
+    else:
+        fp.Flip(pos, True)
+        fp.SetOrientationDegrees((fp.GetOrientationDegrees() + 180.0) % 360.0)
+
+
 _PIN_NAMES = {}
 
 

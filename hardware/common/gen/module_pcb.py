@@ -81,7 +81,7 @@ def build(D, silk):
         fp.SetPosition(P(x, y))
         fp.SetOrientationDegrees(r)
         if side == "bottom":
-            fp.Flip(fp.GetPosition(), True)
+            B.flip_bottom(fp)                              # same result in KiCad 7 and 9/10 (#15)
         if p["ref"].startswith(("J", "RV")):               # centre the pad field on (x, y) (connectors, slide pots)
             xs = [pd.GetPosition().x for pd in fp.Pads()]
             ys = [pd.GetPosition().y for pd in fp.Pads()]

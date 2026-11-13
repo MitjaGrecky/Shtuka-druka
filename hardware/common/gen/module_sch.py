@@ -29,7 +29,8 @@ def _writer(D, ns, comment2, here):
     return M, Sch()
 
 
-BIG = {"ShtukaDruka:LP5864": (16, 26), "74xx:74HC165": (12, 16), "Connector_Generic:Conn_02x07_Odd_Even": (12, 14)}
+BIG = {"ShtukaDruka:LP5864": (16, 26), "74xx:74HC165": (12, 16), "Connector_Generic:Conn_02x07_Odd_Even": (12, 14),
+       "Connector_Generic:Conn_02x08_Odd_Even": (12, 16), "Interface_Expansion:TCA9546APW": (18, 22)}
 
 
 def write_grid(D, ns, comment2, here, notes=()):

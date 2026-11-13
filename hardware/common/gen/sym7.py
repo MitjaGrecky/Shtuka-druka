@@ -37,8 +37,96 @@ def blocks(sch_text):
     return out
 
 
+# Symbols that no KiCad 7 schematic of the repository contains yet: converted from the installed (newer) KiCad library.
+EXTRA = {"Interface_Expansion": ["TCA9546APW"], "Connector_Generic": ["Conn_02x08_Odd_Even"]}
+KSYM10 = os.environ.get("KICAD10_SYMBOL_DIR", r"C:\Program Files\KiCad\10.0\share\kicad\symbols")
+DROP = {"exclude_from_sim", "in_pos_files", "duplicate_pin_numbers_are_jumpers", "show_name", "do_not_autoplace",
+        "embedded_fonts", "embedded_files", "unit_name", "body_styles"}
+
+
+def _parse(text):
+    tok = re.findall(r'\(|\)|"(?:[^"\\]|\\.)*"|[^\s()]+', text)
+    stack, cur = [], []
+    for t in tok:
+        if t == "(":
+            stack.append(cur)
+            cur = []
+        elif t == ")":
+            done, cur = cur, stack.pop()
+            cur.append(done)
+        else:
+            cur.append(t)
+    return cur
+
+
+def _k7(node):
+    """KiCad 9/10 node -> KiCad 7 node: drop new tokens, (hide yes) -> bare hide where KiCad 7 wants it."""
+    if not isinstance(node, list):
+        return node
+    head = node[0] if node else None
+    kids = [c for c in node[1:] if not (isinstance(c, list) and c and c[0] in DROP)]
+    hide = any(isinstance(c, list) and c[:2] == ["hide", "yes"] for c in kids)
+    kids = [c for c in kids if not (isinstance(c, list) and c and c[0] == "hide")]
+    kids = [c for c in kids if not (isinstance(c, list) and c and c[0] in ("bold", "italic") and c[1:] == ["no"])]
+    kids = [[c[0]] if isinstance(c, list) and c and c[0] in ("bold", "italic") else c for c in kids]
+    kids = [c[0] if c == ["bold"] or c == ["italic"] else _k7(c) for c in kids]
+    if hide:
+        if head == "property":                          # property: hide goes into effects
+            for c in kids:
+                if isinstance(c, list) and c and c[0] == "effects":
+                    c.append("hide")
+        else:                                           # pin_names, pin_numbers, pin: bare token
+            kids.append("hide")
+    return [head] + kids
+
+
+def _inline(n):
+    return n if not isinstance(n, list) else "(" + " ".join(_inline(c) for c in n) + ")"
+
+
+def _emit(sym, ind="  "):
+    """Top-level or unit symbol in KiCad 7 layout: one child per line, pins as 'pin ... (length)' then name, number lines."""
+    lines = [f"{ind}(symbol {sym[1]}" + "".join(" " + _inline(c) for c in sym[2:] if not isinstance(c, list) or c[0] in ("pin_names", "pin_numbers", "in_bom", "on_board", "extends", "power"))]
+    for c in sym[2:]:
+        if not isinstance(c, list) or c[0] in ("pin_names", "pin_numbers", "in_bom", "on_board", "extends", "power"):
+            continue
+        if c[0] == "symbol":
+            lines.append(_emit(c, ind + "  "))
+        elif c[0] == "pin":
+            head = [x for x in c[1:] if not (isinstance(x, list) and x[0] in ("name", "number", "alternate"))]
+            rest = [x for x in c[1:] if isinstance(x, list) and x[0] in ("name", "number", "alternate")]
+            lines.append(f"{ind}  (pin " + " ".join(_inline(x) for x in head))
+            lines += [f"{ind}    {_inline(x)}" for x in rest]
+            lines.append(f"{ind}  )")
+        else:
+            lines.append(f"{ind}  {_inline(c)}")
+    lines.append(f"{ind})")
+    return "\n".join(lines)
+
+
+def from_kicad10(lib, names):
+    """KiCad-7-format text blocks of the named symbols (and the symbols they extend) of a KiCad 9/10 library."""
+    root = _parse(open(os.path.join(KSYM10, lib + ".kicad_sym"), encoding="utf-8").read())[0]
+    syms = {c[1].strip('"'): c for c in root if isinstance(c, list) and c and c[0] == "symbol"}
+    want, out = list(names), {}
+    while want:
+        n = want.pop()
+        if n in out:
+            continue
+        s = _k7(syms[n])
+        out[n] = _emit(s)
+        for c in s:
+            if isinstance(c, list) and c and c[0] == "extends":
+                want.append(c[1].strip('"'))
+    return out
+
+
 def build(out=DEFAULT_OUT):
     libs = {}
+    for lib, names in EXTRA.items():
+        if os.path.exists(os.path.join(KSYM10, lib + ".kicad_sym")):
+            for n, b in from_kicad10(lib, names).items():
+                libs.setdefault(lib, {})[n] = b
     for sch in sorted(glob.glob(os.path.join(HW, "*", "*.kicad_sch"))):
         txt = open(sch, encoding="utf-8").read()
         if "(version 2023" not in txt[:200] and "(version 2022" not in txt[:200]:

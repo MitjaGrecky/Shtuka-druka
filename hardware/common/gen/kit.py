@@ -10,6 +10,13 @@ import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 M1_LIB = os.path.abspath(os.path.join(HERE, "..", "..", "m1-screen-knobs", "lib"))   # shared project library
+LAYOUT = os.path.abspath(os.path.join(HERE, "..", "..", "..", "mockup", "layout", "layout_v7.json"))  # panel v7
+
+
+def layout_elements():
+    """{name: element} of the panel layout (x, y = centre, w, h in mm, top view)."""
+    import json
+    return {e["name"]: e for e in json.load(open(LAYOUT, encoding="utf-8"))["elements"]}
 
 R0402, C0402, C0805 = "Resistor_SMD:R_0402_1005Metric", "Capacitor_SMD:C_0402_1005Metric", "Capacitor_SMD:C_0805_2012Metric"
 # only numbers already used in the project (W1, M1); 4.7u 0805, 1n 0402, 560 0402 have none yet ("choose a part" in M1's BOM_notes)
@@ -148,6 +155,68 @@ def knob_pair(add, names, ring_n=12, clips=(), holes=5):
         encoder(add, f"ENC{k + 1}", k, mp="GND", note=f"{names[k]}: Alps EC11E1834403 or another smooth EC11 with switch")
     for h in range(holes):
         hole(add, f"H{h + 1}")
+    return bits
+
+
+# ------------------------------------------------------------------ decks (P1, P3, P4)
+DECK_FP = "Connector_PinHeader_1.27mm:PinHeader_2x08_P1.27mm_Vertical"
+# P100 (proposal): deck bus 2 x 8, 1.27 mm to P2 - pins 1-14 as the module bus, 15 AUX (reserve), 16 GND
+DECK_CONN = {**CONN, 15: None, 16: "GND"}
+
+
+def deck_bus(add, ref, value):
+    add(ref, "Connector_Generic:Conn_02x08_Odd_Even", value, DECK_FP,
+        {str(p): n for p, n in DECK_CONN.items()}, Side="bottom", Note="P100: deck bus to P2, pin 15 AUX not used")
+
+
+def i2c_mux(add, ref, addr, chans, caps, res_first):
+    """TCA9546A (P99): upstream SDA/SCL from P2; chans = {0: (sd, sc) or None, ...}; 4.7k pull-ups on every used channel;
+    ~RESET pulled up; A2 A1 A0 through 0R to GND or +3V3 (addr = 3 bits, 0x70 + addr). Returns the next free R number."""
+    u = {"16": "+3V3", "8": "GND", "15": "SDA", "14": "SCL", "3": "MUX_RST"}
+    pins = {0: ("4", "5"), 1: ("6", "7"), 2: ("9", "10"), 3: ("11", "12")}
+    for ch, (pd, pc) in pins.items():
+        nets = chans.get(ch)
+        u[pd], u[pc] = (nets if nets else (None, None))
+    a = [(addr >> b) & 1 for b in range(3)]
+    for b, pin in zip(range(3), ("1", "2", "13")):
+        u[pin] = f"MUX_A{b}"
+    add(ref, "Interface_Expansion:TCA9546APW", "TCA9546APWR", "Package_SO:TSSOP-16_4.4x5mm_P0.65mm", u,
+        Note=f"P99: I2C address 0x{0x70 + addr:02X} (A2 A1 A0 = {a[2]} {a[1]} {a[0]}); LCSC number to choose")
+    rc(add, caps, "100n", "+3V3", "GND")
+    r = res_first
+    rc(add, f"R{r}", "10k", "MUX_RST", "+3V3"); r += 1
+    for b in range(3):
+        rc(add, f"R{r}", "0", f"MUX_A{b}", "+3V3" if a[b] else "GND", Note="address jumper"); r += 1
+    for ch, nets in sorted(chans.items()):
+        if nets:
+            for n in nets:
+                rc(add, f"R{r}", "4.7k", n, "+3V3", Note=f"pull-up of mux channel {ch}"); r += 1
+    return r
+
+
+def deck_inputs(add, names, cells, sr_refs, sr_caps, chain_in, rn_first=1):
+    """Buttons with 2 RGB each (P101) read by a 74HC165 chain. names: button names in reading order.
+    cells: [(cell, U ref, (4 caps), (ADDR1, ADDR0)), ...] - 12 buttons (24 RGB) per LP5864.
+    Q7 of the first register -> SR_OUT; DS of the last <- chain_in. Returns the bit list."""
+    for cell, u, caps, addr in cells:
+        lp5864(add, u, cell, caps, addr=addr)
+    for k, nm in enumerate(names):
+        add(f"SW{k + 1}", "Switch:SW_Push", "TS-1187A-B-A-B", "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A",
+            {"1": f"BTN{k + 1}", "2": "GND"}, LCSC="C318884", Note=nm)
+        for side in range(2):
+            j = 2 * k + side                       # LED index over the deck
+            cell = cells[j // 24][0]
+            i = j % 24                             # 24 places per LP5864: CS triple i div 4, SW i mod 4
+            c = 3 * (i // 4)
+            rgb(add, f"D{j + 1}", f"{cell}_SW{i % 4}", (f"{cell}_CS{c}", f"{cell}_CS{c + 1}", f"{cell}_CS{c + 2}"),
+                Note=f"{nm} {'left' if side == 0 else 'right'}")
+    bits = [f"BTN{k + 1}" for k in range(len(names))]
+    n = len(sr_refs)
+    for s, (u, cap) in enumerate(zip(sr_refs, sr_caps)):
+        q7 = "SR_OUT" if s == 0 else f"SR_Q{s}"
+        ds = chain_in if s == n - 1 else f"SR_Q{s + 1}"
+        sr165(add, u, bits[8 * s:8 * s + 8], ds, q7, cap)
+    pullups(add, rn_first, bits)
     return bits
 
 

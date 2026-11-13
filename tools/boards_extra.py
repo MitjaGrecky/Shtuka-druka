@@ -7,4 +7,5 @@ BOARDS = {
     "M5": ("m5-gain", {}, ["make_sch.py", "make_pcb.py"]),
     "W2": ("w2-meters", {}, ["make_sch.py", "make_pcb.py"]),
     "W3": ("w3-system", {}, ["make_sch.py", "make_pcb.py"]),
+    "P1": ("p1-left", {}, ["make_sch.py", "make_pcb.py"]),
 }

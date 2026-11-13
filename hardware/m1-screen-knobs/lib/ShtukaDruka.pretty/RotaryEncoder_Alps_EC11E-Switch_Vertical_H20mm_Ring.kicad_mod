@@ -1,7 +1,7 @@
 (footprint "RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm_Ring" (version 20211014) (generator pcbnew)
   (layer "F.Cu")
   (tedit 5A74C8CB)
-  (descr "Courtyard follows body and pins (ring LEDs at the corners); Alps rotary encoder, EC12E... with switch, vertical shaft, http://www.alps.com/prod/info/E/HTML/Encoder/Incremental/EC11/EC11E15204A3.html")
+  (descr "Courtyard = F.Fab body 12.1 x 11.7 + 0.25, with tabs only at the pins (A B C, S1 S2) and the frame lugs (V11, 13.11.2026: ring LEDs r 10.5 sit at the body corners); Alps rotary encoder, EC12E... with switch, vertical shaft, http://www.alps.com/prod/info/E/HTML/Encoder/Incremental/EC11/EC11E15204A3.html")
   (tags "rotary encoder")
   (attr through_hole)
   (fp_text reference "REF**" (at 2.8 -4.7) (layer "F.SilkS")
@@ -45,7 +45,7 @@
   (pad "MP" thru_hole rect (at 7.5 -3.1) (size 3.2 2) (drill oval 2.8 1.5) (layers *.Cu *.Mask) (tstamp fb5c326d-33d2-4f06-ad1b-af7de80ab720))
   (pad "S1" thru_hole circle (at 14.5 5) (size 2 2) (drill 1) (layers *.Cu *.Mask) (tstamp 7d67148e-6a33-40ce-8b6b-e59f7dfe7253))
   (pad "S2" thru_hole circle (at 14.5 0) (size 2 2) (drill 1) (layers *.Cu *.Mask) (tstamp e4806ec9-285f-4aec-99da-67ca111daa66))
-  (fp_poly (pts (xy 1.25 -4.35) (xy 13.75 -4.35) (xy 13.75 -1.25) (xy 15.75 -1.25) (xy 15.75 6.25) (xy 13.75 6.25) (xy 13.75 9.35) (xy 1.25 9.35) (xy 1.25 6.25) (xy -1.5 6.25) (xy -1.5 -1.25) (xy 1.25 -1.25)) (layer "F.CrtYd") (width 0.05) (fill none))
+  (fp_poly (pts (xy 1.19 -3.61) (xy 5.65 -3.61) (xy 5.65 -4.35) (xy 9.35 -4.35) (xy 9.35 -3.61) (xy 13.81 -3.61) (xy 13.81 -1.25) (xy 15.75 -1.25) (xy 15.75 6.25) (xy 13.81 6.25) (xy 13.81 8.61) (xy 9.35 8.61) (xy 9.35 9.35) (xy 5.65 9.35) (xy 5.65 8.61) (xy 1.19 8.61) (xy 1.19 6.25) (xy -0.95 6.25) (xy -1.25 5.95) (xy -1.25 -0.95) (xy -0.95 -1.25) (xy 1.19 -1.25)) (layer "F.CrtYd") (width 0.05) (fill none))
   (model "${KICAD10_3DMODEL_DIR}/Rotary_Encoder.3dshapes/RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm.wrl"
     (offset (xyz 0 0 0))
     (scale (xyz 1 1 1))

@@ -1,7 +1,7 @@
 (export (version "E")
   (design
-    (source "/tmp/forrouting_m07vyyrq/w1-levels/w1-levels.kicad_sch")
-    (date "Thu Nov 12 20:55:59 2026")
+    (source "/tmp/forrouting_g8lflu_o/w1-levels/w1-levels.kicad_sch")
+    (date "Fri Nov 13 13:37:43 2026")
     (tool "Eeschema 7.0.11+dfsg-1build4")
     (sheet (number "1") (name "/") (tstamps "/")
       (title_block
@@ -266,9 +266,9 @@
       (value "Bus to P1 2x7 1.27")
       (footprint "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical")
       (fields
-        (field (name "LCSC") "C3975190"))
+        (field (name "LCSC") "C5372811"))
       (libsource (lib "Connector_Generic") (part "Conn_02x07_Odd_Even") (description "Generic connector, double row, 02x07, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"))
-      (property (name "LCSC") (value "C3975190"))
+      (property (name "LCSC") (value "C5372811"))
       (property (name "Sheetname") (value ""))
       (property (name "Sheetfile") (value "w1-levels.kicad_sch"))
       (property (name "ki_description") (value "Generic connector, double row, 02x07, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"))
@@ -279,9 +279,9 @@
       (value "Bus to M5 2x7 1.27")
       (footprint "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical")
       (fields
-        (field (name "LCSC") "C3975190"))
+        (field (name "LCSC") "C5372811"))
       (libsource (lib "Connector_Generic") (part "Conn_02x07_Odd_Even") (description "Generic connector, double row, 02x07, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"))
-      (property (name "LCSC") (value "C3975190"))
+      (property (name "LCSC") (value "C5372811"))
       (property (name "Sheetname") (value ""))
       (property (name "Sheetfile") (value "w1-levels.kicad_sch"))
       (property (name "ki_description") (value "Generic connector, double row, 02x07, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"))
@@ -730,7 +730,7 @@
         (pin (num "2") (name "2") (type "passive")))))
   (libraries
     (library (logical "ShtukaDruka")
-      (uri "/tmp/forrouting_m07vyyrq/w1-levels/../m1-screen-knobs/lib/ShtukaDruka.kicad_sym")))
+      (uri "/tmp/forrouting_g8lflu_o/w1-levels/../m1-screen-knobs/lib/ShtukaDruka.kicad_sym")))
   (nets
     (net (code "1") (name "+3V3")
       (node (ref "C2") (pin "1") (pintype "passive"))

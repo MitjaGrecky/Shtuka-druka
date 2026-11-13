@@ -54,8 +54,10 @@ def lcsc_of(p):
         return v
     if p["value"] in VALUE_LCSC:
         return VALUE_LCSC[p["value"]]
-    if "PinHeader_2x07_P1.27" in p["fp"]:
-        return "C3975190"
+    if "PinHeader_2x07_P1.27" in p["fp"]:      # through-hole PZ127-2-07-Z (C3975190 is the SMD variant -S)
+        return "C5372811"
+    if "PinHeader_2x08_P1.27" in p["fp"]:
+        return "C5372812"
     key = (p["value"], "R0402" if "R_0402" in p["fp"] else "C0402" if "C_0402" in p["fp"] else "C0805" if "C_0805" in p["fp"] else "")
     return DEFAULT_LCSC.get(key, "")
 

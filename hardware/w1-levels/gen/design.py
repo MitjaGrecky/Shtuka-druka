@@ -77,9 +77,9 @@ def parts():
 
     hdr = "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical"
     add("J1", "Connector_Generic:Conn_02x07_Odd_Even", "Bus to P1 2x7 1.27", hdr,
-        {str(p): n for p, n in CONN.items()}, LCSC="C3975190", Side="bottom")
+        {str(p): n for p, n in CONN.items()}, LCSC="C5372811", Side="bottom")
     add("J2", "Connector_Generic:Conn_02x07_Odd_Even", "Bus to M5 2x7 1.27", hdr,
-        {str(p): n for p, n in CONN_M5.items()}, LCSC="C3975190", Side="bottom")
+        {str(p): n for p, n in CONN_M5.items()}, LCSC="C5372811", Side="bottom")
     rc("C1", "10u", "+5V", "GND", C0805)
     rc("C2", "1u", "+3V3", "GND")
 

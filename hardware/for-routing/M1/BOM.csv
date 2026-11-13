@@ -1,5 +1,5 @@
 Comment,Designator,Footprint,LCSC Part #
-Module bus 2x7 1.27,J1,PinHeader_2x07_P1.27mm_Vertical,C3975190
+Module bus 2x7 1.27,J1,PinHeader_2x07_P1.27mm_Vertical,C5372811
 LP5864RSMR,"U1,U6,U7,U8",VQFN-32-1EP_4x4mm_P0.4mm_EP2.8x2.8mm,C5220564
 1u,"C1,C3,C7,C13,C14,C16,C18,C20,C22,C24",C_0402_1005Metric,C52923
 4.7u,"C2,C15,C19,C23",C_0805_2012Metric,

@@ -18,7 +18,13 @@ def layout_elements():
     import json
     return {e["name"]: e for e in json.load(open(LAYOUT, encoding="utf-8"))["elements"]}
 
-R0402, C0402, C0805 = "Resistor_SMD:R_0402_1005Metric", "Capacitor_SMD:C_0402_1005Metric", "Capacitor_SMD:C_0805_2012Metric"
+def ring_r(name):
+    """Radius of the LED ring around knob `name`: half the layout's `ring` diameter (V2, user 13.11.2026: the panel
+    layout wins over the spec formula r = knob/2 + 3)."""
+    return layout_elements()[name]["ring"] / 2.0
+
+
+R0402, C0402, C0805 ="Resistor_SMD:R_0402_1005Metric", "Capacitor_SMD:C_0402_1005Metric", "Capacitor_SMD:C_0805_2012Metric"
 # LCSC numbers, all found in EasyEDA Pro's system library on 13.11.2026 (tools/eda/eda_parts.py; class = JLCPCB part class):
 # 100n C1525 CL05B104KO5NNNC 16V X7R, 1u C52923 CL05A105KA5NQNC 25V X5R, 10u C15850 CL21A106KAYNNNE 25V X5R,
 # 4.7u C1779 CL21A475KAQNNNE 25V X5R, 1n C1523 0402B102K500NT 50V X7R - all Basic; 10k C25744, 4.7k C25900, 1k C11702,

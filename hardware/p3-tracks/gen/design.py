@@ -28,7 +28,7 @@ import kit as K  # noqa: E402
 NAME = "p3-tracks"
 ID = "P3"
 TITLE = "P3 - Tracks deck + Level knobs: 21 buttons with 2 RGB, 8 encoders with rings and touch, I2C mux, buses to P2, M4, W2"
-REV = "0.2"
+REV = "0.3"                                  # 0.2: Level knobs on this board (R128); 0.3: Level rings r = 10.5 (V2)
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("J1 deck bus 2x8 to P2 (P100); TCA9546A 0x71 (P99): ch0 own LEDs, ch1 Level block (4 LP5864, touch), "
             "ch2 J3 -> M4, ch3 J4 -> W2; chain P3 buttons -> Level knobs -> M4")
@@ -70,7 +70,7 @@ _ROW_GAPS = (47.5, 97.5, 147.5, 197.5)       # board y between button rows
 # Level block's bands (y 17 + 55.5, 105.5, 155.5) and next to its first and last ring: no more than 53 mm apart
 HOLES = ([(2.6, 2.6), (W - 2.6, 2.6), (2.6, H - 2.6), (W - 2.6, H - 2.6), (16.0, 2.6), (W / 2, H - 2.6)]
          + [(2.6, y) for y in _ROW_GAPS] + [(40.9, y) for y in _ROW_GAPS]
-         + [(W - 2.6, M2_DY + y) for y in (2.6, 55.5, 105.5, 155.5, 202.4)])
+         + [(W - 2.6, M2_DY + y) for y in (2.6, 55.5, 105.5, 155.5, 206.5)])   # 206.5: 6 mm from the Level 8 ring (r 10.5)
 CELLS = [("A", "U1", ("C3", "C4", "C5", "C6"), (0, 0)), ("B", "U2", ("C7", "C8", "C9", "C10"), (0, 1))]
 SRS, SR_CAPS = ("U3", "U4", "U5"), ("C11", "C12", "C13")
 

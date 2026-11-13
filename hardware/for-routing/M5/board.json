@@ -2,8 +2,8 @@
  "id": "M5",
  "name": "m5-gain",
  "title": "M5 - Gain 1 + 2 module on the slope (2 encoders, 11-LED rings, Clip LEDs)",
- "rev": "0.1",
- "w": 82.0,
+ "rev": "0.2",
+ "w": 84.0,
  "h": 34.0,
  "layers": 2,
  "parts": 46,
@@ -21,11 +21,11 @@
    2.6
   ],
   [
-   79.4,
+   81.4,
    2.6
   ],
   [
-   79.4,
+   81.4,
    31.4
   ]
  ],

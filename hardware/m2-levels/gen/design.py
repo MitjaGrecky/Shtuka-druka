@@ -21,7 +21,7 @@ import kit as K  # noqa: E402
 NAME = "m2-levels"
 ID = "M2"
 TITLE = "M2 - Level 1-8 module (8 encoders, 12-LED RGB rings, touch)"
-REV = "0.1"
+REV = "0.2"                                  # 0.2: rings r = 10.5 from the layout (V2)
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Module bus (R123): J1 to P3's J2 (I2C channel 1 of P3's TCA9546A); chain P3 -> M2 -> M4: SR_OUT to P3, "
             "SR_IN from M4. LP5864 0x40-0x43, touch CY8CMBR3108 0x37")
@@ -32,7 +32,7 @@ W, H = X1 - X0, Y1 - Y0                      # 24 x 205
 LAYERS = 4                                   # 96 LEDs and 4 drivers in a 24 mm strip, as M1
 KNOB_X, KNOB_D = 394.5, 14.0
 KNOBS = [(f"Level {8 - k}", KNOB_X, 52.0 + 25.0 * k) for k in range(8)]
-RING_R = KNOB_D / 2 + 3.0                    # 10 mm
+RING_R = K.ring_r(KNOBS[0][0])                 # 10.5 mm: layout ring 21 (V2: layout over the spec formula, was 10)
 RING_N = 12
 CELLS = [("A", "U1", ("C3", "C4", "C5", "C6"), (0, 0)), ("B", "U2", ("C7", "C8", "C9", "C10"), (0, 1)),
          ("C", "U3", ("C11", "C12", "C13", "C14"), (1, 0)), ("D", "U4", ("C15", "C16", "C17", "C18"), (1, 1))]

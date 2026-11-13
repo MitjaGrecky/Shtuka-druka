@@ -1,8 +1,8 @@
-"""M5 - Gain 1 + 2 module (2 encoders on the slope, in the window of W1). Single source of truth for the schematic
+﻿"""M5 - Gain 1 + 2 module (2 encoders on the slope, in the window of W1). Single source of truth for the schematic
 and the board. Spec: hardware/for-routing/SPEC_boards.md, section M5; W1: hardware/w1-levels/gen/design.py.
 
 Panel (layout_v7.json): knobs Gain 1 x 32 and Gain 2 x 80 at y 379 (slope), knob 16 mm; Clip 1 and Clip 2 LEDs
-at x 48 and 96, y 386. The board is 82 x 34 mm and sits in W1's window (W1 board x M5_X = 5-87, i.e. panel x 15-97),
+at x 48 and 96, y 386. The board is 84 x 34 mm and sits in W1's window (W1 board x M5_X = 5-89, i.e. panel x 15-99; rev 0.1: 82 mm to x 97),
 centred on the Gain row. P103: rings of 11 LEDs + the 2 Clip LEDs = 24 RGB on one LP5864 (each Clip LED is the
 12th position of its ring's CS triples). P102: no touch. J1 faces W1's J2 (W1 board x 46 = M5 x 41, front edge).
 Slope: s = (panel_y - 300) / cos 30 along the slope from the fold. Board (KiCad, y down): origin at the rear-left
@@ -20,19 +20,19 @@ import kit as K  # noqa: E402
 NAME = "m5-gain"
 ID = "M5"
 TITLE = "M5 - Gain 1 + 2 module on the slope (2 encoders, 11-LED rings, Clip LEDs)"
-REV = "0.1"
+REV = "0.2"                                  # 0.2: V1 board to panel x 99, V2 rings r = 10.5 (layout)
 M1_LIB = K.M1_LIB
 BUS_NOTE = "Module bus (R123): J1 to W1's J2 (W1 passes the bus on; chain: P1 -> M3 -> W1 -> M5)"
 
 COS = math.cos(math.radians(30.0))
-W1_X0, M5_X = 10.0, (5.0, 87.0)              # W1 board edge in panel x; M5 outline in W1 board x (w1-levels design.py)
-X0, X1 = W1_X0 + M5_X[0], W1_X0 + M5_X[1]   # panel x 15-97
-W, H = X1 - X0, 34.0                         # 82 x 34
+W1_X0, M5_X = 10.0, (5.0, 89.0)              # W1 board edge in panel x; M5 outline in W1 board x (V1: to 89 = panel 99, W1 window to follow)
+X0, X1 = W1_X0 + M5_X[0], W1_X0 + M5_X[1]   # panel x 15-99 (V1, user 13.11: Clip 2 at x 96 was 0.15 mm from the edge)
+W, H = X1 - X0, 34.0                         # 84 x 34
 LAYERS = 2
 KNOBS = [("Gain 1", 32.0, 379.0), ("Gain 2", 80.0, 379.0)]
 CLIPS = [("Clip 1", 48.0, 386.0), ("Clip 2", 96.0, 386.0)]
 KNOB_D = 16.0
-RING_R = KNOB_D / 2 + 3.0                    # 11 mm (spec formula; layout_v7 draws a 21 mm ring)
+RING_R = K.ring_r(KNOBS[0][0])                 # 10.5 mm: layout ring 21 (V2: layout over the spec formula, was 11)
 RING_N = 11                                  # P103
 TOUCH = False                                # P102
 

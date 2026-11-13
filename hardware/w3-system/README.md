@@ -13,7 +13,7 @@ Package: `hardware/for-routing/W3/`.
 | I2C | LP5864 0x40 |
 | LEDs | D1 Save left, D2 Save right, D3 Project left, D4 Project right, D5 record; LED i: CS triple i div 4, SW i mod 4 (CS0-5 used) |
 | Shift chain | D7 Save, D6 Project, D5-D0 = 1; DS <- SR_IN (R3 10k) |
-| Not on this board | USB-A + SD pocket (retail module, P105: only its cut-out next to this board); **Power button** (behind the pocket, open question V9) |
+| Not on this board | USB-A + SD pocket (retail module, P105: only its cut-out next to this board); **Power button** (behind the pocket; V9, user 13.11: a panel button on a wire straight to the Mini-ITX PWR_SW header, no board) |
 | Holes | M2 in the corners, one more on each long side (x 40 rear, x 30 front) |
 
 Why the board ends at the pocket: the pocket (92 x 24 mm in the top view) is as wide as the whole column, so a single board

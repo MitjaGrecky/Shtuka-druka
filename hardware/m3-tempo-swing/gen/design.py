@@ -17,7 +17,7 @@ import kit as K  # noqa: E402
 NAME = "m3-tempo-swing"
 ID = "M3"
 TITLE = "M3 - Tempo + Swing module (2 encoders, 12-LED RGB rings)"
-REV = "0.1"
+REV = "0.2"                                  # 0.2: rings r = 15 from the layout (V2)
 M1_LIB = K.M1_LIB
 
 # ------------------------------------------------------------------ geometry (mm)
@@ -27,7 +27,7 @@ W, H = X1 - X0, Y1 - Y0                      # 92 x 34
 LAYERS = 2                                   # 24 LEDs, one driver: 2 layers are expected to do (M1 needs 4 for 96 LEDs)
 KNOBS = [("Tempo", 32.0, 277.0), ("Swing", 80.0, 277.0)]
 KNOB_D = 22.0
-RING_R = KNOB_D / 2 + 3.0                    # 14 mm (spec: r = knob diameter / 2 + 3)
+RING_R = K.ring_r(KNOBS[0][0])                 # 15 mm: layout ring 30 (V2: layout over the spec formula, was 14)
 RING_N = 12
 TOUCH = False                                # P102: no touch on M3; True would need a touch controller like M1
 

@@ -1,7 +1,7 @@
 """M4 - FX Mix + Filter module (2 encoders with 12-LED rings). Single source of truth for the schematic
 and the board. Spec: hardware/for-routing/SPEC_boards.md, section M4 ("as M3").
 
-Panel (layout_v7.json): knobs FX Mix x 355 and Filter x 389, y 277, knob 22 mm; board x 339-405, y 263-297 (66 x 34).
+Panel (layout_v7.json): knobs FX Mix x 355 and Filter x 389, y 277, knob 22 mm; board x 337-407, y 263-297 (70 x 34; rev 0.1: 339-405).
 The knobs are only 34 mm apart, so the rings (r 14) leave 6 mm between them: the ICs sit on the bottom side
 between the encoder pins (x 26-40), J1 at the front edge in the gap under the two ring openings.
 Board coordinates (KiCad, y down): origin at the rear-left corner, x = panel_x - X0, y = Y1 - panel_y.
@@ -17,17 +17,17 @@ import kit as K  # noqa: E402
 NAME = "m4-fx-filter"
 ID = "M4"
 TITLE = "M4 - FX Mix + Filter module (2 encoders, 12-LED RGB rings)"
-REV = "0.1"
+REV = "0.2"                                  # 0.2: rings r = 15 from the layout (V2)
 M1_LIB = K.M1_LIB
 BUS_NOTE = "Module bus (R123): J1 to P3 (I2C channel 2 of P3's TCA9546A); chain: P3 buttons -> M2 -> M4"
 
-X0, X1 = 339.0, 405.0
+X0, X1 = 337.0, 407.0                        # 0.2: 70 mm (was 339-405): rings r 15 reach x 339.2 / 404.8; M1 ends at 332.75, P4 starts at 413
 Y0, Y1 = 263.0, 297.0
-W, H = X1 - X0, Y1 - Y0                      # 66 x 34
+W, H = X1 - X0, Y1 - Y0                      # 70 x 34
 LAYERS = 2
 KNOBS = [("FX Mix", 355.0, 277.0), ("Filter", 389.0, 277.0)]
 KNOB_D = 22.0
-RING_R = KNOB_D / 2 + 3.0                    # 14 mm (spec)
+RING_R = K.ring_r(KNOBS[0][0])                 # 15 mm: layout ring 30 (V2: layout over the spec formula, was 14)
 RING_N = 12
 TOUCH = False                                # P102
 HOLES = K.corner_holes(W, H) + [(W / 2, 2.6)]   # 66 mm: corners alone would be 60.8 apart (> 60), one more in the middle

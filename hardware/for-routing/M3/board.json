@@ -2,7 +2,7 @@
  "id": "M3",
  "name": "m3-tempo-swing",
  "title": "M3 - Tempo + Swing module (2 encoders, 12-LED RGB rings)",
- "rev": "0.1",
+ "rev": "0.2",
  "w": 92.0,
  "h": 34.0,
  "layers": 2,

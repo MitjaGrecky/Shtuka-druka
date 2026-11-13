@@ -138,7 +138,7 @@ def main():
             try:
                 res = run(bridge, win, code, timeout=300)
                 pins = [n for pads in res.get("comps", {}).values() for _, n in pads]
-                if pins and not any(pins) and attempt < 2:      # board still loading: every pad without a net
+                if not any(pins) and attempt < 2:               # board still loading: no parts, or every pad without a net
                     raise RuntimeError("all pads without nets (document still loading?)")
                 break
             except RuntimeError as e:

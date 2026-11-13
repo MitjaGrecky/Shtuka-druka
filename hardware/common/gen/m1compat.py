@@ -31,4 +31,19 @@ def load(name):
     mod.__file__ = path
     sys.modules[name] = mod
     exec(compile(src, path, "exec"), mod.__dict__)
+    if name == "make_sch":                       # "Common:<symbol>" comes from hardware/common/lib/Common.kicad_sym
+        orig = mod.lib_block
+
+        def lib_block(lib_id):
+            if not lib_id.startswith("Common:"):
+                return orig(lib_id)
+            old, mod.KSYM = mod.KSYM, COMMON_LIB
+            try:
+                return orig(lib_id)
+            finally:
+                mod.KSYM = old
+        mod.lib_block = lib_block
     return mod
+
+
+COMMON_LIB = os.path.abspath(os.path.join(M1_GEN, "..", "..", "common", "lib"))

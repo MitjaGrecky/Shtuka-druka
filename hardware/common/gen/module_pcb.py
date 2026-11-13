@@ -11,7 +11,7 @@ import boardkit as B
 import kit as K
 
 mm, P = pcbnew.FromMM, B.P
-LOCKED = ("ENC", "D", "H", "J", "SW")
+LOCKED = ("ENC", "D", "H", "J", "SW", "RV")
 
 
 def load_fp(D, fpid):
@@ -82,7 +82,7 @@ def build(D, silk):
         fp.SetOrientationDegrees(r)
         if side == "bottom":
             fp.Flip(fp.GetPosition(), True)
-        if p["ref"].startswith("J"):                       # centre the pad field on (x, y)
+        if p["ref"].startswith(("J", "RV")):               # centre the pad field on (x, y) (connectors, slide pots)
             xs = [pd.GetPosition().x for pd in fp.Pads()]
             ys = [pd.GetPosition().y for pd in fp.Pads()]
             t = P(x, y)

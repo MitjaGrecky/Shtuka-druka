@@ -38,7 +38,7 @@ def blocks(sch_text):
 
 
 # Symbols that no KiCad 7 schematic of the repository contains yet: converted from the installed (newer) KiCad library.
-EXTRA = {"Interface_Expansion": ["TCA9546APW"], "Connector_Generic": ["Conn_02x08_Odd_Even"]}
+EXTRA = {"Interface_Expansion": ["TCA9546APW"], "Connector_Generic": ["Conn_02x08_Odd_Even", "Conn_01x02"]}
 KSYM10 = os.environ.get("KICAD10_SYMBOL_DIR", r"C:\Program Files\KiCad\10.0\share\kicad\symbols")
 DROP = {"exclude_from_sim", "in_pos_files", "duplicate_pin_numbers_are_jumpers", "show_name", "do_not_autoplace",
         "embedded_fonts", "embedded_files", "unit_name", "body_styles"}

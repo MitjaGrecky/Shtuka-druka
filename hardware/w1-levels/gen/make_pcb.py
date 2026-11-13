@@ -178,8 +178,8 @@ def gnd_pour(b, layer, prio):
 
 def parity_fix(b):
     """Make the board agree with the schematic the way KiCad 10's parity check reads it (CI, 13.11.2026: 127 warnings):
-    net names as the schematic netlist writes them (local labels get "/": AIN0 -> /AIN0), the LCSC field on every
-    footprint whose symbol has one, mounting holes excluded from the BOM like their symbols."""
+    net names as the schematic netlist writes them (local labels get "/": AIN0 -> /AIN0; single pins
+    "unconnected-(...)"), the symbol fields (LCSC, Note) on the footprints, mounting holes in the BOM like their symbols."""
     import re
     import subprocess
     import tempfile
@@ -191,25 +191,32 @@ def parity_fix(b):
     for m in re.finditer(r'\(net \(code "?\d+"?\) \(name "([^"]*)"\)(.*?)(?=\n\s*\(net \(code|\Z)', open(net).read(), re.S):
         for ref, pin in re.findall(r'\(node \(ref "?([^")\s]+)"?\) \(pin "?([^")\s]+)"?\)', m.group(2)):
             pin_net[(ref, pin)] = m.group(1)
-    rename = {}
+    rename, single = {}, 0
     for fp in b.GetFootprints():
         for p in fp.Pads():
             want = pin_net.get((fp.GetReference(), p.GetNumber()))
             have = p.GetNetname()
             if want and have and want != have and not have.startswith("unconnected-"):
                 rename[have] = want
+            elif want and not have and want.startswith("unconnected-"):      # KiCad names single pins' nets too
+                n = pcbnew.NETINFO_ITEM(b, want)
+                b.Add(n)
+                p.SetNet(n)
+                single += 1
     for old, new in rename.items():
         n = b.FindNet(old)
         if n:
             n.SetNetname(new)
-    lcsc = {p["ref"]: p["fields"]["LCSC"] for p in D.parts() if p["fields"].get("LCSC")}
+    fields = {p["ref"]: p["fields"] for p in D.parts()}
+    nf = 0
     for fp in b.GetFootprints():
         ref = fp.GetReference()
-        if ref in lcsc:
-            fp.SetProperty("LCSC", lcsc[ref])
-        if ref.startswith("H"):
-            fp.SetAttributes(fp.GetAttributes() | pcbnew.FP_EXCLUDE_FROM_BOM)
-    return len(rename), len(lcsc)
+        for k, v in fields.get(ref, {}).items():                      # LCSC, Note, ... as on the symbol
+            fp.SetProperty(k, v)
+            nf += 1
+        if ref.startswith("H"):                                       # the hole symbols are in the BOM (in_bom yes)
+            fp.SetAttributes(fp.GetAttributes() & ~pcbnew.FP_EXCLUDE_FROM_BOM)
+    return len(rename), single, nf
 
 
 if __name__ == "__main__":
@@ -231,7 +238,7 @@ if __name__ == "__main__":
         M.fill(board)
         print("stitching vias", M.stitch(board, pitch=4.0, margin=0.7))
         M.fill(board)
-    print("parity fix: nets renamed %d, LCSC fields %d" % parity_fix(board))
+    print("parity fix: nets renamed %d, single-pin nets %d, fields %d" % parity_fix(board))
     board.Save(OUT)
     M.write_project()
     print("ok", OUT, len(board.GetFootprints()), "footprints", len(board.GetTracks()), "tracks/vias")

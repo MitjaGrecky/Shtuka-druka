@@ -133,7 +133,16 @@ def main():
     out =[f"### EasyEDA check: {a.id}, project `{info['project']}` (board `{info['board']}`)",
            f"Netlist: `{netlist.relative_to(ROOT) if netlist.is_relative_to(ROOT) else netlist}`", ""]
     for kind, f in (("PCB", "pcb_nets.js"), ("Schematic", "sch_nets.js")):
-        res = run(bridge, win, js(f).replace("__PROJECT_UUID__", info["projectUuid"]), timeout=300)
+        code = js(f).replace("__PROJECT_UUID__", info["projectUuid"])
+        for attempt in range(3):                 # just-opened documents may still be loading: retry
+            try:
+                res = run(bridge, win, code, timeout=300)
+                break
+            except RuntimeError as e:
+                if attempt == 2:
+                    raise
+                print(f"{kind}: {e} - retrying in 10 s", flush=True)
+                time.sleep(10)
         if "error" in res:
             out.append(f"**{kind}:** {res['error']}")
             continue

@@ -2,7 +2,7 @@
  "id": "W2",
  "name": "w2-meters",
  "title": "W2 - Meters (slope): 2 x 14 RGB LED level meters",
- "rev": "0.1",
+ "rev": "0.1b",
  "w": 35.0,
  "h": 126.0,
  "layers": 2,

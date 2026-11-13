@@ -1,14 +1,14 @@
 # W2 - Meters (slope, above the track column)
 
 Two level meters (master L and R), 14 RGB LEDs each, on two LP5864 drivers. No buttons, no knobs.
-Spec: `hardware/for-routing/SPEC_boards.md`, section W2. Status: rev 0.1 - schematic and placed board, not routed (`UNROUTED`).
+Spec: `hardware/for-routing/SPEC_boards.md`, section W2. Status: rev 0.1b - schematic and placed board, not routed (`UNROUTED`).
 Package: `hardware/for-routing/W2/`.
 
 | | |
 |---|---|
 | Board | 35 x 126 mm along the slope, 2 layers; panel x 355-390, slope s 12-138 mm from the fold (as W1) |
 | Top side | 28 x XL-1615RGBC-RF: Meter L at panel x 364, Meter R at x 380; 14 per column over the meter length (120.1 mm along the slope, step 8.58 mm) |
-| Bottom side | 2 x LP5864 between the columns (U1 L, U2 R), their capacitors, J1 at the front edge (towards the fold) |
+| Bottom side | each LP5864 right under its own column at mid-height (U1 under L, U2 under R; rev 0.1b), capacitors towards the centre, J1 at the front edge (towards the fold) |
 | Bus | J1 2 x 7, 1.27 mm to P3 over the fold (I2C channel 3 of P3's TCA9546A, P99); SR_IN and SR_OUT tied (SR_THRU) |
 | I2C | U1 0x40 (L), U2 0x41 (R) |
 | LEDs | LED i (1 = bottom, fold side) of a meter: CS triple (i-1) div 4, SW (i-1) mod 4; CS12-17 unused (no-connect) |

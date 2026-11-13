@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """PC-side packer: like tools/pack_for_routing.py, but works with KiCad 9/10 and without playwright.
 
-  python tools/pack_easyeda.py ID PROJECT_DIR [--out hardware/for-routing]
+  python tools/pack_easyeda.py ID PROJECT_DIR [--out hardware/for-routing] [--no-cli]
+
+--no-cli: do not call kicad-cli (it crashes the PC): zip, BOM and board.json are rebuilt, netlist.net, schematic.pdf
+and outline.dxf stay from the last full build - use it only when the connections and the outline did not change.
 
 Differences from pack_for_routing.py (whose code it reuses unchanged):
 - the board copy that goes into ID_kicad7.zip gets KiCad 7 style numbered nets
@@ -36,6 +39,16 @@ def main():
         import playwright  # noqa: F401
     except ImportError:
         PK.render = lambda *a, **k: print("previews skipped (no playwright)")
+    if "--no-cli" in sys.argv:          # the PC blue-screens on kicad-cli: keep netlist/pdf/dxf of the last build
+        sys.argv.remove("--no-cli")
+        real = PK.subprocess.run
+
+        def run(cmd, *a, **k):
+            if cmd and os.path.basename(str(cmd[0])).startswith("kicad-cli"):
+                print("skipped (--no-cli):", " ".join(map(str, cmd[1:4])))
+                return PK.subprocess.CompletedProcess(cmd, 0, "", "")
+            return real(cmd, *a, **k)
+        PK.subprocess.run = run
     # work on a copy: the netnums board goes into the zip, the project stays as generated
     work = tempfile.mkdtemp(prefix="pack_easyeda_")
     copy = os.path.join(work, os.path.basename(proj))

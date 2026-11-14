@@ -139,10 +139,10 @@ def parts():
 
     # ================================================================ clocks
     osc_lcsc = {"OSC48": "C5203547", "OSC44": "C7431341"}
-    osc_note = {"OSC48": "OT2EL4C4JI-111OLP-24.576M (LCSC C5203547), 1.8-3.3 V CMOS, +-10 ppm, 9419 in stock on 14.11.2026; replaces the SiT8208 "
-                         "(out of stock = obsolete, B19); jitter not in the datasheet text: check the data / measure, pin 1 function (OE) to confirm",
-                "OSC44": "SCTF SX3M22.5792B10F20TNN (LCSC C7431341), 3.3 V CMOS, +-10 ppm, 641 in stock on 14.11.2026 (better than the "
-                         "+-20 ppm part); jitter and the pin 1 function to confirm (B19)"}
+    osc_note = {"OSC48": "YXC YSO110TR OT2EL4C4JI-111OLP-24.576M (LCSC C5203547), 1.8-3.3 V CMOS, +-10 ppm, phase jitter 12 kHz-20 MHz 0.7 ps max, "
+                         "pin 1 OE (high or open = on), 9419 in stock on 14.11.2026; replaces the SiT8208 (out of stock, B19; datasheet read)",
+                "OSC44": "SCTF SX3M22.5792B10F20TNN (LCSC C7431341), 3.3 V CMOS, +-10 ppm, pin 1 tri-state (high or open = on), 641 in stock on "
+                         "14.11.2026; jitter is NOT in the datasheet: measure on the first board (B19)"}
     for nm, freq, en_pull in (("OSC48", "24.576MHz", "+3V3D"), ("OSC44", "22.5792MHz", "GND")):
         add(ref("Y"), "Oscillator:ASE-xxxMHz", freq, OSC, {"1": f"{nm}_EN", "2": "GND", "3": f"{nm}_OUT", "4": "+3V3D"},
             LCSC=osc_lcsc[nm], Note=f"{freq} 3.3 V oscillator, 3.2 x 2.5, pin 1 = output enable (high = on): {osc_note[nm]} (R114)")

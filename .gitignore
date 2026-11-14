@@ -20,3 +20,4 @@ hardware/*/quilter/results/
 /quilter/
 # local hand-work copies (the user plays with them in KiCad; never pushed)
 hardware/*/almost/
+model3d/fit/fit_parts.json

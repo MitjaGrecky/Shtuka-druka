@@ -33,6 +33,9 @@ SKIN = 3.0
 PCB_TOP = TOP_Z - SKIN - 6.5        # panel boards: encoder body (6.5) between board and skin
 PCB = 1.6
 GAP_MIN = 1.0                        # below this a clearance is reported as tight
+COMPUTER = os.environ.get("COMPUTER", "H5")      # "H5" (ODROID-H5, R149) or "ITX" (Mini-ITX, the fallback of R36)
+H5_Z0 = float(os.environ.get("H5_Z0", "3.0"))    # underside of the H5 board above the floor (standoffs)
+H5_H = float(os.environ.get("H5_H", "44.0"))     # overall height of the H5 above the board underside, mm
 
 
 class Box:
@@ -312,9 +315,18 @@ def parts(usb=None):
           note="2x7 1.27 mm header and the ribbon plug, from below"))
 
     # computer, front jacks
-    a(box("Mini-ITX board", "itx", 136, 306, 45, 215, 9, 10.6, color="pcb"))
-    a(box("Mini-ITX parts", "itx", 136, 306, 45, 215, 10.6, 45, color="parts", est=True,
-          note="tallest: rear I/O stack and the heatsink (doc 27)"))
+    if COMPUTER == "H5":
+        # ODROID-H5 (R149): 120 x 120 mm board, 44 mm overall height (Hardkernel via cnx-software, 20.05.2026; whether the 44 mm
+        # counts the board's feet is not stated: here it is taken from the underside of the board). Centred on the old Mini-ITX area.
+        cx, cy = (136 + 306) / 2, (45 + 215) / 2
+        hx0, hx1, hy0, hy1 = cx - 60, cx + 60, cy - 60, cy + 60
+        a(box("Mini-ITX board", "itx", hx0, hx1, hy0, hy1, H5_Z0, H5_Z0 + 1.6, color="pcb"))
+        a(box("Mini-ITX parts H5", "itx", hx0, hx1, hy0, hy1, H5_Z0 + 1.6, H5_Z0 + H5_H, color="parts", est=True,
+              note="ODROID-H5 with its heatsink, 44 mm overall"))
+    else:
+        a(box("Mini-ITX board", "itx", 136, 306, 45, 215, 9, 10.6, color="pcb"))
+        a(box("Mini-ITX parts", "itx", 136, 306, 45, 215, 10.6, 45, color="parts", est=True,
+              note="tallest: rear I/O stack and the heatsink (doc 27)"))
     for nm, x in (("Phones 1 jack", 32), ("Phones 2 jack", 80)):
         a(box(nm, "front", x - 10, x + 10, SKIN, 35, 17, 33, color="metal", est=True))
     a(box("F1 headphone board", "front", 15, 100, 35, 36.6, 6, 50, color="pcb"))

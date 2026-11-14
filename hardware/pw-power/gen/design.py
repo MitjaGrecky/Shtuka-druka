@@ -24,7 +24,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 19 V Mini-ITX, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "0.3"
+REV = "0.4"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D), battery 4S 12.8-16.8 V -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 12-24 V -> 19 V Mini-ITX (LM5176), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -130,13 +130,19 @@ def parts():
     R("5m", "BUS_SW", "BUS", fp=R2512, Note="shunt 5 mOhm 1 % 3 W: 8 A -> 40 mV (INA226 range 81.9 mV)")
     u = ref("U")
     add(u, "Sensor_Energy:INA226", "INA226", "Package_SO:VSSOP-10_3x3mm_P0.5mm",
-        {"1": "GND", "2": "GND", "3": "PM_ALERT", "4": "PM_SDA", "5": "PM_SCL", "6": "+5V", "7": "GND", "8": "BUS",
+        {"1": "GND", "2": "GND", "3": "PM_ALERT", "4": "PM_SDA", "5": "PM_SCL", "6": "+3V3", "7": "GND", "8": "BUS",
          "9": "PM_INN", "10": "PM_INP"}, LCSC="C49851",
-        Note="R146: input power monitor, I2C address 0x40 (A0 = A1 = GND); BUS voltage up to 36 V")
+        Note="R146: input power monitor, I2C address 0x40 (A0 = A1 = GND), powered from +3V3; BUS voltage up to 36 V")
     R("10", "BUS_SW", "PM_INP", fp=R0603, Note="shunt sense filter")
     R("10", "BUS", "PM_INN", fp=R0603)
     C("100n 50V", "PM_INP", "PM_INN", fp=C0603)
-    C("100n", "+5V", fp=C0603)
+    C("100n", "+3V3", fp=C0603)
+    # INA226 VIH = 0.7 x VS (3.5 V at 5 V) is above a 3.3 V pull-up level: the monitor runs from its own 3.3 V (review 14.11.2026)
+    add(ref("U"), "Regulator_Linear:AP2112K-3.3", "AP2112K-3.3", "Package_TO_SOT_SMD:SOT-23-5",
+        {"1": "+5V", "2": "GND", "3": "+5V", "4": None, "5": "+3V3"}, LCSC="C51118",
+        Note="3.3 V for the INA226 only (VIH = 0.7 x VS); the same level as the pull-ups on P2")
+    C("1u", "+5V", fp=C0603)
+    C("1u", "+3V3", fp=C0603)
     add(ref("J"), "Connector_Generic:Conn_01x04", "I2C power monitor", PH.format(n=4),
         {"1": "PM_SDA", "2": "PM_SCL", "3": "PM_ALERT", "4": "GND"},
         Note="to the panel hub P2, which drives the LEDs (R146): pull-ups to 3.3 V on P2; ALERT open drain = over-limit")

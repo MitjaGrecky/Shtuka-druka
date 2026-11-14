@@ -9,8 +9,9 @@ XMOS XU316 product series datasheet XM-015129-PC (QF60B pin list); EasyEDA/LCSC 
   20 IN7P, 21 IN8N, 22 IN8P, 23 RESET, 24 ASP_FSYNC, 25-28 ASP_DOUT1-4, 29 ASP_BCLK, 30 GND_D, 31 VDD_IO, 32 LDO_D_FILT, 33 VDD_D,
   34 MCLK, 35 SPI_SDO/I2C_SCL, 36 SPI_SCK, 37 SPI_SDI/I2C_SDA, 38 SPI_CS, 39 IN1N, 40 IN1P, 41 IN2N, 42 IN2P, 43 ADC_FILT1P,
   44 ADC_FILT1N, 45 IN3N, 46 IN3P, 47 IN4N, 48 IN4P. VDD_A 3.3 V, VDD_IO 1.8-3.3 V; FILTxP to VDD_A via 1 Ohm.
-  Software (SPI) mode: CONFIG1 to VDD_A (0 Ohm); unused CONFIG to GND. Recommended buffer: FS 8 Vrms at the buffer input,
-  /4 to the ADC pins -> on A1 use gain 1 (R1 delivers 2 Vrms diff FS).
+  Software (SPI) mode: CONFIG1 to VDD_A (0 Ohm); unused CONFIG to GND. Recommended buffer (CS5308P fig. 2-1): FS 8 Vrms
+  differential at the buffer input, /4 to the ADC pins (300 R / 1.2k, 680 pF, 68 uF per leg). **R1 rev 0.2+ delivers 8 Vrms
+  diff FS (cloud #24), so A1 uses the Cirrus buffer with gain 1/4 - not gain 1** (corrected 14.11.2026 after the codex review).
 - CS5304P (C49192888): same pinout, IN1-4 only, pin 1 ADC_VMID, 12-22 DNC, 43/44 ADC_FILTP/N.
 - CS4308P: 1 CONFIG5, 2 VDD_A1, 3 GND_A, 4 LDO_A_FILT, 5 RESET, 6 LDO_D_FILT, 7 VDD_D, 8 MCLK, 9 ASP_BCLK, 10 ASP_FSYNC, 11 VDD_IO,
   12 GND_D, 13-16 ASP_DIN4-1, 17 SPI_SCK, 18 SPI_SDO/I2C_SCL, 19 SPI_SDI/I2C_SDA, 20 SPI_CS, 21 CONFIG3, 22 CONFIG2, 23 CONFIG4,

@@ -299,7 +299,7 @@ function screen(e){
 // ---------- shelf behind the screen: rear jack labels seen from the front (R73) ----------
 [['Audio In',4.5,162.5,['Mic/Line 1–2, Hi-Z 1–2','Line 1–8, Phono L R, GND']],
  ['Audio Out',172.5,242.5,['Main L R, Aux L R','RCA L R']],
- ['Control',252.5,426.5,['MIDI In 1–2, Out 1–2, Out/Thru 3–4, TRS In, O1, O2','Clock, Reset, CV In 1–4, CV 1–8']],
+ ['Control',252.5,426.5,['MIDI In 1–2, Out 1–4, TRS In, O1, O2','Clock, Reset, CV In 1–4, CV 1–8']],
  ['Power / USB',436.5,510.5,['LAN, USB-A, USB-C (PC)','DC 12–24V, On/Off']]].forEach(([t,x0,x1,lines])=>{
   const cx=(x0+x1)/2*K;label(sg,t,cx,8*K,3.2,PRINT,600);lines.forEach((l,i)=>label(sg,l,cx,(15.5+i*6.5)*K,2.4,DIM));
   sg.strokeStyle='rgba(232,236,234,.25)';sg.lineWidth=.3*K;sg.beginPath();sg.moveTo((x0+2)*K,3*K);sg.lineTo((x1-2)*K,3*K);sg.stroke();});
@@ -335,8 +335,8 @@ jack('dc',R(22),40,false,{name:'DC 12–24 В',group:'Сзади · питани
 box(12,8,R(52),40,KNOB,{name:'Выключатель',group:'Сзади · питание и USB',desc:'Механический выключатель питания.'});rtag('On/Off',52,30,false);
 
 rframe(88.5,262.5,'Control');
-const midi=(n,io)=>({name:'MIDI '+n,group:'Сзади · управление · MIDI',desc:io==='in'?'Вход MIDI DIN на оптроне (R32).':n.includes('Thru')?'Выход MIDI DIN, свой порт (R34); в меню переключается в Thru от In 1 или In 2 — копию делает PIO, задержка единицы мкс (R144).':'Выход MIDI DIN, свой порт (R34).'});
-[['In 1',100,82,0],['Out 1',122,82,1],['Out/Thru 3',144,82,1],['In 2',100,52,0],['Out 2',122,52,1],['Out/Thru 4',144,52,1]].forEach(m=>J('din',m[1],m[2],m[0],m[3],midi(m[0],m[3]?'out':'in')));
+const midi=(n,io)=>({name:'MIDI '+n,group:'Сзади · управление · MIDI',desc:io==='in'?'Вход MIDI DIN на оптроне (R32).':'Выход MIDI DIN, свой порт (R34). В меню любой выход можно сделать Thru от In 1 или In 2 — копию делает PIO, задержка единицы мкс (R144).'});
+[['In 1',100,82,0],['Out 1',122,82,1],['Out 3',144,82,1],['In 2',100,52,0],['Out 2',122,52,1],['Out 4',144,52,1]].forEach(m=>J('din',m[1],m[2],m[0],m[3],midi(m[0],m[3]?'out':'in')));
 [['TRS In',100,22,0],['TRS O1',122,22,1],['TRS O2',144,22,1]].forEach(m=>J('mini',m[1],m[2],m[0],m[3],{name:'MIDI '+m[0],group:'Сзади · управление · MIDI 3,5 мм',desc:'Мини-джек MIDI, тип A/B переключается в меню (R32, R34). Стоит в MIDI-блоке, отдельно от CV, чтобы не перепутать.'}));
 const syn=[['Clk O1',1],['Clk O2',1],['Rst O',1],['Clk In',0],['Rst In',0]];
 syn.forEach((s,i)=>J('mini',172+i*17,90,s[0],s[1],{name:s[0],group:'Сзади · управление · синхро',desc:'Блок «Синхро» (R33): 2 клок-выхода со своим PPQN, Reset/Run, клок и Reset на вход.'}));

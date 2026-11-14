@@ -55,6 +55,7 @@ EXTRA["Regulator_Linear"] += ["TPS7A4701xRGW", "TPS7A3301RGW", "TPS7A4101DGN"]
 EXTRA["Connector_Generic"] += ["Conn_02x02_Odd_Even", "Conn_02x03_Odd_Even"]
 EXTRA.setdefault("Sensor_Energy", []).append("INA226")    # PW power monitor (R146)
 EXTRA.setdefault("74xx", []).append("74HC595")              # R2 output expander (task #25)
+EXTRA.setdefault("74xx", []).append("74HC4051")          # P2 pad multiplexers
 # A1 digital audio board (14.11.2026)
 EXTRA["Connector_Generic"] += ["Conn_01x06"]
 EXTRA["Device"] += ["FerriteBead_Small"]

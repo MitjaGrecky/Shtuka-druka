@@ -137,5 +137,15 @@ def adum4166():
               "Analog Devices USB 2.0 high-speed isolator (side 1 = computer, side 2 = device), SOIC-20", left, right, [], [])
 
 
+def adc128s102():
+    left = [("1", "CS#", I), ("16", "SCLK", I), ("14", "DIN", I), ("15", "DOUT", O)]
+    right = [(str(4 + k), f"IN{k}", I) for k in range(8)]
+    top = [("2", "VA", P), ("13", "VD", P)]
+    bottom = [("3", "AGND", P), ("12", "DGND", P)]
+    return ic("ADC128S102", "ADC128S102", "U", "Package_SO:TSSOP-16_4.4x5mm_P0.65mm",
+              "https://www.ti.com/lit/ds/symlink/adc128s102.pdf", "C206503",
+              "TI 12-bit 8-channel SPI ADC, 500 ksps to 1 MSPS, 2.7-5.25 V, TSSOP-16", left, right, top, bottom)
+
+
 def all_symbols():
-    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166()
+    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166() + adc128s102()

@@ -52,7 +52,10 @@ jobs:
               # full report (warnings too) printed into the log without the unconnected items: readable without the artifact
               kicad-cli pcb drc --severity-all --schematic-parity --refill-zones -o "$o/drc-all.rpt" "$dir/$name.kicad_pcb" >/dev/null 2>&1 || true
               echo "::group::DRC $name (all severities, unconnected items left out)"
-              awk '/^\*\* Found [0-9]+ unconnected/{skip=1} /^\*\* Found [0-9]+ (DRC|Footprint|errors)/{skip=0} !skip && n<400 {print; n++}' "$o/drc-all.rpt" 2>/dev/null || true
+              # every violation type with its count and the first 3 examples (a full list does not fit the log of a big board)
+              awk '/^\*\* Found [0-9]+ unconnected/{skip=1; next} /^\*\* Found [0-9]+ (DRC|Footprint|errors)/{skip=0; show=0; next}
+                   skip{next} /^\[[a-z_]+\]/{t=$1; c[t]++; show=(c[t]<=3)} show{print}
+                   END{for (t in c) print "COUNT " t " " c[t]}' "$o/drc-all.rpt" 2>/dev/null || true
               grep -E '^\*\* Found' "$o/drc-all.rpt" 2>/dev/null || true
               echo "::endgroup::"
               kicad-cli pcb export svg --layers "F.Cu,F.Silkscreen,Edge.Cuts" --exclude-drawing-sheet --mode-single -o "$o/$name-top.svg" "$dir/$name.kicad_pcb" || true

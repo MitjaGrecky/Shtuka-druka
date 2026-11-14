@@ -30,7 +30,7 @@ M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8 x 74HC4051 + ADC128S102 (SPI0); 5 x LP5864 for 109 RGB; "
             "buses to P1, P3, P4 (2x8) and M1 (2x7); power and INA226 from PW")
 PWR_FLAG_NETS = ("+5V_PANEL", "DVDD", "VREG_AVDD", "ADC_AVDD", "+3V3A", "VAP")
-NO_PWR_FLAG = ()
+NO_PWR_FLAG = ("+3V3",)
 W, H = 224.0, 290.0
 LAYERS = 4
 

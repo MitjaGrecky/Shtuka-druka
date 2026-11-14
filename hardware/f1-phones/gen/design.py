@@ -107,7 +107,7 @@ def parts():
         # relay: first contact set tip (left), second ring (right); common 11 / 21, normally open 14 / 24
         add(ref("K"), RELAY[0], "G6K-2F-Y 5V", RELAY[1],
             {"A1": "+5V", "A2": "COIL_K", "11": f"{h}L_OR", "12": None, "14": f"{h}_TIP", "21": f"{h}R_OR", "22": None, "24": f"{h}_RING"},
-            LCSC="C37516489", Note=f"Phones {k} mute relay: normally open, opens without power (R66, R137)")
+            LCSC="C2982926", Note=f"Phones {k} mute relay: normally open, opens without power (R66, R137)")
         add(ref("J"), "Connector_Audio:AudioJack3_Switch", f"PHONES {k}", JACK,
             {"T": f"{h}_TIP", "TN": None, "R": f"{h}_RING", "RN": None, "S": "GND", "SN": None},
             LCSC="C368502", Note=f"Phones {k}: Neutrik NMJ6HCD2, 6.35 mm stereo, right angle, switched (unused)")

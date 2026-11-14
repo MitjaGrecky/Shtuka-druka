@@ -132,7 +132,7 @@ def adum4166():
             ("6", "GND1", P), ("7", "GND1", P), ("10", "GND1", P)]
     right = [("20", "VBUS2", P), ("18", "VDD2", P), ("12", "DD+", B), ("13", "DD-", B), None, ("14", "PGOOD", O), ("15", "XO2", O), ("16", "XI2", I),
              None, ("11", "GND2", P), ("17", "GND2", P), ("19", "GND2", P)]
-    return ic("ADuM4166", "ADuM4166", "U", "Package_SO:SOIC-20W_7.5x15.4mm_P1.27mm",
+    return ic("ADuM4166", "ADuM4166", "U", "Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm",
               "https://www.analog.com/en/products/adum4166.html", "C5367256",
               "Analog Devices USB 2.0 high-speed isolator (side 1 = computer, side 2 = device), SOIC-20", left, right, [], [])
 

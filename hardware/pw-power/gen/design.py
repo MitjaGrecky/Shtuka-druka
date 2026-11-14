@@ -81,13 +81,13 @@ def parts():
     add(ref("J"), "Connector_Generic:Conn_01x02", "DC in", MF.format("43650-0215_1x02"), {"1": "DC_RAW", "2": "GND"},
         Note="cable from the locking DC jack on the rear wall (R141; Kycon KLDHCX-0202-BC-1, 5 A 24 V)")
     add(ref("F"), "Device:Fuse", "7A", "Fuse:Fuse_2920_7451Metric", {"1": "DC_RAW", "2": "DC_F"}, Note="resettable fuse, 7 A hold - check")
-    add(ref("D"), "Device:D_TVS", "SMBJ28CA", SMB, {"1": "DC_F", "2": "GND"}, LCSC="C132572", Note="DC input surge, 28 V standoff (R72)")
+    add(ref("D"), "Device:D_TVS", "SMBJ28CA", SMB, {"1": "DC_F", "2": "GND"}, LCSC="C151259", Note="DC input surge, 28 V standoff (R72)")
     ideal_diode("IDC", "DC_F", "BUS_IN")
 
     add(ref("J"), "Connector_Generic:Conn_02x03_Odd_Even", "USB-C Power in", MF.format("43045-0612_2x03"),
         {"1": "PD_VBUS", "2": "PD_VBUS", "3": "GND", "4": "GND", "5": "PD_CC1", "6": "PD_CC2"},
         Note="cable from the USB-C Power receptacle on the rear wall (R145): VBUS x 2, GND x 2, CC1, CC2; 5 A rated USB-C")
-    add(ref("D"), "Device:D_TVS", "SMBJ22CA", SMB, {"1": "PD_VBUS", "2": "GND"}, LCSC="C127561", Note="VBUS surge, 22 V standoff")
+    add(ref("D"), "Device:D_TVS", "SMBJ22CA", SMB, {"1": "PD_VBUS", "2": "GND"}, LCSC="C224016", Note="VBUS surge, 22 V standoff")
     u = ref("U")
     add(u, "Interface_USB:TPS25730D", "TPS25730D", "Package_DFN_QFN:Texas_REF0038A_WQFN-38-2EP_6x4mm_P0.4",
         {"1": "PD_LDO3V3", "2": "PD_ADCIN1", "3": "PD_LDO3V3", "4": "PD_LDO1V5", "5": "PD_ADCIN34", "6": None,
@@ -120,7 +120,7 @@ def parts():
         {"1": "BAT_RAW", "2": "BAT_RAW", "3": "GND", "4": "GND"},
         Note="removable 4S2P pack with its own BMS (R109), 12.8-16.8 V; charger later (R40)")
     add(ref("F"), "Device:Fuse", "10A", "Fuse:Fuse_2920_7451Metric", {"1": "BAT_RAW", "2": "BAT_F"}, Note="check rating")
-    add(ref("D"), "Device:D_TVS", "SMBJ20CA", SMB, {"1": "BAT_F", "2": "GND"}, LCSC="C127559")
+    add(ref("D"), "Device:D_TVS", "SMBJ20CA", SMB, {"1": "BAT_F", "2": "GND"}, LCSC="C151258")
     ideal_diode("IBAT", "BAT_F", "BUS_IN")
 
     # ---------------------------------------------------------------- On/Off switch and BUS

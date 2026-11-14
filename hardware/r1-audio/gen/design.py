@@ -174,7 +174,7 @@ def parts():
         add(ref("K"), RELAY[0], "G6K-2F-Y 5V", RELAY[1],
             {"A1": "+5V", "A2": f"ATT{k}_K", "11": f"{m}_PS", "12": f"{m}_PX", "14": f"{m}_PA",
              "21": f"{m}_NS", "22": f"{m}_NX", "24": f"{m}_NA"},
-            LCSC="C37516489", Note=f"Mic/Line {k} attenuator -12 dB (line +24 dBu): de-energised = direct, energised = attenuated")
+            LCSC="C2982926", Note=f"Mic/Line {k} attenuator -12 dB (line +24 dBu): de-energised = direct, energised = attenuated")
         add(ref("Q"), "Transistor_FET:2N7002", "2N7002", SOT23, {"1": f"ATT{k}_G", "2": "GND", "3": f"ATT{k}_K"}, Note="attenuator relay")
         R("1k", f"ATT{k}", f"ATT{k}_G")
         R("100k", f"ATT{k}_G", "GND")
@@ -227,7 +227,7 @@ def parts():
         add(ref("K"), RELAY[0], "G6K-2F-Y 5V", RELAY[1],
             {"A1": "+5V", "A2": "PHONO_K", "11": f"{p}_J", "12": f"{p}_LIN", "14": f"{p}_RIN",
              "21": f"{p}_DRV", "22": f"{p}_LIN", "24": f"{p}_R75"},
-            LCSC="C37516489", Note="de-energised = line (R2 boots low); energised = phono (R118)")
+            LCSC="C2982926", Note="de-energised = line (R2 boots low); energised = phono (R118)")
         R("47k", f"{p}_RIN", "GND", Note="MM load 47k")
         C("100p C0G", f"{p}_RIN", fp=C0603, Note="MM load capacitance")
         R("100", f"{p}_RIN", f"{p}_RINS", fp=R0603)
@@ -292,7 +292,7 @@ def parts():
             c1, d1, c2, d2 = f"{a}_HOT", f"{a}_TIP", f"{b}_HOT", f"{b}_TIP"
         add(ref("K"), RELAY[0], "G6K-2F-Y 5V", RELAY[1],
             {"A1": "+5V", "A2": "OUT_K", "11": c1, "12": None, "14": d1, "21": c2, "22": None, "24": d2},
-            LCSC="C37516489", Note=f"{name} output relay: normally open, opens without power (R66, R137)")
+            LCSC="C2982926", Note=f"{name} output relay: normally open, opens without power (R66, R137)")
     add(ref("Q"), "Transistor_FET:2N7002", "2N7002", SOT23, {"1": "MUTE_G", "2": "OUT_KS", "3": "OUT_K"},
         Note="MUTE and R2_OK in series: relays close only when both are high")
     add(ref("Q"), "Transistor_FET:2N7002", "2N7002", SOT23, {"1": "R2OK_G", "2": "GND", "3": "OUT_KS"})

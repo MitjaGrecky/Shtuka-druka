@@ -128,7 +128,7 @@ def parts():
     R("10k", "+5V_PANEL_S", "VBUS_SENSE", Note="not used by firmware; keeps the net from floating")
     R("20k", "VBUS_SENSE", "GND")
     add(ref("U"), "Power_Protection:USBLC6-2SC6", "USBLC6-2SC6", SOT236,
-        {"1": "MCU_DP", "6": "MCU_DP", "3": "MCU_DM", "4": "MCU_DM", "2": "GND", "5": "+5V_PANEL_S"}, LCSC="C323793")
+        {"1": "MCU_DP", "6": "MCU_DP", "3": "MCU_DM", "4": "MCU_DM", "2": "GND", "5": "+5V_PANEL_S"}, LCSC="C7519")
     R("1k", "STATUS_LED", "STATUS_K")
     add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": "STATUS_K", "1": "GND"})
 

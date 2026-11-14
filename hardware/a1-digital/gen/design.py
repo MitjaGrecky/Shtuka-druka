@@ -332,22 +332,22 @@ def parts():
         # boot flash
         add(ref("U"), "Memory_Flash:W25Q16JVSS", "W25Q32JVSSIQ", "Package_SO:SOIC-8_5.3x5.3mm_P1.27mm",
             {"1": f"QCS{tag}", "2": f"QD1{tag}", "3": f"QD2{tag}", "4": "GND", "5": f"QD0{tag}", "6": f"QCLK{tag}", "7": f"QD3{tag}",
-             "8": "+3V3D"}, LCSC="C82344", Note=f"xcore {tag} boot flash (QSPI) 32 Mbit (4 MB, B18; pinout of the W25Q16 symbol): ready within 300 us of power-up, Quad I/O read (0xEB): set QE once from xflash; boot pins X0D04-06 have weak pull-downs = QSPI")
+             "8": "+3V3D"}, LCSC="C179173", Note=f"xcore {tag} boot flash (QSPI) 32 Mbit (4 MB, B18; pinout of the W25Q16 symbol): ready within 300 us of power-up, Quad I/O read (0xEB): set QE once from xflash; boot pins X0D04-06 have weak pull-downs = QSPI")
         C("100n", "+3V3D")
         R("10k", f"QCS{tag}", "+3V3D")
 
     # USB port A (hub cable): ESD and VBUS sense divider
     add(ref("U"), "Power_Protection:USBLC6-2SC6", "USBLC6-2SC6", SOT236,
-        {"1": "HUB_DP", "6": "HUB_DP", "3": "HUB_DM", "4": "HUB_DM", "2": "GND", "5": "HUB_VBUS"}, LCSC="C323793")
+        {"1": "HUB_DP", "6": "HUB_DP", "3": "HUB_DM", "4": "HUB_DM", "2": "GND", "5": "HUB_VBUS"}, LCSC="C7519")
     R("10k", "HUB_VBUS", "HUB_VBUS_S")
     R("20k", "HUB_VBUS_S", "GND", Note="5 V -> 3.33 V sense for xcore A (port A VBUS present)")
 
     # ================================================================ USB port B: PC jack side (GNDPC), ADuM4166, xcore B
     add(ref("U"), "Power_Protection:USBLC6-2SC6", "USBLC6-2SC6", SOT236,
-        {"1": "PC_DP", "6": "PC_DP", "3": "PC_DM", "4": "PC_DM", "2": "GNDPC", "5": "PC_VBUS"}, LCSC="C323793", Note="ESD on the computer side")
+        {"1": "PC_DP", "6": "PC_DP", "3": "PC_DM", "4": "PC_DM", "2": "GNDPC", "5": "PC_VBUS"}, LCSC="C7519", Note="ESD on the computer side")
     R("5.1k", "PC_CC1", "GNDPC", Note="device (Rd)")
     R("5.1k", "PC_CC2", "GNDPC", Note="device (Rd)")
-    add(ref("U"), "ShtukaDruka:ADuM4166", "ADuM4166", "Package_SO:SOIC-20W_7.5x15.4mm_P1.27mm",
+    add(ref("U"), "ShtukaDruka:ADuM4166", "ADuM4166", "Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm",
         {"1": "PC_VBUS", "3": "ISO_V1", "8": "PC_DP", "9": "PC_DM", "2": "GNDPC", "4": "GNDPC", "5": "GNDPC", "6": "GNDPC", "7": "GNDPC", "10": "GNDPC",
          "20": "+3V3D", "18": "+3V3D", "12": "UDP", "13": "UDM", "14": None, "15": "ISO_XO", "16": "ISO_XI", "11": "GND", "17": "GND", "19": "GND"},
         LCSC="C5367256", Note="USB 2.0 HS isolator: side 1 = computer (VBUS1 = PC VBUS 5 V, the internal LDO makes VDD1 3.3 V), side 2 = xcore B "
@@ -380,7 +380,10 @@ def placement():
     """Rev 0.3: rough automatic placement (hardware/common/gen/autoplace.py): cable headers in a row along the bottom edge
     (top side), ICs on a grid, small parts around the IC they share signals with. Starting point for the routing."""
     import autoplace
-    return autoplace.place(sys.modules[__name__])
+    # the two TLV62568 buck converters (U4, U5) and their inductors (L1, L2) go to the empty top-right corner: in rev 0.3 they sat
+    # 16-32 mm from the 24.576 / 22.5792 MHz audio master clocks (Y1, Y2) and 63 mm from the CS5304P; now >= 80 mm from the clocks
+    fixed = {"U4": (246.0, 12.0, 0, "top"), "L1": (230.0, 12.0, 0, "top"), "U5": (214.0, 12.0, 0, "top"), "L2": (198.0, 12.0, 0, "top")}
+    return autoplace.place(sys.modules[__name__], fixed=fixed)
 
 
 if __name__ == "__main__":

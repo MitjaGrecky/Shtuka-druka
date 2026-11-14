@@ -151,9 +151,32 @@ def encoder():
     return s[:i] + mp + s[i:]
 
 
+# ---------------------------------------------------------------- OPA1637 fully differential amplifier
+# TI OPA1637 datasheet SBOSA00B, figure 5-1 (DGK, VSSOP-8): 1 IN-, 2 VOCM, 3 VS+, 4 OUT+, 5 OUT-, 6 VS-, 7 PD, 8 IN+.
+# Used by R1 (rear audio board): every input becomes a differential pair for the ADC buffers on A1.
+def opa1637():
+    s = '  (symbol "OPA1637" (pin_names (offset 1.016)) (in_bom yes) (on_board yes)\n'
+    s += prop("Reference", "U", -7.62, 8.89, justify="left")
+    s += prop("Value", "OPA1637", -7.62, -8.89, justify="left")
+    s += prop("Footprint", "Package_SO:VSSOP-8_3x3mm_P0.65mm", 0, 0, hide=True)
+    s += prop("Datasheet", "https://www.ti.com/lit/ds/symlink/opa1637.pdf", 0, 0, hide=True)
+    s += prop("ki_description", "Fully differential audio amplifier, 36 V, 3.7 nV/rtHz, VSSOP-8", 0, 0, hide=True)
+    s += prop("LCSC", "C2860968", 0, 0, hide=True)
+    s += '    (symbol "OPA1637_0_1"\n'
+    s += ('      (polyline (pts (xy -5.08 7.62) (xy -5.08 -7.62) (xy 7.62 0) (xy -5.08 7.62)) (stroke (width 0.254) (type default))'
+          ' (fill (type background)))\n')
+    s += '    )\n    (symbol "OPA1637_1_1"\n'
+    s += pin("input", -7.62, 5.08, 0, "IN+", "8") + pin("input", -7.62, -5.08, 0, "IN-", "1")
+    s += pin("input", -7.62, 0, 0, "VOCM", "2") + pin("input", 0, 7.62, 270, "PD", "7", length=2.54)
+    s += pin("power_in", -2.54, 8.89, 270, "VS+", "3", length=3.81) + pin("power_in", -2.54, -8.89, 90, "VS-", "6", length=3.81)
+    s += pin("output", 10.16, 2.54, 180, "OUT+", "4") + pin("output", 10.16, -2.54, 180, "OUT-", "5")
+    s += '    )\n  )\n'
+    return s
+
+
 def write_symbols():
     out = "(kicad_symbol_lib (version 20220914) (generator shtuka_druka_make_lib)\n"
-    out += is31fl3741a() + lp5864() + xl1615() + encoder() + ")\n"
+    out += is31fl3741a() + lp5864() + xl1615() + encoder() + opa1637() + ")\n"
     os.makedirs(LIB, exist_ok=True)
     open(os.path.join(LIB, "ShtukaDruka.kicad_sym"), "w").write(out)
 

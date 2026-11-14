@@ -53,6 +53,14 @@ EXTRA = {"Interface_Expansion": ["TCA9546APW"],
 EXTRA["Interface_USB"].append("TPS25730D")
 EXTRA["Regulator_Linear"] += ["TPS7A4701xRGW", "TPS7A3301RGW", "TPS7A4101DGN"]
 EXTRA["Connector_Generic"] += ["Conn_02x02_Odd_Even", "Conn_02x03_Odd_Even"]
+# R1 audio board (14.11.2026)
+EXTRA["Connector_Audio"] += ["NCJ6FI-V", "AudioJack2"]
+EXTRA["Connector_Generic"] += ["Conn_02x20_Odd_Even", "Conn_02x25_Odd_Even"]
+EXTRA["Transistor_BJT"] += ["MMBTA92"]
+EXTRA["Transistor_FET"] += ["2N7002"]
+EXTRA["Diode"] += ["1N4148W"]
+EXTRA.setdefault("Relay", []).append("Omron_G6K-2")
+EXTRA.setdefault("Amplifier_Operational", []).append("OPA1612AxD")
 # Pin types changed in the copies: a second OUT pin of the same regulator as power_out would make ERC report two
 # power outputs on one net; the copy keeps one power_out and marks the other passive (as KiCad does for TPS7A3301).
 PIN_TYPE = {"TPS7A4701xRGW": {"20": "passive"},

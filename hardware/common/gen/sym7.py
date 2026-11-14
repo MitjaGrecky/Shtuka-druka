@@ -56,7 +56,8 @@ EXTRA["Connector_Generic"] += ["Conn_02x02_Odd_Even", "Conn_02x03_Odd_Even"]
 # Pin types changed in the copies: a second OUT pin of the same regulator as power_out would make ERC report two
 # power outputs on one net; the copy keeps one power_out and marks the other passive (as KiCad does for TPS7A3301).
 PIN_TYPE = {"TPS7A4701xRGW": {"20": "passive"},
-            "LM5176PWP": {"12": "input"}}      # VOSNS senses the output (an input), typed output in the library
+            "LM5175PWP": {"12": "input"}}      # VOSNS senses the output (an input), typed output in the library;
+                                               # LM5176PWP extends LM5175PWP, so the base symbol is patched
 KSYM10 = os.environ.get("KICAD10_SYMBOL_DIR", r"C:\Program Files\KiCad\10.0\share\kicad\symbols")
 DROP = {"exclude_from_sim", "in_pos_files", "duplicate_pin_numbers_are_jumpers", "show_name", "do_not_autoplace",
         "embedded_fonts", "embedded_files", "unit_name", "body_styles"}

@@ -26,7 +26,7 @@ import kit as K  # noqa: E402
 NAME = "a1-digital"
 ID = "A1"
 TITLE = "A1 - Digital audio: 3 ADC, 1 DAC, 2 xcore.ai, USB isolator, clocks, quiet supplies"
-REV = "0.3"
+REV = "0.4"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 ADC pairs (8 Vrms FS), A1 -> R1: Main/Aux DAC pairs, A1 -> F1: Phones pairs; xcore A: TDM master, SPI to the "
             "converters, USB port A (hub on R2), xcore B: USB port B through the ADuM4166 (isolated ground GNDPC)")
@@ -138,10 +138,11 @@ def parts():
         C("22u", core, fp=C0805)
 
     # ================================================================ clocks
-    osc_lcsc = {"OSC48": "C839665", "OSC44": "C2901572"}
-    osc_note = {"OSC48": "SiTime SiT8208AI-21-33E-24.576000, 0.5 ps jitter, +-20 ppm (LCSC out of stock on 14.11.2026: check)",
-                "OSC44": "SCTF SX3M22.5792M20F30TNN, +-20 ppm, 825 in stock on 14.11.2026; jitter and enable pin not verified: "
-                         "a SiT8208 22.5792 is better if the stock allows"}
+    osc_lcsc = {"OSC48": "C5203547", "OSC44": "C7431341"}
+    osc_note = {"OSC48": "OT2EL4C4JI-111OLP-24.576M (LCSC C5203547), 1.8-3.3 V CMOS, +-10 ppm, 9419 in stock on 14.11.2026; replaces the SiT8208 "
+                         "(out of stock = obsolete, B19); jitter not in the datasheet text: check the data / measure, pin 1 function (OE) to confirm",
+                "OSC44": "SCTF SX3M22.5792B10F20TNN (LCSC C7431341), 3.3 V CMOS, +-10 ppm, 641 in stock on 14.11.2026 (better than the "
+                         "+-20 ppm part); jitter and the pin 1 function to confirm (B19)"}
     for nm, freq, en_pull in (("OSC48", "24.576MHz", "+3V3D"), ("OSC44", "22.5792MHz", "GND")):
         add(ref("Y"), "Oscillator:ASE-xxxMHz", freq, OSC, {"1": f"{nm}_EN", "2": "GND", "3": f"{nm}_OUT", "4": "+3V3D"},
             LCSC=osc_lcsc[nm], Note=f"{freq} 3.3 V oscillator, 3.2 x 2.5, pin 1 = output enable (high = on): {osc_note[nm]} (R114)")

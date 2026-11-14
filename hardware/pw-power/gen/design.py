@@ -11,6 +11,7 @@ scaled to these rails; every "check" note is to be verified against the datashee
 Rev 0.2 (14.11.2026, cloud, task #23): checked against the datasheets - TPS25730 VIN_3V3 to GND (VBUS-powered only),
 +47 uF on PPHV; LM5176 RMODE to AGND (was to VCC = no hiccup); TPS7A33 thermal pad to GND (was IN) and 10 nF FB-OUT;
 LM5156H DITHOFF to VCC (dithering off) and a 100 V FET; boost 48.5 V and phantom 46.1 V (TPS7A4101 input max 50 V).
+Rev 0.3 (14.11.2026, PC, R146): INA226 input power monitor on a 5 mOhm shunt after the On/Off switch, I2C cable to P2.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -23,7 +24,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 19 V Mini-ITX, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "0.2"
+REV = "0.3"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D), battery 4S 12.8-16.8 V -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 12-24 V -> 19 V Mini-ITX (LM5176), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -123,8 +124,22 @@ def parts():
     ideal_diode("IBAT", "BAT_F", "BUS_IN")
 
     # ---------------------------------------------------------------- On/Off switch and BUS
-    add(ref("J"), "Connector_Generic:Conn_01x02", "On/Off switch", MF.format("43650-0215_1x02"), {"1": "BUS_IN", "2": "BUS"},
+    add(ref("J"), "Connector_Generic:Conn_01x02", "On/Off switch", MF.format("43650-0215_1x02"), {"1": "BUS_IN", "2": "BUS_SW"},
         Note="mechanical On/Off on the rear wall (model): rocker rated 10 A DC or more in series with the bus")
+    # input power monitor (R146): everything the instrument draws passes the shunt; P2 reads it and caps the LEDs
+    R("5m", "BUS_SW", "BUS", fp=R2512, Note="shunt 5 mOhm 1 % 3 W: 8 A -> 40 mV (INA226 range 81.9 mV)")
+    u = ref("U")
+    add(u, "Sensor_Energy:INA226", "INA226", "Package_SO:VSSOP-10_3x3mm_P0.5mm",
+        {"1": "GND", "2": "GND", "3": "PM_ALERT", "4": "PM_SDA", "5": "PM_SCL", "6": "+5V", "7": "GND", "8": "BUS",
+         "9": "PM_INN", "10": "PM_INP"}, LCSC="C49851",
+        Note="R146: input power monitor, I2C address 0x40 (A0 = A1 = GND); BUS voltage up to 36 V")
+    R("10", "BUS_SW", "PM_INP", fp=R0603, Note="shunt sense filter")
+    R("10", "BUS", "PM_INN", fp=R0603)
+    C("100n 50V", "PM_INP", "PM_INN", fp=C0603)
+    C("100n", "+5V", fp=C0603)
+    add(ref("J"), "Connector_Generic:Conn_01x04", "I2C power monitor", PH.format(n=4),
+        {"1": "PM_SDA", "2": "PM_SCL", "3": "PM_ALERT", "4": "GND"},
+        Note="to the panel hub P2, which drives the LEDs (R146): pull-ups to 3.3 V on P2; ALERT open drain = over-limit")
     CP("100u 35V", "BUS", fp=CP10, Note="bulk")
     for _ in range(2):
         C("10u 50V", "BUS", fp=C1210)

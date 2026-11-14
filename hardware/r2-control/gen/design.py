@@ -29,12 +29,13 @@ BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmw
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = Mini-ITX, down = RP2350, panel P2, A1 port A, spare")
 PWR_FLAG_NETS = ("+12V", "-12V", "DVDD", "VREG_AVDD", "ADC_AVDD")   # ERC: rails from a connector, inductor or RC filter
 NO_PWR_FLAG = ("+3V3",)                                               # +3V3 is driven by the AP2112K (power output pin)
-W, H = 258.0, 100.0         # rough: rear wall right part x 252-510, height up to ~104 mm (doc 29); refined with the panel layout
+W, H = 258.0, 102.0         # rear x 5-263, z 11-113 with the comb tab (OUTLINE below)
 LAYERS = 4
 
 R0402, C0402, C0805 = K.R0402, K.C0402, K.C0805
 SOT23, SOD123 = "Package_TO_SOT_SMD:SOT-23", "Diode_SMD:D_SOD-123"
 JACK35 = "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
+JACK35ST = "ShtukaDruka:Jack_3.5mm_QingPu_WQP-PJ366ST_Vertical_CircularHoles"   # same footprint, TN pin = ring R
 # 2x7 comb to R2b (R139), same numbering as hardware/r2b-jacks/gen/design.py COMB
 R2B_COMB = {"1": "MO1_4", "2": "MO1_5", "3": "MO2_4", "4": "MO2_5", "5": "MO3_4", "6": "MO3_5", "7": "MO4_4", "8": "MO4_5",
             "9": "MI1_4", "10": "MI1_5", "11": "MI2_4", "12": "MI2_5", "13": "GND", "14": "GND"}
@@ -51,8 +52,12 @@ GPIO_PIN = {0: "2", 1: "3", 2: "4", 3: "5", 4: "7", 5: "8", 6: "9", 7: "10", 8: 
             22: "34", 23: "35", 24: "36", 25: "37", 26: "40", 27: "41", 28: "42", 29: "43"}
 
 
+BLOCK = {}      # ref -> group name for the placement (filled by parts())
+
+
 def parts():
     P = []
+    G = ["power"]
     n = {"R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "L": 0, "Y": 0, "SW": 0}
 
     def ref(k):
@@ -61,6 +66,7 @@ def parts():
 
     def add(r, lib, value, fp, pins, **f):
         P.append(dict(ref=r, lib=lib, value=value, fp=fp, pins=pins, fields=f))
+        BLOCK[r] = G[0]
 
     def R(value, a, b, **f):
         K.rc(add, ref("R"), value, a, b, **f)
@@ -68,9 +74,13 @@ def parts():
     def C(value, a, b="GND", fp=None, **f):
         K.rc(add, ref("C"), value, a, b, fp, **f)
 
-    def jack(note, tip, ring=None):
-        add(ref("J"), "Connector_Audio:AudioJack3", "PJ398SM", JACK35, {"T": tip, "R": ring, "S": "GND"},
-            LCSC="C9900009788", Note=note)
+    def jack(note, tip, ring=None):                     # mono PJ398SM (S, T, TN switch unused) or stereo PJ366ST (S, T, R)
+        if ring is None:
+            add(ref("J"), "Connector_Audio:AudioJack2_SwitchT", "PJ398SM", JACK35, {"T": tip, "TN": None, "S": "GND"},
+                LCSC="C9900009788", Note=note)
+        else:
+            add(ref("J"), "Connector_Audio:AudioJack3", "PJ366ST", JACK35ST, {"T": tip, "R": ring, "S": "GND"},
+                Note=note + "; stereo Thonkiconn PJ366ST (Thonk, not at LCSC; hand-soldered like the PJ398SM)")
 
     # ---------------------------------------------------------------- power in, 3.3 V
     add(ref("J"), "Connector_Generic:Conn_01x05", "Power from PW", PH.format(n=5),
@@ -85,6 +95,7 @@ def parts():
         C("100n", "-12V")
 
     # ---------------------------------------------------------------- RP2350A
+    G[0] = "mcu"
     u = ref("U")
     mcu = {"1": "+3V3", "11": "+3V3", "20": "+3V3", "30": "+3V3", "38": "+3V3", "45": "+3V3",
            "6": "DVDD", "23": "DVDD", "39": "DVDD", "44": "ADC_AVDD", "46": "VREG_AVDD", "47": "GND", "48": "VREG_LX",
@@ -130,6 +141,7 @@ def parts():
     add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": "LED_K", "1": "GND"})
 
     # ---------------------------------------------------------------- USB hub USB2514B
+    G[0] = "hub"
     u = ref("U")
     add(u, "Interface_USB:USB2514B_Bi", "USB2514B", "Package_DFN_QFN:QFN-36-1EP_6x6mm_P0.5mm_EP3.7x3.7mm",
         {"1": "MCU_DM", "2": "MCU_DP", "3": "P2_DM", "4": "P2_DP", "6": "A1_DM", "7": "A1_DP", "8": "SP_DM", "9": "SP_DP",
@@ -162,12 +174,14 @@ def parts():
                        ("USB down: spare", {"1": "+5V", "2": "SP_DM", "3": "SP_DP", "4": "GND"})):
         add(ref("J"), "Connector_Generic:Conn_01x04", note.split(":")[0], PH.format(n=4), pins, Note=note)
 
+    G[0] = "comb"
     # ---------------------------------------------------------------- comb to R2b (R139): the DIN jacks sit on the shelf
     add(ref("J"), "Connector_Generic:Conn_02x07_Odd_Even", "to R2b", "Connector_PinSocket_2.54mm:PinSocket_2x07_P2.54mm_Horizontal",
         R2B_COMB, Note="R139: right-angle socket down to the R2b header; MIDI DIN lines only (USB and power jacks go from R2b "
         "straight to A1, the Mini-ITX and PW)")
 
     # ---------------------------------------------------------------- control lines to the audio boards (R118, R137)
+    G[0] = "ctrl"
     add(ref("J"), "Connector_Generic:Conn_02x05_Odd_Even", "to A1/R1", "Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical",
         {"1": "PH48_1", "2": "GND", "3": "PH48_2", "4": "GND", "5": "PHONO", "6": "GND", "7": "MUTE", "8": "GND",
          "9": "R2_OK", "10": "GND"},
@@ -176,6 +190,7 @@ def parts():
         R("100k", net, "GND", Note="off while the RP2350 boots")
 
     # ---------------------------------------------------------------- MIDI (CA-033, 3.3 V)
+    G[0] = "midi"
     for k in range(4):                                     # DIN out 1-4 (jacks on R2b): pin 4 <- 33 R <- 3.3 V, pin 5 <- 10 R <- TX
         K.rc(add, ref("R"), "33", "+3V3", f"MO{k + 1}_4", "Resistor_SMD:R_1206_3216Metric", Note="CA-033 3.3 V: 33 R 0.5 W")
         R("10", f"MIDI_TX{k + 1}", f"MO{k + 1}_5", Note="CA-033 3.3 V: 10 R")
@@ -186,9 +201,11 @@ def parts():
             {"1": f"MI{k + 1}_A", "3": f"MI{k + 1}_5", "4": "GND", "5": f"MIDI_RX{k + 1}", "6": "+3V3"}, LCSC="C107626")
         C("100n", "+3V3")
     for k in range(2):                                     # TRS out 1-2: type A/B swapped in firmware (two GPIO)
+        G[0] = f"trs{k + 1}"
         jack(f"MIDI TRS OUT {k + 1} (type A/B in firmware, R32)", f"TO{k + 1}_T", f"TO{k + 1}_R")
         R("22", f"TRS{k + 1}_T", f"TO{k + 1}_T")
         R("22", f"TRS{k + 1}_R", f"TO{k + 1}_R")
+    G[0] = "trsin"
     jack("MIDI TRS IN (type A and B: two optos back to back)", "TI_T", "TI_R")
     for side, a, kk in (("A", "TI_T", "TI_R"), ("B", "TI_R", "TI_T")):
         R("220", a, f"TI{side}_A")
@@ -197,6 +214,7 @@ def parts():
         C("100n", "+3V3")
 
     # ---------------------------------------------------------------- CV/Gate out 1-8: DAC80504 x 2 + OPA4197 difference amps
+    G[0] = "dac"
     for d in range(2):
         u = ref("U")
         add(u, "Analog_DAC:DAC80504", "DAC80504", "Package_DFN_QFN:Texas_RTE0016D_WQFN-16-1EP_3x3mm_P0.5mm_EP0.8x0.8mm_ThermalVias",
@@ -208,6 +226,7 @@ def parts():
         C("100n", "+5V")
         C("100n", "+3V3")
         C("100n", f"DAC_REF{d + 1}")
+    G[0] = "opa"
     opa = []
     for _ in range(3):
         u = ref("U")
@@ -228,6 +247,7 @@ def parts():
     C("100n", "REFHALF")
     sec(0, "REFHALF", "REFBUF", "REFBUF")                       # 1.25 V buffer for the 8 difference amps
     for c in range(8):                                          # Vout = 8.06 (Vdac - 1.25 V): -10.1 ... +10.1 V
+        G[0] = f"cv{c + 1}"
         sec(1 + c, f"CVP{c + 1}", f"CVN{c + 1}", f"CVO{c + 1}")
         R("10k", f"DAC{c + 1}", f"CVP{c + 1}", Note="0.1 %")
         R("80.6k", f"CVP{c + 1}", "GND", Note="0.1 %")
@@ -237,16 +257,19 @@ def parts():
         jack(f"CV/GATE OUT {c + 1}", f"CV{c + 1}_J")
     for i, (g, name) in enumerate((("CLK_OUT1", "CLOCK OUT 1"), ("CLK_OUT2", "CLOCK OUT 2"), ("RST_OUT", "RESET/RUN OUT"))):
         o = f"SO{i + 1}"                                        # 3.3 V GPIO -> 0 / +5 V: gain 1.51
+        G[0] = f"so{i + 1}"
         sec(9 + i, g, f"{o}_N", f"{o}_O")
         R("5.1k", f"{o}_O", f"{o}_N")
         R("10k", f"{o}_N", "GND")
         R("1k", f"{o}_O", f"{o}_J")
         jack(name, f"{o}_J")
+    G[0] = "opa"
     for u in opa:
         add(u, "Amplifier_Operational:OPA4197xD", "OPA4197", "Package_SO:TSSOP-14_4.4x5mm_P0.65mm", pins[u], LCSC="C2057327")
 
     # ---------------------------------------------------------------- CV in 1-4: -10...+10 V -> 0...3.03 V (ADC0-3)
     for c in range(4):
+        G[0] = f"ci{c + 1}"
         jack(f"CV IN {c + 1}", f"CVI{c + 1}_J")
         R("100k", f"CVI{c + 1}_J", f"CVIN{c + 1}")
         R("33k", "+3V3", f"CVIN{c + 1}")
@@ -257,6 +280,7 @@ def parts():
     # ---------------------------------------------------------------- sync in (Clock, Reset/Run): NPN, inverted
     for g, name in (("CLK_IN", "CLOCK IN"), ("RST_IN", "RESET/RUN IN")):
         j = f"{g}_J"
+        G[0] = f"si_{g}"
         jack(name, j)
         R("22k", j, f"{g}_B")
         R("100k", f"{g}_B", "GND")
@@ -266,9 +290,65 @@ def parts():
     return P
 
 
+# Board: vertical, F side faces the rear wall; seen from behind (rear view): board x = x_rear - 5, y = 113 - z.
+# Main part rear x 5-263, z 38-113; a tab down to z 11 at rear x 226-246 carries the comb socket to R2b (R139).
+OUTLINE = [(0, 0), (258, 0), (258, 75), (241, 75), (241, 102), (221, 102), (221, 75), (0, 75)]
+AREAS = [(0, 0, 258, 75), (221, 75, 241, 102)]
+JACK_AXIS = 0.78            # PJ398SM / PJ366ST: jack axis is 0.78 mm below the pad-field centre (rotation 0)
+# rear panel v2 (tools/rear_panel.py): (x_rear, z) of the jack axes
+JACKS = {"MIDI TRS IN": (92, 98), "MIDI TRS OUT 1": (92, 76), "MIDI TRS OUT 2": (92, 54),
+         **{f"CV IN {c + 1}": (140 + 20 * c, 98) for c in range(4)}, "CLOCK IN": (220, 98), "RESET/RUN IN": (240, 98),
+         **{f"CV/GATE OUT {c + 1}": (140 + 20 * c, 76) for c in range(6)}, "CV/GATE OUT 7": (140, 54), "CV/GATE OUT 8": (160, 54),
+         "CLOCK OUT 1": (180, 54), "CLOCK OUT 2": (200, 54), "RESET/RUN OUT": (220, 54)}
+
+
+def jack_xy(note):
+    key = next(k for k in sorted(JACKS, key=len, reverse=True) if note.startswith(k))
+    xr, z = JACKS[key]
+    return xr - 5.0, 113.0 - z
+
+
 def placement():
-    """Rev 0.1 is the schematic only: the board waits for the rear panel layout."""
-    return {}
+    """R2 rev 0.3: jacks at the rear panel v2 positions (F side, facing the wall), ICs and connectors in the free left
+    part, small parts packed in groups next to their IC or jack (hardware/common/gen/packer.py). No routing."""
+    import packer
+    P = parts()
+    t, b = "top", "bottom"
+    fixed = {}
+    for p in P:
+        if p["value"] in ("PJ398SM", "PJ366ST"):
+            x, y = jack_xy(p["fields"]["Note"])
+            fixed[p["ref"]] = (x, y - JACK_AXIS, 0, t)
+    by = {p["value"]: p["ref"] for p in P}
+    fixed[by["Power from PW"]] = (4.0, 12.0, 90, t)
+    hdr = [p["ref"] for p in P if p["lib"].endswith("Conn_01x04")]          # USB up, P2, A1, spare
+    for k, r in enumerate(hdr):
+        fixed[r] = (4.0, 28.0 + 12.0 * k, 90, t)
+    fixed[by["SWD"]] = (22.0, 4.0, 0, t)
+    fixed[by["to A1/R1"]] = (72.0, 12.0, 0, t)
+    fixed[by["to R2b"]] = (231.0, 90.4, 270, b)                              # opening down to the R2b header
+    fixed[by["RP2350A"]] = (40.0, 24.0, 0, t)
+    fixed[by["USB2514B"]] = (45.0, 56.0, 0, t)
+    groups = {}
+    for p in P:
+        if p["ref"] not in fixed:
+            groups.setdefault(BLOCK[p["ref"]], []).append(p["ref"])
+    jack_of = {}                                                             # group -> its jack's position
+    for p in P:
+        if p["ref"] in fixed and p["value"] in ("PJ398SM", "PJ366ST"):
+            jack_of[BLOCK[p["ref"]]] = fixed[p["ref"]][:2]
+    anchors = {"power": (14, 10, t), "mcu": (40, 24, t), "hub": (45, 56, t), "ctrl": (72, 26, t), "midi": (231, 88, t),
+               "dac": (110, 22, b), "opa": (110, 52, b)}
+    G = []
+    for name, refs in groups.items():
+        if name in anchors:
+            ax, ay, side = anchors[name]
+        else:
+            (ax, ay), side = jack_of[name], b                                 # behind the jack, bottom side
+        G.append((ax, ay, side, refs, 0))
+    order = ["mcu", "hub", "power", "ctrl", "midi", "dac", "opa"]             # ICs' groups first, then the jacks'
+    G.sort(key=lambda g: order.index(BLOCK[g[3][0]]) if BLOCK[g[3][0]] in order else len(order))
+    return packer.pack(sys.modules[__name__], P, fixed, G, AREAS)
 
 
 if __name__ == "__main__":

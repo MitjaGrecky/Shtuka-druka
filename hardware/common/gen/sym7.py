@@ -44,7 +44,7 @@ EXTRA = {"Interface_Expansion": ["TCA9546APW"],
          "MCU_RaspberryPi": ["RP2350A"], "Interface_USB": ["USB2514B_Bi"], "Analog_DAC": ["DAC80504"],
          "Amplifier_Operational": ["OPA4197xD"], "Isolator": ["TLP2361"], "Memory_Flash": ["W25Q16JVSS"],
          "Connector": ["DIN-5", "Barrel_Jack_Switch", "USB_C_Receptacle_USB2.0_14P", "USB_C_Receptacle_USB2.0_16P", "USB_A"],
-         "Connector_Audio": ["AudioJack3"], "Regulator_Linear": ["AP2112K-3.3"], "Power_Protection": ["USBLC6-2SC6"],
+         "Connector_Audio": ["AudioJack2_SwitchT", "AudioJack3"], "Regulator_Linear": ["AP2112K-3.3"], "Power_Protection": ["USBLC6-2SC6"],
          "Transistor_BJT": ["MMBT3904"], "Diode": ["BAT54S", "1N4148W"], "Device": ["Crystal_GND24", "L", "LED"]}
 KSYM10 = os.environ.get("KICAD10_SYMBOL_DIR", r"C:\Program Files\KiCad\10.0\share\kicad\symbols")
 DROP = {"exclude_from_sim", "in_pos_files", "duplicate_pin_numbers_are_jumpers", "show_name", "do_not_autoplace",

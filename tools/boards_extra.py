@@ -10,4 +10,6 @@ BOARDS = {
     "P1": ("p1-left", {}, ["make_sch.py", "make_pcb.py"]),
     "P4": ("p4-right", {}, ["make_sch.py", "make_pcb.py"]),
     "P3": ("p3-tracks", {}, ["make_sch.py", "make_pcb.py"]),
+    "R2": ("r2-control", {}, ["make_sch.py", "make_pcb.py"]),
+    "R2b": ("r2b-jacks", {}, ["make_sch.py", "make_pcb.py"]),
 }

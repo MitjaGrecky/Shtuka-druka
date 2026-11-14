@@ -4,7 +4,8 @@ The RP2350 of the control board (R85) with everything that is not audio at the r
 USB hub and the control lines to the audio boards. The DIN, USB and power jacks are on the shelf R2b below (R139).
 Research and decisions: `docs/ru/34_rear_boards_research.md`, R118, R135-R140. Map of boards: `docs/ru/29_board_map.md`.
 
-**Status: rev 0.3 - schematic only** (216 parts, 157 nets). Rev 0.2 = checked against the datasheets (14.11.2026, cloud, see below);
+**Status: rev 0.3 - schematic and placed board, not routed** (216 parts, 157 nets, 4 layers; outline 258 x 75 mm plus a
+20 mm wide tab down to rear z 11 that carries the 2x7 comb socket to R2b on the bottom side). Rev 0.2 = checked against the datasheets (14.11.2026, cloud, see below);
 rev 0.3 = the right-angle jacks (MIDI DIN x 6, USB-C PC, USB-A, USB-C PD, DC) moved to the jack shelf **R2b**
 (`hardware/r2b-jacks`, R139) with their ESD and cables; R2 keeps the MIDI parts and gets a 2x7 comb socket to R2b.
 
@@ -28,6 +29,16 @@ Datasheet check (rev 0.2, 14.11.2026; table in `notes/handoff.md`, report #20): 
 RSTSEL high = mid-scale, **REFDIV high** (with the internal 2.5 V reference undivided the DAC needs VDD >= 5.0 V and raises a
 reference alarm, all outputs 0 V, below that); USB2514B straps by the internal pull-downs, CRFILT/PLLFILT 100 nF, VBUS_DET 100k/100k.
 Still without an LCSC number: the 0.1 % resistors (10k, 80.6k), the 1206 33 R 0.5 W, the passives in general (chosen at the BOM).
+
+Board (`gen/make_pcb.py`): F side faces the rear wall; seen from behind, board x = rear x - 5, y = 113 - z. The jacks sit at the
+rear panel v2 positions (jack axis 0.78 mm below the pad-field centre). RP2350, flash, hub, regulator and the cable headers
+are in the free left part (F); the parts of each CV/sync/MIDI channel are packed on the B side behind their jack, the DACs and
+op-amps between the TRS column and the CV columns, the CA-033 MIDI parts on the tab next to the comb
+(`hardware/common/gen/packer.py`). MIDI TRS jacks are stereo Thonkiconn **PJ366ST** (same footprint as the PJ398SM, the switch
+pin is the ring; Thonk, not at LCSC); mono jacks use the AudioJack2_SwitchT symbol (S, T, TN), so pins and pads agree.
+BOOTSEL faces the wall: use picotool to reboot into USB boot.
+Geometry without kicad-cli: `tools/pcb_geomcheck.py hardware/r2-control/r2-control.kicad_pcb --edge-ok J7` - 0 problems
+(courtyards per side, through-hole pads against SMD on the other side, pads near the edge); pins = pads for all 216 parts.
 
 Checks: `tools/sch_netcheck.py hardware/r2-control` - rev 0.3 (14.11.2026, PC): 228 symbol units, 675 pins, 0 mismatches against
 `design.py`; ERC by CI.

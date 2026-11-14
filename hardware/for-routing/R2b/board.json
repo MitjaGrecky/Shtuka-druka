@@ -1,0 +1,70 @@
+{
+ "id": "R2b",
+ "name": "r2b-jacks",
+ "title": "R2b - Jack shelf under R2: MIDI DIN, USB-C PC, USB-A, USB-C PD, DC",
+ "rev": "0.2",
+ "w": 245.0,
+ "h": 30.0,
+ "layers": 2,
+ "parts": 18,
+ "holes": [],
+ "connectors": [
+  [
+   "J1",
+   "to R2"
+  ],
+  [
+   "J2",
+   "MIDI OUT 1"
+  ],
+  [
+   "J3",
+   "MIDI OUT 2"
+  ],
+  [
+   "J4",
+   "MIDI OUT 3"
+  ],
+  [
+   "J5",
+   "MIDI OUT 4"
+  ],
+  [
+   "J6",
+   "MIDI IN 1"
+  ],
+  [
+   "J7",
+   "MIDI IN 2"
+  ],
+  [
+   "J8",
+   "USB-C PC"
+  ],
+  [
+   "J9",
+   "to A1 port B"
+  ],
+  [
+   "J10",
+   "USB-A rear"
+  ],
+  [
+   "J11",
+   "USB-A to Mini-ITX"
+  ],
+  [
+   "J12",
+   "USB-C PD 5 A"
+  ],
+  [
+   "J13",
+   "DC 12-24 V"
+  ],
+  [
+   "J14",
+   "to PW"
+  ]
+ ],
+ "bom_lines": 16
+}

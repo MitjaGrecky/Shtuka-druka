@@ -1,0 +1,126 @@
+{
+ "id": "R2",
+ "name": "r2-control",
+ "title": "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; DIN, USB and power jacks on R2b",
+ "rev": "0.3",
+ "w": 258.0,
+ "h": 102.0,
+ "layers": 4,
+ "parts": 216,
+ "holes": [],
+ "connectors": [
+  [
+   "J1",
+   "Power from PW"
+  ],
+  [
+   "J2",
+   "SWD"
+  ],
+  [
+   "J3",
+   "USB up"
+  ],
+  [
+   "J4",
+   "USB down"
+  ],
+  [
+   "J5",
+   "USB down"
+  ],
+  [
+   "J6",
+   "USB down"
+  ],
+  [
+   "J7",
+   "to R2b"
+  ],
+  [
+   "J8",
+   "to A1/R1"
+  ],
+  [
+   "J9",
+   "PJ366ST"
+  ],
+  [
+   "J10",
+   "PJ366ST"
+  ],
+  [
+   "J11",
+   "PJ366ST"
+  ],
+  [
+   "J12",
+   "PJ398SM"
+  ],
+  [
+   "J13",
+   "PJ398SM"
+  ],
+  [
+   "J14",
+   "PJ398SM"
+  ],
+  [
+   "J15",
+   "PJ398SM"
+  ],
+  [
+   "J16",
+   "PJ398SM"
+  ],
+  [
+   "J17",
+   "PJ398SM"
+  ],
+  [
+   "J18",
+   "PJ398SM"
+  ],
+  [
+   "J19",
+   "PJ398SM"
+  ],
+  [
+   "J20",
+   "PJ398SM"
+  ],
+  [
+   "J21",
+   "PJ398SM"
+  ],
+  [
+   "J22",
+   "PJ398SM"
+  ],
+  [
+   "J23",
+   "PJ398SM"
+  ],
+  [
+   "J24",
+   "PJ398SM"
+  ],
+  [
+   "J25",
+   "PJ398SM"
+  ],
+  [
+   "J26",
+   "PJ398SM"
+  ],
+  [
+   "J27",
+   "PJ398SM"
+  ],
+  [
+   "J28",
+   "PJ398SM"
+  ]
+ ],
+ "bom_lines": 44
+}

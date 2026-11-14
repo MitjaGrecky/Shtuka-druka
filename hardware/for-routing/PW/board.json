@@ -1,12 +1,12 @@
 {
  "id": "PW",
  "name": "pw-power",
- "title": "PW - Power: DC / USB-C PD / battery, 19 V Mini-ITX, +5 V x 2, +-12 V quiet, +48 V phantom",
- "rev": "0.6",
+ "title": "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom",
+ "rev": "0.7",
  "w": 100.0,
  "h": 80.0,
  "layers": 4,
- "parts": 188,
+ "parts": 199,
  "holes": [],
  "connectors": [
   [
@@ -31,7 +31,7 @@
   ],
   [
    "J6",
-   "19 V to Mini-ITX"
+   "15 V to H5"
   ],
   [
    "J7",
@@ -54,5 +54,5 @@
    "+5V screen"
   ]
  ],
- "bom_lines": 100
+ "bom_lines": 101
 }

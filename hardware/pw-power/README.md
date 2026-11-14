@@ -17,7 +17,8 @@ on the board: the LM5176 and LM5156H loops (compensation taken from TI examples 
 | Battery | fuse 10 A, SMBJ20CA, LM74700 + FET | 4S 12.8-16.8 V -> BUS_IN | pack with its own BMS (R109); charger later (R40) |
 | On/Off | rocker on the rear wall, >= 10 A DC | BUS_IN -> BUS_SW | mechanical master switch |
 | Power monitor | INA226 (C49851, VS = 3.3 V from an AP2112K), shunt 5 mOhm 2512 | BUS_SW -> BUS | R146: whole input power, I2C 0x40 to P2 (LED limit); ALERT open drain |
-| 19 V Mini-ITX | LM5176 four-switch buck-boost, 4 x CSD18540Q5B | BUS 12-24 V -> 19 V 5 A (95 W), 300 kHz | ASRock N100DC-ITX officially wants 19 V (doc 34); upgrades limited to 35-45 W (R36) |
+| 19 V internal rail | LM5176 four-switch buck-boost, 4 x CSD18540Q5B | BUS 12-24 V -> 19 V 5 A (95 W), 300 kHz | feeds +-14 V, the phantom and the 15 V stage; no longer goes out of the board (R151) |
+| 15 V ODROID-H5 | LMR33640 buck (same part as the 14 V stages) | 19 V -> 15 V, 4 A part for 1.7 A peak | ODROID-H5 window 11-20 V, Hardkernel recommends 15 V / 4 A (R149, R151) |
 | +5V_PANEL | TPS54560B (C1850354) | BUS -> 5 V 5 A | panel boards and LEDs; LED budget up to ~5.6 A white on full (doc 10): firmware limits brightness |
 | +5V | TPS54560B | BUS -> 5 V 5 A | screen 4 W, R2, USB devices, logic of the audio boards |
 | +-14 V | 2 x LMR33640 (buck, inverting buck-boost) | 19 V -> +14 V / -14 V | pre-regulators 1-2 V above the LDOs (doc 34) |
@@ -32,7 +33,7 @@ on the board: the LM5176 and LM5156H loops (compensation taken from TI examples 
 | USB-C Power in | USB-C receptacle on the wall (Micro-Fit 2x3) | VBUS x 2, GND x 2, CC1, CC2 |
 | Battery | pack (Micro-Fit 2x2) | BAT x 2, GND x 2 |
 | On/Off switch | rocker (Micro-Fit 1x2) | BUS_IN, BUS |
-| 19 V to Mini-ITX | Micro-Fit 2x2 -> 5.5 x 2.5 plug | V19 x 2, GND x 2 |
+| 15 V to H5 | Micro-Fit 2x2 -> 5.5 x 2.1 plug, centre positive | V15 x 2, GND x 2 |
 | +5V panel | P2 hub (Micro-Fit 2x3) | +5V_PANEL x 3, GND x 3 |
 | to R2 | JST PH 5 | +12V, GND, -12V, GND, +5V (as R2 J1) |
 | to A1/R1 | Micro-Fit 2x5 | +12V, -12V, +5V x 2, +48V, GND x 5 |

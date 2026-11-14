@@ -1,6 +1,6 @@
 """PW - Power board under the slope (right, next to the battery bay, R109): inputs DC 12-24 V (locking jack on the rear
 wall), USB-C Power (PD 20 V / 5 A, R145) and the 4S battery (R40, R59), joined by ideal diodes; the rear On/Off switch;
-rails: 19 V for the Mini-ITX (R36: ASRock N100DC-ITX needs 19 V), +5V_PANEL (panel boards and their LEDs), +5V (screen,
+rails: 15 V for the ODROID-H5 (R149, P106; H5 window 11-20 V) from the internal 19 V rail, +5V_PANEL (panel boards and their LEDs), +5V (screen,
 R2, USB, logic), +-14 V pre-regulators and quiet +-12 V for the audio boards (TIDA-01458 scheme), +48 V phantom (R118).
 Single source of truth for the schematic. Research: docs/ru/34_rear_boards_research.md (section 5), decisions R36, R40,
 R59, R72, R109, R118, R145.
@@ -23,11 +23,11 @@ import kit as K  # noqa: E402
 
 NAME = "pw-power"
 ID = "PW"
-TITLE = "PW - Power: DC / USB-C PD / battery, 19 V Mini-ITX, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "0.6"
+TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
+REV = "0.7"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D), battery 4S 12.8-16.8 V -> ideal diodes (LM74700) -> rear On/Off "
-            "switch -> BUS 12-24 V -> 19 V Mini-ITX (LM5176), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
+            "switch -> BUS 12-24 V -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
             "+-12 V (TPS7A47 / TPS7A33), +48 V (LM5156H + TPS7A4101)")
 PWR_FLAG_NETS = ("B19_VCC", "B19_VIN", "BAT_F", "BUS", "DC_F", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
 NO_PWR_FLAG = ("+3V3",)     # no 3.3 V rail on this board
@@ -193,8 +193,9 @@ def parts():
         C("10u 35V", "V19", fp=C1210, Note="output ceramic")
     for _ in range(2):
         CP("100u 35V", "V19", fp=CP8, Note="output polymer")
-    add(ref("J"), "Connector_Generic:Conn_02x02_Odd_Even", "19 V to Mini-ITX", MF.format("43045-0412_2x02"),
-        {"1": "V19", "2": "V19", "3": "GND", "4": "GND"}, Note="cable to the DC jack of the ASRock N100DC-ITX (5.5 x 2.5 plug)")
+    add(ref("J"), "Connector_Generic:Conn_02x02_Odd_Even", "15 V to H5", MF.format("43045-0412_2x02"),
+        {"1": "V15", "2": "V15", "3": "GND", "4": "GND"},
+        Note="cable to the DC jack of the ODROID-H5 (5.5 x 2.1 mm plug, centre positive; H5 input 11-20 V, Hardkernel recommends 15 V / 4 A, R149)")
 
     # ---------------------------------------------------------------- +5 V x 2: TPS54560B, 5 A each
     def buck5(net, note):
@@ -325,6 +326,23 @@ def parts():
         Note="Waveshare 10.1DP-CAPLCD, 5 V / 4 W (R110)")
     R("2.2k", "+5V", "LED_K", Note="power LED")
     add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": "LED_K", "1": "GND"})
+
+    # ---------------------------------------------------------------- 15 V for the ODROID-H5 (R149, P106): LMR33640 buck from V19
+    u = ref("U")
+    add(u, "Regulator_Switching:LMR33640ADDA", "LMR33640", "Package_SO:Texas_HSOP-8-1EP_3.9x4.9mm_P1.27mm_ThermalVias",
+        {"1": "GND", "2": "V19", "3": "V19", "4": None, "5": "V15_FB", "6": "V15_VCC", "7": "V15_BOOT", "8": "V15_SW", "9": "GND"},
+        LCSC="C2836966", Note="19 V -> 15 V for the H5 (25 W peak = 1.7 A; the part gives 4 A), 400 kHz like the 14 V stage; "
+        "the H5 never sees more than 15 V + tolerance: the 19 V rail stays inside PW (+-14 V, phantom need it)")
+    R("100k", "V15", "V15_FB", Note="1.0 V x (1 + 100k / 7.15k) = 15.0 V")
+    R("7.15k", "V15_FB", "GND")
+    C("100n 25V", "V15_BOOT", "V15_SW", fp=C0603)
+    C("1u", "V15_VCC", fp=C0603)
+    C("10u 50V", "V19", fp=C1210)
+    C("220n 50V", "V19", fp=C0603)
+    add(ref("L"), "Device:L", "10uH", "Inductor_SMD:L_Bourns_SRN6045TA", {"1": "V15_SW", "2": "V15"}, Note="10 uH, Isat >= 3.2 A - check")
+    for _ in range(3):
+        C("22u 25V", "V15", fp=C1210)
+
     return P
 
 

@@ -329,9 +329,9 @@ def parts():
             {"1": f"TCK{tag}", "2": f"TMS{tag}", "3": f"TDI{tag}", "4": f"TDO{tag}", "5": f"RST{tag}", "6": "GND"},
             Note=f"xcore {tag} debug: 1.8 V logic (TCK, TMS, TDI, TDO, RST_N), xTAG adapter - check the cable pinout")
         # boot flash
-        add(ref("U"), "Memory_Flash:W25Q16JVSS", "W25Q16JVSIQ", "Package_SO:SOIC-8_5.3x5.3mm_P1.27mm",
+        add(ref("U"), "Memory_Flash:W25Q16JVSS", "W25Q32JVSSIQ", "Package_SO:SOIC-8_5.3x5.3mm_P1.27mm",
             {"1": f"QCS{tag}", "2": f"QD1{tag}", "3": f"QD2{tag}", "4": "GND", "5": f"QD0{tag}", "6": f"QCLK{tag}", "7": f"QD3{tag}",
-             "8": "+3V3D"}, LCSC="C131025", Note=f"xcore {tag} boot flash (QSPI) 16 Mbit: ready within 300 us of power-up, Quad I/O read (0xEB): set QE once from xflash; boot pins X0D04-06 have weak pull-downs = QSPI")
+             "8": "+3V3D"}, LCSC="C82344", Note=f"xcore {tag} boot flash (QSPI) 32 Mbit (4 MB, B18; pinout of the W25Q16 symbol): ready within 300 us of power-up, Quad I/O read (0xEB): set QE once from xflash; boot pins X0D04-06 have weak pull-downs = QSPI")
         C("100n", "+3V3D")
         R("10k", f"QCS{tag}", "+3V3D")
 

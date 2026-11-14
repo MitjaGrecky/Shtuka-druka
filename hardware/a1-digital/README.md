@@ -14,7 +14,7 @@ channels), R114 (two oscillators), R116/R117 (converters, two paths per mic), R1
 | ADC | 2 x CS5308P (8 ch, C42457798) + 1 x CS5304P (4 ch, C49192888) | SPI software mode (CONFIG1 to VDD_A), ASP secondary, TDM out on DOUT1. Chip A = ADC 1-8 (mic 1-2 two paths, Hi-Z 1-2 two paths), B = ADC 9-16 (phono 2, line 1-6), C = ADC 17-20 (line 7-8, spare 1-2) |
 | ADC input buffers | 20 x OPA1656 dual, 47 uF X5R (2.8 Hz) + 1.2k in, 300 R + 680 pF feedback, 10 R out, 15 nF across the pair | Cirrus circuit, gain 1/4: R1 delivers 8 Vrms diff FS -> 2 Vrms at the pins (AN0635); inverting, so the source P leg goes to the N pin (polarity kept); non-inverting inputs at ADC_VMID |
 | DAC | CS4308P (8 ch) | Current outputs: 8 x OPA1656 dual I-V, Rf 1.2k + 620 pF per leg (AN0679), 47 R build-out, 1 nF across. Outputs 1-4 Main L/R, Aux L/R -> R1; 5-8 Phones 1 L/R, 2 L/R -> F1. Not in the EasyEDA library (R136) |
-| xcore A (U) | XU316-1024-QF60B (C7397517), W25Q16 boot flash | TDM master (BCLK, FSYNC, DAC data, 3 ADC data), SPI to the 4 converters (tile 1), converter reset, oscillator enables, USB port A from the R2 hub, XLINK0 to B |
+| xcore A (U) | XU316-1024-QF60B (C7397517), W25Q32JVSSIQ boot flash (4 MB, B18; C82344) | TDM master (BCLK, FSYNC, DAC data, 3 ADC data), SPI to the 4 converters (tile 1), converter reset, oscillator enables, USB port A from the R2 hub, XLINK0 to B |
 | xcore B | XU316-1024-QF60B, W25Q16 | USB port B to the external computer through the ADuM4166, PDM microphone (header), XLINK0 to A |
 | USB isolator | ADuM4166 (C5367256), USBLC6 on the computer side, Rd 5.1k | Computer side on the isolated ground GNDPC; the rear USB-C (PC) receptacle on the wall comes in over a JST PH 6 cable (R145: data only) |
 | Clocks | 24.576 MHz and 22.5792 MHz oscillators with enable pins (parts to choose), 33 R each into MCLK, 22 R star to every load | Default 48 kHz family on; xcore A can switch (R114). 24 MHz crystals for both xcore cores |
@@ -66,7 +66,7 @@ B: MCLK X0D11, PDM X1D00/X1D01. QSPI boot on X0D01 (SS), X0D10 (SCLK), X0D04-07.
   our SPI chip selects CS_ADCC and CS_DAC of xcore A would be lost.** lib_xua then runs the USB and the audio on tile 0 (supported); the SPI to the converters and the PDM microphone stay on tile 1.
 - Boot: X0D04-X0D06 are sampled after reset with weak pull-downs, 000 = QSPI; the flash must answer a Quad I/O read (0xEB) within 300 us, so its QE bit must be set (the first programming
   goes over JTAG with xflash, which sets it). A blank W25Q16 may pull IO2/IO3 up internally; if the board does not boot before the first programming, program it over JTAG.
-- Flash 16 Mbit (2 MB): the datasheet gives no minimum; a lib_xua UAC2 application with DFU needs about 2x the image - the W25Q32 (4 MB, same package) is a cheap reserve (question to the user).
+- Flash: the datasheet gives no minimum; a lib_xua UAC2 application with DFU needs about 2x the image, so the user chose 4 MB (B18): W25Q32JVSSIQ (C82344), same package and pinout.
 - Ports: BCLK X0D00 (1A), MCLK X0D11 (1D), FSYNC X0D35, DAC data X0D36, ADC data X0D37-39 are all 1-bit ports of tile 0 (nine 1-bit ports on tile 0: 1A, 1B, 1C, 1D, 1L-1P);
   SPI on tile 1 (1A, 1B, 1C, 1D, 1F, 1G, 1K). Everything the plan uses exists. TDM master with a 1-bit BCLK clock port is the lib_xua configuration; PDM needs a 1-bit data port (X1D01).
 
@@ -90,7 +90,7 @@ AP2112K 3.3 V: 600 mA max, estimated 150 mA typical -> 0.26 W in a SOT-23-5 (250
 - CS5308P and CS5304P datasheets (pins 12-22 of the CS5304P are DNC in the CS53A04P; the CS5308P has pins 13-22 as IN5-8 and the second VMID/FILT) - compare once the datasheet is available.
 - Exposed-pad size of the CS4308P footprint; body length of the ADuM4166; CS4308P order.
 - Oscillator parts (stock), 10 pF crystal for the ADuM4166.
-- Flash 2 MB or 4 MB; AP2112K temperature.
+- AP2112K temperature.
 
 Checks: `tools/sch_netcheck.py hardware/a1-digital` - 663 symbol units, 1887 pins, 0 mismatches; every symbol pin listed. ERC by CI.
 Symbols for the CS5308P / CS5304P / CS4308P / XU316 / ADuM4166: `hardware/common/gen/ic_symbols.py` -> `ShtukaDruka.kicad_sym`; footprint of

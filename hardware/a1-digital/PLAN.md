@@ -29,7 +29,7 @@ VDD core 0.9 V; VDDIOL/R/T 3.3 V; VDDIOB18 (JTAG, crystal) 1.8 V. QSPI data X0D0
 
 Port plan, xcore A (bus master): MCLK in X0D11 (1D), BCLK X0D00 (1A), FSYNC X0D35 (1L), DAC DIN X0D36 (1M), ADC1/2/3 DOUT
 X0D37/X0D38/X0D39 (1N/1O/1P); SPI on tile 1: SCK X1D00, MOSI X1D01, MISO X1D10, CS X1D11 / X1D22 / X1D13 / X1D34; converter RESET
-X0D29, clock select X0D30, VBUS sense X0D40; XLINK0 2-wire to B: X1D16/X1D17 in, X1D18/X1D19 out. xcore B: USB via ADuM4166,
+X0D29, clock select X0D30, VBUS sense X0D40; USB PHY on tile 0 (on tile 1 it would take X1D13 and X1D34 = two SPI chip selects, #26); XLINK0 2-wire to B: X1D16/X1D17 in, X1D18/X1D19 out. xcore B: USB via ADuM4166,
 XLINK0 to A, PDM mic (header) on free 1-bit ports.
 
 ## ADuM4166 (C5367256, SOIC-20W)

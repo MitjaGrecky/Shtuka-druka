@@ -11,8 +11,9 @@ with every pin, 15 nF across the pair. The stage inverts, so the source P leg dr
 Output stage (AN0679 fig. 1): inverting I-V per leg, Rf 1.2k || 620 pF, non-inverting input at DAC_VMID, 2 Vrms differential full scale;
 47 R build-out, 1 nF across the pair. Outputs 1-4 = Main L/R, Aux L/R (to R1), 5-8 = Phones 1 L/R, 2 L/R (to F1).
 
-Rev 0.1 (14.11.2026, PC) = schematic only. Capacitor values around the converters follow the datasheet typical-connection drawings as far as
-they were readable ("check" notes); XU316 PLL_AVDD at 0.9 V (check), ADuM4166 supply pins (check), oscillator part numbers (to choose).
+Rev 0.1 (14.11.2026, PC) = schematic only. Rev 0.2 (14.11.2026, cloud #26) = checked against the datasheets CS4308P DS1317, CS53A04P DS1397,
+XU316-1024-QF60B, ADuM4165/4166: converter capacitors, 47 uF X5R coupling capacitors, PLL_AVDD filter, ADuM4166 supplies (VBUS2 = VDD2),
+oscillator parts. The CS5308P / CS5304P datasheets were not reachable: their pins are compared with the CS53A04P (same family).
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -25,7 +26,7 @@ import kit as K  # noqa: E402
 NAME = "a1-digital"
 ID = "A1"
 TITLE = "A1 - Digital audio: 3 ADC, 1 DAC, 2 xcore.ai, USB isolator, clocks, quiet supplies"
-REV = "0.1"
+REV = "0.2"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 ADC pairs (8 Vrms FS), A1 -> R1: Main/Aux DAC pairs, A1 -> F1: Phones pairs; xcore A: TDM master, SPI to the "
             "converters, USB port A (hub on R2), xcore B: USB port B through the ADuM4166 (isolated ground GNDPC)")
@@ -110,7 +111,7 @@ def parts():
         C("1u", "+5V", fp=C0603)
         C("2.2u", net, fp=C0603)
 
-    ldo33("+3V3D", "digital 3.3 V: xcore I/O, flash, converter digital I/O, oscillators, USB (600 mA)")
+    ldo33("+3V3D", "digital 3.3 V: xcore I/O + USB_VDD33, flash, converter digital I/O, oscillators, ADuM4166 (600 mA max; about 150 mA typical = 0.26 W in the SOT-23-5, +65 K: watch the temperature)")
     add(ref("U"), "Regulator_Linear:AP2112K-1.8", "AP2112K-1.8", SOT235, {"1": "+5V", "2": "GND", "3": "+5V", "4": None, "5": "+1V8"},
         LCSC="C176944", Note="1.8 V: xcore bottom I/O domain (JTAG, crystal) and USB_VDD18")
     C("1u", "+5V", fp=C0603)
@@ -120,7 +121,7 @@ def parts():
         {"1": "+3V3A", "3": "+3V3A", "4": None, "5": None, "6": None, "7": "GND", "8": "GND", "9": None, "10": None, "11": "GND",
          "12": "GND", "13": "+5V", "14": "REG_NR", "15": "+5V", "16": "+5V", "20": "+3V3A", "21": "GND"},
         LCSC="C90084", Note="quiet analog 3.3 V for the converters: ANY-OUT 1.4 + 1.6 + 0.2 + 0.1 = 3.3 V (pins 8, 11, 12 to GND), 4 uV rms")
-    C("1u", "REG_NR", fp=C0603, Note="NR - check value")
+    C("1u", "REG_NR", fp=C0603, Note="NR/SS 1 uF: not verified (the TI datasheet text was not retrievable)")
     C("10u", "+5V", fp=C0805)
     C("22u", "+3V3A", fp=C0805)
     C("100n", "+3V3A")
@@ -131,15 +132,19 @@ def parts():
             Note=f"core 0.9 V for xcore {k}: 0.6 V x (1 + 100k / 200k) = 0.9 V, 1 A")
         R("100k", core, f"FB{k}")
         R("200k", f"FB{k}", "GND")
-        add(ref("L"), "Device:L", "2.2uH", "Inductor_SMD:L_Bourns-SRN4018", {"1": f"SW{k}", "2": core}, Note="2.2 uH, Isat >= 2 A - choose")
+        add(ref("L"), "Device:L", "2.2uH", "Inductor_SMD:L_Bourns-SRN4018", {"1": f"SW{k}", "2": core}, Note="2.2 uH, Isat >= 2 A (TLV62568: 1 A)")
         C("10u", "+5V", fp=C0805)
         C("22u", core, fp=C0805)
         C("22u", core, fp=C0805)
 
     # ================================================================ clocks
+    osc_lcsc = {"OSC48": "C839665", "OSC44": "C2901572"}
+    osc_note = {"OSC48": "SiTime SiT8208AI-21-33E-24.576000, 0.5 ps jitter, +-20 ppm (LCSC out of stock on 14.11.2026: check)",
+                "OSC44": "SCTF SX3M22.5792M20F30TNN, +-20 ppm, 825 in stock on 14.11.2026; jitter and enable pin not verified: "
+                         "a SiT8208 22.5792 is better if the stock allows"}
     for nm, freq, en_pull in (("OSC48", "24.576MHz", "+3V3D"), ("OSC44", "22.5792MHz", "GND")):
         add(ref("Y"), "Oscillator:ASE-xxxMHz", freq, OSC, {"1": f"{nm}_EN", "2": "GND", "3": f"{nm}_OUT", "4": "+3V3D"},
-            Note=f"{freq} 3.3 V oscillator, enable pin: part to choose with JLC stock (R114); low phase noise")
+            LCSC=osc_lcsc[nm], Note=f"{freq} 3.3 V oscillator, 3.2 x 2.5, pin 1 = output enable (high = on): {osc_note[nm]} (R114)")
         R("10k", f"{nm}_EN", en_pull, Note="default state; xcore A can switch (one oscillator on at a time)")
         C("100n", "+3V3D")
         R("33", f"{nm}_OUT", "MCLK", Note="series, outputs tied: only one is enabled")
@@ -186,24 +191,23 @@ def parts():
         R("33", "CONV_RESET", f"RST_{name}")
         R("0", f"{name}_CFG1", "+3V3A", Note="CONFIG1 to VDD_A = software control mode (datasheet table 4-1)")
         for k in (2, 3, 4):
-            R("10k", f"{name}_CFG{k}", "GND", Note="unused in SPI mode: to ground - check")
-        R("10k", f"{name}_CFG5", "GND", Note="I2C address select, unused (SPI)")
-        C("1u", "+3V3A", fp=C0603)
-        C("10n", "+3V3A")
-        C("1u", "+3V3A", fp=C0603)
-        C("10n", "+3V3A")
+            R("1k", f"{name}_CFG{k}", "GND", Note="CONFIG2-4 are the HGC SPI outputs in software mode (unused: HGC off); 1k to ground is safe either way")
+        R("10k", f"{name}_CFG5", "GND", Note="SPI: CONFIG5 to GND (datasheet)")
+        for _ in range(2):
+            C("4.7u", "+3V3A", fp=C0805, Note="VDD_A1 / VDD_A2: 4.7 uF + 10 nF each (typical connection)")
+            C("10n", "+3V3A")
         C("100n", "+3V3D")
-        C("10u", f"{name}_LDOD", fp=C0805, Note="LDO_D_FILT / VDD_D - check value")
-        C("4.7u", f"{name}_LDOA", fp=C0805, Note="LDO_A_FILT - check value")
+        C("1u", f"{name}_LDOD", fp=C0603, Note="LDO_D_FILT / VDD_D: 1 uF (typical connection)")
+        C("1u", f"{name}_LDOA", fp=C0603, Note="LDO_A_FILT: 1 uF (typical connection)")
         R("1", "+3V3A", f"{name}_F1P", Note="ADC_FILTP to VDD_A via 1 R (datasheet)")
-        C("4.7u", f"{name}_F1P", f"{name}_F1N", fp=C0805, Note="FILT cap - check value")
-        C("10n", f"{name}_F1P", f"{name}_F1N")
+        C("4.7u", f"{name}_F1P", f"{name}_F1N", fp=C0805, Note="FILT 4.7 uF + 0.47 uF (typical connection, pair assignment read from the figure)")
+        C("470n", f"{name}_F1P", f"{name}_F1N")
         if value == "CS5308P":
             R("1", "+3V3A", f"{name}_F2P")
             C("4.7u", f"{name}_F2P", f"{name}_F2N", fp=C0805)
-            C("10n", f"{name}_F2P", f"{name}_F2N")
+            C("470n", f"{name}_F2P", f"{name}_F2N")
         for v in [x for x in vm if x]:
-            C("2.2u", v, fp=C0603, Note="ADC_VMID: 2.2 uF + 0.22 uF (typical connection) - check")
+            C("2.2u", v, fp=C0603, Note="ADC_VMID: 2.2 uF + 0.22 uF (typical connection; pairing with FILT read from the figure)")
             C("220n", v)
 
     # ---------------------------------------------------------------- ADC input buffers (20 channels)
@@ -216,7 +220,9 @@ def parts():
         C("100n 25V", "+12V", fp=C0603)
         C("100n 25V", "-12V", fp=C0603)
         for leg, src, out_net, adc_net in (("A", f"ADC{ch}_P", f"B{ch}_OA", f"ADC{ch}_BN"), ("B", f"ADC{ch}_N", f"B{ch}_OB", f"ADC{ch}_BP")):
-            C("68u 25V", src, f"B{ch}_C{leg}", fp=C1210, Note="series coupling 68 uF (Cirrus) - check type (low leakage)")
+            C("47u 10V X5R", src, f"B{ch}_C{leg}", fp=C1210,
+              Note="series coupling, non-polar MLCC: the buffer side sits at 1.6 V and each leg swings +-5.7 V at FS, so a polarised cap would "
+                   "see reverse voltage; 2.8 Hz corner with 1.2k (Cirrus 68 uF = 1.95 Hz); peak 7.3 V < 10 V")
             R("1.2k", f"B{ch}_C{leg}", f"B{ch}_I{leg}", Note="0.1 %")
             R("300", out_net, f"B{ch}_I{leg}", Note="0.1 %: gain 1/4")
             C("680p C0G", out_net, f"B{ch}_I{leg}", fp=C0603)
@@ -236,7 +242,7 @@ def parts():
         dpins[pp], dpins[pn] = f"DO{c}_P", f"DO{c}_N"
     add(ref("U"), "ShtukaDruka:CS4308P", "CS4308P", QFN48, _fill(dpins, 49),
         Note="CS4308P: 8 channels, current outputs (I-V on this board), TDM data in on DIN1, software control by SPI; not in the EasyEDA library "
-        "(R136): LCSC number to find or hand-place; QFN-48 6x6 P0.4, pad 4.6 - check the drawing")
+        "(R136): no LCSC number (a new part: order from Digikey/Cirrus); 48-QFN 6x6 P0.4 per Digikey; pad size from the package drawing, section 10 of the datasheet")
     mclk_load("MCLK_DAC")
     R("100k", "RST_DAC", "GND")
     R("33", "CONV_RESET", "RST_DAC")
@@ -244,16 +250,15 @@ def parts():
     for k in (2, 3, 4):
         R("10k", f"DAC_CFG{k}", "GND")
     R("10k", "DAC_CFG5", "GND")
-    C("1u", "+3V3A", fp=C0603)
-    C("22u", "+3V3A", fp=C0805)
-    C("4.7u", "+3V3A", fp=C0805)
-    C("10n", "+3V3A")
+    for _ in range(2):
+        C("4.7u", "+3V3A", fp=C0805, Note="VDD_A1 / VDD_A2: 4.7 uF + 10 nF each (typical connection)")
+        C("10n", "+3V3A")
     C("100n", "+3V3D")
-    C("10u", "DAC_LDOD", fp=C0805)
-    C("1u", "DAC_LDOA", fp=C0603)
-    C("4.7u", "DAC_FP", "DAC_FN", fp=C0805, Note="DAC_FILTP/N - check value; FILTP to VDD_A2 per datasheet")
-    C("10n", "DAC_FP", "DAC_FN")
-    C("1u", "DAC_VMID", fp=C0603, Note="DAC_VMID 1 uF (typical connection)")
+    C("1u", "DAC_LDOD", fp=C0603, Note="LDO_D_FILT / VDD_D: 1 uF (typical connection)")
+    C("1u", "DAC_LDOA", fp=C0603, Note="LDO_A_FILT: 1 uF (typical connection)")
+    C("22u", "DAC_FP", "+3V3A", fp=C0805, Note="DAC_FILTP: 22 uF to VDD_A2 (typical connection, Table 1-1)")
+    C("22u", "DAC_FN", fp=C0805, Note="DAC_FILTN: 22 uF to ground (typical connection)")
+    C("10u", "DAC_VMID", fp=C0805, Note="DAC_VMID 10 uF (typical connection; AN0679: 2 x 10 uF lowers THD+N, slows start-up)")
     dac_names = {1: "DAC_ML", 2: "DAC_MR", 3: "DAC_AL", 4: "DAC_AR", 5: "HP1L", 6: "HP1R", 7: "HP2L", 8: "HP2R"}
     for c in range(1, 9):
         u = ref("U")
@@ -309,12 +314,12 @@ def parts():
         C("4.7u", f"+0V9{tag}", fp=C0603)
         for net in ("+3V3D", "+3V3D", "+3V3D", "+1V8", "+1V8"):
             C("100n", net)
-        FB(f"+0V9{tag}", f"PLL{tag}", Note="PLL_AVDD filter (0.9 V - check against the datasheet)")
-        C("4.7u", f"PLL{tag}", fp=C0603)
+        FB(f"+0V9{tag}", f"PLL{tag}", Note="PLL_AVDD filter: 600 R at 100 MHz, DCR < 1 R, + 1 uF MLCC (XMOS datasheet, 0.9 V nominal)")
+        C("1u", f"PLL{tag}", fp=C0603, Note="PLL_AVDD 1 uF MLCC, close to pin 22")
         C("100n", f"PLL{tag}")
         # crystal 24 MHz on XIN/XOUT (1.8 V domain)
         add(ref("Y"), "Device:Crystal_GND24", "24MHz", "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-            {"1": f"XIN{tag}", "3": f"XOUT{tag}", "2": "GND", "4": "GND"}, LCSC="C70590", Note="X322524MOB4SI, 12 pF load - check against XMOS")
+            {"1": f"XIN{tag}", "3": f"XOUT{tag}", "2": "GND", "4": "GND"}, LCSC="C70590", Note="X322524MOB4SI: 24 MHz, 12 pF load, ESR <= 60 R as XMOS requires (18 pF caps)")
         C("18p", f"XIN{tag}")
         C("18p", f"XOUT{tag}")
         # reset, JTAG
@@ -322,11 +327,11 @@ def parts():
         C("100n", f"RST{tag}")
         add(ref("J"), "Connector_Generic:Conn_01x06", f"JTAG {tag}", PH.format(n=6),
             {"1": f"TCK{tag}", "2": f"TMS{tag}", "3": f"TDI{tag}", "4": f"TDO{tag}", "5": f"RST{tag}", "6": "GND"},
-            Note=f"xcore {tag} debug: 1.8 V logic, xTAG adapter - check the pinout")
+            Note=f"xcore {tag} debug: 1.8 V logic (TCK, TMS, TDI, TDO, RST_N), xTAG adapter - check the cable pinout")
         # boot flash
         add(ref("U"), "Memory_Flash:W25Q16JVSS", "W25Q16JVSIQ", "Package_SO:SOIC-8_5.3x5.3mm_P1.27mm",
             {"1": f"QCS{tag}", "2": f"QD1{tag}", "3": f"QD2{tag}", "4": "GND", "5": f"QD0{tag}", "6": f"QCLK{tag}", "7": f"QD3{tag}",
-             "8": "+3V3D"}, LCSC="C131025", Note=f"xcore {tag} boot flash (QSPI), 16 Mbit - firmware + UAC2 descriptors; check size")
+             "8": "+3V3D"}, LCSC="C131025", Note=f"xcore {tag} boot flash (QSPI) 16 Mbit: ready within 300 us of power-up, Quad I/O read (0xEB): set QE once from xflash; boot pins X0D04-06 have weak pull-downs = QSPI")
         C("100n", "+3V3D")
         R("10k", f"QCS{tag}", "+3V3D")
 
@@ -343,17 +348,17 @@ def parts():
     R("5.1k", "PC_CC2", "GNDPC", Note="device (Rd)")
     add(ref("U"), "ShtukaDruka:ADuM4166", "ADuM4166", "Package_SO:SOIC-20W_7.5x15.4mm_P1.27mm",
         {"1": "PC_VBUS", "3": "ISO_V1", "8": "PC_DP", "9": "PC_DM", "2": "GNDPC", "4": "GNDPC", "5": "GNDPC", "6": "GNDPC", "7": "GNDPC", "10": "GNDPC",
-         "20": "+5V", "18": "+3V3D", "12": "UDP", "13": "UDM", "14": None, "15": "ISO_XO", "16": "ISO_XI", "11": "GND", "17": "GND", "19": "GND"},
-        LCSC="C5367256", Note="USB 2.0 HS isolator: side 1 = computer (VBUS1 = PC VBUS, GNDPC), side 2 = xcore B (VBUS2 +5 V, VDD2 3.3 V); "
-        "supply pins and crystal: check the datasheet; footprint SOIC-20W 15.4 mm per the LCSC part - check")
-    C("1u", "PC_VBUS", "GNDPC", fp=C0603)
-    C("1u", "ISO_V1", "GNDPC", fp=C0603, Note="VDD1: check whether it is an output (LDO) or an input")
-    C("100n", "+3V3D")
-    C("1u", "+5V", fp=C0603)
+         "20": "+3V3D", "18": "+3V3D", "12": "UDP", "13": "UDM", "14": None, "15": "ISO_XO", "16": "ISO_XI", "11": "GND", "17": "GND", "19": "GND"},
+        LCSC="C5367256", Note="USB 2.0 HS isolator: side 1 = computer (VBUS1 = PC VBUS 5 V, the internal LDO makes VDD1 3.3 V), side 2 = xcore B "
+        "(VBUS2 tied to VDD2 = +3V3D, LDO bypassed: an LDO next to the external 3.3 V would fight it); PGOOD open; "
+        "footprint SOIC-20 300 mil (LCSC label) - check the body length against the datasheet drawing")
+    C("100n", "PC_VBUS", "GNDPC", fp=C0603, Note="VBUS1: 0.1 uF within 10 mm of the pin (datasheet)")
+    C("100n", "ISO_V1", "GNDPC", fp=C0603, Note="VDD1: exactly 0.1 uF (more disturbs the LDO start-up)")
+    C("100n", "+3V3D", fp=C0603, Note="VDD2 / VBUS2: 0.1 uF within 10 mm of the pins")
     add(ref("Y"), "Device:Crystal_GND24", "24MHz", "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-        {"1": "ISO_XI", "3": "ISO_XO", "2": "GND", "4": "GND"}, LCSC="C70590", Note="ADuM4166 crystal (XI2/XO2): frequency - check")
-    C("18p", "ISO_XI")
-    C("18p", "ISO_XO")
+        {"1": "ISO_XI", "3": "ISO_XO", "2": "GND", "4": "GND"}, LCSC="C70590", Note="ADuM4166 crystal (XI2/XO2): 24 MHz, <= 50 ppm, typical load 10 pF, start within 0.3 ms; C70590 (12 pF, +-20 ppm) with 15 pF caps - a 10 pF part is better")
+    C("15p", "ISO_XI")
+    C("15p", "ISO_XO")
 
     # ================================================================ shared TDM clocks: source series resistors
     R("22", "BCLK_X", "BCLK", Note="BCLK from xcore A to the four converters")

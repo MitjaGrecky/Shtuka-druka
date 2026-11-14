@@ -4,15 +4,15 @@
 Plan, pinouts and sources: `PLAN.md`. Decisions: R82-R84 (two USB ports, TDM, 96 kHz hardware), R87 (volume in the DAC), R88 (two spare
 channels), R114 (two oscillators), R116/R117 (converters, two paths per mic), R136 (CS4308P, current outputs).
 
-**Status: rev 0.1 - schematic only** (608 parts, 388 nets, 14.11.2026). Values around the converters follow the typical-connection drawings
-as far as they could be read from the datasheets; every "check" note in `gen/design.py` is for the datasheet review (cloud task #26).
+**Status: rev 0.2 - schematic only** (607 parts, 388 nets, 14.11.2026). Checked against the datasheets (cloud task #26): CS4308P DS1317, CS53A04P DS1397
+(same family as the CS5304P/8P - the CS5308P/CS5304P datasheets themselves were not reachable), XU316-1024-QF60B, ADuM4165/4166, SiTime/SCTF oscillators.
 
 ## Blocks
 
 | Block | Parts | Notes |
 |---|---|---|
 | ADC | 2 x CS5308P (8 ch, C42457798) + 1 x CS5304P (4 ch, C49192888) | SPI software mode (CONFIG1 to VDD_A), ASP secondary, TDM out on DOUT1. Chip A = ADC 1-8 (mic 1-2 two paths, Hi-Z 1-2 two paths), B = ADC 9-16 (phono 2, line 1-6), C = ADC 17-20 (line 7-8, spare 1-2) |
-| ADC input buffers | 20 x OPA1656 dual, 68 uF + 1.2k in, 300 R + 680 pF feedback, 10 R out, 15 nF across the pair | Cirrus circuit, gain 1/4: R1 delivers 8 Vrms diff FS -> 2 Vrms at the pins (AN0635); inverting, so the source P leg goes to the N pin (polarity kept); non-inverting inputs at ADC_VMID |
+| ADC input buffers | 20 x OPA1656 dual, 47 uF X5R (2.8 Hz) + 1.2k in, 300 R + 680 pF feedback, 10 R out, 15 nF across the pair | Cirrus circuit, gain 1/4: R1 delivers 8 Vrms diff FS -> 2 Vrms at the pins (AN0635); inverting, so the source P leg goes to the N pin (polarity kept); non-inverting inputs at ADC_VMID |
 | DAC | CS4308P (8 ch) | Current outputs: 8 x OPA1656 dual I-V, Rf 1.2k + 620 pF per leg (AN0679), 47 R build-out, 1 nF across. Outputs 1-4 Main L/R, Aux L/R -> R1; 5-8 Phones 1 L/R, 2 L/R -> F1. Not in the EasyEDA library (R136) |
 | xcore A (U) | XU316-1024-QF60B (C7397517), W25Q16 boot flash | TDM master (BCLK, FSYNC, DAC data, 3 ADC data), SPI to the 4 converters (tile 1), converter reset, oscillator enables, USB port A from the R2 hub, XLINK0 to B |
 | xcore B | XU316-1024-QF60B, W25Q16 | USB port B to the external computer through the ADuM4166, PDM microphone (header), XLINK0 to A |
@@ -37,17 +37,62 @@ xcore pin plan (as in `gen/design.py`): A: MCLK X0D11, BCLK X0D00, FSYNC X0D35, 
 MOSI X1D01, MISO X1D10, CS X1D11/X1D22/X1D13/X1D34; reset X0D29; oscillator enables X0D30/X0D31; hub VBUS sense X0D40; XLINK0 X1D16-X1D19.
 B: MCLK X0D11, PDM X1D00/X1D01. QSPI boot on X0D01 (SS), X0D10 (SCLK), X0D04-07.
 
-## To check (cloud task #26)
+## Checked (cloud task #26, rev 0.2)
 
-- ADC/DAC capacitor values and strap resistors against the typical-connection drawings (VMID 2.2 uF + 0.22 uF, FILT, LDO pins, VDD_D),
-  DAC_FILTP to VDD_A2, unused CONFIG pins in SPI mode, 68 uF coupling type; the CS4308P LCSC number / footprint.
-- XU316: PLL_AVDD supply (0.9 V assumed), core power-up sequencing, crystal load, 1.8 V domain pins (JTAG, RST_N), QSPI flash size, port plan
-  against lib_xua (TDM master, async USB, PDM microphone), whether tile-1 pins can drive the SPI at the needed rate.
-- ADuM4166: VDD1 (output or input), VBUS2/VDD2 supply, crystal on XI2/XO2, footprint (SOIC-20W body 15.4 mm per the LCSC part).
-- Oscillators: JLC parts for 24.576 and 22.5792 MHz (3.3 V, enable pin), jitter; the 33 R / 22 R star.
-- TPS7A4701 noise bits and NR; AP2112K current budget (digital 3.3 V, 600 mA).
+**Converters (CS4308P, CS53A04P family).** Pin maps of the CS4308P (all 48) and of the four-channel ADC half (supplies, SPI, ASP, CONFIG, IN1-4) agree with the schematic.
+- Capacitors as in the typical-connection drawings: VDD_A1 and VDD_A2 each 4.7 uF + 10 nF, LDO_A_FILT 1 uF, LDO_D_FILT 1 uF with VDD_D tied to it (no separate cap),
+  VDD_IO 0.1 uF. Rev 0.1 had 1 uF / 10 uF / 4.7 uF.
+- DAC: DAC_FILTP 22 uF to **VDD_A2**, DAC_FILTN 22 uF to ground (rev 0.1: 4.7 uF between them), DAC_VMID 10 uF (rev 0.1: 1 uF).
+  ADC: FILT 4.7 uF + 0.47 uF (the figure text is ambiguous between 0.47/4.7 and 0.22/2.2; VMID 2.2 uF + 0.22 uF), ADC_FILTP through 1 R to VDD_A.
+- SPI mode: CONFIG1 0 R to VDD_A, **CONFIG5 to ground**; in software mode CONFIG2-4 of the ADC are the **HGC SPI outputs** (clock, data, chip select for external
+  preamplifiers, off by default): 1 k to ground instead of 10 k. DAC CONFIG2-4 unused to ground.
+- No power-up sequencing; RESET low >= 1 ms, control port ready 5 ms after the release; POR of VDD_A 1.9-2.7 V.
+- MCLK 24.576 / 22.5792 MHz directly (software mode, PLL bypass) or 512 fs with the PLL, +-1 %, duty 40-60 %. **ASP secondary: MCLK, BCLK and FSYNC must come from a
+  common source** - here MCLK from the oscillator and BCLK / FSYNC derived by xcore A from the same MCLK (lib_xua master mode does that).
+- ADC input: 0 dBFS = 2.0 Vrms differential at the pins (scales with VDD_A), input resistance 3 kOhm differential in the default mode (INxx_HIZ = 0).
+- **Coupling capacitors 68 uF -> 47 uF X5R 10 V (1210)**: a 68 uF 25 V ceramic does not exist, and a polarised one cannot be used - the buffer side sits at 1.6 V
+  while each leg swings +-5.7 V at full scale (reverse voltage). Corner 2.8 Hz instead of 1.95 Hz; the capacitor voltage never exceeds 7.3 V. 20 x 2 = 40 pieces.
+- CS4308P: **no LCSC number** (a new part; Digikey CS4308P-DNR, 16 weeks lead time, 48-QFN 6x6, 0.4 mm). Footprint body 6x6 and pitch 0.4 are confirmed;
+  the exposed-pad size is in section 10 of the datasheet (not retrievable here) - draw the footprint from it. Output: 1.67 mA rms per channel, 1.2 kOhm = 2.0 Vrms (AN0679).
 
-Checks: `tools/sch_netcheck.py hardware/a1-digital` - 664 symbol units, 1889 pins, 0 mismatches; every symbol pin listed. ERC by CI.
+**XU316-1024-QF60B.**
+- Pin map of the supplies and of all used ports agrees (VDD x 8 + paddles 61-64 at 0.9 V, VDDIOL/R/T 3.3 V, VDDIOB18 x 2 1.8 V, USB_VDD33 3.3 V, USB_VDD18 1.8 V).
+  Bottom bank (XIN, XOUT, RST_N, JTAG) is 1.8 V only - correct.
+- **PLL_AVDD:** 0.9 V nominal, filter = ferrite bead 600 R at 100 MHz (DCR < 1 R) + **1 uF** MLCC at the pin (rev 0.1: 4.7 uF + 100 nF kept as a second capacitor).
+- **Sequencing:** VDD and VDDIO within about 50 ms, monotonic; the 3.3 V domains must be valid before reset is released, and VDDIOB18 must not be last - here all rails come from the
+  same +5 V and the TLV62568 / AP2112K start together; RST_N has a 100 nF to ground with the 10 k pull-up to 1.8 V (about 1 ms delay), which keeps it low while the rails rise.
+- Crystal 24 MHz, 12 pF load, ESR <= 60 R, tolerance +-500 ppm or better: C70590 with 18 pF caps is right.
+- **USB PHY:** enable it on **tile 0** (xcore A and B). The USB ports of the PHY are not on the QF60 pins of tile 0; enabling it on **tile 1 removes ports 1F (X1D13) and 1K (X1D34) -
+  our SPI chip selects CS_ADCC and CS_DAC of xcore A would be lost.** lib_xua then runs the USB and the audio on tile 0 (supported); the SPI to the converters and the PDM microphone stay on tile 1.
+- Boot: X0D04-X0D06 are sampled after reset with weak pull-downs, 000 = QSPI; the flash must answer a Quad I/O read (0xEB) within 300 us, so its QE bit must be set (the first programming
+  goes over JTAG with xflash, which sets it). A blank W25Q16 may pull IO2/IO3 up internally; if the board does not boot before the first programming, program it over JTAG.
+- Flash 16 Mbit (2 MB): the datasheet gives no minimum; a lib_xua UAC2 application with DFU needs about 2x the image - the W25Q32 (4 MB, same package) is a cheap reserve (question to the user).
+- Ports: BCLK X0D00 (1A), MCLK X0D11 (1D), FSYNC X0D35, DAC data X0D36, ADC data X0D37-39 are all 1-bit ports of tile 0 (nine 1-bit ports on tile 0: 1A, 1B, 1C, 1D, 1L-1P);
+  SPI on tile 1 (1A, 1B, 1C, 1D, 1F, 1G, 1K). Everything the plan uses exists. TDM master with a 1-bit BCLK clock port is the lib_xua configuration; PDM needs a 1-bit data port (X1D01).
+
+**ADuM4166** (pin table: all 20 agree).
+- **VBUS2 was +5 V with VDD2 on the external 3.3 V: the internal LDO would fight our regulator** (and VDD1/VDD2 need exactly 0.1 uF with the LDO). Now VBUS2 = VDD2 = +3V3D (LDO bypassed, 3.0-3.6 V),
+  VDD2 / VBUS2 0.1 uF, VDD1 0.1 uF (LDO output, **not** 1 uF: "above 0.1 uF disrupts the start-up"), VBUS1 0.1 uF; PGOOD open. VBUS1 = PC VBUS 3.0-5.5 V.
+- Crystal 24 MHz, <= 50 ppm and <= 100 ppm stability, starts within 0.3 ms, typical load 10 pF: C70590 (12 pF) with 15 pF caps (about 10.5 pF) works; a 10 pF part is better. Or a 24 MHz clock into XI2 (XO2 open).
+- Footprint: LCSC lists it as SOIC-20-300mil (rev 0.1 had a 15.4 mm body "per the LCSC part" - a 300-mil SOIC-20 is 12.8 mm): check against the datasheet drawing; the LCSC number of the BRIZ-RL
+  is C5581725 (out of stock on 14.11.2026, $15), the schematic carries C5367256 from the PC - check which one is the stocked variant.
+
+**Oscillators** (R114): 24.576 MHz SiTime SiT8208AI-21-33E-24.576000 (C839665, 3225, 3.3 V, +-20 ppm, 0.5 ps; **out of stock** on 14.11), 22.5792 MHz SCTF SX3M22.5792M20F30TNN (C2901572,
+3225, 825 in stock, 1.62-3.63 V, +-20 ppm; jitter and enable pin polarity not on the page). Pin 1 = enable, high = on, as the schematic assumes. For a 123 dB ADC the clock jitter matters: SiTime
+has 0.5 ps; the SCTF part must be checked or replaced (SiT8208 22.5792). The 33 R + 22 R star is kept.
+
+**Supplies.** TPS7A4701: ANY-OUT 1.4 + 1.6 + 0.2 + 0.1 = 3.3 V with pins 8 (1.6 V), 11 (0.2 V), 12 (0.1 V) to ground - confirmed from the symbol; NR/SS 1 uF not verified (TI text not retrievable).
+AP2112K 3.3 V: 600 mA max, estimated 150 mA typical -> 0.26 W in a SOT-23-5 (250 K/W = +65 K): **warm, keep an eye on it on the first board** - the analog side is not on this regulator
+(it is on the TPS7A4701). TLV62568 0.9 V x 2: 1 A, the feedback 0.6 x (1 + 100k / 200k) = 0.9 V is right; the xcore.ai core draws about 0.5 A at full load (to measure).
+
+## Still open
+
+- CS5308P and CS5304P datasheets (pins 12-22 of the CS5304P are DNC in the CS53A04P; the CS5308P has pins 13-22 as IN5-8 and the second VMID/FILT) - compare once the datasheet is available.
+- Exposed-pad size of the CS4308P footprint; body length of the ADuM4166; CS4308P order.
+- Oscillator parts (stock), 10 pF crystal for the ADuM4166.
+- Flash 2 MB or 4 MB; AP2112K temperature.
+
+Checks: `tools/sch_netcheck.py hardware/a1-digital` - 663 symbol units, 1887 pins, 0 mismatches; every symbol pin listed. ERC by CI.
 Symbols for the CS5308P / CS5304P / CS4308P / XU316 / ADuM4166: `hardware/common/gen/ic_symbols.py` -> `ShtukaDruka.kicad_sym`; footprint of
 the XU316: `ShtukaDruka.pretty` (converted from the LCSC library with `tools/eda/lcsc_fp.py`).
 

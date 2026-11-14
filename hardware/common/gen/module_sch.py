@@ -76,7 +76,9 @@ def write_grid(D, ns, comment2, here, notes=()):
     for i, t in enumerate(notes or (getattr(D, "BUS_NOTE", ""),)):
         S.text(t, 10 * g, (6 + 3 * i) * g)
     for net, x in (("+5V", 10), ("+3V3", 14), ("GND", 18)):    # D.NO_PWR_FLAG: rails driven by a regulator on the board
-        S.power(net, x * g, 20 * g, 90 if net != "GND" else 270, flag=net not in getattr(D, "NO_PWR_FLAG", ()))
+        if net in getattr(D, "NO_PWR_FLAG", ()):               # no symbol: a lone power symbol is a dangling pin in ERC
+            continue
+        S.power(net, x * g, 20 * g, 90 if net != "GND" else 270, flag=True)
     for i, net in enumerate(getattr(D, "PWR_FLAG_NETS", ())):  # rails that come in through a connector or an inductor
         S.npwr += 1
         S.symbol(f"#FLG{S.npwr:03d}", "power:PWR_FLAG", "PWR_FLAG", (10 + 6 * i) * g, 26 * g, 0, nets={"1": net}, in_bom=False)

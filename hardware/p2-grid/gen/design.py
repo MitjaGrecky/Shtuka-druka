@@ -25,7 +25,7 @@ import kit as K  # noqa: E402
 NAME = "p2-grid"
 ID = "P2"
 TITLE = "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses"
-REV = "0.1"
+REV = "0.2"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8 x 74HC4051 + ADC128S102 (SPI0); 5 x LP5864 for 109 RGB; "
             "buses to P1, P3, P4 (2x8) and M1 (2x7); power and INA226 from PW")
@@ -140,15 +140,15 @@ def parts():
     add(ref("FB"), "Device:FerriteBead_Small", "600R", "Resistor_SMD:R_0603_1608Metric", {"1": "+3V3A", "2": "VAP"}, LCSC="C14709",
         Note="reference / ADC supply filter")
     C("10u", "VAP", fp=C0805)
-    C("100n", "VAP")
+    C("1u", "VAP", Note="ADC128S102 datasheet: VA bypass 1 uF + 0.1 uF at the pins")
     C("100n", "VAP")
     for row in range(1, 9):
         m = ref("U")
         pins = {"16": "+3V3A", "8": "GND", "7": "GND", "6": "GND", "9": "MUX_S2", "10": "MUX_S1", "11": "MUX_S0", "3": f"ROW{row}_C"}
         for c, pin in enumerate(("13", "14", "15", "12", "1", "5", "2", "4")):
             pins[pin] = f"PAD{row}.{c + 1}"
-        add(m, "74xx:74HC4051", "74HC4051", TSSOP16, pins, LCSC="C2943042",
-            Note=f"row {row}: pads {row}.1-{row}.8, address S0-S2 shared, COM -> ADC channel {row}; 74HC4051PW (LCSC part is SOP-16: check)")
+        add(m, "74xx:74HC4051", "74HC4051", TSSOP16, pins, LCSC="C5645",
+            Note=f"row {row}: pads {row}.1-{row}.8, address S0-S2 shared, COM -> ADC channel {row}; Nexperia 74HC4051PW,118 (TSSOP-16, LCSC C5645; C2943042 from rev 0.1 not confirmed)")
         C("100n", "+3V3A")
         R("1k", f"ROW{row}_C", f"ROW{row}", Note="series + 1n below: anti-alias")
         C("1n", f"ROW{row}")
@@ -217,8 +217,8 @@ def parts():
         add(ref("J"), "Connector_Generic:Conn_02x08_Odd_Even", f"Deck bus to {deck}", K.DECK_FP, {str(p): v for p, v in conn.items()},
             LCSC=K.DECK_LCSC, Note=f"R130: bus to {deck}; SR_OUT of the deck back to the controller, SR_IN (14) not used, AUX (15) reserved")
     for tag, (sd, sc) in (("A", ("T_SDA", "T_SCL")), ("B", ("X_SDA", "X_SCL"))):
-        add(ref("J"), "Connector_Generic:Conn_01x04", f"Trill Bar {tag}", PH.format(n=4), {"1": sd, "2": sc, "3": "+3V3", "4": "GND"},
-            Note=f"Bela Trill Bar {tag} (R113), I2C on mux channel {'2' if tag == 'A' else '3'}; pinout: check against the Trill Bar")
+        add(ref("J"), "Connector_Generic:Conn_01x04", f"Trill Bar {tag}", PH.format(n=4), {"1": "GND", "2": "+3V3", "3": sd, "4": sc},
+            Note=f"Bela Trill Bar {tag} (R113), I2C on mux channel {'2' if tag == 'A' else '3'}; Qwiic order GND, 3.3 V, SDA, SCL (SH 1.0 on the sensor: cable SH-PH); address 0x20, no pull-ups on the sensor")
     add(ref("J"), "Connector_Generic:Conn_01x04", "I2C power monitor (PW)", PH.format(n=4),
         {"1": "X_SDA", "2": "X_SCL", "3": "PM_ALERT", "4": "GND"}, Note="cable from PW (INA226, R146): SDA, SCL on mux channel 3, ALERT to a GPIO")
     R("100k", "PM_ALERT", "+3V3", Note="ALERT is open drain")

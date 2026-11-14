@@ -33,8 +33,9 @@ def jack(board, zone, label, kind, x, z, d):
 jack("panel", "POWER / USB", "LAN", "lan", 20, 78, "io")
 jack("panel", "POWER / USB", "USB-A", "usba", 40, 80, "io")
 jack("panel", "POWER / USB", "USB-C (PC)", "usbc", 62, 80, "io")
-jack("panel", "POWER / USB", "DC 12-24V", "dc", 22, 40, "in")
-jack("panel", "POWER / USB", "ON/OFF", "onoff", 52, 40, "in")
+jack("panel", "POWER / USB", "DC 12-24V", "dc", 20, 40, "in")
+jack("panel", "POWER / USB", "USB-C POWER", "usbc", 40, 40, "in")
+jack("panel", "POWER / USB", "ON/OFF", "onoff", 62, 40, "in")
 # ---------------------------------------------------------------- Control: MIDI DIN 3 x 2 on nuts, TRS under them (R2)
 for lab, x, z, d in (("MIDI IN 1", 100, 82, "in"), ("MIDI OUT 1", 122, 82, "out"), ("MIDI OUT 3", 144, 82, "out"),
                      ("MIDI IN 2", 100, 52, "in"), ("MIDI OUT 2", 122, 52, "out"), ("MIDI OUT 4", 144, 52, "out")):

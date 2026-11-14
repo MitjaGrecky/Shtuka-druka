@@ -45,7 +45,18 @@ EXTRA = {"Interface_Expansion": ["TCA9546APW"],
          "Amplifier_Operational": ["OPA4197xD"], "Isolator": ["TLP2361"], "Memory_Flash": ["W25Q16JVSS"],
          "Connector": ["DIN-5", "Barrel_Jack_Switch", "USB_C_Receptacle_USB2.0_14P", "USB_C_Receptacle_USB2.0_16P", "USB_A"],
          "Connector_Audio": ["AudioJack2_SwitchT", "AudioJack3"], "Regulator_Linear": ["AP2112K-3.3"], "Power_Protection": ["USBLC6-2SC6"],
-         "Transistor_BJT": ["MMBT3904"], "Diode": ["BAT54S", "1N4148W"], "Device": ["Crystal_GND24", "L", "LED"]}
+         "Transistor_BJT": ["MMBT3904"], "Diode": ["BAT54S", "1N4148W"],
+         "Device": ["Crystal_GND24", "L", "LED", "C_Polarized", "Fuse", "D_TVS", "D_Schottky"],
+         # PW power board (14.11.2026)
+         "Power_Management": ["LM74700"], "Regulator_Switching": ["LM5176PWP", "LM5156HPWP", "TPS54560BDDA", "LMR33640ADDA"],
+         "Transistor_FET": ["CSD18540Q5B", "IRLML2060"]}
+EXTRA["Interface_USB"].append("TPS25730D")
+EXTRA["Regulator_Linear"] += ["TPS7A4701xRGW", "TPS7A3301RGW", "TPS7A4101DGN"]
+EXTRA["Connector_Generic"] += ["Conn_02x02_Odd_Even", "Conn_02x03_Odd_Even"]
+# Pin types changed in the copies: a second OUT pin of the same regulator as power_out would make ERC report two
+# power outputs on one net; the copy keeps one power_out and marks the other passive (as KiCad does for TPS7A3301).
+PIN_TYPE = {"TPS7A4701xRGW": {"20": "passive"},
+            "LM5176PWP": {"12": "input"}}      # VOSNS senses the output (an input), typed output in the library
 KSYM10 = os.environ.get("KICAD10_SYMBOL_DIR", r"C:\Program Files\KiCad\10.0\share\kicad\symbols")
 DROP = {"exclude_from_sim", "in_pos_files", "duplicate_pin_numbers_are_jumpers", "show_name", "do_not_autoplace",
         "embedded_fonts", "embedded_files", "unit_name", "body_styles"}
@@ -121,6 +132,13 @@ def from_kicad10(lib, names):
         if n in out:
             continue
         s = _k7(syms[n])
+        for num, typ in PIN_TYPE.get(n, {}).items():       # pin type patches (see PIN_TYPE)
+            for unit in s:
+                if isinstance(unit, list) and unit and unit[0] == "symbol":
+                    for pin in unit:
+                        if isinstance(pin, list) and pin and pin[0] == "pin" and any(
+                                isinstance(x, list) and x[:2] == ["number", f'"{num}"'] for x in pin):
+                            pin[1] = typ
         out[n] = _emit(s)
         for c in s:
             if isinstance(c, list) and c and c[0] == "extends":

@@ -300,7 +300,7 @@ function screen(e){
 [['Audio In',4.5,162.5,['Mic/Line 1–2, Hi-Z 1–2','Line 1–8, Phono L R, GND']],
  ['Audio Out',172.5,242.5,['Main L R, Aux L R','RCA L R']],
  ['Control',252.5,426.5,['MIDI In 1–2, Out 1–4, TRS In, O1, O2','Clock, Reset, CV In 1–4, CV 1–8']],
- ['Power / USB',436.5,510.5,['LAN, USB-A, USB-C (PC)','DC 12–24V, On/Off']]].forEach(([t,x0,x1,lines])=>{
+ ['Power / USB',436.5,510.5,['LAN, USB-A, USB-C (PC)','DC 12–24V, USB-C Power, On/Off']]].forEach(([t,x0,x1,lines])=>{
   const cx=(x0+x1)/2*K;label(sg,t,cx,8*K,3.2,PRINT,600);lines.forEach((l,i)=>label(sg,l,cx,(15.5+i*6.5)*K,2.4,DIM));
   sg.strokeStyle='rgba(232,236,234,.25)';sg.lineWidth=.3*K;sg.beginPath();sg.moveTo((x0+2)*K,3*K);sg.lineTo((x1-2)*K,3*K);sg.stroke();});
 
@@ -330,9 +330,10 @@ const J=(kind,r,y,tag,out,info)=>{jack(kind,R(r),y,false,info);rtag(tag,r,y-(kin
 rframe(4.5,78.5,'Power / USB');
 box(16,13,R(20),78,HOLE,{name:'Ethernet',group:'Сзади · питание и USB',desc:'Для синхронизации Ableton Link и обновлений.'});rtag('LAN',20,67,false);
 box(13,5.5,R(40),80,HOLE,{name:'USB-A',group:'Сзади · питание и USB',desc:'Постоянный накопитель (внешний SSD с библиотекой) и обновление прошивки. Без контроллеров и звука; прямо к Mini-ITX (R80).'});rtag('USB-A',40,72,false);
-box(9,3.5,R(62),80,HOLE,{name:'USB-C (PC)',group:'Сзади · питание и USB',desc:'Порт B аудиоплаты: Штука как звуковая карта 32 × 16 и MIDI для внешнего компьютера (R78, P46); питание USB-C PD.'});rtag('USB-C (PC)',62,72,false);
-jack('dc',R(22),40,false,{name:'DC 12–24 В',group:'Сзади · питание и USB',desc:'Разъём с фиксацией, защита от переполюсовки и перенапряжения (P30).'});rtag('DC 12–24V',22,30,false);
-box(12,8,R(52),40,KNOB,{name:'Выключатель',group:'Сзади · питание и USB',desc:'Механический выключатель питания.'});rtag('On/Off',52,30,false);
+box(9,3.5,R(62),80,HOLE,{name:'USB-C (PC)',group:'Сзади · питание и USB',desc:'Порт B аудиоплаты: Штука как звуковая карта 32 × 16 и MIDI для внешнего компьютера (R78, P46). Только данные, гальванически развязан (ADuM4166 на A1), питание через него не идёт (R145).'});rtag('USB-C (PC)',62,72,false);
+jack('dc',R(20),40,false,{name:'DC 12–24 В',group:'Сзади · питание и USB',desc:'Разъём с фиксацией, защита от переполюсовки и перенапряжения (P30).'});rtag('DC 12–24V',20,30,false);
+box(9,3.5,R(40),40,HOLE,{name:'USB-C Power',group:'Сзади · питание и USB',desc:'Питание USB-C PD до 100 Вт (20 В, 5 А), только питание, без данных (R145). Отдельно от USB-C (PC), чтобы порт к компьютеру оставался развязанным.'});rtag('USB-C Power',40,32,false);
+box(12,8,R(62),40,KNOB,{name:'Выключатель',group:'Сзади · питание и USB',desc:'Механический выключатель питания.'});rtag('On/Off',62,30,false);
 
 rframe(88.5,262.5,'Control');
 const midi=(n,io)=>({name:'MIDI '+n,group:'Сзади · управление · MIDI',desc:io==='in'?'Вход MIDI DIN на оптроне (R32).':'Выход MIDI DIN, свой порт (R34). В меню любой выход можно сделать Thru от In 1 или In 2 — копию делает PIO, задержка единицы мкс (R144).'});

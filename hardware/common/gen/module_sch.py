@@ -81,7 +81,8 @@ def write_grid(D, ns, comment2, here, notes=()):
         S.power(net, x * g, 20 * g, 90 if net != "GND" else 270, flag=True)
     for i, net in enumerate(getattr(D, "PWR_FLAG_NETS", ())):  # rails that come in through a connector or an inductor
         S.npwr += 1
-        S.symbol(f"#FLG{S.npwr:03d}", "power:PWR_FLAG", "PWR_FLAG", (10 + 6 * i) * g, 26 * g, 0, nets={"1": net}, in_bom=False)
+        S.symbol(f"#FLG{S.npwr:03d}", "power:PWR_FLAG", "PWR_FLAG", (10 + 6 * (i % 3)) * g, (26 + 7 * (i // 3)) * g, 0,
+                 nets={"1": net}, in_bom=False)                 # three per row, left of the parts grid (x < 26)
     P = D.parts()
     x, y, row_h = 26, 20, 0
     cells = []

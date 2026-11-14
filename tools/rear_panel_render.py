@@ -114,9 +114,10 @@ E.append(f'<rect x="{X(20 - 5)}" y="{Z(78 - 4.5)}" width="{10 * S}" height="{2 *
 box(13, 5.5, 40, 80, HOLE, "USB-A", 72)
 E.append(f'<rect x="{X(40 - 5)}" y="{Z(80 + 0.6)}" width="{10 * S}" height="{1.6 * S}" fill="{NUT2}"/>')
 box(9, 3.5, 62, 80, HOLE, "USB-C (PC)", 72, rx=1.75)
-jack("dc", 22, 40, "DC 12–24V", False)
-box(12, 8, 52, 40, BODY, "On/Off", 30)
-E.append(f'<rect x="{X(52 - 4.5)}" y="{Z(40 + 3)}" width="{9 * S}" height="{6 * S}" rx="{0.5 * S}" fill="url(#alu)"/>')
+jack("dc", 20, 40, "DC 12–24V", False)
+box(9, 3.5, 40, 40, HOLE, "USB-C Power", 32, rx=1.75)
+box(12, 8, 62, 40, BODY, "On/Off", 30)
+E.append(f'<rect x="{X(62 - 4.5)}" y="{Z(40 + 3)}" width="{9 * S}" height="{6 * S}" rx="{0.5 * S}" fill="url(#alu)"/>')
 
 frame(88.5, 262.5, "Control")
 for lab, x, z, o in (("In 1", 100, 82, 0), ("Out 1", 122, 82, 1), ("Out 3", 144, 82, 1),

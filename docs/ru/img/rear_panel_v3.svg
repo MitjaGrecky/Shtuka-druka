@@ -18,12 +18,15 @@
 <rect x="163.2" y="209.79999999999998" width="31.2" height="37.199999999999996" rx="3" fill="none" stroke="#222" stroke-width="1.4"/>
 <rect x="168.0" y="217.0" width="21.599999999999998" height="8.4" rx="2" fill="#dddddd" stroke="#222"/>
 <text x="178.79999999999998" y="236.2" font-size="7.5" text-anchor="middle" fill="#222">USB-C (PC)</text>
-<rect x="64.8" y="296.79999999999995" width="36.0" height="55.199999999999996" rx="3" fill="none" stroke="#222" stroke-width="1.4"/>
-<circle cx="82.8" cy="317.2" r="13.2" fill="#dddddd" stroke="#222"/>
-<text x="82.8" y="341.2" font-size="8.5" text-anchor="middle" fill="#222">DC 12-24V</text>
-<rect x="135.6" y="300.4" width="38.4" height="48.0" rx="3" fill="none" stroke="#222" stroke-width="1.4"/>
-<rect x="140.39999999999998" y="307.6" width="28.799999999999997" height="19.2" rx="2" fill="#dddddd" stroke="#222"/>
-<text x="154.8" y="337.59999999999997" font-size="8.5" text-anchor="middle" fill="#222">ON/OFF</text>
+<rect x="60.0" y="296.79999999999995" width="36.0" height="55.199999999999996" rx="3" fill="none" stroke="#222" stroke-width="1.4"/>
+<circle cx="78.0" cy="317.2" r="13.2" fill="#dddddd" stroke="#222"/>
+<text x="78.0" y="341.2" font-size="8.5" text-anchor="middle" fill="#222">DC 12-24V</text>
+<rect x="110.39999999999999" y="305.79999999999995" width="31.2" height="37.199999999999996" rx="3" fill="none" stroke="#222" stroke-width="1.4"/>
+<rect x="115.2" y="313.0" width="21.599999999999998" height="8.4" rx="2" fill="#dddddd" stroke="#222"/>
+<text x="126.0" y="332.2" font-size="7.5" text-anchor="middle" fill="#222">USB-C POWER</text>
+<rect x="159.6" y="300.4" width="38.4" height="48.0" rx="3" fill="none" stroke="#222" stroke-width="1.4"/>
+<rect x="164.4" y="307.6" width="28.799999999999997" height="19.2" rx="2" fill="#dddddd" stroke="#222"/>
+<text x="178.79999999999998" y="337.59999999999997" font-size="8.5" text-anchor="middle" fill="#222">ON/OFF</text>
 <rect x="242.4" y="186.39999999999998" width="55.199999999999996" height="74.39999999999999" rx="3" fill="none" stroke="#222" stroke-width="1.4"/>
 <circle cx="270.0" cy="216.4" r="22.8" fill="#dddddd" stroke="#222"/>
 <text x="270.0" y="250.0" font-size="8.5" text-anchor="middle" fill="#222">MIDI IN 1</text>

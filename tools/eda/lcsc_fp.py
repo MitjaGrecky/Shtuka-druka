@@ -80,6 +80,12 @@ def main():
         num = "" if not num.isdigit() else ren.get(num, num)
         size_w, size_h = w * U, h * U
         drill_d = 2 * hr * U
+        if hr == 0:                                           # surface-mount pad (RECT / OVAL), rotation by 90 swaps the sides
+            if rot in (90, 270):
+                size_w, size_h = size_h, size_w
+            shape = "rect" if kind == "RECT" else ("circle" if kind == "ELLIPSE" else "oval")
+            o.append(f'  (pad "{num}" smd {shape} (at {X(x):g} {Y(y):g}) (size {size_w:g} {size_h:g}) (layers "F.Cu" "F.Paste" "F.Mask"))')
+            continue
         if kind == "OVAL" and slot:                           # slot and the pad's long side along the hole's end points
             slot_l = slot * U
             lo, sh = max(size_w, size_h), min(size_w, size_h)

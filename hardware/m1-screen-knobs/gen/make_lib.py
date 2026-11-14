@@ -174,9 +174,17 @@ def opa1637():
     return s
 
 
+def _a1_symbols():
+    """CS5308P, CS5304P, CS4308P, XU316, ADuM4166 (hardware/common/gen/ic_symbols.py)."""
+    import sys
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "common", "gen"))
+    import ic_symbols
+    return ic_symbols.all_symbols()
+
+
 def write_symbols():
     out = "(kicad_symbol_lib (version 20220914) (generator shtuka_druka_make_lib)\n"
-    out += is31fl3741a() + lp5864() + xl1615() + encoder() + opa1637() + ")\n"
+    out += is31fl3741a() + lp5864() + xl1615() + encoder() + opa1637() + _a1_symbols() + ")\n"
     os.makedirs(LIB, exist_ok=True)
     open(os.path.join(LIB, "ShtukaDruka.kicad_sym"), "w").write(out)
 

@@ -1,4 +1,4 @@
-# A1 - converters and xcore.ai: plan and pinouts (14.11.2026, PC; schematic not started)
+# A1 - converters and xcore.ai: plan and pinouts (14.11.2026, PC; the schematic is `README.md` + `gen/design.py`, rev 0.1)
 
 Sources: Cirrus CS5308P DS1314F1, CS5304P DS1313F1, CS4308P DS1317F1, AN0635 (ADC input buffer), AN0679 (DAC output buffer);
 XMOS XU316 product series datasheet XM-015129-PC (QF60B pin list); EasyEDA/LCSC symbols C7397517 (XU316), C5367256 (ADuM4166).

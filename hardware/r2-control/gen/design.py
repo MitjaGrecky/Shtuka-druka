@@ -9,6 +9,8 @@ not drawn yet; the 5-pin DIN footprint (CUI SDS-50J) and the locking DC jack are
 Rev 0.2 (14.11.2026, cloud, task #20): checked against the datasheets - RP2350 minimal design (inductor, crystal, BOOTSEL,
 shared 100 nF of pins 53/54), DAC80504 REFDIV high (2.5 V ref needs VDD >= 5.0 V undivided: the +5 V rail is not enough),
 CV difference amps x8.06 around REF/2, USB2514B straps left to the internal pull-downs, CRFILT/PLLFILT 100 nF, VBUS_DET 100k/100k.
+Rev 0.5 (14.11.2026, PC, task #25): ATT1/ATT2 for the Mic/Line attenuator relays of R1 rev 0.3, connector to A1/R1 2x7;
+PH48_1, PH48_2, PHONO, ATT1, ATT2 moved to a 74HC595 on the DAC SPI lines (GPIO 23 latch, 24 /OE, 25 free).
 Rev 0.4 (14.11.2026, PC, R141-R143): rear wall as the 3D model of panel v7; DIN, USB, LAN, DC are panel parts on nuts
 (R2b dropped): six JST PH headers for the DIN cables instead of the comb; MIDI TRS = PJ-3920-3A (JLC stock); board outline
 = the Control block without the window behind the DIN sockets.
@@ -26,7 +28,7 @@ import kit as K  # noqa: E402
 NAME = "r2-control"
 ID = "R2"
 TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables"
-REV = "0.4"
+REV = "0.5"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = Mini-ITX, down = RP2350, panel P2, A1 port A, spare")
@@ -47,7 +49,7 @@ GPIO = {0: "MIDI_TX1", 1: "MIDI_TX2", 2: "MIDI_TX3", 3: "MIDI_TX4", 4: "MIDI_RX1
         6: "TRS1_T", 7: "TRS1_R", 8: "TRS2_T", 9: "TRS2_R", 10: "TRSIN_A", 11: "TRSIN_B",
         12: "MUTE", 13: "R2_OK", 14: "DAC_SCK", 15: "DAC_SDI", 16: "DAC_CS1", 17: "DAC_CS2",
         18: "CLK_OUT1", 19: "CLK_OUT2", 20: "RST_OUT", 21: "CLK_IN", 22: "RST_IN",
-        23: "PH48_1", 24: "PH48_2", 25: "PHONO", 26: "CVIN1", 27: "CVIN2", 28: "CVIN3", 29: "CVIN4"}
+        23: "XR_LATCH", 24: "XR_OE", 25: None, 26: "CVIN1", 27: "CVIN2", 28: "CVIN3", 29: "CVIN4"}
 GPIO_PIN = {0: "2", 1: "3", 2: "4", 3: "5", 4: "7", 5: "8", 6: "9", 7: "10", 8: "12", 9: "13", 10: "14", 11: "15",
             12: "16", 13: "17", 14: "18", 15: "19", 16: "27", 17: "28", 18: "29", 19: "31", 20: "32", 21: "33",
             22: "34", 23: "35", 24: "36", 25: "37", 26: "40", 27: "41", 28: "42", 29: "43"}
@@ -190,11 +192,22 @@ def parts():
 
     # ---------------------------------------------------------------- control lines to the audio boards (R118, R137)
     G[0] = "ctrl"
-    add(ref("J"), "Connector_Generic:Conn_02x05_Odd_Even", "to A1/R1", "Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical",
+    add(ref("J"), "Connector_Generic:Conn_02x07_Odd_Even", "to A1/R1", "Connector_PinHeader_2.54mm:PinHeader_2x07_P2.54mm_Vertical",
         {"1": "PH48_1", "2": "GND", "3": "PH48_2", "4": "GND", "5": "PHONO", "6": "GND", "7": "MUTE", "8": "GND",
-         "9": "R2_OK", "10": "GND"},
-        Note="phantom 48 V per channel, phono/line, output mute relays (all outputs), alive; relays open when R2 stops (R66, R137)")
-    for net in ("PH48_1", "PH48_2", "PHONO", "MUTE"):
+         "9": "R2_OK", "10": "GND", "11": "ATT1", "12": "GND", "13": "ATT2", "14": "GND"},
+        Note="phantom 48 V per channel, phono/line, output mute relays, alive, Mic/Line attenuator relays (R1 rev 0.3, task #25); "
+        "relays open when R2 stops (R66, R137)")
+    # slow static lines on a 74HC595 that shares the DAC SPI clock and data (all 30 GPIO of the RP2350A are in use):
+    # DAC traffic only shifts the register; the outputs change on XR_LATCH. /OE is pulled high, so until the firmware
+    # has loaded zeros and pulls XR_OE low the outputs are high-Z and the 100k pull-downs hold every line low.
+    add(ref("U"), "74xx:74HC595", "74HC595", "Package_SO:SOIC-16_3.9x9.9mm_P1.27mm",
+        {"15": "PH48_1", "1": "PH48_2", "2": "PHONO", "3": "ATT1", "4": "ATT2", "5": None, "6": None, "7": None, "8": "GND",
+         "9": None, "10": "+3V3", "11": "DAC_SCK", "12": "XR_LATCH", "13": "XR_OE", "14": "DAC_SDI", "16": "+3V3"},
+        LCSC="C5947", Note="output expander: QA PH48_1, QB PH48_2, QC PHONO, QD ATT1, QE ATT2, QF-QH spare; SRCLR high")
+    C("100n", "+3V3")
+    R("10k", "XR_OE", "+3V3", Note="outputs high-Z until the firmware enables them")
+    R("100k", "XR_LATCH", "GND")
+    for net in ("PH48_1", "PH48_2", "PHONO", "MUTE", "ATT1", "ATT2"):
         R("100k", net, "GND", Note="off while the RP2350 boots")
 
     # ---------------------------------------------------------------- MIDI (CA-033, 3.3 V)

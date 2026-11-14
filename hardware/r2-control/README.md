@@ -4,7 +4,7 @@ The RP2350 of the control board (R85) with everything that is not audio at the r
 USB hub and the control lines to the audio boards. DIN, USB, LAN and DC are panel parts on nuts with cables (R141).
 Research and decisions: `docs/ru/34_rear_boards_research.md`, R118, R135-R143. Map of boards: `docs/ru/29_board_map.md`.
 
-**Status: rev 0.4 - schematic and placed board, not routed** (221 parts, 4 layers; 14.11.2026). Rear wall = the 3D model
+**Status: rev 0.5 - schematic and placed board, not routed** (227 parts, 4 layers; 14.11.2026; rev 0.5 = ATT1/ATT2 and the 74HC595, task #25). Rear wall = the 3D model
 of panel v7 (R142). MIDI DIN, USB, LAN and DC are panel parts on nuts with short cables (R141, the shelf R2b of rev 0.3 is
 dropped): R2 carries the twenty 3.5 mm jacks and six JST PH headers for the DIN cables. Outline: the Control block, rear
 x 88-263, z 10-113, without the window behind the DIN sockets (rear x 88-156, z 38-113) - an L, 175 x 103 mm.
@@ -18,11 +18,12 @@ x 88-263, z 10-113, without the window behind the DIN sockets (rear x 88-156, z 
 | CV/Gate out 1-8 | 2 x DAC80504RTET (C2862796; internal 2.5 V ref divided by 2, gain 2 = 0-2.5 V), 3 x OPA4197 (C2057327) on +-12 V | Vout = 8.06 (Vdac - 1.25 V) = -10.1 ... +10.1 V around a buffered REF/2; reset to mid-scale = 0 V; 1k output resistors. Step 0.31 mV = 0.37 cent at 1 V/oct |
 | CV in 1-4 | RP2350 ADC0-3 | -10 ... +10 V -> 0 ... 3.03 V (100k / 33k to 3.3 V / 39k to GND), BAT54S clamp |
 | Sync | 3 out, 2 in | Out: GPIO -> op-amp x1.51 -> 0 / +5 V. In: NPN inverter, 22k / 100k, negative clamp |
-| To A1/R1 (2x5) | PH48_1, PH48_2, PHONO, MUTE, R2_OK | Pulled low while booting; the output relays (R137) open when R2 stops |
+| To A1/R1 (2x7) | PH48_1, PH48_2, PHONO, MUTE, R2_OK, ATT1, ATT2 (pins 1, 3, 5, 7, 9, 11, 13; even pins GND) | Pulled low while booting; the output relays (R137) open when R2 stops; ATT1/ATT2 = -12 dB relay attenuators of Mic/Line 1-2 on R1 rev 0.3 |
+| Output expander | 74HC595 (C5947) on the DAC SPI clock and data, latch GPIO 23, /OE GPIO 24 | QA PH48_1, QB PH48_2, QC PHONO, QD ATT1, QE ATT2, QF-QH spare. All 30 GPIO were in use, so the slow static lines moved here. /OE is pulled high: outputs are high-Z and the 100k pull-downs hold the lines low until the firmware loads zeros and enables them; DAC traffic only shifts the register, outputs change on the latch |
 
-GPIO map (all 30 used): 0-3 MIDI TX 1-4, 4-5 MIDI RX 1-2, 6-9 TRS out 1-2 tip/ring, 10-11 TRS in A/B, 12 MUTE,
+GPIO map (29 used, GPIO 25 free): 0-3 MIDI TX 1-4, 4-5 MIDI RX 1-2, 6-9 TRS out 1-2 tip/ring, 10-11 TRS in A/B, 12 MUTE,
 13 R2_OK (+ status LED), 14-17 DAC SCK, SDI, CS1, CS2, 18-20 clock out 1, 2, reset/run out, 21-22 clock in, reset/run in,
-23-24 phantom 1-2, 25 phono/line, 26-29 CV in 1-4.
+23 expander latch, 24 expander /OE, 25 free, 26-29 CV in 1-4 (phantom 1-2, phono/line, ATT 1-2 on the 74HC595).
 
 Datasheet check (rev 0.2, 14.11.2026; table in `notes/handoff.md`, report #20): RP2350 per the minimal design; DAC80504 GAIN high = x2,
 RSTSEL high = mid-scale, **REFDIV high** (with the internal 2.5 V reference undivided the DAC needs VDD >= 5.0 V and raises a
@@ -38,7 +39,7 @@ sample** (tip and ring are swapped in firmware anyway, R32). Mono jacks: PJ398SM
 Panel DIN sockets at a 22 mm pitch (model): pick a panel DIN whose flange fits (e.g. round-flange types), with the enclosure.
 Geometry without kicad-cli: `tools/pcb_geomcheck.py hardware/r2-control/r2-control.kicad_pcb` - 0 problems; pins = pads.
 
-Checks: `tools/sch_netcheck.py hardware/r2-control` - rev 0.4 (14.11.2026, PC): 233 symbol units, 677 pins, 0 mismatches against
+Checks: `tools/sch_netcheck.py hardware/r2-control` - rev 0.5 (14.11.2026, PC): 239 symbol units, 707 pins, 0 mismatches against
 `design.py`; ERC by CI.
 
 

@@ -2,11 +2,11 @@
  "id": "R2",
  "name": "r2-control",
  "title": "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables",
- "rev": "0.4",
+ "rev": "0.5",
  "w": 175.0,
  "h": 103.0,
  "layers": 4,
- "parts": 221,
+ "parts": 227,
  "holes": [],
  "connectors": [
   [
@@ -142,5 +142,5 @@
    "PJ398SM"
   ]
  ],
- "bom_lines": 49
+ "bom_lines": 50
 }

@@ -1,0 +1,58 @@
+{
+ "id": "PW",
+ "name": "pw-power",
+ "title": "PW - Power: DC / USB-C PD / battery, 19 V Mini-ITX, +5 V x 2, +-12 V quiet, +48 V phantom",
+ "rev": "0.6",
+ "w": 100.0,
+ "h": 80.0,
+ "layers": 4,
+ "parts": 188,
+ "holes": [],
+ "connectors": [
+  [
+   "J1",
+   "DC in"
+  ],
+  [
+   "J2",
+   "USB-C Power in"
+  ],
+  [
+   "J3",
+   "Battery"
+  ],
+  [
+   "J4",
+   "On/Off switch"
+  ],
+  [
+   "J5",
+   "I2C power monitor"
+  ],
+  [
+   "J6",
+   "19 V to Mini-ITX"
+  ],
+  [
+   "J7",
+   "+5V panel"
+  ],
+  [
+   "J8",
+   "to R2"
+  ],
+  [
+   "J9",
+   "to A1/R1"
+  ],
+  [
+   "J10",
+   "to F1"
+  ],
+  [
+   "J11",
+   "+5V screen"
+  ]
+ ],
+ "bom_lines": 100
+}

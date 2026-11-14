@@ -25,7 +25,7 @@ import kit as K  # noqa: E402
 NAME = "p2-grid"
 ID = "P2"
 TITLE = "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses"
-REV = "0.2"
+REV = "0.3"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8 x 74HC4051 + ADC128S102 (SPI0); 5 x LP5864 for 109 RGB; "
             "buses to P1, P3, P4 (2x8) and M1 (2x7); power and INA226 from PW")
@@ -226,8 +226,33 @@ def parts():
 
 
 def placement():
-    """Rev 0.1 is the schematic only."""
-    return {}
+    """Rev 0.3: pads, scene buttons, arrows, strip and their LEDs on the panel v7 grid (doc 27: columns every 28 mm from x 14,
+    rows every 25 mm from y 52, strip y 22, scenes y 252; the pad LED sits in the gap below its pad), cable headers in a row along the
+    bottom edge, the rest by hardware/common/gen/autoplace.py. y is counted from the front edge."""
+    import autoplace
+    fixed = {}
+    for p in parts():
+        r, note, val = p["ref"], p["fields"].get("Note", ""), p["value"]
+        if val.startswith("FSR "):
+            row, col = (int(v) for v in val[4:].split("."))
+            fixed[r] = (14.0 + 28 * (col - 1), 52.0 + 25 * (row - 1), 0, "top")
+        elif r.startswith("D") and note.startswith("Pad "):
+            row, col = (int(v) for v in note[4:].split("."))
+            fixed[r] = (14.0 + 28 * (col - 1), 52.0 + 25 * (row - 1) + 12.5, 0, "top")
+        elif r.startswith("D") and note.startswith("Strip "):
+            k = int(note[6:])
+            fixed[r] = (20.75 + 7.26 * (k - 0.5), 22.0, 0, "top")
+        elif r.startswith("SW") and note.startswith("Scene "):
+            fixed[r] = (14.0 + 28 * (int(note[6:]) - 1), 252.0, 0, "top")
+        elif r.startswith("D") and note.startswith("Scene "):
+            k = int(note.split()[1])
+            fixed[r] = (14.0 + 28 * (k - 1) + (-9.0 if note.endswith("left") else 9.0), 252.0, 0, "top")
+        elif r.startswith("SW") and note.startswith("Arrow "):
+            fixed[r] = (12.0 if "left" in note else 211.5, 22.0, 0, "top")
+        elif r.startswith("D") and note.startswith("Arrow "):
+            x0 = 12.0 if note.startswith("Arrow left") else 211.5
+            fixed[r] = (x0 + (-8.5 if note.endswith("left") else 8.5), 22.0, 0, "top")
+    return autoplace.place(sys.modules[__name__], fixed=fixed)
 
 
 if __name__ == "__main__":

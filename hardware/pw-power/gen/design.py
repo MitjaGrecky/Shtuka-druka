@@ -24,7 +24,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 19 V Mini-ITX, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "0.5"
+REV = "0.6"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D), battery 4S 12.8-16.8 V -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 12-24 V -> 19 V Mini-ITX (LM5176), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -129,7 +129,7 @@ def parts():
     # input power monitor (R146): everything the instrument draws passes the shunt; P2 reads it and caps the LEDs
     R("5m", "BUS_SW", "BUS", fp=R2512, Note="shunt 5 mOhm 1 % 3 W: 8 A -> 40 mV (INA226 range 81.9 mV)")
     u = ref("U")
-    add(u, "Sensor_Energy:INA226", "INA226", "Package_SO:VSSOP-10_3x3mm_P0.5mm",
+    add(u, "Sensor_Energy:INA226", "INA226", "Package_SO:MSOP-10_3x3mm_P0.5mm",
         {"1": "GND", "2": "GND", "3": "PM_ALERT", "4": "PM_SDA", "5": "PM_SCL", "6": "+3V3", "7": "GND", "8": "BUS",
          "9": "PM_INN", "10": "PM_INP"}, LCSC="C49851",
         Note="R146: input power monitor, I2C address 0x40 (A0 = A1 = GND), powered from +3V3; BUS voltage up to 36 V")
@@ -329,8 +329,10 @@ def parts():
 
 
 def placement():
-    """Rev 0.1 is the schematic only."""
-    return {}
+    """Rev 0.2: rough automatic placement (hardware/common/gen/autoplace.py): connectors in a row along the bottom edge,
+    ICs on a grid, small parts around the IC they share signals with. A starting point for the routing; mechanics not fixed yet."""
+    import autoplace
+    return autoplace.place(sys.modules[__name__])
 
 
 if __name__ == "__main__":

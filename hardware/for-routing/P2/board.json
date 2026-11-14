@@ -1,0 +1,54 @@
+{
+ "id": "P2",
+ "name": "p2-grid",
+ "title": "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses",
+ "rev": "0.3",
+ "w": 224.0,
+ "h": 290.0,
+ "layers": 4,
+ "parts": 391,
+ "holes": [],
+ "connectors": [
+  [
+   "J1",
+   "+5V from PW"
+  ],
+  [
+   "J2",
+   "SWD"
+  ],
+  [
+   "J3",
+   "USB to R2 hub"
+  ],
+  [
+   "J4",
+   "Module bus M1 (2x7)"
+  ],
+  [
+   "J5",
+   "Deck bus to P1"
+  ],
+  [
+   "J6",
+   "Deck bus to P3"
+  ],
+  [
+   "J7",
+   "Deck bus to P4"
+  ],
+  [
+   "J8",
+   "Trill Bar A"
+  ],
+  [
+   "J9",
+   "Trill Bar B"
+  ],
+  [
+   "J10",
+   "I2C power monitor (PW)"
+  ]
+ ],
+ "bom_lines": 107
+}

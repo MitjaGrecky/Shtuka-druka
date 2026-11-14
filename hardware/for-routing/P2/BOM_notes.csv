@@ -1,0 +1,108 @@
+Designator,Value,Footprint,LCSC,Status of the LCSC number
+J1,+5V from PW,Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical,,номера нет: выбрать деталь
+"C1,C2",100u 10V,CP_Elec_6.3x7.7,,номера нет: выбрать деталь
+"C3,C6,C7,C27",10u,C_0805_2012Metric,C15850,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL21A106KAYNNNE 10 мкФ 25 В X5R 0805, Basic; наличие и цена не смотрелись"
+U1,AP2112K-3.3,SOT-23-5,C51118,проверить в EasyEDA
+"C4,C5",1u,C_0603_1608Metric,C52923,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05A105KA5NQNC 1 мкФ 25 В X5R 0402, Basic; наличие и цена не смотрелись"
+"FB1,FB2",600R,R_0603_1608Metric,C14709,проверить в EasyEDA
+"C8,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C26,C29,C30,C32,C34,C36,C38,C40,C42,C44,C46,C67,C68",100n,C_0402_1005Metric,C1525,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05B104KO5NNNC 100 нФ 16 В X7R 0402, Basic; наличие и цена не смотрелись"
+U2,RP2350A,QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm,C42411118,проверить в EasyEDA
+L1,3.3uH,L_Abracon_AOTA-B201610S,C42411119,проверить в EasyEDA
+"R1,R2",33,R_0402_1005Metric,,номера нет: выбрать деталь
+"C9,C11,C12,C48,C52,C56,C60,C64",4.7u,C_0805_2012Metric,C1779,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL21A475KAQNNNE 4,7 мкФ 25 В X5R 0805, Basic; наличие и цена не смотрелись"
+"C10,C28,C47,C49,C51,C53,C55,C57,C59,C61,C63,C65",1u,C_0402_1005Metric,C52923,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05A105KA5NQNC 1 мкФ 25 В X5R 0402, Basic; наличие и цена не смотрелись"
+"R3,R5,R9,R13,R14,R15,R16,R17,R18,R19,R20,R22,R23,R24,R25,R26,R27,R28,R29,R31,R32,R33,R34,R35,R36,R37,R38,R40,R41,R42,R43,R44,R45,R46,R47,R49,R50,R51,R52,R53,R54,R55,R56,R58,R59,R60,R61,R62,R63,R64,R65,R67,R68,R69,R70,R71,R72,R73,R74,R76,R77,R78,R79,R80,R81,R82,R83,R87,R99",10k,R_0402_1005Metric,C25744,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1002TCE 10 кОм 1% 0402, Basic; наличие и цена не смотрелись"
+Y1,12MHz,Crystal_SMD_3225-4Pin_3.2x2.5mm,C20625731,проверить в EasyEDA
+"R4,R6,R11,R12,R21,R30,R39,R48,R57,R66,R75",1k,R_0402_1005Metric,C11702,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1001TCE 1 кОм 1% 0402, Basic; наличие и цена не смотрелись"
+"C24,C25",15p,C_0402_1005Metric,,номера нет: выбрать деталь
+U3,W25Q128JVSIQ,SOIC-8_5.3x5.3mm_P1.27mm,C97521,проверить в EasyEDA
+SW1,BOOTSEL,SW_Push_1P1T_XKB_TS-1187A,C318884,проверено 06.11.2026 (док. 31)
+"R7,R8",27,R_0402_1005Metric,,номера нет: выбрать деталь
+J2,SWD,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,,номера нет: выбрать деталь
+J3,USB to R2 hub,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
+R10,20k,R_0402_1005Metric,,номера нет: выбрать деталь
+U4,USBLC6-2SC6,SOT-23-6,C323793,проверить в EasyEDA
+D1,green,LED_0603_1608Metric,,номера нет: выбрать деталь
+U5,ADC128S102,TSSOP-16_4.4x5mm_P0.65mm,C206503,проверить в EasyEDA
+"U6,U7,U8,U9,U10,U11,U12,U13",74HC4051,TSSOP-16_4.4x5mm_P0.65mm,C5645,проверить в EasyEDA
+"C31,C33,C35,C37,C39,C41,C43,C45,C50,C54,C58,C62,C66",1n,C_0402_1005Metric,C1523,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): FH 0402B102K500NT 1 нФ 50 В X7R 0402, Basic; наличие и цена не смотрелись"
+FSR1,FSR 1.1,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR2,FSR 1.2,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR3,FSR 1.3,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR4,FSR 1.4,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR5,FSR 1.5,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR6,FSR 1.6,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR7,FSR 1.7,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR8,FSR 1.8,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR9,FSR 2.1,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR10,FSR 2.2,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR11,FSR 2.3,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR12,FSR 2.4,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR13,FSR 2.5,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR14,FSR 2.6,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR15,FSR 2.7,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR16,FSR 2.8,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR17,FSR 3.1,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR18,FSR 3.2,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR19,FSR 3.3,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR20,FSR 3.4,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR21,FSR 3.5,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR22,FSR 3.6,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR23,FSR 3.7,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR24,FSR 3.8,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR25,FSR 4.1,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR26,FSR 4.2,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR27,FSR 4.3,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR28,FSR 4.4,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR29,FSR 4.5,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR30,FSR 4.6,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR31,FSR 4.7,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR32,FSR 4.8,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR33,FSR 5.1,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR34,FSR 5.2,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR35,FSR 5.3,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR36,FSR 5.4,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR37,FSR 5.5,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR38,FSR 5.6,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR39,FSR 5.7,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR40,FSR 5.8,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR41,FSR 6.1,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR42,FSR 6.2,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR43,FSR 6.3,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR44,FSR 6.4,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR45,FSR 6.5,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR46,FSR 6.6,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR47,FSR 6.7,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR48,FSR 6.8,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR49,FSR 7.1,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR50,FSR 7.2,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR51,FSR 7.3,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR52,FSR 7.4,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR53,FSR 7.5,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR54,FSR 7.6,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR55,FSR 7.7,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR56,FSR 7.8,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR57,FSR 8.1,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR58,FSR 8.2,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR59,FSR 8.3,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR60,FSR 8.4,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR61,FSR 8.5,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR62,FSR 8.6,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR63,FSR 8.7,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+FSR64,FSR 8.8,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,,номера нет: выбрать деталь
+"R84,R85,R86,R91,R92,R93,R94,R95,R96,R97,R98",4.7k,R_0402_1005Metric,C25900,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF4701TCE 4,7 кОм 1% 0402, Basic; наличие и цена не смотрелись"
+U14,TCA9546APWR,TSSOP-16_4.4x5mm_P0.65mm,C201653,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): TI TCA9546APWR, TSSOP-16, Extended; наличие и цена не смотрелись"
+"R88,R89,R90",0,R_0402_1005Metric,C17168,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF0000TCE 0 Ом 0402, Basic; наличие и цена не смотрелись"
+"U15,U16,U17,U18,U19",LP5864RSMR,VQFN-32-1EP_4x4mm_P0.4mm_EP2.8x2.8mm,C5220564,"проверено 12.11.2026: 55 шт., 0,92 $ (LCSC)"
+"D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16,D17,D18,D19,D20,D21,D22,D23,D24,D25,D26,D27,D28,D29,D30,D31,D32,D33,D34,D35,D36,D37,D38,D39,D40,D41,D42,D43,D44,D45,D46,D47,D48,D49,D50,D51,D52,D53,D54,D55,D56,D57,D58,D59,D60,D61,D62,D63,D64,D65,D66,D67,D68,D69,D70,D71,D72,D73,D74,D75,D76,D77,D78,D79,D80,D81,D82,D83,D84,D85,D86,D87,D88,D89,D90,D91,D92,D93,D94,D95,D96,D97,D98,D99,D100,D101,D102,D103,D104,D105,D106,D107,D108,D109,D110",XL-1615RGBC-RF,LED_RGB_XL-1615RGBC_1.6x1.5mm,C965840,проверено 01.11.2026 (док. 30)
+"SW2,SW3,SW4,SW5,SW6,SW7,SW8,SW9,SW10,SW11",TS-1187A-B-A-B,SW_Push_1P1T_XKB_TS-1187A,C318884,проверено 06.11.2026 (док. 31)
+"U20,U21",74HC165PW,TSSOP-16_4.4x5mm_P0.65mm,C80696,проверено 06.11.2026 (док. 31)
+"RN1,RN2,RN3",4x10k,R_Array_Convex_4x0402,C25725,проверено 06.11.2026 (док. 31)
+J4,Module bus M1 (2x7),PinHeader_2x07_P1.27mm_Vertical,C5372811,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-07-Z, штыри 2x7 1,27 выводные, Extended; наличие и цена не смотрелись"
+J5,Deck bus to P1,PinHeader_2x08_P1.27mm_Vertical,C5372812,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-08-Z, штыри 2x8 1,27 выводные, Extended; наличие и цена не смотрелись"
+J6,Deck bus to P3,PinHeader_2x08_P1.27mm_Vertical,C5372812,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-08-Z, штыри 2x8 1,27 выводные, Extended; наличие и цена не смотрелись"
+J7,Deck bus to P4,PinHeader_2x08_P1.27mm_Vertical,C5372812,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-08-Z, штыри 2x8 1,27 выводные, Extended; наличие и цена не смотрелись"
+J8,Trill Bar A,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
+J9,Trill Bar B,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
+J10,I2C power monitor (PW),JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
+R100,100k,R_0402_1005Metric,,номера нет: выбрать деталь

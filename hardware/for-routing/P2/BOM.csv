@@ -1,0 +1,108 @@
+Comment,Designator,Footprint,LCSC Part #
++5V from PW,J1,Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical,
+100u 10V,"C1,C2",CP_Elec_6.3x7.7,
+10u,"C3,C6,C7,C27",C_0805_2012Metric,C15850
+AP2112K-3.3,U1,SOT-23-5,C51118
+1u,"C4,C5",C_0603_1608Metric,C52923
+600R,"FB1,FB2",R_0603_1608Metric,C14709
+100n,"C8,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C26,C29,C30,C32,C34,C36,C38,C40,C42,C44,C46,C67,C68",C_0402_1005Metric,C1525
+RP2350A,U2,QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm,C42411118
+3.3uH,L1,L_Abracon_AOTA-B201610S,C42411119
+33,"R1,R2",R_0402_1005Metric,
+4.7u,"C9,C11,C12,C48,C52,C56,C60,C64",C_0805_2012Metric,C1779
+1u,"C10,C28,C47,C49,C51,C53,C55,C57,C59,C61,C63,C65",C_0402_1005Metric,C52923
+10k,"R3,R5,R9,R13,R14,R15,R16,R17,R18,R19,R20,R22,R23,R24,R25,R26,R27,R28,R29,R31,R32,R33,R34,R35,R36,R37,R38,R40,R41,R42,R43,R44,R45,R46,R47,R49,R50,R51,R52,R53,R54,R55,R56,R58,R59,R60,R61,R62,R63,R64,R65,R67,R68,R69,R70,R71,R72,R73,R74,R76,R77,R78,R79,R80,R81,R82,R83,R87,R99",R_0402_1005Metric,C25744
+12MHz,Y1,Crystal_SMD_3225-4Pin_3.2x2.5mm,C20625731
+1k,"R4,R6,R11,R12,R21,R30,R39,R48,R57,R66,R75",R_0402_1005Metric,C11702
+15p,"C24,C25",C_0402_1005Metric,
+W25Q128JVSIQ,U3,SOIC-8_5.3x5.3mm_P1.27mm,C97521
+BOOTSEL,SW1,SW_Push_1P1T_XKB_TS-1187A,C318884
+27,"R7,R8",R_0402_1005Metric,
+SWD,J2,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,
+USB to R2 hub,J3,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,
+20k,R10,R_0402_1005Metric,
+USBLC6-2SC6,U4,SOT-23-6,C323793
+green,D1,LED_0603_1608Metric,
+ADC128S102,U5,TSSOP-16_4.4x5mm_P0.65mm,C206503
+74HC4051,"U6,U7,U8,U9,U10,U11,U12,U13",TSSOP-16_4.4x5mm_P0.65mm,C5645
+1n,"C31,C33,C35,C37,C39,C41,C43,C45,C50,C54,C58,C62,C66",C_0402_1005Metric,C1523
+FSR 1.1,FSR1,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 1.2,FSR2,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 1.3,FSR3,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 1.4,FSR4,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 1.5,FSR5,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 1.6,FSR6,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 1.7,FSR7,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 1.8,FSR8,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 2.1,FSR9,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 2.2,FSR10,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 2.3,FSR11,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 2.4,FSR12,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 2.5,FSR13,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 2.6,FSR14,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 2.7,FSR15,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 2.8,FSR16,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 3.1,FSR17,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 3.2,FSR18,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 3.3,FSR19,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 3.4,FSR20,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 3.5,FSR21,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 3.6,FSR22,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 3.7,FSR23,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 3.8,FSR24,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 4.1,FSR25,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 4.2,FSR26,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 4.3,FSR27,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 4.4,FSR28,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 4.5,FSR29,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 4.6,FSR30,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 4.7,FSR31,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 4.8,FSR32,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 5.1,FSR33,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 5.2,FSR34,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 5.3,FSR35,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 5.4,FSR36,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 5.5,FSR37,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 5.6,FSR38,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 5.7,FSR39,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 5.8,FSR40,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 6.1,FSR41,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 6.2,FSR42,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 6.3,FSR43,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 6.4,FSR44,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 6.5,FSR45,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 6.6,FSR46,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 6.7,FSR47,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 6.8,FSR48,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 7.1,FSR49,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 7.2,FSR50,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 7.3,FSR51,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 7.4,FSR52,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 7.5,FSR53,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 7.6,FSR54,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 7.7,FSR55,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 7.8,FSR56,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 8.1,FSR57,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 8.2,FSR58,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 8.3,FSR59,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 8.4,FSR60,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 8.5,FSR61,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 8.6,FSR62,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 8.7,FSR63,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+FSR 8.8,FSR64,TestPoint_2Pads_Pitch2.54mm_Drill0.8mm,
+4.7k,"R84,R85,R86,R91,R92,R93,R94,R95,R96,R97,R98",R_0402_1005Metric,C25900
+TCA9546APWR,U14,TSSOP-16_4.4x5mm_P0.65mm,C201653
+0,"R88,R89,R90",R_0402_1005Metric,C17168
+LP5864RSMR,"U15,U16,U17,U18,U19",VQFN-32-1EP_4x4mm_P0.4mm_EP2.8x2.8mm,C5220564
+XL-1615RGBC-RF,"D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16,D17,D18,D19,D20,D21,D22,D23,D24,D25,D26,D27,D28,D29,D30,D31,D32,D33,D34,D35,D36,D37,D38,D39,D40,D41,D42,D43,D44,D45,D46,D47,D48,D49,D50,D51,D52,D53,D54,D55,D56,D57,D58,D59,D60,D61,D62,D63,D64,D65,D66,D67,D68,D69,D70,D71,D72,D73,D74,D75,D76,D77,D78,D79,D80,D81,D82,D83,D84,D85,D86,D87,D88,D89,D90,D91,D92,D93,D94,D95,D96,D97,D98,D99,D100,D101,D102,D103,D104,D105,D106,D107,D108,D109,D110",LED_RGB_XL-1615RGBC_1.6x1.5mm,C965840
+TS-1187A-B-A-B,"SW2,SW3,SW4,SW5,SW6,SW7,SW8,SW9,SW10,SW11",SW_Push_1P1T_XKB_TS-1187A,C318884
+74HC165PW,"U20,U21",TSSOP-16_4.4x5mm_P0.65mm,C80696
+4x10k,"RN1,RN2,RN3",R_Array_Convex_4x0402,C25725
+Module bus M1 (2x7),J4,PinHeader_2x07_P1.27mm_Vertical,C5372811
+Deck bus to P1,J5,PinHeader_2x08_P1.27mm_Vertical,C5372812
+Deck bus to P3,J6,PinHeader_2x08_P1.27mm_Vertical,C5372812
+Deck bus to P4,J7,PinHeader_2x08_P1.27mm_Vertical,C5372812
+Trill Bar A,J8,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,
+Trill Bar B,J9,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,
+I2C power monitor (PW),J10,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,
+100k,R100,R_0402_1005Metric,

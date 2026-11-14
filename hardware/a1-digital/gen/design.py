@@ -26,7 +26,7 @@ import kit as K  # noqa: E402
 NAME = "a1-digital"
 ID = "A1"
 TITLE = "A1 - Digital audio: 3 ADC, 1 DAC, 2 xcore.ai, USB isolator, clocks, quiet supplies"
-REV = "0.2"
+REV = "0.3"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 ADC pairs (8 Vrms FS), A1 -> R1: Main/Aux DAC pairs, A1 -> F1: Phones pairs; xcore A: TDM master, SPI to the "
             "converters, USB port A (hub on R2), xcore B: USB port B through the ADuM4166 (isolated ground GNDPC)")
@@ -376,8 +376,10 @@ def parts():
 
 
 def placement():
-    """Rev 0.1 is the schematic only."""
-    return {}
+    """Rev 0.3: rough automatic placement (hardware/common/gen/autoplace.py): cable headers in a row along the bottom edge
+    (top side), ICs on a grid, small parts around the IC they share signals with. Starting point for the routing."""
+    import autoplace
+    return autoplace.place(sys.modules[__name__])
 
 
 if __name__ == "__main__":

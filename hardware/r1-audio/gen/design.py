@@ -35,7 +35,7 @@ import kit as K  # noqa: E402
 NAME = "r1-audio"
 ID = "R1"
 TITLE = "R1 - Audio jacks and analog front end: mic/Hi-Z two paths, line 1-8, phono, Main/Aux/RCA out on relays"
-REV = "0.3"
+REV = "0.5"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 differential ADC pairs (FS 8 Vrms diff into the AN0635 buffers), A1 -> R1: 4 DAC pairs; phantom per channel and phono/line "
             "from R2 (R118); output relays need MUTE and R2_OK (R137)")
@@ -52,7 +52,7 @@ SOIC8, VSSOP8 = "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm", "Package_SO:VSSOP-8_3x3mm
 SOT23, SOD123 = "Package_TO_SOT_SMD:SOT-23", "Diode_SMD:D_SOD-123"
 COMBO = "Connector_Audio:Jack_XLR-6.35mm_Neutrik_NCJ6FI-V_Vertical"
 TRS = "Connector_Audio:Jack_6.35mm_Neutrik_NJ3FD-V_Vertical"
-RCA = ""                    # vertical-mount RCA with a nut - part to choose with the board
+RCA = "ShtukaDruka:Jack_RCA_Vertical_Placeholder"                    # vertical-mount RCA with a nut - part to choose with the board
 RELAY = ("Relay:Omron_G6K-2", "Relay_SMD:Relay_DPDT_Omron_G6K-2F-Y")
 MF = "Connector_Molex:Molex_Micro-Fit_3.0_{}_P3.00mm_Vertical"
 
@@ -304,9 +304,24 @@ def parts():
     return P
 
 
+JACKS = {"MAIN L": (292, 80), "MAIN R": (322, 80), "AUX L": (292, 52), "AUX R": (322, 52), "RCA L": (292, 24), "RCA R": (322, 24),
+         "MIC/LINE 1": (370, 80), "MIC/LINE 2": (400, 80), "HI-Z 1": (370, 32), "HI-Z 2": (400, 32),
+         "PHONO L": (428, 86), "PHONO R": (446, 86), **{f"LINE {i + 1}": (428 + 22 * (i % 4), 56 if i < 4 else 28) for i in range(8)}}
+X0, Z0 = 273.0, 104.0       # board origin in the rear-wall coordinates of tools/rear_panel.py (x from the left, z up)
+
+
 def placement():
-    """Rev 0.1 is the schematic only."""
-    return {}
+    """Rev 0.4: the jacks at the 3D model positions (top side, facing the wall; tools/rear_panel.py), cable headers in a row along
+    the bottom edge, the rest by hardware/common/gen/autoplace.py (ICs on a grid, small parts around the IC they share signals with)."""
+    import autoplace
+    fixed = {}
+    for p in parts():
+        if p["ref"].startswith("J") and p["value"] in JACKS:
+            xr, z = JACKS[p["value"]]
+            fixed[p["ref"]] = (xr - X0, Z0 - z, 0, "top")
+    for ref, x in (("J4", 40.0), ("J1", 82.0), ("J5", 122.0), ("J2", 165.0), ("J3", 200.0)):
+        fixed[ref] = (x, {"J1": 85.5, "J3": 90.5}.get(ref, 92.5), 90, "bottom")          # cable headers (2 x 25 and 2 x 20 to A1, small ones) along the bottom edge
+    return autoplace.place(sys.modules[__name__], fixed=fixed, conn_side="bottom")
 
 
 if __name__ == "__main__":

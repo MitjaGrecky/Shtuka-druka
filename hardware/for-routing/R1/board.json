@@ -1,0 +1,114 @@
+{
+ "id": "R1",
+ "name": "r1-audio",
+ "title": "R1 - Audio jacks and analog front end: mic/Hi-Z two paths, line 1-8, phono, Main/Aux/RCA out on relays",
+ "rev": "0.5",
+ "w": 238.0,
+ "h": 96.0,
+ "layers": 4,
+ "parts": 445,
+ "holes": [],
+ "connectors": [
+  [
+   "J1",
+   "Power from PW"
+  ],
+  [
+   "J2",
+   "from R2"
+  ],
+  [
+   "J3",
+   "to F1 (mute)"
+  ],
+  [
+   "J4",
+   "to A1 (ADC 1-10)"
+  ],
+  [
+   "J5",
+   "to A1 (ADC 11-18, DAC 1-4, power)"
+  ],
+  [
+   "J6",
+   "MIC/LINE 1"
+  ],
+  [
+   "J7",
+   "MIC/LINE 2"
+  ],
+  [
+   "J8",
+   "HI-Z 1"
+  ],
+  [
+   "J9",
+   "HI-Z 2"
+  ],
+  [
+   "J10",
+   "PHONO L"
+  ],
+  [
+   "J11",
+   "PHONO R"
+  ],
+  [
+   "J12",
+   "LINE 1"
+  ],
+  [
+   "J13",
+   "LINE 2"
+  ],
+  [
+   "J14",
+   "LINE 3"
+  ],
+  [
+   "J15",
+   "LINE 4"
+  ],
+  [
+   "J16",
+   "LINE 5"
+  ],
+  [
+   "J17",
+   "LINE 6"
+  ],
+  [
+   "J18",
+   "LINE 7"
+  ],
+  [
+   "J19",
+   "LINE 8"
+  ],
+  [
+   "J20",
+   "MAIN L"
+  ],
+  [
+   "J21",
+   "MAIN R"
+  ],
+  [
+   "J22",
+   "AUX L"
+  ],
+  [
+   "J23",
+   "AUX R"
+  ],
+  [
+   "J24",
+   "RCA L"
+  ],
+  [
+   "J25",
+   "RCA R"
+  ]
+ ],
+ "bom_lines": 75
+}

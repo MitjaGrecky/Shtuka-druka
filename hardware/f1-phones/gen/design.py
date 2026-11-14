@@ -24,13 +24,13 @@ import kit as K  # noqa: E402
 NAME = "f1-phones"
 ID = "F1"
 TITLE = "F1 - Headphones: 2 x NMJ6HCD2, 2 x OPA1622 difference amplifiers x2, mute relays"
-REV = "0.1"
+REV = "0.2"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("From A1: Phones 1 and 2 as differential pairs (2 Vrms FS) -> OPA1622 difference amp x2 -> 10 R -> relay -> NMJ6HCD2; "
             "volume is the DAC's digital attenuator (R87); mute relays need MUTE and R2_OK (R66, R137)")
 PWR_FLAG_NETS = ("+12V", "-12V")      # ERC: rails from the connector (+5V already gets the standard flag)
 NO_PWR_FLAG = ("+3V3",)
-W, H = 100.0, 40.0          # rough: front edge under the headphone columns (model: x 32 and 80 on the slope front); with the board
+W, H = 100.0, 42.0          # rough: front edge under the headphone columns (model: x 32 and 80 on the slope front); with the board
 LAYERS = 2
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
@@ -115,8 +115,33 @@ def parts():
 
 
 def placement():
-    """Rev 0.1 is the schematic only."""
-    return {}
+    """Rev 0.2: the two jacks at the front edge (top side, 50 mm apart), cable headers on the bottom along the back edge, the rest
+    packed on the bottom next to their jack (hardware/common/gen/packer.py). No routing."""
+    import packer
+    P = parts()
+    t, b = "top", "bottom"
+    fixed = {}
+    jacks = [p["ref"] for p in P if p["value"].startswith("PHONES")]
+    for r, x in zip(jacks, (25.0, 75.0)):
+        fixed[r] = (x, 14.0, 0, t)
+    heads = [p["ref"] for p in P if p["lib"].startswith("Connector_Generic") and p["ref"] not in jacks]
+    for r, x in zip(heads, (20.0, 50.0, 80.0)):
+        fixed[r] = (x, 38.0 if x < 30 else 34.0, 90, b)
+    grp = {1: [], 2: [], 0: []}
+    for p in P:
+        if p["ref"] in fixed:
+            continue
+        side = 0
+        for pin_net in p["pins"].values():
+            if pin_net and pin_net.startswith("HP1"):
+                side = 1
+            elif pin_net and pin_net.startswith("HP2"):
+                side = 2
+        if p["value"].startswith("G6K"):
+            side = 1 if "HP1" in str(p["pins"]) else 2
+        grp[side].append(p["ref"])
+    G = [(25.0, 22.0, b, grp[1], 0), (75.0, 22.0, b, grp[2], 0), (50.0, 28.0, b, grp[0], 0)]
+    return packer.pack(sys.modules[__name__], P, fixed, G, [(0, 0, W, H)])
 
 
 if __name__ == "__main__":

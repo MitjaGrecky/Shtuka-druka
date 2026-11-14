@@ -143,5 +143,5 @@ def main(D, silk, here):
     out = os.path.join(proj, D.NAME + ".kicad_pcb")
     board = build(D, silk)
     board.Save(out)
-    B.write_project(proj, D.NAME)
+    B.write_project(proj, D.NAME, getattr(D, "LAYERS", 2))
     print("ok", out, len(board.GetFootprints()), "footprints")

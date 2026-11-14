@@ -21,4 +21,4 @@ if __name__ == "__main__":
                                  "Power from PW: +5 V, +-12 V; MIDI DIN, USB, LAN and DC are panel parts on nuts (R141); DIN by cable to J PH headers",
                                  "Control to A1/R1: PH48_1, PH48_2, PHONO, MUTE (relays, R137), R2_OK - all pulled low while the RP2350 boots",
                                  "Rev 0.4: jack positions = 3D model of panel v7 (R142, tools/rear_panel.py v3); placed, not routed"))
-    B.write_project(os.path.join(HERE, ".."), D.NAME)
+    B.write_project(os.path.join(HERE, ".."), D.NAME, getattr(D, "LAYERS", 2))

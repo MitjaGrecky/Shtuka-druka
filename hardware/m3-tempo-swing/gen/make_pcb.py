@@ -141,5 +141,5 @@ def build():
 if __name__ == "__main__":
     board = build()
     board.Save(OUT)
-    B.write_project(PROJ, D.NAME)
+    B.write_project(PROJ, D.NAME, getattr(D, "LAYERS", 2))
     print("ok", OUT, len(board.GetFootprints()), "footprints")

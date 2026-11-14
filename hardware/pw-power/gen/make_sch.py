@@ -19,4 +19,4 @@ if __name__ == "__main__":
                           notes=(D.BUS_NOTE,
                                  "Values after the TI datasheet examples, scaled; every 'check' note is verified before the board",
                                  "Rev 0.1: schematic only (R145: USB-C Power is separate from the isolated USB-C PC port)"))
-    B.write_project(os.path.join(HERE, ".."), D.NAME)
+    B.write_project(os.path.join(HERE, ".."), D.NAME, getattr(D, "LAYERS", 2))

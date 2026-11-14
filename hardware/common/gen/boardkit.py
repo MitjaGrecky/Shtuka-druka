@@ -60,14 +60,17 @@ def copy_fields(fp, fields):
             fp.SetProperty(k, str(v))
 
 
-def write_project(proj_dir, name):
+def write_project(proj_dir, name, layers=2):
+    """Design rules into <name>.kicad_pro. 4 layers: JLCPCB minimum hole 0.2 mm and via 0.45 mm (hardware/for-routing/RULES.md),
+    so the 0.2 mm thermal vias of the KiCad footprints (e.g. WQFN ..._ThermalVias) pass DRC; net classes stay the same."""
+    hole, via_min = (0.2, 0.45) if layers >= 4 else (0.3, 0.5)
     cls = dict(clearance=CLEAR, track_width=TRACK, via_diameter=VIA[0], via_drill=VIA[1], microvia_diameter=0.3,
                microvia_drill=0.1, diff_pair_gap=0.25, diff_pair_width=0.2, diff_pair_via_gap=0.25,
                wire_width=6, bus_width=12, line_style=0)
     pro = {
         "board": {"design_settings": {"meta": {"version": 2}, "rules": {
-            "min_clearance": 0.127, "min_track_width": 0.127, "min_via_diameter": 0.5, "min_via_annular_width": 0.1,
-            "min_through_hole_diameter": 0.3, "min_hole_clearance": 0.254, "min_hole_to_hole": 0.25,
+            "min_clearance": 0.127, "min_track_width": 0.127, "min_via_diameter": via_min, "min_via_annular_width": 0.1,
+            "min_through_hole_diameter": hole, "min_hole_clearance": 0.254, "min_hole_to_hole": 0.25,
             "min_copper_edge_clearance": 0.3, "min_silk_clearance": 0.0, "min_text_height": 0.8,
             "min_text_thickness": 0.08}}},
         "net_settings": {"meta": {"version": 3},

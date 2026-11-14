@@ -26,7 +26,8 @@ W1 = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(W1)
 
 W, D = 515.0, 460.0
-FOLD_Y, FOLD_Z, SHELF_Y, TOP_Z, BACK_Z = 300.0, 68.0, 430.0, 68.0, 143.0
+_T = float(os.environ.get("FRONT_Z", "68.0"))      # height of the front top surface; the slope keeps its 30 degrees
+FOLD_Y, FOLD_Z, SHELF_Y, TOP_Z, BACK_Z = 300.0, _T, 430.0, _T, _T + 75.0
 SLOPE = math.atan2(BACK_Z - FOLD_Z, SHELF_Y - FOLD_Y)          # 30 degrees
 SLOPE_LEN = math.hypot(BACK_Z - FOLD_Z, SHELF_Y - FOLD_Y)       # 150.1 mm
 SKIN = 3.0
@@ -318,7 +319,8 @@ def parts(usb=None):
     if COMPUTER == "H5":
         # ODROID-H5 (R149): 120 x 120 mm board, 44 mm overall height (Hardkernel via cnx-software, 20.05.2026; whether the 44 mm
         # counts the board's feet is not stated: here it is taken from the underside of the board). Centred on the old Mini-ITX area.
-        cx, cy = (136 + 306) / 2, (45 + 215) / 2
+        cx = float(os.environ.get("H5_X", (136 + 306) / 2))
+        cy = float(os.environ.get("H5_Y", (45 + 215) / 2))
         hx0, hx1, hy0, hy1 = cx - 60, cx + 60, cy - 60, cy + 60
         a(box("Mini-ITX board", "itx", hx0, hx1, hy0, hy1, H5_Z0, H5_Z0 + 1.6, color="pcb"))
         a(box("Mini-ITX parts H5", "itx", hx0, hx1, hy0, hy1, H5_Z0 + 1.6, H5_Z0 + H5_H, color="parts", est=True,

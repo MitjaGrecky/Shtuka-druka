@@ -4,15 +4,16 @@ All the power of the instrument: three inputs joined by ideal diodes, the rear O
 Research: `docs/ru/34_rear_boards_research.md` (section 5). Decisions: R36 (Mini-ITX, 19 V), R40/R59/R109 (battery),
 R72 (DC 12-24 V with protection, USB-C PD), R110 (screen 5 V / 4 W), R118 (phantom), R145 (USB-C Power separate from the PC port).
 
-**Status: rev 0.1 - schematic only** (177 parts, 95 nets, 14.11.2026). Values follow the TI datasheet examples scaled to these
-rails; the notes marked "check" are to be verified against the datasheets before the board (cloud task #23).
+**Status: rev 0.2 - schematic only** (178 parts, 94 nets). Rev 0.1 (14.11.2026, PC): values after the TI datasheet examples.
+Rev 0.2 (14.11.2026, cloud, task #23): checked against the datasheets, table in `notes/handoff.md` (report #23). Still to measure
+on the board: the LM5176 and LM5156H loops (compensation taken from TI examples for other outputs).
 
 ## Power tree
 
 | Block | Part | From -> to | Notes |
 |---|---|---|---|
 | DC input | fuse 7 A, SMBJ28CA, LM74700 + CSD18540Q5B | DC jack 12-24 V -> BUS_IN | reverse polarity and ORing |
-| USB-C Power | TPS25730D (C22438973), SMBJ22CA, LM74700 + FET | PD 15-20 V, 3 A operating / 5 A max -> BUS_IN | no I2C: ADCIN1 = 15 V min, ADCIN2 = 20 V max, ADCIN3/4 = 3 A / 5 A (datasheet tables 8-3..8-6) |
+| USB-C Power | TPS25730D (C22438973), SMBJ22CA, LM74700 + FET | PD 15-20 V, 3 A operating / 5 A max -> BUS_IN | no I2C: ADCIN1 = 15 V min, ADCIN2 = 20 V max, ADCIN3 = 3 A, ADCIN4 = 5 A; VIN_3V3 to GND (VBUS-powered only); PPHV 47 uF polymer + ceramics |
 | Battery | fuse 10 A, SMBJ20CA, LM74700 + FET | 4S 12.8-16.8 V -> BUS_IN | pack with its own BMS (R109); charger later (R40) |
 | On/Off | rocker on the rear wall, >= 10 A DC | BUS_IN -> BUS | mechanical master switch |
 | 19 V Mini-ITX | LM5176 four-switch buck-boost, 4 x CSD18540Q5B | BUS 12-24 V -> 19 V 5 A (95 W), 300 kHz | ASRock N100DC-ITX officially wants 19 V (doc 34); upgrades limited to 35-45 W (R36) |
@@ -20,7 +21,7 @@ rails; the notes marked "check" are to be verified against the datasheets before
 | +5V | TPS54560B | BUS -> 5 V 5 A | screen 4 W, R2, USB devices, logic of the audio boards |
 | +-14 V | 2 x LMR33640 (buck, inverting buck-boost) | 19 V -> +14 V / -14 V | pre-regulators 1-2 V above the LDOs (doc 34) |
 | +-12 V quiet | TPS7A4701 / TPS7A3301 | +-14 V -> +-12 V | TIDA-01458 scheme; TPS7A47: 4 uV rms, ANY-OUT 12.0 V |
-| +48 V phantom | LM5156H boost + TPS7A4101 | 19 V -> 49.7 V -> 47.8 V, ~40 mA | two P48 channels (doc 34, 2.3); switched per channel on R1 (R118) |
+| +48 V phantom | LM5156H boost + TPS7A4101 | 19 V -> 48.5 V -> 46.1 V, ~40 mA | two P48 channels (doc 34, 2.3; P48 = 44-52 V); TPS7A4101 input max 50 V, dropout <= 1.3 V; 100 V FET IRLML0100; switched per channel on R1 (R118) |
 
 ## Connectors
 
@@ -37,14 +38,15 @@ rails; the notes marked "check" are to be verified against the datasheets before
 | to F1 | JST PH 3 | +12V, GND, -12V |
 | +5V screen | JST PH 2 | +5V, GND |
 
-Budget (estimate): Mini-ITX 25-45 W, panel 5-28 W (LEDs), screen 4 W, audio +-12 V ~ 10 W, phantom < 2 W. Typical 45-60 W,
-peak above the 100 W of a PD source: the firmware caps LED brightness when running from PD or the battery.
+Budget (estimate, report #23): without LEDs 44-64 W out (Mini-ITX 25-45, screen 4, audio 10, phantom 2, logic 3) = 49-71 W in at
+~90 %. LED room: PD 100 W -> 26-46 W; PD 65 W or DC 12 V (jack 5 A = 60 W) -> 0-15 W; DC 24 V (120 W) -> full. The firmware must
+know the source and the input power to cap the LEDs (question V14 in `notes/handoff.md`).
 
 ERC notes: PWR_FLAG on the rails that only connectors and converter outputs drive (`PWR_FLAG_NETS`); in the KiCad-7 symbol
 copies (`hardware/common/gen/sym7.py`, `PIN_TYPE`) the second OUT pin of the TPS7A4701 is passive and VOSNS of the LM5176 is
 an input, so ERC does not see two power outputs or an output against the PWR_FLAG.
 
-Checks: `tools/sch_netcheck.py hardware/pw-power` - 177 symbol units, 541 pins, 0 mismatches; every symbol pin listed in
+Checks: `tools/sch_netcheck.py hardware/pw-power` - rev 0.2: 178 symbol units, 543 pins, 0 mismatches; every symbol pin listed in
 `design.py`. ERC by CI.
 
 Generators: `gen/design.py`, `gen/make_sch.py`. On the PC set `KICAD_SYMBOL_DIR=<repo>/hardware/common/sym7`.

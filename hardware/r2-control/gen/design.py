@@ -9,6 +9,8 @@ not drawn yet; the 5-pin DIN footprint (CUI SDS-50J) and the locking DC jack are
 Rev 0.2 (14.11.2026, cloud, task #20): checked against the datasheets - RP2350 minimal design (inductor, crystal, BOOTSEL,
 shared 100 nF of pins 53/54), DAC80504 REFDIV high (2.5 V ref needs VDD >= 5.0 V undivided: the +5 V rail is not enough),
 CV difference amps x8.06 around REF/2, USB2514B straps left to the internal pull-downs, CRFILT/PLLFILT 100 nF, VBUS_DET 100k/100k.
+Rev 0.3 (14.11.2026, PC, R139): the right-angle jacks (MIDI DIN x 6, USB-C PC, USB-A, USB-C PD, DC) moved to the shelf
+board R2b (hardware/r2b-jacks) with their ESD and cables; R2 keeps the MIDI parts and gets a 2x7 comb to R2b.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -20,12 +22,12 @@ import kit as K  # noqa: E402
 
 NAME = "r2-control"
 ID = "R2"
-TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync, power and USB jacks"
-REV = "0.2"
+TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; DIN, USB and power jacks on R2b"
+REV = "0.3"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = Mini-ITX, down = RP2350, panel P2, A1 port A, spare")
-PWR_FLAG_NETS = ("+12V", "-12V", "DVDD", "VREG_AVDD", "ADC_AVDD", "UA_VBUS")   # ERC: rails from a connector, inductor or RC filter
+PWR_FLAG_NETS = ("+12V", "-12V", "DVDD", "VREG_AVDD", "ADC_AVDD")   # ERC: rails from a connector, inductor or RC filter
 NO_PWR_FLAG = ("+3V3",)                                               # +3V3 is driven by the AP2112K (power output pin)
 W, H = 258.0, 100.0         # rough: rear wall right part x 252-510, height up to ~104 mm (doc 29); refined with the panel layout
 LAYERS = 4
@@ -33,7 +35,9 @@ LAYERS = 4
 R0402, C0402, C0805 = K.R0402, K.C0402, K.C0805
 SOT23, SOD123 = "Package_TO_SOT_SMD:SOT-23", "Diode_SMD:D_SOD-123"
 JACK35 = "Connector_Audio:Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles"
-DIN5 = ""   # footprint for CUI SDS-50J is drawn with the board (EasyEDA has CONN-TH_SDS-50J); empty keeps ERC clean
+# 2x7 comb to R2b (R139), same numbering as hardware/r2b-jacks/gen/design.py COMB
+R2B_COMB = {"1": "MO1_4", "2": "MO1_5", "3": "MO2_4", "4": "MO2_5", "5": "MO3_4", "6": "MO3_5", "7": "MO4_4", "8": "MO4_5",
+            "9": "MI1_4", "10": "MI1_5", "11": "MI2_4", "12": "MI2_5", "13": "GND", "14": "GND"}
 PH = "Connector_JST:JST_PH_B{n}B-PH-K_1x0{n}_P2.00mm_Vertical"
 
 # GPIO map of the RP2350A (30 GPIO, all used)
@@ -158,34 +162,10 @@ def parts():
                        ("USB down: spare", {"1": "+5V", "2": "SP_DM", "3": "SP_DP", "4": "GND"})):
         add(ref("J"), "Connector_Generic:Conn_01x04", note.split(":")[0], PH.format(n=4), pins, Note=note)
 
-    # ---------------------------------------------------------------- rear USB-C (PC) -> A1 port B, rear USB-A <- Mini-ITX
-    add(ref("J"), "Connector:USB_C_Receptacle_USB2.0_14P", "USB-C PC", "Connector_USB:USB_C_Receptacle_HRO_TYPE-C-31-M-12",
-        {"A1": "GND", "A12": "GND", "B1": "GND", "B12": "GND", "A4": "PC_VBUS", "A9": "PC_VBUS", "B4": "PC_VBUS", "B9": "PC_VBUS",
-         "A5": "PC_CC1", "B5": "PC_CC2", "A6": "PC_DP", "B6": "PC_DP", "A7": "PC_DM", "B7": "PC_DM", "SH": "GND"},
-        LCSC="C165948", Note="R80/R82: USB audio to an external computer; isolated on A1 (ADuM4166)")
-    R("5.1k", "PC_CC1", "GND", Note="device (Rd)")
-    R("5.1k", "PC_CC2", "GND", Note="device (Rd)")
-    add(ref("U"), "Power_Protection:USBLC6-2SC6", "USBLC6-2SC6", "Package_TO_SOT_SMD:SOT-23-6",
-        {"1": "PC_DP", "6": "PC_DP", "3": "PC_DM", "4": "PC_DM", "2": "GND", "5": "PC_VBUS"}, LCSC="C323793")
-    add(ref("J"), "Connector_Generic:Conn_01x04", "to A1 port B", PH.format(n=4),
-        {"1": "PC_VBUS", "2": "PC_DM", "3": "PC_DP", "4": "GND"}, Note="to A1: ADuM4166 side of the PC")
-    add(ref("J"), "Connector:USB_A", "USB-A rear", "Connector_USB:USB_A_Molex_67643_Horizontal",
-        {"1": "UA_VBUS", "2": "UA_DM", "3": "UA_DP", "4": "GND", "SH": "GND"}, Note="R80: storage and firmware, straight to the Mini-ITX")
-    add(ref("U"), "Power_Protection:USBLC6-2SC6", "USBLC6-2SC6", "Package_TO_SOT_SMD:SOT-23-6",
-        {"1": "UA_DP", "6": "UA_DP", "3": "UA_DM", "4": "UA_DM", "2": "GND", "5": "UA_VBUS"}, LCSC="C323793")
-    add(ref("J"), "Connector_Generic:Conn_01x04", "USB-A to Mini-ITX", PH.format(n=4),
-        {"1": "UA_VBUS", "2": "UA_DM", "3": "UA_DP", "4": "GND"}, Note="cable to a Mini-ITX USB header")
-
-    # ---------------------------------------------------------------- power jacks -> PW
-    add(ref("J"), "Connector:USB_C_Receptacle_USB2.0_14P", "USB-C PD", "Connector_USB:USB_C_Receptacle_HRO_TYPE-C-31-M-12",
-        {"A1": "GND", "A12": "GND", "B1": "GND", "B12": "GND", "A4": "VBUS_PD", "A9": "VBUS_PD", "B4": "VBUS_PD", "B9": "VBUS_PD",
-         "A5": "PD_CC1", "B5": "PD_CC2", "A6": None, "B6": None, "A7": None, "B7": None, "SH": "GND"},
-        Note="R59/R72: power 65-100 W; the PD sink TPS25730 sits on PW. A 5 A rated receptacle is to choose with the board")
-    add(ref("J"), "Connector:Barrel_Jack_Switch", "DC 12-24 V", "Connector_BarrelJack:BarrelJack_CUI_PJ-063AH_Horizontal",
-        {"1": "DC_IN", "2": "GND", "3": None}, Note="R72: locking DC jack 12-24 V - part to choose with the board")
-    add(ref("J"), "Connector_Generic:Conn_02x05_Odd_Even", "to PW", "Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical",
-        {"1": "VBUS_PD", "2": "VBUS_PD", "3": "DC_IN", "4": "DC_IN", "5": "GND", "6": "GND", "7": "GND", "8": "GND",
-         "9": "PD_CC1", "10": "PD_CC2"}, Note="power inputs to PW (protection, PD, source selection there)")
+    # ---------------------------------------------------------------- comb to R2b (R139): the DIN jacks sit on the shelf
+    add(ref("J"), "Connector_Generic:Conn_02x07_Odd_Even", "to R2b", "Connector_PinSocket_2.54mm:PinSocket_2x07_P2.54mm_Horizontal",
+        R2B_COMB, Note="R139: right-angle socket down to the R2b header; MIDI DIN lines only (USB and power jacks go from R2b "
+        "straight to A1, the Mini-ITX and PW)")
 
     # ---------------------------------------------------------------- control lines to the audio boards (R118, R137)
     add(ref("J"), "Connector_Generic:Conn_02x05_Odd_Even", "to A1/R1", "Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical",
@@ -196,17 +176,10 @@ def parts():
         R("100k", net, "GND", Note="off while the RP2350 boots")
 
     # ---------------------------------------------------------------- MIDI (CA-033, 3.3 V)
-    for k in range(4):                                     # DIN out 1-4: pin 4 <- 33 R <- 3.3 V, pin 5 <- 10 R <- TX
-        j = ref("J")
-        add(j, "Connector:DIN-5", f"MIDI OUT {k + 1}", DIN5,
-            {"1": None, "2": "GND", "3": None, "4": f"MO{k + 1}_4", "5": f"MO{k + 1}_5"}, LCSC="C6216157", Note="CUI SDS-50J")
+    for k in range(4):                                     # DIN out 1-4 (jacks on R2b): pin 4 <- 33 R <- 3.3 V, pin 5 <- 10 R <- TX
         K.rc(add, ref("R"), "33", "+3V3", f"MO{k + 1}_4", "Resistor_SMD:R_1206_3216Metric", Note="CA-033 3.3 V: 33 R 0.5 W")
         R("10", f"MIDI_TX{k + 1}", f"MO{k + 1}_5", Note="CA-033 3.3 V: 10 R")
-    for k in range(2):                                     # DIN in 1-2: opto TLP2361 (3.3 V)
-        j = ref("J")
-        add(j, "Connector:DIN-5", f"MIDI IN {k + 1}", DIN5,
-            {"1": None, "2": None, "3": None, "4": f"MI{k + 1}_4", "5": f"MI{k + 1}_5"}, LCSC="C6216157",
-            Note="CUI SDS-50J; pin 2 not connected on a receiver (CA-033)")
+    for k in range(2):                                     # DIN in 1-2 (jacks on R2b): opto TLP2361 (3.3 V)
         R("220", f"MI{k + 1}_4", f"MI{k + 1}_A")
         add(ref("D"), "Diode:1N4148W", "1N4148W", SOD123, {"1": f"MI{k + 1}_A", "2": f"MI{k + 1}_5"}, Note="reverse protection")
         add(ref("U"), "Isolator:TLP2361", "TLP2361", "Package_SO:SO-5-6_4.55x3.7mm_P1.27mm",

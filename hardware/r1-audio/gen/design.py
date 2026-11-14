@@ -11,7 +11,7 @@ Level plan (rev 0.2, checked by the cloud, task #24: CS53A04P DS1397 (CS5304P/8P
 - Line 1-8 (TRS, balanced): OPA1637 gain 6.81k / (10k + 100 R) = 0.674: FS at +24.1 dBu (R135).
 - Mic/Line 1-2 (combo): phantom 6.81k + 47 uF on XLR (R72), TRS joins after the blocking caps (no phantom on TRS); OPA1612
   two-op-amp front end gain 1 + 2 x 499 / 332 = 4.01 (+12 dB, lower Rg noise); loud path x 0.681 (FS at +11.9 dBu in;
-  front end clips at about +13.6 dBu), quiet path 68.1k / 1k (+40 dB over loud, FS at -28.1 dBu in) - R117.
+  front end clips at about +13.6 dBu; a relay -12 dB attenuator ahead of it (rev 0.3) takes +24 dBu lines), quiet path 68.1k / 1k (+40 dB over loud, FS at -28.1 dBu in) - R117.
 - Hi-Z 1-2: 1 MOhm, OPA1642 buffer x 1, then OPA1637 single-ended -> differential: loud x 1.37 (FS at +17.9 dBu),
   quiet x 137 (+40 dB, FS at -22.1 dBu).
 - Phono L/R: relay per channel (R118, default = line): line -> OPA1637 x 4.12 (FS 2.02 Vrms = +8.3 dBu, CD level);
@@ -22,7 +22,7 @@ Level plan (rev 0.2, checked by the cloud, task #24: CS53A04P DS1397 (CS5304P/8P
   (hot through 47 R, cold 47 R to GND), RCA = copy of Main (R23); NO relays per pair open without power (R66, R137),
   closed only when MUTE and R2_OK are both high (R118).
 
-Rev 0.1 (14.11.2026, PC) = schematic only; rev 0.2 (14.11.2026, cloud #24) = levels and values checked; jacks vertical-mount (Neutrik NCJ6FI-V, NJ3FD-V), RCA part to choose.
+Rev 0.1 (14.11.2026, PC) = schematic only; rev 0.2 (14.11.2026, cloud #24) = levels and values checked; rev 0.3 = -12 dB attenuator relay per combo (ATT1/ATT2 from R2); jacks vertical-mount (Neutrik NCJ6FI-V, NJ3FD-V), RCA part to choose.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -35,7 +35,7 @@ import kit as K  # noqa: E402
 NAME = "r1-audio"
 ID = "R1"
 TITLE = "R1 - Audio jacks and analog front end: mic/Hi-Z two paths, line 1-8, phono, Main/Aux/RCA out on relays"
-REV = "0.2"
+REV = "0.3"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 differential ADC pairs (FS 8 Vrms diff into the AN0635 buffers), A1 -> R1: 4 DAC pairs; phantom per channel and phono/line "
             "from R2 (R118); output relays need MUTE and R2_OK (R137)")
@@ -109,9 +109,10 @@ def parts():
     for _ in range(2):
         CP("47u 25V", "+12V", fp=CP63)
         CP("47u 25V", "GND", "-12V", fp=CP63)
-    add(ref("J"), "Connector_Generic:Conn_02x05_Odd_Even", "from R2", "Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical",
+    add(ref("J"), "Connector_Generic:Conn_02x07_Odd_Even", "from R2", "Connector_PinHeader_2.54mm:PinHeader_2x07_P2.54mm_Vertical",
         {"1": "PH48_1", "2": "GND", "3": "PH48_2", "4": "GND", "5": "PHONO", "6": "GND", "7": "MUTE", "8": "GND", "9": "R2_OK",
-         "10": "GND"}, Note="same pinout as R2 'to A1/R1'; all lines pulled low on R2 while it boots")
+         "10": "GND", "11": "ATT1", "12": "GND", "13": "ATT2", "14": "GND"},
+        Note="same pinout as R2 'to A1/R1' (2x7 from rev 0.3: ATT1/ATT2 = Mic/Line attenuator relays); all lines pulled low on R2 while it boots")
 
     # ---------------------------------------------------------------- board-to-board to A1
     adc = [f"ADC{k}" for k in range(1, 19)]
@@ -162,8 +163,18 @@ def parts():
         R("0", f"{m}_TR", f"{m}_N")
         for leg in ("P", "N"):
             R("10k", f"{m}_{leg}", "GND", Note="discharge / bias")
-            R("10", f"{m}_{leg}", f"{m}_{leg}S", fp=R0603, Note="series, current limit into the clamps")
+            R("10", f"{m}_{leg}", f"{m}_{leg}X", fp=R0603, Note="series, current limit into the clamps")
+            R("15k", f"{m}_{leg}X", f"{m}_{leg}A", fp=R0603, Note="attenuator -12 dB: series 15k, 0.1 %")
+            R("4.99k", f"{m}_{leg}A", "GND", fp=R0603, Note="attenuator -12 dB: shunt 4.99k, 0.1 % (ratio 0.250)")
             clamp(f"{m}_{leg}S")
+        add(ref("K"), RELAY[0], "G6K-2F-Y 5V", RELAY[1],
+            {"A1": "+5V", "A2": f"ATT{k}_K", "11": f"{m}_PS", "12": f"{m}_PX", "14": f"{m}_PA",
+             "21": f"{m}_NS", "22": f"{m}_NX", "24": f"{m}_NA"},
+            LCSC="C37516489", Note=f"Mic/Line {k} attenuator -12 dB (line +24 dBu): de-energised = direct, energised = attenuated")
+        add(ref("Q"), "Transistor_FET:2N7002", "2N7002", SOT23, {"1": f"ATT{k}_G", "2": "GND", "3": f"ATT{k}_K"}, Note="attenuator relay")
+        R("1k", f"ATT{k}", f"ATT{k}_G")
+        R("100k", f"ATT{k}_G", "GND")
+        add(ref("D"), "Diode:1N4148W", "1N4148W", SOD123, {"1": "+5V", "2": f"ATT{k}_K"}, Note="flyback")
         C("470p C0G", f"{m}_PS", f"{m}_NS", fp=C0603, Note="RF")
         u = ref("U")
         add(u, "Amplifier_Operational:OPA1612AxD", "OPA1612", SOIC8,

@@ -56,7 +56,7 @@ EXTRA["Connector_Generic"] += ["Conn_02x02_Odd_Even", "Conn_02x03_Odd_Even"]
 EXTRA.setdefault("Sensor_Energy", []).append("INA226")    # PW power monitor (R146)
 # R1 audio board (14.11.2026)
 EXTRA["Connector_Audio"] += ["NCJ6FI-V", "AudioJack2"]
-EXTRA["Connector_Generic"] += ["Conn_02x20_Odd_Even", "Conn_02x25_Odd_Even"]
+EXTRA["Connector_Generic"] += ["Conn_02x20_Odd_Even", "Conn_02x25_Odd_Even", "Conn_02x07_Odd_Even"]
 EXTRA["Transistor_BJT"] += ["MMBTA92", "MMBTA42"]
 EXTRA["Transistor_FET"] += ["2N7002"]
 EXTRA["Diode"] += ["1N4148W"]

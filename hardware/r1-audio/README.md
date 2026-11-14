@@ -5,13 +5,13 @@ the Cirrus buffers around ADC_VMID / DAC_VMID (AN0635 for the CS5304P/8P inputs,
 converters on A1. Research: `docs/ru/34_rear_boards_research.md` (sections 2, 3), doc 28. Decisions: R64-R66, R72, R88,
 R116-R118, R135-R137, R142 (jack positions = 3D model).
 
-**Status: rev 0.2 - schematic only** (426 parts, 250 nets, 14.11.2026). Levels and values checked against the datasheets (cloud task #24); the board is not drawn yet.
+**Status: rev 0.3 - schematic only** (444 parts, 264 nets, 14.11.2026; rev 0.3 adds the Mic/Line attenuator relays, user decision on В16). Levels and values checked against the datasheets (cloud task #24); the board is not drawn yet.
 
 ## Channels
 
 | Input | Jack | Path | ADC (A1) |
 |---|---|---|---|
-| Mic/Line 1-2 | Neutrik NCJ6FI-V combo, vertical (C368503) | phantom 6.81k + 47 uF on XLR only (R72); TRS joins after the caps; clamps to +-12 V; OPA1612 two-op-amp front end x 4.01; OPA1637 loud x 0.681 (FS +11.9 dBu) and quiet x 68.1 (+40 dB, FS -28.1 dBu) | 1-4 (two per input, R117) |
+| Mic/Line 1-2 | Neutrik NCJ6FI-V combo, vertical (C368503) | phantom 6.81k + 47 uF on XLR only (R72); TRS joins after the caps; clamps to +-12 V; relay attenuator -12 dB (rev 0.3); OPA1612 two-op-amp front end x 4.01; OPA1637 loud x 0.681 (FS +11.9 dBu) and quiet x 68.1 (+40 dB, FS -28.1 dBu) | 1-4 (two per input, R117) |
 | Hi-Z 1-2 | Neutrik NJ3FD-V, vertical | 1 MOhm, clamps, OPA1642 buffer; OPA1637 loud x 1.37 (FS +17.9 dBu), quiet x 137 (+40 dB, FS -22.1 dBu) | 5-8 |
 | Phono L/R | RCA with nut (part to choose) | relay per channel (R118; off = line): line -> OPA1637 x 4.12 (FS +8.3 dBu); phono -> computed RIAA on OPA1612 (+35 dB at 1 kHz) -> OPA1637 x 4.12 | 9-10 |
 | Line 1-8 | NJ3FD-V | RF filter, OPA1637 diff x 0.674: FS +24.1 dBu (R135) | 11-18 |
@@ -26,7 +26,7 @@ R116-R118, R135-R137, R142 (jack positions = 3D model).
 Phantom per channel (R118): MMBTA92 (300 V PNP) high-side switch from +48 V, slow ramp by a Miller capacitor (2.2 uF base-collector), driven from R2 through an
 MMBTA42 (300 V NPN, the collector sees 48 V); 47k bleeder.
 
-Connectors: power from PW (Micro-Fit 2x5, same pinout as PW "to A1/R1"), control from R2 (2x5, same pinout as R2 "to A1/R1"),
+Connectors: power from PW (Micro-Fit 2x5, same pinout as PW "to A1/R1"), control from R2 (2x7: the 2x5 pinout of R2 "to A1/R1" plus ATT1 at pin 11 and ATT2 at pin 13, GND between; R2 must be widened - PC task #25),
 to A1: 2x20 (ADC 1-10) and 2x25 (ADC 11-18, DAC 1-4, +-12 V, +5 V) - pairs on adjacent pins with GND pairs between.
 
 ## Level plan (checked, rev 0.2)
@@ -43,6 +43,10 @@ Sources: CS53A04P datasheet DS1397 (same family as CS5304P/8P), CS4308P DS1317, 
   about +13.6 dBu (+-10.5 V on each output), so FS of the loud path is set to +11.9 dBu: **no pad is needed**, the loud path has 1.7 dB headroom
   over line level; a line signal above +13.6 dBu on the combo clips (question to the user). Quiet path +40 dB higher, FS -28.1 dBu; the 1k Rg
   keeps the fault current into the OPA1637 below 10 mA.
+- **Attenuator (rev 0.3, В16 b):** one G6K-2F-Y per combo after the phantom caps and the 10 R, in front of the clamps and the front end: 15k series + 4.99k shunt per leg
+  (ratio 0.250 = -12.0 dB, 0.1 %). De-energised = direct (mic), energised = attenuated: FS of the loud path +23.9 dBu; the clamps see
+  only the attenuated signal. Control: ATT1/ATT2 from R2 (3.3 V) through a 2N7002, flyback diode per coil. In the direct position the divider loads each leg with 20k
+  (parallel to the 10k bias: 6.7k per leg, 13 k differential) - fine for microphones; the divider adds 7.8 nV/rtHz only while attenuated.
 - **Hi-Z:** OPA1642 buffer, then x 1.37 / x 137 (FS +17.9 / -22.1 dBu). The JFET buffer keeps the 1 MOhm input.
 - **Phono:** FS of the line path +8.3 dBu (2.02 Vrms, CD level). RIAA computed (script in the cloud task, `docs/ru/` note): active stage 3180 / 318 us
   (68.1k || 47n in series with 7.42k, over 130 R + 470 uF), 75 us as a passive section 787 R + 100 nF ahead of the FDA (input 16.7 k).

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Rear panel sketch (proposal, not a decision): rear view, x from the left edge as seen from behind, z from the bottom.
-Zones per doc 13 (3.3, 3.5), doc 34, R26 (inputs framed, outputs filled), R44 (rear wall 143 mm), R45 (English labels).
-Writes docs/ru/img/rear_panel_v2.svg, .png (v1 kept for history) and prints the R2/R2b jack table (markdown).
+"""Rear panel v3 (R142): the layout of the 3D model of panel v7 (model3d/index.html), taken over position by position -
+rear view, x from the left edge as seen from behind, z from the bottom. R26 (inputs framed, outputs filled), R44 (rear wall
+143 mm), R45 (English labels). R141: DIN, USB, LAN, DC and the power switch are panel parts on nuts with short cables;
+the 3.5 mm jacks stand on the vertical control board R2 (outline drawn), the audio jacks on R1.
+Writes docs/ru/img/rear_panel_v3.svg (v1, v2 kept for history) and prints the R2 jack table (markdown).
 
   python3 tools/rear_panel.py
 
@@ -11,13 +13,15 @@ import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "..", "docs", "ru", "img")
-W, H = 515.0, 143.0          # rear wall: panel width (doc 13: ~515), height (R44)
-R2_X = (5.0, 263.0)          # R2 zone in the rear view = panel x 252-510 seen from behind (x_rear = 515 - x_panel)
+W, H = 515.0, 143.0          # rear wall: panel width, height (R44)
+# R2 outline in the rear view: Control block x 88-263, z 10-113, without the window behind the panel DIN sockets
+R2_POLY = [(156, 113), (263, 113), (263, 10), (88, 10), (88, 38), (156, 38)]
 R1_X = (273.0, 511.0)
 
-# kind: mini (3.5 mm PJ398SM, hole 6), din (5-pin DIN, ring 19), usbc, usba, dc, trs (6.3 mm, hole 11), combo, rca, gnd, sw
-SIZE = {"mini": (6, 6), "din": (19, 19), "usbc": (9.4, 3.6), "usba": (13.5, 6.0), "dc": (11, 11), "trs": (11, 11),
-        "combo": (24, 30), "rca": (10, 10), "gnd": (8, 8), "sw": (8, 4)}
+# kind: mini (3.5 mm, hole 6), mini3 (stereo 3.5 mm PJ-3920-3A), din (5-pin DIN on nuts), usbc, usba, lan, dc, onoff,
+# trs (6.3 mm), combo, rca, gnd, sw
+SIZE = {"mini": (6, 6), "mini3": (6, 6), "din": (19, 19), "usbc": (9, 3.5), "usba": (13, 5.5), "lan": (16, 13), "dc": (11, 11),
+        "onoff": (12, 8), "trs": (11, 11), "combo": (24, 30), "rca": (10, 10), "gnd": (8, 8), "sw": (5, 9)}
 J = []      # (board, zone, label, kind, x, z, direction)
 
 
@@ -25,49 +29,46 @@ def jack(board, zone, label, kind, x, z, d):
     J.append((board, zone, label, kind, x, z, d))
 
 
-# ---------------------------------------------------------------- R2b shelf (R139): right-angle jacks in one row, z 18
-jack("R2b", "POWER / USB", "DC 12-24V", "dc", 12, 18, "in")
-jack("R2b", "POWER / USB", "USB-C PD", "usbc", 30, 18, "in")
-jack("R2b", "POWER / USB", "USB-C PC", "usbc", 48, 18, "io")
-jack("R2b", "POWER / USB", "USB-A", "usba", 67, 18, "io")
-jack("R2b", "MIDI DIN", "MIDI IN 1", "din", 92, 18, "in")
-jack("R2b", "MIDI DIN", "MIDI IN 2", "din", 115, 18, "in")
-for k in range(4):
-    jack("R2b", "MIDI DIN", f"MIDI OUT {k + 1}", "din", 140 + 23 * k, 18, "out")
-# ---------------------------------------------------------------- R2 (vertical, z 38-112): MIDI TRS column over the DINs
-jack("R2", "MIDI TRS", "TRS IN", "mini", 92, 98, "in")
-jack("R2", "MIDI TRS", "TRS OUT 1", "mini", 92, 76, "out")
-jack("R2", "MIDI TRS", "TRS OUT 2", "mini", 92, 54, "out")
-# ---------------------------------------------------------------- R2: CV and sync (6 x 3, pitch 20 x 22)
-cols = [140 + 20 * i for i in range(6)]
-for i, lab in enumerate(["CV IN 1", "CV IN 2", "CV IN 3", "CV IN 4", "CLK IN", "RESET IN"]):
-    jack("R2", "CV / SYNC", lab, "mini", cols[i], 98, "in")
-for i in range(6):
-    jack("R2", "CV / SYNC", f"CV OUT {i + 1}", "mini", cols[i], 76, "out")
-for i, lab in enumerate(["CV OUT 7", "CV OUT 8", "CLK OUT 1", "CLK OUT 2", "RESET OUT"]):
-    jack("R2", "CV / SYNC", lab, "mini", cols[i], 54, "out")
-# ---------------------------------------------------------------- R1: outputs (2 rows x 3)
-for i, lab in enumerate(["MAIN L", "MAIN R", "AUX L"]):
-    jack("R1", "OUTPUTS", lab, "trs", 285 + 23 * i, 75, "out")
-jack("R1", "OUTPUTS", "AUX R", "trs", 285, 38, "out")
-jack("R1", "OUTPUTS", "RCA L", "rca", 308, 38, "out")
-jack("R1", "OUTPUTS", "RCA R", "rca", 331, 38, "out")
-# ---------------------------------------------------------------- R1: inputs
-jack("R1", "INPUTS", "MIC/LINE 1", "combo", 368, 75, "in")
-jack("R1", "INPUTS", "MIC/LINE 2", "combo", 396, 75, "in")
-jack("R1", "INPUTS", "HI-Z 1", "trs", 368, 35, "in")
-jack("R1", "INPUTS", "HI-Z 2", "trs", 396, 35, "in")
-jack("R1", "INPUTS", "PHONO L", "rca", 421, 82, "in")
-jack("R1", "INPUTS", "PHONO R", "rca", 421, 60, "in")
-jack("R1", "INPUTS", "GND", "gnd", 421, 39, "in")
-jack("R1", "INPUTS", "PHONO/LINE", "sw", 421, 20, "in")
+# ---------------------------------------------------------------- Power / USB: panel parts on nuts (R141)
+jack("panel", "POWER / USB", "LAN", "lan", 20, 78, "io")
+jack("panel", "POWER / USB", "USB-A", "usba", 40, 80, "io")
+jack("panel", "POWER / USB", "USB-C (PC)", "usbc", 62, 80, "io")
+jack("panel", "POWER / USB", "DC 12-24V", "dc", 22, 40, "in")
+jack("panel", "POWER / USB", "ON/OFF", "onoff", 52, 40, "in")
+# ---------------------------------------------------------------- Control: MIDI DIN 3 x 2 on nuts, TRS under them (R2)
+for lab, x, z, d in (("MIDI IN 1", 100, 82, "in"), ("MIDI OUT 1", 122, 82, "out"), ("MIDI OUT 3", 144, 82, "out"),
+                     ("MIDI IN 2", 100, 52, "in"), ("MIDI OUT 2", 122, 52, "out"), ("MIDI OUT 4", 144, 52, "out")):
+    jack("panel", "CONTROL", lab, "din", x, z, d)
+jack("R2", "CONTROL", "TRS IN", "mini3", 100, 22, "in")
+jack("R2", "CONTROL", "TRS OUT 1", "mini3", 122, 22, "out")
+jack("R2", "CONTROL", "TRS OUT 2", "mini3", 144, 22, "out")
+# ---------------------------------------------------------------- Control: sync, CV in, CV out (R2), pitch 17 x 22
+for i, (lab, d) in enumerate((("CLK OUT 1", "out"), ("CLK OUT 2", "out"), ("RESET OUT", "out"), ("CLK IN", "in"), ("RESET IN", "in"))):
+    jack("R2", "CONTROL", lab, "mini", 172 + 17 * i, 90, d)
+for i in range(4):
+    jack("R2", "CONTROL", f"CV IN {i + 1}", "mini", 172 + 17 * i, 68, "in")
 for i in range(8):
-    jack("R1", "INPUTS", f"LINE {i + 1}", "trs", 443 + 21 * (i % 4), 75 if i < 4 else 38, "in")
+    jack("R2", "CONTROL", f"CV OUT {i + 1}", "mini", 172 + 17 * (i % 4), 46 if i < 4 else 24, "out")
+# ---------------------------------------------------------------- Audio Out (R1)
+for lab, x, z in (("MAIN L", 292, 80), ("MAIN R", 322, 80), ("AUX L", 292, 52), ("AUX R", 322, 52)):
+    jack("R1", "AUDIO OUT", lab, "trs", x, z, "out")
+jack("R1", "AUDIO OUT", "RCA L", "rca", 292, 24, "out")
+jack("R1", "AUDIO OUT", "RCA R", "rca", 322, 24, "out")
+# ---------------------------------------------------------------- Audio In (R1)
+jack("R1", "AUDIO IN", "MIC/LINE 1", "combo", 370, 80, "in")
+jack("R1", "AUDIO IN", "MIC/LINE 2", "combo", 400, 80, "in")
+jack("R1", "AUDIO IN", "HI-Z 1", "trs", 370, 32, "in")
+jack("R1", "AUDIO IN", "HI-Z 2", "trs", 400, 32, "in")
+jack("R1", "AUDIO IN", "PHONO L", "rca", 428, 86, "in")
+jack("R1", "AUDIO IN", "PHONO R", "rca", 446, 86, "in")
+jack("R1", "AUDIO IN", "GND", "gnd", 468, 86, "in")
+jack("R1", "AUDIO IN", "PHONO/LINE", "sw", 490, 86, "in")
+for i in range(8):
+    jack("R1", "AUDIO IN", f"LINE {i + 1}", "trs", 428 + 22 * (i % 4), 56 if i < 4 else 28, "in")
 
-# (board, name, x0, x1, z of the band top or None = header above the panel)
-ZONES = [("R2b", "POWER / USB", 3, 78, 32), ("R2b", "MIDI DIN", 80, 221, 32),
-         ("R2", "MIDI TRS", 80, 104, 107), ("R2", "CV / SYNC", 128, 252, 107),
-         ("R1", "OUTPUTS", 273, 343, None), ("R1", "INPUTS", 353, 511, None)]
+# (board, name, x0, x1, z of the band top or None = header above the panel): the frames of the model
+ZONES = [("panel", "POWER / USB", 4.5, 78.5, None), ("R2", "CONTROL", 88.5, 262.5, None),
+         ("R1", "AUDIO OUT", 272.5, 342.5, None), ("R1", "AUDIO IN", 352.5, 510.5, None)]
 
 
 def svg():
@@ -79,17 +80,17 @@ def svg():
     o = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{w:.0f}" height="{h:.0f}" viewBox="0 0 {w:.0f} {h:.0f}" '
          'font-family="Helvetica, Arial, sans-serif">',
          f'<rect width="100%" height="100%" fill="#ffffff"/>',
-         f'<text x="{pad}" y="22" font-size="15" font-weight="bold">Rear panel - v2 (R140 base v1 + R139 jack shelf R2b; rear view, mm; R26: inputs framed, outputs filled)</text>',
+         f'<text x="{pad}" y="22" font-size="15" font-weight="bold">Rear panel - v3 = 3D model of panel v7 (R142; rear view, mm; R26: inputs framed, outputs filled; R141: DIN, USB, LAN, DC on nuts)</text>',
          f'<rect x="{X(0)}" y="{Z(H)}" width="{W * s}" height="{H * s}" fill="#f4f4f2" stroke="#222" stroke-width="1.5"/>']
     # usable band: jack tops below ~116 mm at 40 mm depth (doc 13, 3.6)
     o.append(f'<line x1="{X(0)}" y1="{Z(116)}" x2="{X(W)}" y2="{Z(116)}" stroke="#c33" stroke-dasharray="6 4"/>'
              f'<text x="{X(W) - 4}" y="{Z(116) - 4}" font-size="10" fill="#c33" text-anchor="end">jack tops below ~116 mm (doc 13, 3.6)</text>')
-    for b, (x0, x1), (z0, z1) in (("R2 vertical", R2_X, (38, 113)), ("R2b shelf (R139)", R2_X, (1, 36)),
-                                  ("R1 audio board", R1_X, (8, 104))):
-        tx, ta = (X(x1) - 4, "end") if "shelf" in b else (X(x0) + 4, "start")
-        o.append(f'<rect x="{X(x0)}" y="{Z(z1)}" width="{(x1 - x0) * s}" height="{(z1 - z0) * s}" fill="none" stroke="#88a" '
-                 f'stroke-dasharray="3 3"/><text x="{tx}" y="{Z(z1) + 12}" font-size="10" fill="#557" '
-                 f'text-anchor="{ta}">{b}, z {z0}-{z1}</text>')
+    pts = " ".join(f"{X(x):.1f},{Z(z):.1f}" for x, z in R2_POLY)
+    o.append(f'<polygon points="{pts}" fill="none" stroke="#88a" stroke-dasharray="3 3"/>'
+             f'<text x="{X(258)}" y="{Z(113) + 12}" font-size="10" fill="#557" text-anchor="end">R2 control board (vertical)</text>')
+    x0, x1 = R1_X
+    o.append(f'<rect x="{X(x0)}" y="{Z(104)}" width="{(x1 - x0) * s}" height="{96 * s}" fill="none" stroke="#88a" '
+             f'stroke-dasharray="3 3"/><text x="{X(x1) - 4}" y="{Z(104) + 12}" font-size="10" fill="#557" text-anchor="end">R1 audio board</text>')
     for b, name, x0, x1, zt in ZONES:
         y = Z(H) - 2 if zt is None else Z(zt)
         o.append(f'<text x="{X((x0 + x1) / 2)}" y="{y - 4}" font-size="{11 if zt is None else 9}" font-weight="bold" '
@@ -99,24 +100,24 @@ def svg():
         sw, sh = SIZE[kind]
         fill = "#2b2b2b" if d == "out" else "#ffffff"
         tcol = "#ffffff" if d == "out" else "#222"
-        bw, bh = max(sw + 4, 13), sh + (14 if kind == "mini" else 12)
+        bw, bh = max(sw + 4, 13), sh + (14 if kind in ("mini", "mini3") else 12)
         # R26 marking: output = filled plate, input = frame
         o.append(f'<rect x="{X(x - bw / 2)}" y="{Z(z + sh / 2 + 3)}" width="{bw * s}" height="{bh * s}" rx="3" '
                  f'fill="{fill if d == "out" else "none"}" stroke="#222" stroke-width="{1.4 if d != "out" else 0}"/>')
         hole = "#bbbbbb" if d == "out" else "#dddddd"
-        if kind in ("usbc", "usba", "sw"):
+        if kind in ("usbc", "usba", "sw", "lan", "onoff"):
             o.append(f'<rect x="{X(x - sw / 2)}" y="{Z(z + sh / 2)}" width="{sw * s}" height="{sh * s}" rx="2" fill="{hole}" stroke="#222"/>')
         elif kind == "combo":
             o.append(f'<circle cx="{X(x)}" cy="{Z(z)}" r="{11 * s}" fill="{hole}" stroke="#222"/>'
                      f'<circle cx="{X(x)}" cy="{Z(z)}" r="{3.2 * s}" fill="#fff" stroke="#222"/>')
         else:
             o.append(f'<circle cx="{X(x)}" cy="{Z(z)}" r="{sw / 2 * s}" fill="{hole}" stroke="#222"/>')
-        lines = lab.rsplit(" ", 1) if kind == "mini" and " " in lab else [lab]
-        fs = (6.0 if len(lines[0]) > 7 else 7.0) if kind == "mini" else (7.5 if len(lab) > 9 else 8.5)
+        lines = lab.rsplit(" ", 1) if kind in ("mini", "mini3") and " " in lab else [lab]
+        fs = (6.0 if len(lines[0]) > 7 else 7.0) if kind in ("mini", "mini3") else (7.5 if len(lab) > 9 else 8.5)
         for k, t in enumerate(lines):
             o.append(f'<text x="{X(x)}" y="{Z(z - sh / 2 - 4.5) + k * 9}" font-size="{fs}" text-anchor="middle" fill="{tcol}">{t}</text>')
-    o.append(f'<text x="{pad}" y="{h - 8}" font-size="10" fill="#555">v1 by Claude (cloud) 14.11.2026, task #20; v2 by Claude (PC) 14.11.2026 after R139/R140 - '
-             f'positions are centres (x from the left seen from behind, z from the bottom). Jack rows and z are estimates until the parts are chosen.</text>')
+    o.append(f'<text x="{pad}" y="{h - 8}" font-size="10" fill="#555">v3 (PC, 14.11.2026): positions of the 3D model of panel v7 (model3d/index.html), R141-R143 - '
+             f'positions are centres (x from the left seen from behind, z from the bottom). </text>')
     o.append("</svg>")
     return "\n".join(o), w, h
 
@@ -124,7 +125,7 @@ def svg():
 def main():
     os.makedirs(OUT, exist_ok=True)
     text, w, h = svg()
-    p = os.path.join(OUT, "rear_panel_v2.svg")
+    p = os.path.join(OUT, "rear_panel_v3.svg")
     open(p, "w").write(text)
     try:
         from playwright.sync_api import sync_playwright
@@ -139,7 +140,7 @@ def main():
     print("| Jack | Board | Zone | Kind | x (rear view) | z | Panel x | Direction |")
     print("|---|---|---|---|---|---|---|---|")
     for b, zone, lab, kind, x, z, d in J:
-        if b in ("R2", "R2b"):
+        if b in ("R2", "panel") and zone in ("CONTROL", "POWER / USB"):
             print(f"| {lab} | {b} | {zone} | {kind} | {x:g} | {z:g} | {W - x:g} | {d} |")
 
 

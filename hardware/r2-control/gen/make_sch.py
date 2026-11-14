@@ -18,7 +18,7 @@ if __name__ == "__main__":
                           "RP2350A + USB2514B hub; MIDI per CA-033 (3.3 V); CV +-10 V = 8.06 (DAC - 1.25 V); CV in -10..+10 V -> 0..3.03 V",
                           HERE,
                           notes=(D.BUS_NOTE,
-                                 "Power from PW: +5 V, +-12 V; DIN, USB and power jacks are on the shelf R2b (R139), joined by a 2x7 comb",
+                                 "Power from PW: +5 V, +-12 V; MIDI DIN, USB, LAN and DC are panel parts on nuts (R141); DIN by cable to J PH headers",
                                  "Control to A1/R1: PH48_1, PH48_2, PHONO, MUTE (relays, R137), R2_OK - all pulled low while the RP2350 boots",
-                                 "Rev 0.3: schematic only; board and jack positions follow the rear panel v2 (tools/rear_panel.py)"))
+                                 "Rev 0.4: jack positions = 3D model of panel v7 (R142, tools/rear_panel.py v3); placed, not routed"))
     B.write_project(os.path.join(HERE, ".."), D.NAME)

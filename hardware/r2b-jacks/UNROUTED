@@ -1,1 +1,0 @@
-Rev 0.2: schematic and placed board; routing will be done in EasyEDA Pro (hardware/for-routing/R2b). CI keeps the DRC report but does not fail on this board until this file is removed.

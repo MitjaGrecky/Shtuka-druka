@@ -23,18 +23,23 @@ Y2,24MHz,Crystal_SMD_3225-4Pin_3.2x2.5mm,C70590,проверить в EasyEDA
 "R13,R14,R15,R16,R17,R18,R86,R89,R92,R95,R99,R102",100k,R_0402_1005Metric,,номера нет: выбрать деталь
 J3,USB up,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
 "J4,J5,J6",USB down,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
-J7,to R2b,PinSocket_2x07_P2.54mm_Horizontal,,номера нет: выбрать деталь
-J8,to A1/R1,PinHeader_2x05_P2.54mm_Vertical,,номера нет: выбрать деталь
+J7,DIN OUT 1,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,,номера нет: выбрать деталь
+J8,DIN OUT 2,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,,номера нет: выбрать деталь
+J9,DIN OUT 3,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,,номера нет: выбрать деталь
+J10,DIN OUT 4,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,,номера нет: выбрать деталь
+J11,DIN IN 1,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,,номера нет: выбрать деталь
+J12,DIN IN 2,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,,номера нет: выбрать деталь
+J13,to A1/R1,PinHeader_2x05_P2.54mm_Vertical,,номера нет: выбрать деталь
 "R19,R21,R23,R25",33,R_1206_3216Metric,,номера нет: выбрать деталь
 "R20,R22,R24,R26",10,R_0402_1005Metric,,номера нет: выбрать деталь
 "R27,R28,R33,R34",220,R_0402_1005Metric,,номера нет: выбрать деталь
 "D2,D3,D8,D9",1N4148W,D_SOD-123,,номера нет: выбрать деталь
 "U5,U6,U7,U8",TLP2361,SO-5-6_4.55x3.7mm_P1.27mm,C107626,проверить в EasyEDA
-"J9,J10,J11",PJ366ST,Jack_3.5mm_QingPu_WQP-PJ366ST_Vertical_CircularHoles,,номера нет: выбрать деталь
+"J14,J15,J16",PJ-3920-3A,Jack_3.5mm_Hroparts_PJ-3920-3A_Vertical,C707259,проверить в EasyEDA
 "R29,R30,R31,R32",22,R_0402_1005Metric,,номера нет: выбрать деталь
 "U9,U10",DAC80504,Texas_RTE0016D_WQFN-16-1EP_3x3mm_P0.5mm_EP0.8x0.8mm_ThermalVias,C2862796,проверить в EasyEDA
 "R38,R40,R43,R45,R48,R50,R53,R55,R58,R60,R63,R65,R68,R70,R73,R75",80.6k,R_0402_1005Metric,,номера нет: выбрать деталь
-"J12,J13,J14,J15,J16,J17,J18,J19,J20,J21,J22,J23,J24,J25,J26,J27,J28",PJ398SM,Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles,C9900009788,проверить в EasyEDA
+"J17,J18,J19,J20,J21,J22,J23,J24,J25,J26,J27,J28,J29,J30,J31,J32,J33",PJ398SM,Jack_3.5mm_QingPu_WQP-PJ398SM_Vertical_CircularHoles,C9900009788,проверить в EasyEDA
 "R77,R80,R83",5.1k,R_0402_1005Metric,,номера нет: выбрать деталь
 "U11,U12,U13",OPA4197,TSSOP-14_4.4x5mm_P0.65mm,C2057327,проверить в EasyEDA
 "R87,R90,R93,R96",33k,R_0402_1005Metric,,номера нет: выбрать деталь

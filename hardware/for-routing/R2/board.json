@@ -1,12 +1,12 @@
 {
  "id": "R2",
  "name": "r2-control",
- "title": "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; DIN, USB and power jacks on R2b",
- "rev": "0.3",
- "w": 258.0,
- "h": 102.0,
+ "title": "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables",
+ "rev": "0.4",
+ "w": 175.0,
+ "h": 103.0,
  "layers": 4,
- "parts": 216,
+ "parts": 221,
  "holes": [],
  "connectors": [
   [
@@ -35,43 +35,43 @@
   ],
   [
    "J7",
-   "to R2b"
+   "DIN OUT 1"
   ],
   [
    "J8",
-   "to A1/R1"
+   "DIN OUT 2"
   ],
   [
    "J9",
-   "PJ366ST"
+   "DIN OUT 3"
   ],
   [
    "J10",
-   "PJ366ST"
+   "DIN OUT 4"
   ],
   [
    "J11",
-   "PJ366ST"
+   "DIN IN 1"
   ],
   [
    "J12",
-   "PJ398SM"
+   "DIN IN 2"
   ],
   [
    "J13",
-   "PJ398SM"
+   "to A1/R1"
   ],
   [
    "J14",
-   "PJ398SM"
+   "PJ-3920-3A"
   ],
   [
    "J15",
-   "PJ398SM"
+   "PJ-3920-3A"
   ],
   [
    "J16",
-   "PJ398SM"
+   "PJ-3920-3A"
   ],
   [
    "J17",
@@ -120,7 +120,27 @@
   [
    "J28",
    "PJ398SM"
+  ],
+  [
+   "J29",
+   "PJ398SM"
+  ],
+  [
+   "J30",
+   "PJ398SM"
+  ],
+  [
+   "J31",
+   "PJ398SM"
+  ],
+  [
+   "J32",
+   "PJ398SM"
+  ],
+  [
+   "J33",
+   "PJ398SM"
   ]
  ],
- "bom_lines": 44
+ "bom_lines": 49
 }

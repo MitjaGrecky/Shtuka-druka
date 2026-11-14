@@ -7,7 +7,7 @@ Handles: round and oval (slotted) through-hole pads, plain holes (NPTH), the bod
 courtyard (+0.25 mm), silkscreen tracks (layer 3). The footprint origin is the centre of the pad field (the board writer
 centres connectors on it). Unnumbered pads (EasyEDA "E", shield tabs) become mechanical pads with no number.
 
-Usage: lcsc_fp.py JSON NAME OUT_DIR [--descr TEXT]        License: AGPL-3.0-or-later.
+Usage: lcsc_fp.py JSON NAME OUT_DIR [--descr TEXT] [--rename 1=S,2=T,3=R]        License: AGPL-3.0-or-later.
 """
 import argparse
 import json
@@ -22,6 +22,7 @@ def main():
     ap.add_argument("name")
     ap.add_argument("out_dir")
     ap.add_argument("--descr", default="")
+    ap.add_argument("--rename", default="", help="pad renames, e.g. 1=S,2=T,3=R (to match the KiCad symbol's pin numbers)")
     a = ap.parse_args()
     d = json.load(open(a.json, encoding="utf-8"))["result"]
     shapes = d["packageDetail"]["dataStr"]["shape"]
@@ -32,13 +33,25 @@ def main():
             kind, x, y, w, h, num, hole_r = f[1], float(f[2]), float(f[3]), float(f[4]), float(f[5]), f[8], float(f[9] or 0)
             rot = float(f[11] or 0)
             slot = float(f[13]) if len(f) > 13 and f[13] else 0.0
-            pads.append((kind, x, y, w, h, num, hole_r, rot, slot))
+            pts = [float(v) for v in f[10].split()] if f[10].strip() else []
+            horiz = len(pts) >= 4 and abs(pts[2] - pts[0]) >= abs(pts[3] - pts[1])   # slot direction from its end points
+            pads.append((kind, x, y, w, h, num, hole_r, rot, slot, horiz))
         elif f[0] == "HOLE":
             holes.append((float(f[1]), float(f[2]), float(f[3])))
         elif f[0] == "SOLIDREGION" and f[1] == "99":
-            nums = [float(v) for v in re.findall(r"-?\d+\.?\d*", f[3])]
-            xs, ys = nums[0::2], nums[1::2]
-            body = (min(xs), min(ys), max(xs), max(ys))
+            xs, ys, r = [], [], 0.0
+            for cmd, args in re.findall(r"([MLA])\s*([-\d.,\s]+)", f[3]):
+                v = [float(t) for t in re.split(r"[\s,]+", args.strip()) if t]
+                if cmd == "A":                                  # rx ry rot large sweep x y: keep the end point and radius
+                    r = max(r, v[0])
+                    v = v[5:7]
+                xs += v[0::2]
+                ys += v[1::2]
+            if r:                                               # circle made of arcs: centre +- r
+                mx, my = (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2
+                body = (mx - r, my - r, mx + r, my + r)
+            else:
+                body = (min(xs), min(ys), max(xs), max(ys))
         elif f[0] == "TRACK" and f[2] == "3":
             pts = [float(v) for v in f[4].split()]
             silk.append(list(zip(pts[0::2], pts[1::2])))
@@ -62,19 +75,17 @@ def main():
     for line in silk:
         for (ax, ay), (bx, by) in zip(line, line[1:]):
             o.append(f'  (fp_line (start {X(ax):g} {Y(ay):g}) (end {X(bx):g} {Y(by):g}) (stroke (width 0.12) (type solid)) (layer "F.SilkS"))')
-    for kind, x, y, w, h, num, hr, rot, slot in pads:
-        num = "" if not num.isdigit() else num
+    ren = dict(kv.split("=") for kv in a.rename.split(",") if kv)
+    for kind, x, y, w, h, num, hr, rot, slot, horiz in pads:
+        num = "" if not num.isdigit() else ren.get(num, num)
         size_w, size_h = w * U, h * U
         drill_d = 2 * hr * U
-        if kind == "OVAL" and slot:                           # slot along the long side of the pad
+        if kind == "OVAL" and slot:                           # slot and the pad's long side along the hole's end points
             slot_l = slot * U
-            if rot in (90, 270):
-                size_w, size_h = size_h, size_w
-                drill = f"(drill oval {drill_d:g} {slot_l:g})"
-                shape = "oval"
-            else:
-                drill = f"(drill oval {slot_l:g} {drill_d:g})"
-                shape = "oval"
+            lo, sh = max(size_w, size_h), min(size_w, size_h)
+            size_w, size_h = (lo, sh) if horiz else (sh, lo)
+            drill = f"(drill oval {slot_l:g} {drill_d:g})" if horiz else f"(drill oval {drill_d:g} {slot_l:g})"
+            shape = "oval"
         else:
             drill = f"(drill {drill_d:g})"
             shape = "circle" if kind == "ELLIPSE" else ("rect" if kind == "RECT" else "oval")

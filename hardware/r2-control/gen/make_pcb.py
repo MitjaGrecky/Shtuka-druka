@@ -12,4 +12,4 @@ import design as D  # noqa: E402
 import module_pcb  # noqa: E402
 
 if __name__ == "__main__":
-    module_pcb.main(D, [(f"R2 Control rev {D.REV}", (30.0, 70.0)), ("Shtuka Druka CERN-OHL-S-2.0", (30.0, 71.6))], HERE)
+    module_pcb.main(D, [(f"R2 Control rev {D.REV}", (40.0, 99.0)), ("Shtuka Druka CERN-OHL-S-2.0", (40.0, 100.6))], HERE)

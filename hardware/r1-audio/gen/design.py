@@ -1,25 +1,28 @@
 """R1 - Audio board at the rear wall (left part, Audio Out + Audio In blocks of the 3D model, R142): the audio jacks and the
-analog front end. Every input leaves R1 as a differential pair scaled to the converters' full scale (2 Vrms differential,
+analog front end. Every input leaves R1 as a differential pair scaled to the full scale of the A1 input buffer (8 Vrms differential,
 referred to GND); the Cirrus buffers around ADC_VMID / DAC_VMID (AN0635, AN0679) sit next to the converters on A1.
 Single source of truth for the schematic. Research: docs/ru/34_rear_boards_research.md (2, 3), doc 28; decisions R16, R23,
 R64-R66, R72, R88, R116-R118, R135-R137.
 
-Level plan (rev 0.1, to check against the CS5308P / CS4308P datasheets):
-- ADC full scale assumed 2.0 Vrms differential at the A1 buffer input (AN0635 buffer gain 1; CS4308P I-V stage of AN0679
-  gives 2 Vrms) - "check FS".
-- Line 1-8 (TRS, balanced): OPA1637 diff-in diff-out, gain 1.62k/10k = 0.162: +24 dBu (12.28 Vrms) -> 1.99 Vrms (R135).
+Level plan (rev 0.2, checked by the cloud, task #24: CS53A04P DS1397 (CS5304P/8P family), CS4308P DS1317, AN0635, AN0679):
+- ADC: 0 dBFS = 2.0 Vrms differential at the ADC pins. The recommended AN0635 buffer (inverting, 1.2k in / 300 R
+  feedback, 68 uF per leg) has gain 1/4: 0 dBFS = 8 Vrms differential at its input. A1 uses it unchanged, so R1 delivers
+  8.33 Vrms diff at FS (8 x (1200 + 49.9) / 1200, the 49.9 R build-out is in series). Rev 0.1 assumed 2 Vrms: gains x 4.17.
+- Line 1-8 (TRS, balanced): OPA1637 gain 6.81k / (10k + 100 R) = 0.674: FS at +24.1 dBu (R135).
 - Mic/Line 1-2 (combo): phantom 6.81k + 47 uF on XLR (R72), TRS joins after the blocking caps (no phantom on TRS); OPA1612
-  two-op-amp front end gain 4 (+12 dB; Rf 1k, Rg 665); "loud" path OPA1637 x 0.137 (FS at +13.6 dBu in), "quiet" path
-  x 13.7 (+40 dB, FS at -26.4 dBu in) - R117 (glued in xcore A).
-- Hi-Z 1-2: 1 MOhm, OPA1642 buffer x 1, then OPA1637 single-ended -> differential: loud x 0.649 (FS at +12 dBu),
-  quiet x 64.9 (+40 dB).
-- Phono L/R: relay per channel (R118, default = line): line -> OPA1637 x 1 (FS 2 Vrms); phono -> RIAA on OPA1612
-  (+40 dB at 1 kHz, approximate network) -> OPA1637 x 1.
-- Outputs: DAC pairs from A1 (2 Vrms diff) -> OPA1612 difference amp x 3.09 -> +18.2 dBu (R64), impedance-balanced TRS
+  two-op-amp front end gain 1 + 2 x 499 / 332 = 4.01 (+12 dB, lower Rg noise); loud path x 0.681 (FS at +11.9 dBu in;
+  front end clips at about +13.6 dBu), quiet path 68.1k / 1k (+40 dB over loud, FS at -28.1 dBu in) - R117.
+- Hi-Z 1-2: 1 MOhm, OPA1642 buffer x 1, then OPA1637 single-ended -> differential: loud x 1.37 (FS at +17.9 dBu),
+  quiet x 137 (+40 dB, FS at -22.1 dBu).
+- Phono L/R: relay per channel (R118, default = line): line -> OPA1637 x 4.12 (FS 2.02 Vrms = +8.3 dBu, CD level);
+  phono -> computed RIAA (+35.0 dB at 1 kHz, error < 0.05 dB 20 Hz - 20 kHz; FS 36 mV at 1 kHz): active 3180/318 us
+  (68.1k || 47n + 7.42k over 130 R + 470 uF), passive 75 us (787 R + 100n into the 16.7k FDA input) -> OPA1637 x 4.12.
+- Outputs: DAC pairs from A1 (CS4308P 1.67 mA rms x 1.2k = 2.0 Vrms diff) -> OPA1612 difference amp x 3.09 ->
+  6.19 Vrms = +18.0 dBu (R64), impedance-balanced TRS
   (hot through 47 R, cold 47 R to GND), RCA = copy of Main (R23); NO relays per pair open without power (R66, R137),
   closed only when MUTE and R2_OK are both high (R118).
 
-Rev 0.1 (14.11.2026, PC) = schematic only; jacks vertical-mount (Neutrik NCJ6FI-V, NJ3FD-V), RCA part to choose.
+Rev 0.1 (14.11.2026, PC) = schematic only; rev 0.2 (14.11.2026, cloud #24) = levels and values checked; jacks vertical-mount (Neutrik NCJ6FI-V, NJ3FD-V), RCA part to choose.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -32,9 +35,9 @@ import kit as K  # noqa: E402
 NAME = "r1-audio"
 ID = "R1"
 TITLE = "R1 - Audio jacks and analog front end: mic/Hi-Z two paths, line 1-8, phono, Main/Aux/RCA out on relays"
-REV = "0.1"
+REV = "0.2"
 M1_LIB = K.M1_LIB
-BUS_NOTE = ("R1 -> A1: 18 differential ADC pairs (FS 2 Vrms diff), A1 -> R1: 4 DAC pairs; phantom per channel and phono/line "
+BUS_NOTE = ("R1 -> A1: 18 differential ADC pairs (FS 8 Vrms diff into the AN0635 buffers), A1 -> R1: 4 DAC pairs; phantom per channel and phono/line "
             "from R2 (R118); output relays need MUTE and R2_OK (R137)")
 PWR_FLAG_NETS = ("+12V", "-12V")   # ERC: rails from the PW connector feed power inputs (op-amps)
 NO_PWR_FLAG = ("+3V3",)
@@ -96,7 +99,7 @@ def parts():
         C(cf, f"{name}_ON", f"{name}_IP", fp=C0603, Note="Cf C0G")
         R("49.9", f"{name}_OP", outp, Note="isolates the cable to A1")
         R("49.9", f"{name}_ON", outn)
-        C("1n C0G", outp, outn, fp=C0603, Note="differential RF filter - check with the AN0635 input filter on A1")
+        C("1n C0G", outp, outn, fp=C0603, Note="differential RF filter, 1.6 MHz with 2 x 49.9 R; the A1 buffer filters again")
         supply(u)
 
     # ---------------------------------------------------------------- power and control
@@ -133,12 +136,13 @@ def parts():
     for k in (1, 2):
         q = ref("Q")
         add(q, "Transistor_BJT:MMBTA92", "MMBTA92", SOT23, {"1": f"P48_{k}_B", "2": "+48V", "3": f"P48_{k}"},
-            LCSC="C3009890", Note=f"phantom {k} switch (300 V PNP); ramp by the base RC ~0.5 s")
+            LCSC="C3009890", Note=f"phantom {k} switch (300 V PNP), Miller ramp")
         R("100k", "+48V", f"P48_{k}_B", Note="base pull-up: off by default")
-        R("47k", f"P48_{k}_B", f"P48_{k}_BC", Note="base drive")
-        C("10u 63V", f"P48_{k}_B", "+48V", fp=C1210, Note="slow turn-on and turn-off - check ramp")
-        add(ref("Q"), "Transistor_BJT:MMBT3904", "MMBT3904", SOT23, {"1": f"PH48_{k}_G", "2": "GND", "3": f"P48_{k}_BC"},
-            Note="level shift from R2 (3.3 V)")
+        R("100k", f"P48_{k}_B", f"P48_{k}_BC", Note="base drive about 0.45 mA: 11 mA at hFE 25")
+        C("2.2u 100V", f"P48_{k}_B", f"P48_{k}", fp=C1210,
+          Note="Miller C-B: linear ramp of about 0.1-0.2 s (X7R at 48 V keeps about 1 uF)")
+        add(ref("Q"), "Transistor_BJT:MMBTA42", "MMBTA42", SOT23, {"1": f"PH48_{k}_G", "2": "GND", "3": f"P48_{k}_BC"},
+            Note="level shift from R2 (3.3 V); 300 V NPN: its collector sees 48 V when off (MMBT3904 is 40 V)")
         R("10k", f"PH48_{k}", f"PH48_{k}_G")
         R("100k", f"PH48_{k}_G", "GND")
         R("47k", f"P48_{k}", "GND", fp=R0603, Note="bleeds the rail when off")
@@ -154,7 +158,7 @@ def parts():
         R("6.81k", f"P48_{k}", f"{m}_X3", fp=R1206, Note="phantom feed 0.1 %, matched pair")
         CP("47u 63V", f"{m}_X2", f"{m}_P", fp=CP8, Note="phantom blocking (doc 34, 2.3)")
         CP("47u 63V", f"{m}_X3", f"{m}_N", fp=CP8, Note="phantom blocking")
-        R("0", f"{m}_TT", f"{m}_P", Note="TRS tip joins after the caps (no phantom on TRS) - pad if line levels clip, check")
+        R("0", f"{m}_TT", f"{m}_P", Note="TRS tip joins after the caps (no phantom on TRS); FS +11.9 dBu, clip +13.6 dBu")
         R("0", f"{m}_TR", f"{m}_N")
         for leg in ("P", "N"):
             R("10k", f"{m}_{leg}", "GND", Note="discharge / bias")
@@ -164,16 +168,16 @@ def parts():
         u = ref("U")
         add(u, "Amplifier_Operational:OPA1612AxD", "OPA1612", SOIC8,
             {"1": f"{m}_A", "2": f"{m}_FA", "3": f"{m}_PS", "4": "-12V", "5": f"{m}_NS", "6": f"{m}_FB", "7": f"{m}_B", "8": "+12V"},
-            LCSC="C94590", Note="two-op-amp front end, gain 1 + 2 x 1k / 665 = 4 (+12 dB)")
-        R("1k", f"{m}_A", f"{m}_FA", Note="0.1 %")
-        R("1k", f"{m}_B", f"{m}_FB", Note="0.1 %")
-        R("665", f"{m}_FA", f"{m}_FB", Note="Rg 0.1 %")
+            LCSC="C94590", Note="two-op-amp front end, gain 1 + 2 x 499 / 332 = 4.01 (+12 dB)")
+        R("499", f"{m}_A", f"{m}_FA", Note="0.1 %")
+        R("499", f"{m}_B", f"{m}_FB", Note="0.1 %")
+        R("332", f"{m}_FA", f"{m}_FB", Note="Rg 0.1 %")
         supply(u)
         base = 2 * (k - 1)                              # mic 1 -> ADC1/2, mic 2 -> ADC3/4
-        fda(f"{m}L", f"{m}_A", f"{m}_B", f"ADC{base + 1}_P", f"ADC{base + 1}_N", "10k", "1.37k", "100p",
-            f"Mic {k} loud path -> ADC{base + 1} (FS at +13.6 dBu in)")
-        fda(f"{m}Q", f"{m}_A", f"{m}_B", f"ADC{base + 2}_P", f"ADC{base + 2}_N", "1k", "13.7k", "10p",
-            f"Mic {k} quiet path (+40 dB) -> ADC{base + 2}")
+        fda(f"{m}L", f"{m}_A", f"{m}_B", f"ADC{base + 1}_P", f"ADC{base + 1}_N", "10k", "6.81k", "150p",
+            f"Mic {k} loud path -> ADC{base + 1} (FS at +11.9 dBu in)")
+        fda(f"{m}Q", f"{m}_A", f"{m}_B", f"ADC{base + 2}_P", f"ADC{base + 2}_N", "1k", "68.1k", "18p",
+            f"Mic {k} quiet path (+40 dB, FS at -28.1 dBu in) -> ADC{base + 2}")
 
     # ---------------------------------------------------------------- Hi-Z 1-2: OPA1642 buffer, two paths
     u = ref("U")
@@ -193,10 +197,10 @@ def parts():
     supply(u)
     for k in (1, 2):
         base = 4 + 2 * (k - 1)                          # Hi-Z 1 -> ADC5/6, Hi-Z 2 -> ADC7/8
-        fda(f"H{k}L", f"H{k}_B", "GND", f"ADC{base + 1}_P", f"ADC{base + 1}_N", "10k", "6.49k", "47p",
-            f"Hi-Z {k} loud path -> ADC{base + 1} (FS at +12 dBu)")
-        fda(f"H{k}Q", f"H{k}_B", "GND", f"ADC{base + 2}_P", f"ADC{base + 2}_N", "1k", "64.9k", "4.7p",
-            f"Hi-Z {k} quiet path (+40 dB) -> ADC{base + 2}")
+        fda(f"H{k}L", f"H{k}_B", "GND", f"ADC{base + 1}_P", f"ADC{base + 1}_N", "10k", "13.7k", "68p",
+            f"Hi-Z {k} loud path -> ADC{base + 1} (FS at +17.9 dBu)")
+        fda(f"H{k}Q", f"H{k}_B", "GND", f"ADC{base + 2}_P", f"ADC{base + 2}_N", "1k", "137k", "18p",
+            f"Hi-Z {k} quiet path (+40 dB, FS at -22.1 dBu) -> ADC{base + 2}")
 
     # ---------------------------------------------------------------- Phono L/R: relay phono/line, RIAA on OPA1612
     u_riaa = ref("U")
@@ -207,22 +211,23 @@ def parts():
             Note="RCA with a nut, vertical mount - part to choose with the board")
         add(ref("K"), RELAY[0], "G6K-2F-Y 5V", RELAY[1],
             {"A1": "+5V", "A2": "PHONO_K", "11": f"{p}_J", "12": f"{p}_LIN", "14": f"{p}_RIN",
-             "21": f"{p}_DRV", "22": f"{p}_LIN", "24": f"{p}_ROUT"},
+             "21": f"{p}_DRV", "22": f"{p}_LIN", "24": f"{p}_R75"},
             LCSC="C37516489", Note="de-energised = line (R2 boots low); energised = phono (R118)")
         R("47k", f"{p}_RIN", "GND", Note="MM load 47k")
         C("100p C0G", f"{p}_RIN", fp=C0603, Note="MM load capacitance")
         R("100", f"{p}_RIN", f"{p}_RINS", fp=R0603)
         ip, im, o = ("3", "2", "1") if k == 1 else ("5", "6", "7")
         riaa_pins.update({ip: f"{p}_RINS", im: f"{p}_RFB", o: f"{p}_ROUT"})
-        R("316", f"{p}_RFB", f"{p}_RG", Note="RIAA gain leg - check (+40 dB at 1 kHz)")
-        CP("100u 16V", f"{p}_RG", "GND", fp=CP63, Note="DC gain 1")
-        R("316k", f"{p}_ROUT", f"{p}_RN1", Note="RIAA 3180 us: 316k x 10n - check network")
-        C("10n C0G", f"{p}_ROUT", f"{p}_RN1", fp=C0805)
-        R("31.6k", f"{p}_RN1", f"{p}_RFB", Note="RIAA 318 us / 75 us section - check")
-        C("2.4n C0G", f"{p}_RN1", f"{p}_RFB", fp=C0603)
+        R("130", f"{p}_RFB", f"{p}_RG", Note="RIAA gain leg 0.1 %: +35.0 dB at 1 kHz")
+        CP("470u 16V", f"{p}_RG", "GND", fp=CP8, Note="DC gain 1, corner 2.6 Hz")
+        R("68.1k", f"{p}_ROUT", f"{p}_RN1", Note="RIAA 3180 us: 68.1k x 47n, 0.1 %")
+        C("47n C0G", f"{p}_ROUT", f"{p}_RN1", fp=C1206, Note="1 %")
+        R("7.42k", f"{p}_RN1", f"{p}_RFB", Note="RIAA 318 us: 9 x (Rg + R2), 0.1 %")
+        R("787", f"{p}_ROUT", f"{p}_R75", fp=R0603, Note="passive 75 us: (787 || 16.7k FDA input) x 100n")
+        C("100n C0G", f"{p}_R75", fp=C1206, Note="75 us, 1 %")
         R("100k", f"{p}_LIN", "GND", Note="line input bias")
         fda(f"PF{side}", f"{p}_DRV", "GND", f"ADC{8 + k}_P", f"ADC{8 + k}_N",
-            "10k", "10k", "47p", f"Phono/line {side} -> ADC{8 + k} (x 1, FS 2 Vrms)")
+            "10k", "41.2k", "22p", f"Phono/line {side} -> ADC{8 + k} (x 4.12, FS 2.02 Vrms)")
     add(u_riaa, "Amplifier_Operational:OPA1612AxD", "OPA1612", SOIC8, riaa_pins, LCSC="C94590", Note="RIAA L/R")
     supply(u_riaa)
     add(ref("Q"), "Transistor_FET:2N7002", "2N7002", SOT23, {"1": "PHONO_G", "2": "GND", "3": "PHONO_K"}, Note="phono relays")
@@ -239,7 +244,7 @@ def parts():
         C("1n C0G", f"L{k}_TS", fp=C0603)
         C("1n C0G", f"L{k}_RS", fp=C0603)
         fda(f"L{k}", f"L{k}_TS", f"L{k}_RS", f"ADC{10 + k}_P", f"ADC{10 + k}_N",
-            "10k", "1.62k", "220p", f"Line {k} -> ADC{10 + k} (+24 dBu FS)")
+            "10k", "6.81k", "150p", f"Line {k} -> ADC{10 + k} (FS +24.1 dBu)")
 
     # ---------------------------------------------------------------- outputs: OPA1612 difference amps, impedance-balanced, relays
     outs = [("ML", "MAIN L"), ("MR", "MAIN R"), ("AL", "AUX L"), ("AR", "AUX R")]
@@ -249,7 +254,7 @@ def parts():
         for (ch, _), (ip, im, o) in zip(outs[2 * i:2 * i + 2], (("3", "2", "1"), ("5", "6", "7"))):
             pins.update({ip: f"{ch}_IP", im: f"{ch}_IM", o: f"{ch}_O"})
             R("10k", f"DAC_{ch}_P", f"{ch}_IP", Note="0.1 %")
-            R("30.9k", f"{ch}_IP", "GND", Note="0.1 %: gain 3.09 -> +18.2 dBu at DAC FS (R64)")
+            R("30.9k", f"{ch}_IP", "GND", Note="0.1 %: gain 3.09 -> 6.19 Vrms = +18.0 dBu at DAC FS (R64)")
             R("10k", f"DAC_{ch}_N", f"{ch}_IM", Note="0.1 %")
             R("30.9k", f"{ch}_O", f"{ch}_IM", Note="0.1 %")
             C("47p C0G", f"{ch}_O", f"{ch}_IM", fp=C0603)

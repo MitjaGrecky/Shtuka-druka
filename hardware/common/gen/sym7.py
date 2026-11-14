@@ -57,7 +57,7 @@ EXTRA.setdefault("Sensor_Energy", []).append("INA226")    # PW power monitor (R1
 # R1 audio board (14.11.2026)
 EXTRA["Connector_Audio"] += ["NCJ6FI-V", "AudioJack2"]
 EXTRA["Connector_Generic"] += ["Conn_02x20_Odd_Even", "Conn_02x25_Odd_Even"]
-EXTRA["Transistor_BJT"] += ["MMBTA92"]
+EXTRA["Transistor_BJT"] += ["MMBTA92", "MMBTA42"]
 EXTRA["Transistor_FET"] += ["2N7002"]
 EXTRA["Diode"] += ["1N4148W"]
 EXTRA.setdefault("Relay", []).append("Omron_G6K-2")
@@ -136,7 +136,7 @@ def from_kicad10(lib, names):
     """KiCad-7-format text blocks of the named symbols (and the symbols they extend) of a KiCad 9/10 library."""
     root = _parse(open(os.path.join(KSYM10, lib + ".kicad_sym"), encoding="utf-8").read())[0]
     syms = {c[1].strip('"'): c for c in root if isinstance(c, list) and c and c[0] == "symbol"}
-    want, out = list(names), {}
+    want, out = [n for n in names if n in syms], {}     # a symbol missing in an older installed library comes from the schematics
     while want:
         n = want.pop()
         if n in out:

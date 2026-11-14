@@ -46,6 +46,13 @@ def pin_name(lib_id, num):
     return _PIN_NAMES[lib_id].get(num, "").replace("/", "{slash}")
 
 
+def unconnected_net(ref, lib_id, num):
+    """KiCad's name for the net of a single unconnected pin: unconnected-(REF-NAME-PadN), or unconnected-(REF-PadN) when the
+    pin has no name (CI 13.11: R2 J17 had "unconnected-(J17--PadTN)", 17 parity warnings). "~" counts as no name."""
+    nm = pin_name(lib_id, num)
+    return f"unconnected-({ref}-{nm}-Pad{num})" if nm and nm != "~" else f"unconnected-({ref}-Pad{num})"
+
+
 def copy_fields(fp, fields):
     """Symbol fields (LCSC, Note, ...) onto the footprint, hidden, so schematic parity has nothing to report."""
     import pcbnew

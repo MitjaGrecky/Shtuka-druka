@@ -412,7 +412,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J17--PadTN)")
+			(net "unconnected-(J17-PadTN)")
 			(uuid "3bfb8a10-93d8-4762-96e4-fe979b76471f")
 		)
 		(zone
@@ -784,7 +784,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J31--PadTN)")
+			(net "unconnected-(J31-PadTN)")
 			(uuid "a5b8b2a3-d815-473c-8ed4-b5896d186e9f")
 		)
 		(zone
@@ -1156,7 +1156,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J23--PadTN)")
+			(net "unconnected-(J23-PadTN)")
 			(uuid "72768ba2-c26a-4a53-93d7-cb85e60a3743")
 		)
 		(zone
@@ -1528,7 +1528,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J20--PadTN)")
+			(net "unconnected-(J20-PadTN)")
 			(uuid "1e9a9575-56c5-4fda-aa00-79ace693db1d")
 		)
 		(zone
@@ -1900,7 +1900,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J21--PadTN)")
+			(net "unconnected-(J21-PadTN)")
 			(uuid "6fb95070-175d-4897-afff-85a01e26e4ed")
 		)
 		(zone
@@ -2272,7 +2272,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J30--PadTN)")
+			(net "unconnected-(J30-PadTN)")
 			(uuid "dccba351-d750-405a-8e6a-5b004cd1d1c3")
 		)
 		(zone
@@ -2644,7 +2644,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J25--PadTN)")
+			(net "unconnected-(J25-PadTN)")
 			(uuid "88833a6d-e6fc-46c3-8cb3-7be4c9ff246c")
 		)
 		(zone
@@ -3016,7 +3016,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J22--PadTN)")
+			(net "unconnected-(J22-PadTN)")
 			(uuid "99a63037-04a0-4ee1-a26e-43cdf3e22483")
 		)
 		(zone
@@ -3388,7 +3388,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J24--PadTN)")
+			(net "unconnected-(J24-PadTN)")
 			(uuid "b06056b6-7e5a-44c6-a342-92e492de51bc")
 		)
 		(zone
@@ -3760,7 +3760,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J18--PadTN)")
+			(net "unconnected-(J18-PadTN)")
 			(uuid "16ee35f3-6274-416a-b8a2-d81b6a678c7a")
 		)
 		(zone
@@ -4132,7 +4132,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J33--PadTN)")
+			(net "unconnected-(J33-PadTN)")
 			(uuid "7f67c872-4a84-49a7-bba3-0b86db978234")
 		)
 		(zone
@@ -4504,7 +4504,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J19--PadTN)")
+			(net "unconnected-(J19-PadTN)")
 			(uuid "19008b63-b7b3-47d7-af58-3a55d96c50f9")
 		)
 		(zone
@@ -4876,7 +4876,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J32--PadTN)")
+			(net "unconnected-(J32-PadTN)")
 			(uuid "b9bb122e-a2e6-4f71-94cb-12ece9b16076")
 		)
 		(zone
@@ -5248,7 +5248,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J26--PadTN)")
+			(net "unconnected-(J26-PadTN)")
 			(uuid "b410abbe-533c-4421-9d19-11293f8129b0")
 		)
 		(zone
@@ -5745,7 +5745,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J28--PadTN)")
+			(net "unconnected-(J28-PadTN)")
 			(uuid "aacfacdc-0856-48ef-9ccd-6bd24902789c")
 		)
 		(zone
@@ -6117,7 +6117,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J27--PadTN)")
+			(net "unconnected-(J27-PadTN)")
 			(uuid "7e74b1df-35f9-4950-a0b3-de748ad92eac")
 		)
 		(zone
@@ -6489,7 +6489,7 @@
 			(drill 1.42)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "unconnected-(J29--PadTN)")
+			(net "unconnected-(J29-PadTN)")
 			(uuid "e41515b6-14ee-465f-8877-2fb86ea35963")
 		)
 		(zone

@@ -101,7 +101,7 @@ def build(D, silk):
             if n:
                 pad.SetNet(net(n))
             elif num in p["pins"]:                         # pin left open: KiCad's name for it, so parity is clean
-                pad.SetNet(net_raw(f"unconnected-({p['ref']}-{B.pin_name(p['lib'], num)}-Pad{num})"))
+                pad.SetNet(net_raw(B.unconnected_net(p['ref'], p['lib'], num)))
 
     g = 0.35                                               # copper-to-edge keep-out for the router
     outline = getattr(D, "OUTLINE", None)                  # polygon (board mm) for boards with a notch; else the W x H rectangle

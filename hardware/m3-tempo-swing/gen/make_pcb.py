@@ -114,7 +114,7 @@ def build():
             if n:
                 pad.SetNet(net(n))
             elif num in p["pins"]:                         # pin left open: KiCad's name for it, so parity is clean
-                pad.SetNet(net_raw(f"unconnected-({p['ref']}-{B.pin_name(p['lib'], num)}-Pad{num})"))
+                pad.SetNet(net_raw(B.unconnected_net(p['ref'], p['lib'], num)))
 
     e = pcbnew.PCB_SHAPE(b)
     e.SetShape(pcbnew.SHAPE_T_RECT)

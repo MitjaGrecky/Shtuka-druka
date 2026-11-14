@@ -24,7 +24,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 19 V Mini-ITX, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "0.4"
+REV = "0.5"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D), battery 4S 12.8-16.8 V -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 12-24 V -> 19 V Mini-ITX (LM5176), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -319,8 +319,8 @@ def parts():
     add(ref("J"), "Connector_Generic:Conn_02x05_Odd_Even", "to A1/R1", MF.format("43045-1012_2x05"),
         {"1": "+12V", "2": "GND", "3": "-12V", "4": "GND", "5": "+5V", "6": "GND", "7": "+48V", "8": "GND", "9": "+5V", "10": "GND"},
         Note="audio boards: +-12 V quiet, +5 V digital (their own 3.3 V LDOs), +48 V phantom")
-    add(ref("J"), "Connector_Generic:Conn_01x03", "to F1", PH.format(n=3), {"1": "+12V", "2": "GND", "3": "-12V"},
-        Note="headphone amplifiers")
+    add(ref("J"), "Connector_Generic:Conn_01x04", "to F1", PH.format(n=4), {"1": "+12V", "2": "GND", "3": "-12V", "4": "+5V"},
+        Note="headphone amplifiers +-12 V and the mute relay coils +5 V (F1 'from PW')")
     add(ref("J"), "Connector_Generic:Conn_01x02", "+5V screen", PH.format(n=2), {"1": "+5V", "2": "GND"},
         Note="Waveshare 10.1DP-CAPLCD, 5 V / 4 W (R110)")
     R("2.2k", "+5V", "LED_K", Note="power LED")

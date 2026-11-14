@@ -68,6 +68,8 @@ Sources: CS53A04P datasheet DS1397 (same family as CS5304P/8P), CS4308P DS1317, 
 - Model vs R118: the model shows a Phono/Line switch on the wall, R118 says R2 switches phono/line (relays here).
 - The A1 buffers (AN0635, AN0679) are on A1: R1 only assumes them.
 
+Rev 0.4 (14.11.2026, PC): JST PH 3 "to F1 (mute)" with MUTE, R2_OK, GND for the headphone board.
+
 Checks: `tools/sch_netcheck.py hardware/r1-audio` - 440 symbol units, 1159 pins, 0 mismatches; every symbol pin listed.
 ERC by CI. OPA1637 symbol: project library (`hardware/m1-screen-knobs/gen/make_lib.py`, `opa1637()`).
 

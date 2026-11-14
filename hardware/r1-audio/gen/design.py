@@ -114,6 +114,10 @@ def parts():
          "10": "GND", "11": "ATT1", "12": "GND", "13": "ATT2", "14": "GND"},
         Note="same pinout as R2 'to A1/R1' (2x7 from rev 0.3: ATT1/ATT2 = Mic/Line attenuator relays); all lines pulled low on R2 while it boots")
 
+    add(ref("J"), "Connector_Generic:Conn_01x03", "to F1 (mute)", "Connector_JST:JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical",
+        {"1": "MUTE", "2": "R2_OK", "3": "GND"}, Note="MUTE and R2_OK for the headphone relays on F1 (parallel to the output relay logic); "
+        "the headphone board is at the front edge, R2's connector to R1 stays 2x7")
+
     # ---------------------------------------------------------------- board-to-board to A1
     adc = [f"ADC{k}" for k in range(1, 19)]
     a_pins = {}

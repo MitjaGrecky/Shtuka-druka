@@ -55,6 +55,10 @@ EXTRA["Regulator_Linear"] += ["TPS7A4701xRGW", "TPS7A3301RGW", "TPS7A4101DGN"]
 EXTRA["Connector_Generic"] += ["Conn_02x02_Odd_Even", "Conn_02x03_Odd_Even"]
 EXTRA.setdefault("Sensor_Energy", []).append("INA226")    # PW power monitor (R146)
 EXTRA.setdefault("74xx", []).append("74HC595")              # R2 output expander (task #25)
+# F1 headphone board (14.11.2026)
+EXTRA.setdefault("Amplifier_Audio", []).append("OPA1622")
+EXTRA["Connector_Audio"] += ["AudioJack3_Switch"]
+EXTRA["Connector_Generic"] += ["Conn_02x06_Odd_Even"]
 # R1 audio board (14.11.2026)
 EXTRA["Connector_Audio"] += ["NCJ6FI-V", "AudioJack2"]
 EXTRA["Connector_Generic"] += ["Conn_02x20_Odd_Even", "Conn_02x25_Odd_Even", "Conn_02x07_Odd_Even"]

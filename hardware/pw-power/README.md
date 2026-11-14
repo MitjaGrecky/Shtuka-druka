@@ -4,7 +4,7 @@ All the power of the instrument: three inputs joined by ideal diodes, the rear O
 Research: `docs/ru/34_rear_boards_research.md` (section 5). Decisions: R36 (Mini-ITX, 19 V), R40/R59/R109 (battery),
 R72 (DC 12-24 V with protection, USB-C PD), R110 (screen 5 V / 4 W), R118 (phantom), R145 (USB-C Power separate from the PC port).
 
-**Status: rev 0.4 - schematic only** (188 parts). Rev 0.4 (14.11.2026, PC): INA226 powered from its own 3.3 V (AP2112K-3.3 from +5V), because its VIH = 0.7 x VS = 3.5 V at 5 V. Rev 0.3 (14.11.2026, PC): INA226 power monitor (R146). Rev 0.1 (14.11.2026, PC): values after the TI datasheet examples.
+**Status: rev 0.5 - schematic only** (188 parts). Rev 0.5: "to F1" has +5V for the relays. Rev 0.4 (14.11.2026, PC): INA226 powered from its own 3.3 V (AP2112K-3.3 from +5V), because its VIH = 0.7 x VS = 3.5 V at 5 V. Rev 0.3 (14.11.2026, PC): INA226 power monitor (R146). Rev 0.1 (14.11.2026, PC): values after the TI datasheet examples.
 Rev 0.2 (14.11.2026, cloud, task #23): checked against the datasheets, table in `notes/handoff.md` (report #23). Still to measure
 on the board: the LM5176 and LM5156H loops (compensation taken from TI examples for other outputs).
 
@@ -36,7 +36,7 @@ on the board: the LM5176 and LM5156H loops (compensation taken from TI examples 
 | +5V panel | P2 hub (Micro-Fit 2x3) | +5V_PANEL x 3, GND x 3 |
 | to R2 | JST PH 5 | +12V, GND, -12V, GND, +5V (as R2 J1) |
 | to A1/R1 | Micro-Fit 2x5 | +12V, -12V, +5V x 2, +48V, GND x 5 |
-| to F1 | JST PH 3 | +12V, GND, -12V |
+| to F1 | JST PH 4 | +12V, GND, -12V, +5V (relay coils, F1 rev 0.1) |
 | +5V screen | JST PH 2 | +5V, GND |
 | I2C power monitor | JST PH 4 to P2 | SDA, SCL, ALERT, GND (pull-ups on P2) |
 

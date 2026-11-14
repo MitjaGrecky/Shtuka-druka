@@ -228,6 +228,13 @@
     (comp (ref "D9") (value "1N4148W") (footprint "Diode_SMD:D_SOD-123"))
     (comp (ref "Q2") (value "MMBT3904") (footprint "Package_TO_SOT_SMD:SOT-23"))
     (comp (ref "R107") (value "10k") (footprint "Resistor_SMD:R_0402_1005Metric"))
+    (comp (ref "H1") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H2") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H3") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H4") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H5") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H6") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H7") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
   )
   (nets
     (net (code "1") (name "+3V3")

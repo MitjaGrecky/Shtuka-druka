@@ -10,7 +10,7 @@ import math
 import os
 
 NAME = "m1-screen-knobs"
-LP = os.environ.get("M1_LP") == "1"               # rev 0.5 (job L, 11.11): one TI LP5864 (24 RGB) per pair of rings, 12 LEDs per ring
+LP = os.environ.get("M1_LP", "1") == "1"               # rev 0.5 is the default since 14.11.2026 (R148); M1_LP=0 builds the old rev 0.3. Rev 0.5 (job L, 11.11): one TI LP5864 (24 RGB) per pair of rings, 12 LEDs per ring
 REV = "0.5" if LP else "0.3"
 TITLE = "M1 - screen knobs module (8 encoders, touch, %d-LED RGB rings)" % (12 if LP else 13)
 

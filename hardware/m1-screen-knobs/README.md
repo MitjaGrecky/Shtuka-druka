@@ -1,5 +1,7 @@
 # M1 - screen knobs module
 
+**Current source (R148, 14.11.2026): rev 0.5** - four TI LP5864 (one per pair of rings), 12 RGB LEDs per ring, 4 corner holes + 3 in the gaps (x 56, 112, 168 mm, P97), 163 parts. `gen/design.py` builds rev 0.5 by default; `M1_LP=0` builds the old rev 0.3 (two IS31FL3741A, 13 LEDs, 8 holes), kept for history. The KiCad files here and `hardware/for-routing/M1` agree. The text below still describes rev 0.1-0.3.
+
 Eight smooth encoders with push and touch (Param 1-8 under the screen), each with a ring of 13 RGB LEDs.
 Spec and reasoning: `docs/ru/30_m1_screen_knobs.md`. Status: rev 0.1 - schematic done, board routed except 4 connections around U1 (see UNROUTED), light guide ready to print.
 

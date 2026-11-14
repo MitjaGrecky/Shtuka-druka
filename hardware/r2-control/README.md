@@ -4,7 +4,7 @@ The RP2350 of the control board (R85) with everything that is not audio at the r
 USB hub and the control lines to the audio boards. DIN, USB, LAN and DC are panel parts on nuts with cables (R141).
 Research and decisions: `docs/ru/34_rear_boards_research.md`, R118, R135-R143. Map of boards: `docs/ru/29_board_map.md`.
 
-**Status: rev 0.5 - schematic and placed board, not routed** (227 parts, 4 layers; 14.11.2026; rev 0.5 = ATT1/ATT2 and the 74HC595, task #25). Rear wall = the 3D model
+**Status: rev 0.6 - schematic and placed board, not routed** (234 parts, 4 layers; 14.11.2026; rev 0.5 = ATT1/ATT2 and the 74HC595, task #25; rev 0.6 = 7 x M3 mounting holes). Rear wall = the 3D model
 of panel v7 (R142). MIDI DIN, USB, LAN and DC are panel parts on nuts with short cables (R141, the shelf R2b of rev 0.3 is
 dropped): R2 carries the twenty 3.5 mm jacks and six JST PH headers for the DIN cables. Outline: the Control block, rear
 x 88-263, z 10-113, without the window behind the DIN sockets (rear x 88-156, z 38-113) - an L, 175 x 103 mm.
@@ -37,6 +37,10 @@ each channel packed next to their IC or jack (`hardware/common/gen/packer.py`). 
 MIDI TRS: stereo **PJ-3920-3A** from JLC stock (R143) - pin 1 sleeve, 2 tip, 3 ring per the Flux library: **check the sleeve on a
 sample** (tip and ring are swapped in firmware anyway, R32). Mono jacks: PJ398SM on the AudioJack2_SwitchT symbol (S, T, TN).
 Panel DIN sockets at a 22 mm pitch (model): pick a panel DIN whose flange fits (e.g. round-flange types), with the enclosure.
+Mounting (rev 0.6, proposal to settle with the enclosure): 7 x M3 (3.2 mm, ISO 7380 head keep-out) on standoffs to the rear wall, board
+coordinates (x, y): (80, 4), (162, 4), (171, 99), (4, 99) at the corners, (23, 79) in the bottom strip between the TRS jacks, (126.5, 56) and
+(92.5, 34) inside, in the 7.5 mm gaps between the jack columns and rows. The jacks' own nuts carry the plug force into the wall; the standoffs hold the
+board against flexing and the cable pull of the DIN and header connectors. Before this the board had no holes at all.
 Geometry without kicad-cli: `tools/pcb_geomcheck.py hardware/r2-control/r2-control.kicad_pcb` - 0 problems; pins = pads.
 
 Checks: `tools/sch_netcheck.py hardware/r2-control` - rev 0.5 (14.11.2026, PC): 239 symbol units, 707 pins, 0 mismatches against

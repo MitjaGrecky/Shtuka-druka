@@ -19,6 +19,8 @@ import pcbnew
 
 import json
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "common", "gen"))
+import boardkit as B  # noqa: E402
 import design as D
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -64,6 +66,26 @@ def save(b, path):
     b.Save(path)
 
 
+def _no_pour(z, v):
+    """KiCad 7 name SetDoNotAllowCopperPour, KiCad 9+ SetDoNotAllowZoneFills."""
+    for setter in ("SetDoNotAllowCopperPour", "SetDoNotAllowZoneFills"):
+        if hasattr(z, setter):
+            getattr(z, setter)(v)
+
+
+def _copy_fields(fp, fields):
+    """Symbol fields onto the footprint, hidden: KiCad 7 SetProperty, KiCad 8+ SetField (as hardware/common/gen/boardkit.py)."""
+    for k, v in fields.items():
+        if hasattr(fp, "SetField"):
+            fp.SetField(k, str(v))
+            for f in fp.GetFields():
+                if f.GetName() == k:
+                    f.SetVisible(False)
+                    f.SetLayer(pcbnew.B_Fab if fp.IsFlipped() else pcbnew.F_Fab)
+        else:
+            fp.SetProperty(k, str(v))
+
+
 def build():
     b = pcbnew.BOARD()
     b.SetCopperLayerCount(D.LAYERS)
@@ -71,7 +93,8 @@ def build():
     ds = b.GetDesignSettings()
     ds.m_TrackMinWidth, ds.m_MinClearance, ds.m_ViasMinSize, ds.m_MinThroughDrill = mm(0.1), mm(0.1), mm(0.4), mm(0.2)
     ds.m_CopperEdgeClearance = mm(0.3)
-    nc = ds.m_NetSettings.m_DefaultNetClass
+    ns = ds.m_NetSettings
+    nc = ns.m_DefaultNetClass if hasattr(ns, "m_DefaultNetClass") else ns.GetDefaultNetclass()   # KiCad 7 / 10
     nc.SetTrackWidth(mm(TRACK))
     nc.SetClearance(mm(CLEAR))
     nc.SetViaDiameter(mm(VIA[0]))
@@ -109,7 +132,7 @@ def build():
             fp.SetPosition(pcbnew.VECTOR2I(2 * P(x, y).x - cx, 2 * P(x, y).y - cy))
         fp.SetOrientationDegrees(r)
         if side == "bottom":
-            fp.Flip(fp.GetPosition(), True)
+            B.flip_bottom(fp)                    # same result in KiCad 7 and 9/10 (task #15)
         if p["ref"] == "J1":                     # centre the pad field on (x, y)
             xs = [pd.GetPosition().x for pd in fp.Pads()]
             ys = [pd.GetPosition().y for pd in fp.Pads()]
@@ -122,9 +145,7 @@ def build():
                 pad.SetLocalClearance(mm(0.35))
         if p["fields"].get("DNP") == "yes":
             fp.SetAttributes(fp.GetAttributes() | pcbnew.FP_EXCLUDE_FROM_BOM | pcbnew.FP_EXCLUDE_FROM_POS_FILES)
-        for k, v in p["fields"].items():          # symbol fields on the footprint too (schematic parity)
-            if k not in ("DNP", "Side"):
-                fp.SetProperty(k, v)
+        _copy_fields(fp, {k: v for k, v in p["fields"].items() if k not in ("DNP", "Side")})   # schematic parity
         for pad in fp.Pads():
             num = pad.GetNumber()
             n = p["pins"].get(num)
@@ -154,7 +175,7 @@ def build():
         z.SetLayerSet(pcbnew.LSET.AllCuMask(D.LAYERS))
         z.SetDoNotAllowTracks(True)
         z.SetDoNotAllowVias(True)
-        z.SetDoNotAllowCopperPour(True)
+        _no_pour(z, True)
         z.SetDoNotAllowPads(False)
         z.SetDoNotAllowFootprints(False)
         z.SetZoneName(f"under_encoder_{k + 1}")
@@ -172,7 +193,7 @@ def build():
         z.SetLayerSet(pcbnew.LSET.AllCuMask(D.LAYERS))
         z.SetDoNotAllowTracks(True)
         z.SetDoNotAllowVias(True)
-        z.SetDoNotAllowCopperPour(False)
+        _no_pour(z, False)
         z.SetDoNotAllowPads(False)
         z.SetDoNotAllowFootprints(False)
         z.SetZoneName("edge")
@@ -384,7 +405,7 @@ def gnd_zone(b, layer, prio):
         for hx, hy in ((x - 6.0, y - 8.0), (x + 6.0, y - 8.0), (x + 6.0, y + 8.0), (x - 6.0, y + 8.0)):   # frame +-6; GND pins C, S2 stay on the plane
             p = P(hx, hy)
             hole.Append(p.x, p.y)
-        poly.BooleanSubtract(hole, pcbnew.SHAPE_POLY_SET.PM_FAST)
+        poly.BooleanSubtract(hole)
     z = pcbnew.ZONE(b)
     z.SetLayer(layer)
     z.SetNet(b.FindNet("GND"))

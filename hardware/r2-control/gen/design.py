@@ -9,6 +9,7 @@ not drawn yet; the 5-pin DIN footprint (CUI SDS-50J) and the locking DC jack are
 Rev 0.2 (14.11.2026, cloud, task #20): checked against the datasheets - RP2350 minimal design (inductor, crystal, BOOTSEL,
 shared 100 nF of pins 53/54), DAC80504 REFDIV high (2.5 V ref needs VDD >= 5.0 V undivided: the +5 V rail is not enough),
 CV difference amps x8.06 around REF/2, USB2514B straps left to the internal pull-downs, CRFILT/PLLFILT 100 nF, VBUS_DET 100k/100k.
+Rev 0.6 (14.11.2026, PC): 7 x M3 mounting holes on standoffs (review: the board had none), positions to settle with the enclosure.
 Rev 0.5 (14.11.2026, PC, task #25): ATT1/ATT2 for the Mic/Line attenuator relays of R1 rev 0.3, connector to A1/R1 2x7;
 PH48_1, PH48_2, PHONO, ATT1, ATT2 moved to a 74HC595 on the DAC SPI lines (GPIO 23 latch, 24 /OE, 25 free).
 Rev 0.4 (14.11.2026, PC, R141-R143): rear wall as the 3D model of panel v7; DIN, USB, LAN, DC are panel parts on nuts
@@ -28,7 +29,7 @@ import kit as K  # noqa: E402
 NAME = "r2-control"
 ID = "R2"
 TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables"
-REV = "0.5"
+REV = "0.6"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = Mini-ITX, down = RP2350, panel P2, A1 port A, spare")
@@ -61,7 +62,7 @@ BLOCK = {}      # ref -> group name for the placement (filled by parts())
 def parts():
     P = []
     G = ["power"]
-    n = {"R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "L": 0, "Y": 0, "SW": 0}
+    n = {"R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "L": 0, "Y": 0, "SW": 0, "H": 0}
 
     def ref(k):
         n[k] += 1
@@ -308,8 +309,17 @@ def parts():
         add(ref("D"), "Diode:1N4148W", "1N4148W", SOD123, {"1": f"{g}_B", "2": "GND"}, Note="negative input clamp")
         add(ref("Q"), "Transistor_BJT:MMBT3904", "MMBT3904", SOT23, {"1": f"{g}_B", "2": "GND", "3": g})
         R("10k", g, "+3V3")
+    G[0] = "mech"
+    for _ in HOLES:
+        add(ref("H"), "Mechanical:MountingHole", "M3", MOUNT_FP, {}, Note="M3 standoff to the rear wall; ISO 7380 head keep-out")
     return P
 
+
+# Mounting (rev 0.6, review 14.11.2026): 7 x M3 on standoffs to the rear wall, board coordinates (x, y), proposal to settle with the
+# enclosure: four corners of the L, one in the bottom strip between the TRS jacks, two inside between the jack columns/rows
+# (7.5 mm gaps). The jacks' own nuts carry the plug force into the wall; the standoffs only hold the board against flexing.
+HOLES = [(80.0, 4.0), (162.0, 4.0), (171.0, 99.0), (4.0, 99.0), (23.0, 79.0), (126.5, 56.0), (92.5, 34.0)]
+MOUNT_FP = "MountingHole:MountingHole_3.2mm_M3_ISO7380"
 
 # Board: vertical, F side (jacks) faces the rear wall; seen from behind (rear view): board x = x_rear - 88, y = 113 - z.
 # Outline = the Control block of the 3D model (rear x 88-263, z 10-113) without the window behind the six panel DIN sockets
@@ -352,6 +362,8 @@ def placement():
         fixed[r] = (169.0, 25.0 + 13.0 * k, 90, b)
     fixed[by["to A1/R1"]] = (168.0, 85.0, 0, b)
     fixed[by["SWD"]] = (160.0, 99.0, 0, b)
+    for hx, (x, y) in zip([p["ref"] for p in P if p["ref"].startswith("H")], HOLES):
+        fixed[hx] = (x, y, 0, t)
     groups = {}
     for p in P:
         if p["ref"] not in fixed:

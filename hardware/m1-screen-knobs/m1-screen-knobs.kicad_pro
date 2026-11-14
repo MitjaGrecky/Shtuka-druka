@@ -81,7 +81,11 @@
       },
       {
         "netclass": "LED_SW",
-        "pattern": "*_SW*"
+        "pattern": "/?_SW*"
+      },
+      {
+        "netclass": "LED_SW",
+        "pattern": "?_SW*"
       }
     ]
   },

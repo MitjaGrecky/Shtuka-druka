@@ -252,10 +252,10 @@ def placement():
             pl[f"D{k * RING_N + i + 1}"] = (x, y, a, "top")
     b, y = "bottom", STRIP_Y
     # shift registers with their pull-up packs, rear strip
-    for u, x, rn in (("U3", 15.0, ("RN1", "RN2")), ("U4", 95.0, ("RN3", "RN4")), ("U5", 209.0, ("RN5", "RN6"))):
+    for u, x, rn in (("U3", 15.0, ("RN1", "RN2")), ("U4", 101.0, ("RN3", "RN4")), ("U5", 212.0, ("RN5", "RN6"))):   # clear of the driver capacitors (x + 6.6) and the holes
         pl[u] = (x, y, 0, b)
         pl[rn[0]], pl[rn[1]] = (x - 6.0, y, 90, b), (x + 6.0, y, 90, b)
-    pl["R18"] = (215.0, 6.3, 0, b)
+    pl["R18"] = (217.5, 9.5, 0, b)
     # bus connector at the front of gap 2, its bulk capacitors just behind it
     pl["J1"] = (GAP[2], H - 3.0, 90, b)
     pl["C12"], pl["C13"] = (GAP[2], H - 6.7, 0, b), (GAP[2], H - 8.8, 0, b)
@@ -275,12 +275,12 @@ def placement():
         for n, c in enumerate(cs):
             pl[c] = (x + (6.6 if LP else 7.4), 2.0 + 2.2 * n, 0, b)
     # touch controller near the middle (gap 4), its series resistors in a row beside it
-    pl["U2"] = (118.0, 4.0, 0, b)
+    pl["U2"] = (118.0, 6.0, 0, b)
     for n in range(8):
-        pl[f"R{7 + n}"] = (104.5 + 1.2 * n, 4.0, 90, b)
+        pl[f"R{7 + n}"] = (104.5 + 1.2 * n, 9.0, 90, b)
     for n, c in enumerate(("C5", "C6", "C7", "C8")):
         pl[c] = (121.5, 1.6 + 1.6 * n, 0, b)
-    pl["C9"], pl["C10"], pl["C11"] = (15.0, 6.5, 0, b), (95.0, 6.5, 0, b), (209.0, 6.5, 0, b)
+    pl["C9"], pl["C10"], pl["C11"] = (15.0, 8.2, 0, b), (101.0, 8.2, 0, b), (212.0, 8.2, 0, b)
     for n, (hx, hy) in enumerate(HOLES):
         pl[f"H{n + 1}"] = (hx, hy, 0, "top")
     return pl

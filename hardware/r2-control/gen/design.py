@@ -6,8 +6,9 @@ Single source of truth for the schematic. Research and decisions: docs/ru/34_rea
 
 Rev 0.1 = schematic. The board outline and the jack positions follow the rear panel layout (doc 13, 3.5), which is
 not drawn yet; the 5-pin DIN footprint (CUI SDS-50J) and the locking DC jack are chosen with it.
-Values to check against datasheets before the board (marked "check"): RP2350 VREG parts (Raspberry Pi minimal design),
-DAC80504 GAIN/REFDIV straps and VDD headroom, USB2514B straps.
+Rev 0.2 (14.11.2026, cloud, task #20): checked against the datasheets - RP2350 minimal design (inductor, crystal, BOOTSEL,
+shared 100 nF of pins 53/54), DAC80504 REFDIV high (2.5 V ref needs VDD >= 5.0 V undivided: the +5 V rail is not enough),
+CV difference amps x8.06 around REF/2, USB2514B straps left to the internal pull-downs, CRFILT/PLLFILT 100 nF, VBUS_DET 100k/100k.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -20,7 +21,7 @@ import kit as K  # noqa: E402
 NAME = "r2-control"
 ID = "R2"
 TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync, power and USB jacks"
-REV = "0.1"
+REV = "0.2"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = Mini-ITX, down = RP2350, panel P2, A1 port A, spare")
@@ -48,7 +49,7 @@ GPIO_PIN = {0: "2", 1: "3", 2: "4", 3: "5", 4: "7", 5: "8", 6: "9", 7: "10", 8: 
 
 def parts():
     P = []
-    n = {"R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "L": 0, "Y": 0}
+    n = {"R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "L": 0, "Y": 0, "SW": 0}
 
     def ref(k):
         n[k] += 1
@@ -88,23 +89,25 @@ def parts():
            "21": "XIN", "22": "XOUT", "24": "SWCLK", "25": "SWDIO", "26": "RUN", "61": "GND"}
     mcu.update({GPIO_PIN[g]: net for g, net in GPIO.items()})
     add(u, "MCU_RaspberryPi:RP2350A", "RP2350A", "Package_DFN_QFN:QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm", mcu,
-        Note="R85; stock LCSC number to find (the EasyEDA library lists it under C9900136995)")
-    add(ref("L"), "Device:L", "3.3uH", "Inductor_SMD:L_Taiyo-Yuden_NR-30xx", {"1": "VREG_LX", "2": "DVDD"},
-        Note="VREG, >= 1.4 A (check: Raspberry Pi minimal design)")
-    R("33", "+3V3", "VREG_AVDD", Note="VREG_AVDD filter (check)")
+        LCSC="C42411118", Note="R85; RP2350A, LCSC C42411118 (Extended, 5380 in stock 14.11.2026)")
+    add(ref("L"), "Device:L", "3.3uH", "Inductor_SMD:L_Abracon_AOTA-B201610S", {"1": "VREG_LX", "2": "DVDD"},
+        LCSC="C42411119", Note="AOTA-B201610S3R3-101-T 2.1 A as in Raspberry Pi's minimal design; polarised: dot as on the "
+        "reference layout (Hardware design with RP2350); only 10 in stock at LCSC on 14.11.2026")
+    R("33", "+3V3", "VREG_AVDD", Note="VREG_AVDD filter 33 R + 4.7 uF (minimal design)")
     C("4.7u", "VREG_AVDD", fp=C0805)
-    R("33", "+3V3", "ADC_AVDD", Note="ADC supply filter (check)")
+    R("33", "+3V3", "ADC_AVDD", Note="ADC supply filter (own choice; the minimal design has 100 nF only)")
     C("1u", "ADC_AVDD")
     C("4.7u", "DVDD", fp=C0805)
     C("4.7u", "+3V3", fp=C0805, Note="VREG_VIN")
-    for _ in range(6):
+    for _ in range(7):                    # 6 x IOVDD + one shared by USB_OTP_VDD and QSPI_IOVDD (pins 53, 54)
         C("100n", "+3V3")
     for _ in range(3):
         C("100n", "DVDD")
     R("10k", "RUN", "+3V3")
     C("100n", "RUN")
     add(ref("Y"), "Device:Crystal_GND24", "12MHz", "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-        {"1": "XIN", "3": "XTAL_O", "2": "GND", "4": "GND"}, LCSC="C9002")
+        {"1": "XIN", "3": "XTAL_O", "2": "GND", "4": "GND"}, LCSC="C20625731",
+        Note="ABM8-272-T3, 10 pF load: 2 x 15 pF + ~3 pF stray (minimal design)")
     R("1k", "XOUT", "XTAL_O")
     C("15p", "XIN")
     C("15p", "XTAL_O")
@@ -112,7 +115,10 @@ def parts():
         {"1": "QSPI_SS", "2": "QSPI_SD1", "3": "QSPI_SD2", "4": "GND", "5": "QSPI_SD0", "6": "QSPI_SCLK", "7": "QSPI_SD3",
          "8": "+3V3"}, LCSC="C97521", Note="16 MB QSPI flash (same pinout as the W25Q16JVSS symbol)")
     C("100n", "+3V3")
-    R("10k", "QSPI_SS", "+3V3")
+    R("10k", "QSPI_SS", "+3V3", Note="DNF on the reference design; harmless with W25Q128JV")
+    R("1k", "QSPI_SS", "BOOTSEL", Note="BOOTSEL: button pulls QSPI_SS low (minimal design)")
+    add(ref("SW"), "Switch:SW_Push", "BOOTSEL", "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A", {"1": "BOOTSEL", "2": "GND"},
+        LCSC="C318884", Note="BOOTSEL (USB boot); picotool can also reboot into it over USB")
     R("27", "MCU_DM_R", "MCU_DM", Note="USB series")
     R("27", "MCU_DP_R", "MCU_DP", Note="USB series")
     add(ref("J"), "Connector_Generic:Conn_01x03", "SWD", PH.format(n=3), {"1": "SWCLK", "2": "SWDIO", "3": "GND"})
@@ -127,22 +133,23 @@ def parts():
          "12": None, "16": None, "18": None, "20": None, "13": "HUB_OCS", "17": "HUB_OCS", "19": "HUB_OCS", "21": "HUB_OCS",
          "14": "HUB_CRFILT", "34": "HUB_PLLFILT", "35": "HUB_RBIAS", "32": "HUB_XO", "33": "HUB_XI",
          "26": "HUB_RESET", "27": "HUB_VBUSDET", "30": "UP_DM", "31": "UP_DP",
-         "22": "HUB_STRAP", "24": "HUB_STRAP", "25": "HUB_STRAP", "28": "HUB_STRAP"},
-        LCSC="C220679", Note="straps all low = default configuration (check against the datasheet)")
-    R("10k", "HUB_OCS", "+3V3", Note="no over-current inputs: ports always powered")
-    R("10k", "HUB_STRAP", "GND", Note="CFG_SEL0/1, NON_REM0/1 low (check)")
-    C("1u", "HUB_CRFILT")
-    C("1u", "HUB_PLLFILT")
+         "22": None, "24": None, "25": None, "28": None},
+        LCSC="C220679", Note="straps CFG_SEL[1:0], NON_REM[1:0] low through the internal pull-downs = default "
+        "configuration (datasheet: strap low needs no part; HS_IND, SUSP_IND are LED outputs and must not be tied together)")
+    R("10k", "HUB_OCS", "+3V3", Note="no over-current inputs: ports always powered (OCS_N also has internal pull-ups)")
+    C("100n", "HUB_CRFILT", Note="datasheet: up to 0.1 uF low ESR")
+    C("100n", "HUB_PLLFILT", Note="datasheet: up to 0.1 uF low ESR")
     R("12k", "HUB_RBIAS", "GND", Note="1 %")
     add(ref("Y"), "Device:Crystal_GND24", "24MHz", "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-        {"1": "HUB_XI", "3": "HUB_XO", "2": "GND", "4": "GND"})
+        {"1": "HUB_XI", "3": "HUB_XO", "2": "GND", "4": "GND"}, LCSC="C70590",
+        Note="X322524MOB4SI, 12 pF load (datasheet: load caps typically 18 pF)")
     C("18p", "HUB_XI")
     C("18p", "HUB_XO")
     R("10k", "HUB_RESET", "+3V3")
     C("1u", "HUB_RESET")
-    R("10k", "UP_VBUS", "HUB_VBUSDET", Note="VBUS_DET from the Mini-ITX port")
-    R("20k", "HUB_VBUSDET", "GND")
-    for _ in range(4):
+    R("100k", "UP_VBUS", "HUB_VBUSDET", Note="VBUS_DET from the Mini-ITX port: 2:1 divider, 2 x 100k (datasheet)")
+    R("100k", "HUB_VBUSDET", "GND")
+    for _ in range(6):                    # VDDA33 x 4, VDD33 x 2
         C("100n", "+3V3")
     C("4.7u", "+3V3", fp=C0805)
     for note, pins in (("USB up: from the Mini-ITX USB header", {"1": "UP_VBUS", "2": "UP_DM", "3": "UP_DP", "4": "GND"}),
@@ -221,9 +228,10 @@ def parts():
         u = ref("U")
         add(u, "Analog_DAC:DAC80504", "DAC80504", "Package_DFN_QFN:Texas_RTE0016D_WQFN-16-1EP_3x3mm_P0.5mm_EP0.8x0.8mm_ThermalVias",
             {"1": f"DAC_REF{d + 1}", "2": f"DAC{4 * d + 1}", "3": f"DAC{4 * d + 2}", "4": f"DAC{4 * d + 3}", "5": f"DAC{4 * d + 4}",
-             "6": "GND", "7": "+5V", "8": "+3V3", "9": "+3V3", "10": "GND", "11": "GND", "12": f"DAC_CS{d + 1}",
+             "6": "GND", "7": "+5V", "8": "+3V3", "9": "+3V3", "10": "+3V3", "11": "GND", "12": f"DAC_CS{d + 1}",
              "13": "DAC_SCK", "14": "DAC_SDI", "15": None, "16": "+3V3", "17": "GND"},
-            LCSC="C2859652", Note="internal 2.5 V ref, gain 2 (0-5 V), reset to mid-scale = 0 V out (check straps)")
+            LCSC="C2862796", Note="DAC80504RTET; internal 2.5 V ref divided by 2 (REFDIV high) and gain 2 = 0-2.5 V "
+            "(undivided needs VDD >= 5.0 V); RSTSEL high = mid-scale = 0 V out; LDAC low = update on CS")
         C("100n", "+5V")
         C("100n", "+3V3")
         C("100n", f"DAC_REF{d + 1}")
@@ -242,13 +250,16 @@ def parts():
         p, m, o = SEC[s]
         pins[u].update({p: plus, m: minus, o: out})
 
-    sec(0, "DAC_REF1", "REFBUF", "REFBUF")                      # reference buffer for the 8 difference amps
-    for c in range(8):                                          # Vout = 4.02 (Vdac - 2.5 V): -10 ... +10 V
+    R("10k", "DAC_REF1", "REFHALF", Note="0.1 %: REF / 2 = 1.25 V = DAC mid-scale")
+    R("10k", "REFHALF", "GND", Note="0.1 %")
+    C("100n", "REFHALF")
+    sec(0, "REFHALF", "REFBUF", "REFBUF")                       # 1.25 V buffer for the 8 difference amps
+    for c in range(8):                                          # Vout = 8.06 (Vdac - 1.25 V): -10.1 ... +10.1 V
         sec(1 + c, f"CVP{c + 1}", f"CVN{c + 1}", f"CVO{c + 1}")
         R("10k", f"DAC{c + 1}", f"CVP{c + 1}", Note="0.1 %")
-        R("40.2k", f"CVP{c + 1}", "GND", Note="0.1 %")
+        R("80.6k", f"CVP{c + 1}", "GND", Note="0.1 %")
         R("10k", "REFBUF", f"CVN{c + 1}", Note="0.1 %")
-        R("40.2k", f"CVN{c + 1}", f"CVO{c + 1}", Note="0.1 %")
+        R("80.6k", f"CVN{c + 1}", f"CVO{c + 1}", Note="0.1 %")
         R("1k", f"CVO{c + 1}", f"CV{c + 1}_J", Note="output protection")
         jack(f"CV/GATE OUT {c + 1}", f"CV{c + 1}_J")
     for i, (g, name) in enumerate((("CLK_OUT1", "CLOCK OUT 1"), ("CLK_OUT2", "CLOCK OUT 2"), ("RST_OUT", "RESET/RUN OUT"))):

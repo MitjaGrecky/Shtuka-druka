@@ -36,8 +36,8 @@ jack("panel", "POWER / USB", "USB-C (PC)", "usbc", 62, 80, "io")
 jack("panel", "POWER / USB", "DC 12-24V", "dc", 22, 40, "in")
 jack("panel", "POWER / USB", "ON/OFF", "onoff", 52, 40, "in")
 # ---------------------------------------------------------------- Control: MIDI DIN 3 x 2 on nuts, TRS under them (R2)
-for lab, x, z, d in (("MIDI IN 1", 100, 82, "in"), ("MIDI OUT 1", 122, 82, "out"), ("MIDI OUT 3", 144, 82, "out"),
-                     ("MIDI IN 2", 100, 52, "in"), ("MIDI OUT 2", 122, 52, "out"), ("MIDI OUT 4", 144, 52, "out")):
+for lab, x, z, d in (("MIDI IN 1", 100, 82, "in"), ("MIDI OUT 1", 122, 82, "out"), ("MIDI OUT/THRU 3", 144, 82, "out"),
+                     ("MIDI IN 2", 100, 52, "in"), ("MIDI OUT 2", 122, 52, "out"), ("MIDI OUT/THRU 4", 144, 52, "out")):
     jack("panel", "CONTROL", lab, "din", x, z, d)
 jack("R2", "CONTROL", "TRS IN", "mini3", 100, 22, "in")
 jack("R2", "CONTROL", "TRS OUT 1", "mini3", 122, 22, "out")

@@ -181,7 +181,8 @@ def parts():
     for k in range(4):
         add(ref("J"), "Connector_Generic:Conn_01x03", f"DIN OUT {k + 1}", PH.format(n=3),
             {"1": f"MO{k + 1}_4", "2": f"MO{k + 1}_5", "3": "GND"},
-            Note=f"cable to the MIDI OUT {k + 1} socket on the rear wall: 1 -> pin 4, 2 -> pin 5, 3 -> pin 2 (shield)")
+            Note=f"cable to the MIDI OUT {k + 1} socket on the rear wall: 1 -> pin 4, 2 -> pin 5, 3 -> pin 2 (shield)"
+            + ("; panel label Out/Thru: Thru from In 1 or In 2 by PIO in firmware (R144)" if k >= 2 else ""))
     for k in range(2):
         add(ref("J"), "Connector_Generic:Conn_01x02", f"DIN IN {k + 1}", PH.format(n=2),
             {"1": f"MI{k + 1}_4", "2": f"MI{k + 1}_5"},

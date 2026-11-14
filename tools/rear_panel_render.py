@@ -119,8 +119,8 @@ box(12, 8, 52, 40, BODY, "On/Off", 30)
 E.append(f'<rect x="{X(52 - 4.5)}" y="{Z(40 + 3)}" width="{9 * S}" height="{6 * S}" rx="{0.5 * S}" fill="url(#alu)"/>')
 
 frame(88.5, 262.5, "Control")
-for lab, x, z, o in (("In 1", 100, 82, 0), ("Out 1", 122, 82, 1), ("Out 3", 144, 82, 1),
-                     ("In 2", 100, 52, 0), ("Out 2", 122, 52, 1), ("Out 4", 144, 52, 1)):
+for lab, x, z, o in (("In 1", 100, 82, 0), ("Out 1", 122, 82, 1), ("Out/Thru 3", 144, 82, 1),
+                     ("In 2", 100, 52, 0), ("Out 2", 122, 52, 1), ("Out/Thru 4", 144, 52, 1)):
     jack("din", x, z, lab, o)
 for lab, x, o in (("TRS In", 100, 0), ("TRS O1", 122, 1), ("TRS O2", 144, 1)):
     jack("mini", x, 22, lab, o)

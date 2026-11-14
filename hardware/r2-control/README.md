@@ -13,7 +13,7 @@ x 88-263, z 10-113, without the window behind the DIN sockets (rear x 88-156, z 
 |---|---|---|
 | MCU | RP2350A (C42411118), W25Q128JVSIQ (C97521, 16 MB QSPI), 12 MHz ABM8-272-T3 (C20625731), core regulator with 3.3 uH AOTA-B201610S3R3 (C42411119), BOOTSEL button | As Raspberry Pi's minimal design (Hardware design with RP2350) |
 | USB hub | USB2514B (C220679), 24 MHz X322524MOB4SI (C70590) | Up: Mini-ITX USB header. Down: 1 RP2350, 2 panel P2 (R86), 3 A1 port A (R82), 4 spare. Straps low by the internal pull-downs = default configuration |
-| MIDI DIN | 2 in (TLP2361 at 3.3 V), 4 out; sockets on the wall, one cable each to a JST PH header (out: 3 pins 4, 5, shield; in: 2 pins 4, 5) | CA-033 3.3 V: 33 R 0.5 W + 10 R per output; every output has its own port (R34) |
+| MIDI DIN | 2 in (TLP2361 at 3.3 V), 4 out; sockets on the wall, one cable each to a JST PH header (out: 3 pins 4, 5, shield; in: 2 pins 4, 5) | CA-033 3.3 V: 33 R 0.5 W + 10 R per output; every output has its own port (R34). Out 3, Out 4 = **Out/Thru** on the panel: Thru from In 1 or In 2 is set in the menu, the RP2350 PIO copies the input bit by bit (microseconds, no CPU), R144 |
 | MIDI TRS | 1 in, 2 out: stereo Hroparts PJ-3920-3A (C707259, R143) | Out: tip and ring each from a GPIO through 22 R - type A/B is swapped in firmware (R32). In: two optos back to back, type A and B both work |
 | CV/Gate out 1-8 | 2 x DAC80504RTET (C2862796; internal 2.5 V ref divided by 2, gain 2 = 0-2.5 V), 3 x OPA4197 (C2057327) on +-12 V | Vout = 8.06 (Vdac - 1.25 V) = -10.1 ... +10.1 V around a buffered REF/2; reset to mid-scale = 0 V; 1k output resistors. Step 0.31 mV = 0.37 cent at 1 V/oct |
 | CV in 1-4 | RP2350 ADC0-3 | -10 ... +10 V -> 0 ... 3.03 V (100k / 33k to 3.3 V / 39k to GND), BAT54S clamp |
@@ -57,10 +57,10 @@ Board "panel" = parts on nuts with a cable (R141); "R2" = on this board.
 | ON/OFF | panel | POWER / USB | onoff | 52 | 40 | 463 | in |
 | MIDI IN 1 | panel | CONTROL | din | 100 | 82 | 415 | in |
 | MIDI OUT 1 | panel | CONTROL | din | 122 | 82 | 393 | out |
-| MIDI OUT 3 | panel | CONTROL | din | 144 | 82 | 371 | out |
+| MIDI OUT/THRU 3 | panel | CONTROL | din | 144 | 82 | 371 | out |
 | MIDI IN 2 | panel | CONTROL | din | 100 | 52 | 415 | in |
 | MIDI OUT 2 | panel | CONTROL | din | 122 | 52 | 393 | out |
-| MIDI OUT 4 | panel | CONTROL | din | 144 | 52 | 371 | out |
+| MIDI OUT/THRU 4 | panel | CONTROL | din | 144 | 52 | 371 | out |
 | TRS IN | R2 | CONTROL | mini3 | 100 | 22 | 415 | in |
 | TRS OUT 1 | R2 | CONTROL | mini3 | 122 | 22 | 393 | out |
 | TRS OUT 2 | R2 | CONTROL | mini3 | 144 | 22 | 371 | out |

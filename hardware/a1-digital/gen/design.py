@@ -30,7 +30,7 @@ M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 ADC pairs (8 Vrms FS), A1 -> R1: Main/Aux DAC pairs, A1 -> F1: Phones pairs; xcore A: TDM master, SPI to the "
             "converters, USB port A (hub on R2), xcore B: USB port B through the ADuM4166 (isolated ground GNDPC)")
 PWR_FLAG_NETS = ("+12V", "-12V", "GNDPC", "PC_VBUS", "ISO_V1", "+0V9A", "+0V9B", "PLLA", "PLLB")   # ERC: R1 rails, computer side, buck outputs, filtered PLL supplies
-NO_PWR_FLAG = ()
+NO_PWR_FLAG = ("+3V3",)          # no plain +3V3 rail here (+3V3A and +3V3D): no standard power symbol for it
 W, H = 220.0, 100.0          # rough: under the slope on the left, about 220 x 100 mm (doc 29)
 LAYERS = 4
 

@@ -20,7 +20,7 @@ J6,MIC/LINE 1,Jack_XLR-6.35mm_Neutrik_NCJ6FI-V_Vertical,C368503,проверит
 "R17,R21,R46,R50",15k,R_0603_1608Metric,,номера нет: выбрать деталь
 "R18,R22,R47,R51",4.99k,R_0603_1608Metric,,номера нет: выбрать деталь
 "D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16",1N4148W,D_SOD-123,,номера нет: выбрать деталь
-"K1,K2,K3,K4,K5,K6,K7",G6K-2F-Y 5V,Relay_DPDT_Omron_G6K-2F-Y,C37516489,проверить в EasyEDA
+"K1,K2,K3,K4,K5,K6,K7",G6K-2F-Y 5V,Relay_DPDT_Omron_G6K-2F-Y,C2982926,проверить в EasyEDA
 "Q5,Q6,Q7,Q8,Q9",2N7002,SOT-23,,номера нет: выбрать деталь
 "R23,R34,R35,R52,R63,R64,R79,R80,R91,R92,R123,R215,R217",1k,R_0402_1005Metric,C11702,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1001TCE 1 кОм 1% 0402, Basic; наличие и цена не смотрелись"
 "C11,C26",470p C0G,C_0603_1608Metric,,номера нет: выбрать деталь

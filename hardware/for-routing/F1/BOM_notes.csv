@@ -13,6 +13,6 @@ D1,1N4148W,D_SOD-123,,номера нет: выбрать деталь
 "R9,R10,R14,R15,R21,R22,R26,R27",20k,R_0603_1608Metric,,номера нет: выбрать деталь
 "C7,C8,C11,C12",22p C0G,C_0603_1608Metric,,номера нет: выбрать деталь
 "R11,R16,R23,R28",10,R_0603_1608Metric,,номера нет: выбрать деталь
-"K1,K2",G6K-2F-Y 5V,Relay_DPDT_Omron_G6K-2F-Y,C37516489,проверить в EasyEDA
+"K1,K2",G6K-2F-Y 5V,Relay_DPDT_Omron_G6K-2F-Y,C2982926,проверить в EasyEDA
 J4,PHONES 1,Jack_6.35mm_Neutrik_NMJ6HCD2_Horizontal,C368502,проверить в EasyEDA
 J5,PHONES 2,Jack_6.35mm_Neutrik_NMJ6HCD2_Horizontal,C368502,проверить в EasyEDA

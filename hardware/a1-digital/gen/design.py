@@ -382,7 +382,7 @@ def placement():
     import autoplace
     # the two TLV62568 buck converters (U4, U5) and their inductors (L1, L2) go to the empty top-right corner: in rev 0.3 they sat
     # 16-32 mm from the 24.576 / 22.5792 MHz audio master clocks (Y1, Y2) and 63 mm from the CS5304P; now >= 80 mm from the clocks
-    fixed = {"U4": (246.0, 12.0, 0, "top"), "L1": (230.0, 12.0, 0, "top"), "U5": (214.0, 12.0, 0, "top"), "L2": (198.0, 12.0, 0, "top")}
+    fixed = {"U4": (210.0, 10.0, 0, "top"), "L1": (196.0, 10.0, 0, "top"), "U5": (210.0, 24.0, 0, "top"), "L2": (196.0, 24.0, 0, "top")}   # inside W = 220
     return autoplace.place(sys.modules[__name__], fixed=fixed)
 
 

@@ -1,12 +1,12 @@
 Designator,Value,Footprint,LCSC,Status of the LCSC number
 J1,DC in,Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical,,номера нет: выбрать деталь
 F1,7A,Fuse_2920_7451Metric,,номера нет: выбрать деталь
-D1,SMBJ28CA,D_SMB,C132572,проверить в EasyEDA
+D1,SMBJ28CA,D_SMB,C151259,проверить в EasyEDA
 "U1,U3,U4",LM74700-Q1,SOT-23-6,C2941042,проверить в EasyEDA
 "C1,C12,C13,C42,C52,C60,C67,C89",100n 25V,C_0603_1608Metric,,номера нет: выбрать деталь
 "Q1,Q2,Q3,Q4,Q5,Q6,Q7",CSD18540Q5B,TDSON-8-1,C86513,проверить в EasyEDA
 J2,USB-C Power in,Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical,,номера нет: выбрать деталь
-D2,SMBJ22CA,D_SMB,C127561,проверить в EasyEDA
+D2,SMBJ22CA,D_SMB,C224016,проверить в EasyEDA
 U2,TPS25730D,Texas_REF0038A_WQFN-38-2EP_6x4mm_P0.4,C22438973,проверить в EasyEDA
 "R1,R3",42.2k,R_0402_1005Metric,,номера нет: выбрать деталь
 "R2,R4,R5,R6,R7,R8,R17,R20,R44,R46,R50",10k,R_0402_1005Metric,C25744,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1002TCE 10 кОм 1% 0402, Basic; наличие и цена не смотрелись"
@@ -20,7 +20,7 @@ C5,10n 50V,C_0603_1608Metric,,номера нет: выбрать деталь
 C11,47u 35V,CP_Elec_8x10.5,,номера нет: выбрать деталь
 J3,Battery,Molex_Micro-Fit_3.0_43045-0412_2x02_P3.00mm_Vertical,,номера нет: выбрать деталь
 F2,10A,Fuse_2920_7451Metric,,номера нет: выбрать деталь
-D3,SMBJ20CA,D_SMB,C127559,проверить в EasyEDA
+D3,SMBJ20CA,D_SMB,C151258,проверить в EasyEDA
 J4,On/Off switch,Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical,,номера нет: выбрать деталь
 R9,5m,R_2512_6332Metric,,номера нет: выбрать деталь
 U5,INA226,MSOP-10_3x3mm_P0.5mm,C49851,проверить в EasyEDA

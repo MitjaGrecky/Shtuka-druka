@@ -1,4 +1,4 @@
-"""P2 - Grid deck, the main board of the panel (x 110-331.5, about 224 x 290 mm): the panel's RP2350 (R85), 64 pad sensors read through
+"""P2 - Grid deck, the main board of the panel (x 110-334, y 4-262, 224 x 258 mm): the panel's RP2350 (R85), 64 pad sensors read through
 8 x 74HC4051 and one ADC128S102 (V17, option a), 8 scene buttons and the two grid arrows, 109 RGB LEDs on 5 x LP5864, the strip of 25 lights,
 connectors for two Bela Trill Bars, the module bus of M1 (R123), three deck buses (R130) and the cables to PW (power, INA226) and the R2 hub (USB).
 Single source of truth for the schematic. Research: docs/ru/09_controls_research.md, docs/ru/29_board_map.md; decisions R85, R86, R106, R113,
@@ -31,8 +31,9 @@ BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8
             "buses to P1, P3, P4 (2x8) and M1 (2x7); power and INA226 from PW")
 PWR_FLAG_NETS = ("+5V_PANEL", "DVDD", "VREG_AVDD", "ADC_AVDD", "+3V3A", "VAP")
 NO_PWR_FLAG = ("+3V3",)
-W, H = 224.0, 290.0
-HOLES = [(4.0, 4.0), (220.0, 4.0), (4.0, 286.0), (220.0, 286.0), (112.0, 286.0), (190.0, 4.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
+W, H = 224.0, 258.0          # 16.11.2026: panel y 4-262 (was 290: it ran under M1, whose knob row is at y 263-297; fit model)
+Y0 = 4.0                     # panel y of the board's front edge
+HOLES = [(4.0, 4.0), (220.0, 4.0), (4.0, 254.0), (220.0, 254.0), (112.0, 254.0), (190.0, 4.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
 LAYERS = 4
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
@@ -258,17 +259,18 @@ def placement():
     # Rev 0.3 used it directly, so the strip and the arrows sat at the far edge and turning the board by 180 deg would also reverse
     # the columns (Codex review 15.11.2026). Now board y = H - panel y, as P1, P3 and P4 do: front edge (strip, arrows) at the bottom
     # of the KiCad view, scenes towards the screen at the top; column 1 stays on the musician's left.
-    fixed = {r: (x, round(H - y, 2), a, s) for r, (x, y, a, s) in fixed.items()}
-    # cable headers in a row along the far (rear) edge, top side - towards PW and R2 behind the panel (rev 0.3 had them there too)
+    fixed = {r: (x, round(Y0 + H - y, 2), a, s) for r, (x, y, a, s) in fixed.items()}   # y above = panel y
+    # cable headers in a row along the far (rear) edge, BOTTOM side (the cables go down to PW and R2; the top side there has the
+    # scene buttons, 16.11.2026)
     import packer
     byref = {p["ref"]: p for p in parts()}
-    x, y, rowh, margin = 12.0, 6.0, 0.0, 6.0
+    x, y, rowh, margin = 12.0, 14.0, 0.0, 6.0
     for r in [p["ref"] for p in parts() if p["ref"].startswith("J")]:
-        box, _ = packer._bbox(sys.modules[__name__], byref[r], 0, "top")
+        box, _ = packer._bbox(sys.modules[__name__], byref[r], 0, "bottom")
         w, h = box[2] - box[0], box[3] - box[1]
         if x + w > W - margin:
             x, y, rowh = margin, y + rowh + 2, 0.0
-        fixed[r] = (round(x - box[0], 1), round(y - box[1], 1), 0, "top")
+        fixed[r] = (round(x - box[0], 1), round(y - box[1], 1), 0, "bottom")
         x += w + 2
         rowh = max(rowh, h)
     fixed.update(K.hole_fixed(parts(), HOLES))

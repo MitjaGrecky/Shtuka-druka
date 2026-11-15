@@ -353,7 +353,26 @@ def placement():
     """Rev 0.2: rough automatic placement (hardware/common/gen/autoplace.py): connectors in a row along the bottom edge,
     ICs on a grid, small parts around the IC they share signals with. A starting point for the routing; mechanics not fixed yet."""
     import autoplace
-    return autoplace.place(sys.modules[__name__], fixed=K.hole_fixed(parts(), HOLES), conn_y=H - 8.5)   # header row clear of the bottom holes
+    fixed = K.hole_fixed(parts(), HOLES)
+    # 16.11.2026 (user: "do it properly, not hoping for the best"): the three low-noise LDOs (+-12 V and the phantom post-regulators)
+    # get their own corner, top side, away from every inductor and switcher (all of those stay on the bottom); their capacitors
+    # follow them. Positions are tuned below by QUIET_XY.
+    for p in parts():
+        if p["value"] in QUIET_XY:
+            fixed[p["ref"]] = QUIET_XY[p["value"]] + (0, "top")
+    # the switchers keep to the right two thirds, so nothing switching sits under the quiet corner (their inductors follow them)
+    for r, xy in NOISY_XY.items():
+        fixed[r] = xy + (0, "bottom")
+    follow = [r for r, v in fixed.items() if r in NOISY_XY or r.startswith("U") and v[3] == "top"]
+    return autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 8.5, follow=follow)   # header row clear of the bottom holes
+
+
+QUIET_XY = {"TPS7A4701": (12.0, 12.0), "TPS7A3301": (12.0, 30.0), "TPS7A4101": (28.0, 12.0)}
+# (IC, its inductor) by value order of parts(): U7 LM5176 + L1, U8/U9 TPS54560B + L2/L3, U10 LMR33640 +14 V + L4, U11 -14 V + L5,
+# U14 LM5156H phantom + L6, U16 LMR33640 15 V + L7; all on the bottom, right of x 40 (the quiet corner is x < 36, y < 38)
+NOISY_XY = {"U7": (46.0, 10.0), "L1": (62.0, 12.0), "U14": (80.0, 8.0), "L6": (93.0, 10.0),
+            "U8": (45.0, 28.0), "L2": (57.0, 30.0), "U9": (71.0, 28.0), "L3": (83.0, 30.0), "L7": (95.0, 34.0),
+            "U10": (43.0, 45.0), "L4": (53.0, 45.0), "U11": (64.0, 45.0), "L5": (74.0, 45.0), "U16": (85.0, 46.0)}
 
 
 if __name__ == "__main__":

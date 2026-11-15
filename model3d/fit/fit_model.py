@@ -193,34 +193,58 @@ def slope_boards_and_pocket(usb):
 
 
 SCREEN = os.environ.get("SCREEN", "EP")      # "EP" = Waveshare 10.1EP-CAPLCD (R150), "DP" = the earlier 10.1DP-CAPLCD
+SCREEN_ROT = int(os.environ.get("SCREEN_ROT", "180"))   # 180 (default since 16.11.2026, user) = EP turned upside down in its plane, image and touch flipped in software; 0 = as drawn
 
 
 def screen_parts_ep():
-    """Waveshare 10.1EP-CAPLCD (R150) from its dimension drawing (wiki, 10.1EP-CAPLCD-details-size.png, 15.11.2026):
-    glass 239 x 147, metal back 230.7 x 145.1, 7.3 mm from the glass front to the back, 21.9 mm overall with the driver
-    board; driver board 86.5 wide, seen from behind 72.7-159.2 mm from the left glass edge, about 42-103 mm above the
-    lower glass edge (read off the picture: +-2 mm). Its three sockets (Type-C power, Type-C touch, HDMI, from the top)
-    are on the board edge that faces the device's left (seen from the front), about 91 / 73 / 57 mm above the lower glass
-    edge. Same glass position as the DP. d = depth behind the glass front, n = -SKIN - d; device x grows to the right."""
+    """Waveshare 10.1EP-CAPLCD (R150) from its 2D drawing (files.waveshare.com/wiki/10.1EP-CAPLCD/10.1EP-CAPLCD.pdf,
+    read 16.11.2026): glass 239 x 147, metal back 230.7 x 145.1 (1.37 / 0.95 mm in from the glass edges), 7.3 mm from the
+    glass front to the back, 21.9 mm overall with the driver board; 8 x M2.5 in the back, 218.1 x 133 apart.
+    Driver board 86.5 x 60, seen from behind 72.72-159.22 mm from the back's left edge, 43.5-103.5 mm above its lower edge.
+    Its sockets are on the board edge that faces the device's left (seen from the front); above the lower glass edge:
+    3.5 mm audio 50, HDMI 66, Type-C (touch) 84.5, Type-C (power) 98.5 (pitch 16 / 18.5 / 14 on the drawing).
+    d = depth behind the glass front, n = -SKIN - d; device x grows to the right."""
     gx, gs = 220.75, s_of(365) + SCREEN_SHIFT
     xl = gx - 119.5                                         # left glass edge (front view)
 
-    def ep(name, x0, x1, s0, s1, d0, d1, **kw):            # x from the left glass edge, s from the lower glass edge
+    rot = SCREEN_ROT == 180
+
+    def ep(name, x0, x1, s0, s1, d0, d1, **kw):            # x from the left glass edge, s from the lower glass edge (as drawn)
+        if rot:                                              # screen turned 180 deg in its plane (image flipped in software)
+            x0, x1, s0, s1 = 239.0 - x1, 239.0 - x0, 147.0 - s1, 147.0 - s0
         return slope_box(name, "screen", xl + x0, xl + x1, gs - 73.5 + s0, gs - 73.5 + s1, -SKIN - d1, -SKIN - d0, **kw)
 
-    bx0, bx1 = 239.0 - 159.2, 239.0 - 72.7                  # driver board seen from the front: 79.8-166.3
+    bx0, bx1 = 239.0 - 1.37 - 159.22, 239.0 - 1.37 - 72.72  # driver board seen from the front: 78.4-164.9
     out = [
         ep("Screen glass", 0, 239, 0, 147, 0, 2.0, color="glass", note="239 x 147 lens"),
         ep("Screen LCM + back", 4.15, 234.85, 0.95, 146.05, 2.0, 7.3, color="lcd", note="metal back 230.7 x 145.1, 7.3 mm behind the glass front"),
-        ep("Screen driver board", bx0, bx1, 42, 103, 7.3, 11.5, color="pcb", note="86.5 x ~61 board on posts"),
-        ep("Screen driver parts", bx0, bx1, 42, 103, 11.5, 21.9, color="parts", est=True, note="sockets and parts, 21.9 mm overall"),
+        ep("Screen driver board", bx0, bx1, 44.45, 104.45, 7.3, 11.5, color="pcb", note="86.5 x 60 board on posts"),
+        ep("Screen driver parts", bx0, bx1, 44.45, 104.45, 11.5, 21.9, color="parts", est=True, note="sockets and parts, 21.9 mm overall"),
     ]
     # plugs leave the board edge at bx0 towards the device's left, parallel to the glass; then the cables turn inwards (down)
-    for nm, sc, w, ln in (("HDMI", 57.0, 22.0, 40.0), ("USB-C touch", 73.0, 13.0, 30.0), ("USB-C power", 91.0, 13.0, 30.0)):
+    if rot:     # turned 180 deg: the sockets face the right and sit low on the slope (power lowest), every cable turns in at once
+        for nm, sc, w, ln in (("HDMI", 66.0, 22.0, 40.0), ("USB-C touch", 84.5, 13.0, 30.0), ("USB-C power", 98.5, 13.0, 30.0)):
+            out.append(ep(f"Screen {nm} plug", bx0 - ln, bx0, sc - w / 2, sc + w / 2, 9.0, 21.0, color="plastic", est=True,
+                          note=f"straight {nm} plug, {ln:.0f} mm, lying behind the screen"))
+            out.append(ep(f"Screen {nm} cable bend", bx0 - ln - 25, bx0 - ln, sc - w / 2, sc + w / 2, 9.0, 21.0 + 30,
+                          color="plastic", est=True, note="cable turning inwards, bend radius about 25 mm"))
+        return out
+    for nm, sc, w, ln in (("HDMI", 66.0, 22.0, 40.0), ("USB-C touch", 84.5, 13.0, 30.0)):
         out.append(ep(f"Screen {nm} plug", bx0 - ln, bx0, sc - w / 2, sc + w / 2, 9.0, 21.0, color="plastic", est=True,
                       note=f"straight {nm} plug, {ln:.0f} mm, lying behind the screen"))
         out.append(ep(f"Screen {nm} cable bend", bx0 - ln - 25, bx0 - ln, sc - w / 2, sc + w / 2, 9.0, 21.0 + 30, color="plastic",
                       est=True, note="cable turning inwards, bend radius about 25 mm"))
+    # power (top socket, nearest the rear wall): turning inwards right after the plug, its bend hit R1 by 5 mm (16.11.2026).
+    # So the power cable stays flat behind the screen: along x past the other bends, then down the slope, and turns inwards low.
+    sc = 98.5
+    out.append(ep("Screen USB-C power plug", bx0 - 30, bx0, sc - 6.5, sc + 6.5, 9.0, 21.0, color="plastic", est=True,
+                  note="straight Type-C plug, 30 mm"))
+    out.append(ep("Screen USB-C power cable run", bx0 - 75, bx0 - 30, sc - 3.0, sc + 3.0, 9.0, 16.0, color="plastic", est=True,
+                  note="cable flat behind the screen, along x"))
+    out.append(ep("Screen USB-C power cable down", bx0 - 75, bx0 - 69, 40.0, sc + 3.0, 9.0, 16.0, color="plastic", est=True,
+                  note="cable flat behind the screen, down the slope"))
+    out.append(ep("Screen USB-C power cable bend", bx0 - 75, bx0 - 65, 15.0, 40.0, 9.0, 21.0 + 30, color="plastic", est=True,
+                  note="cable turning inwards near the fold, bend radius about 25 mm"))
     return out
 
 
@@ -284,7 +308,8 @@ def parts(usb=None):
 
     # panel boards under the flat part (doc 29); component envelope 4 mm under each
     z0, z1 = PCB_TOP - PCB, PCB_TOP
-    for nm, x0, x1, y0, y1 in (("P1 Left", 10, 102, 4, 291), ("P2 Grid", 110, 331.5, 4, 261),
+    for nm, x0, x1, y0, y1 in (("P1 Left", 10, 102, 4, 291), ("P2 Grid", 110, 334, 4, 262),   # 16.11.2026: P2 rev 0.4 outline 224 x 258 (was 221.5 x 257)
+                              
                                ("P3 Tracks", 339, 405, 4, 291), ("P4 Right", 413, 505, 4, 291)):
         a(box(nm, "panel", x0, x1, y0, y1, z0, z1, color="pcb"))
         a(box(nm + " parts below", "panel", x0 + 2, x1 - 2, y0 + 2, y1 - 2, z0 - 4, z0, color="parts", est=True,
@@ -367,7 +392,7 @@ def parts(usb=None):
         a(box("Mini-ITX board", "itx", hx0, hx1, hy0, hy1, H5_Z0, H5_Z0 + 1.6, color="pcb"))
         a(box("Mini-ITX parts H5", "itx", hx0, hx1, hy0, hy1, H5_Z0 + 1.6, H5_Z0 + H5_H, color="parts", est=True,
               note="ODROID-H5 with its heatsink, 44 mm overall"))
-    else:
+    elif COMPUTER == "ITX":
         a(box("Mini-ITX board", "itx", 136, 306, 45, 215, 9, 10.6, color="pcb"))
         a(box("Mini-ITX parts", "itx", 136, 306, 45, 215, 10.6, 45, color="parts", est=True,
               note="tallest: rear I/O stack and the heatsink (doc 27)"))
@@ -384,15 +409,54 @@ def parts(usb=None):
     # 15.11.2026: real outlines of the placed boards (A1 rev 0.4 220 x 100, PW rev 0.6 100 x 80, R1 rev 0.5 238 x 96, R2 rev 0.6 L-shape
     # 175 x 103); before they were the early estimates 140 x 90, 60 x 50, 238 x 104 and 258 x 104. Rear boards: model x = 515 - rear x.
     a(box("A1 audio board", "rear", 20, 240, 305, 405, 6, 28, color="pcb", note="220 x 100, rev 0.4; position not fixed"))
-    a(box("PW power", "rear", 300, 400, 320, 400, 6, 24, color="pcb", note="100 x 80, rev 0.6; position not fixed"))
-    a(box("Battery bay", "rear", 414, 504, 312, 398, 3, 48, color="battery"))
+    if COMPUTER == "H5REAR":
+        # 16.11.2026, the user's idea: the H5 where the battery bay was (rear right, under the slope), lying flat; the battery
+        # goes under the grid where the H5 used to be; PW moves 15 mm left to clear it.
+        a(box("PW power", "rear", 285, 385, 320, 400, 6, 24, color="pcb", note="100 x 80, rev 0.6; moved left for the H5"))
+        a(box("Mini-ITX board", "itx", 391, 511, 293, 413, H5_Z0, H5_Z0 + 1.6, color="pcb"))
+        a(box("Mini-ITX parts H5", "itx", 391, 511, 293, 413, H5_Z0 + 1.6, H5_Z0 + H5_H, color="parts", est=True,
+              note="ODROID-H5 in the old battery bay, 44 mm overall"))
+        a(box("Battery bay", "rear", 176, 266, 87, 173, 3, 48, color="battery", note="moved under the grid"))
+    else:
+        a(box("PW power", "rear", 300, 400, 320, 400, 6, 24, color="pcb", note="100 x 80, rev 0.6; position not fixed"))
+        a(box("Battery bay", "rear", 414, 504, 312, 398, 3, 48, color="battery"))
     a(box("R1 audio rear board", "rear", 4, 242, 413.4, 415, 8, 104, color="pcb", note="rear x 273-511, z 8-104"))
     # R2 (hardware/r2-control/gen/design.py OUTLINE): rear x 88-263, z 10-113 without the DIN window rear x 88-156, z 38-113
     a(box("R2 control rear board", "rear", 252, 359, 413.4, 415, 10, 113, color="pcb", note="L-shape, tall part"))
     a(box("R2 control rear board, low arm", "rear", 359, 427, 413.4, 415, 10, 38, color="pcb", note="L-shape, arm under the DIN window"))
     a(box("Rear jacks", "rear", 5, 510, 415, D - SKIN, 8, 112, color="metal", est=True,
           note="envelope of all rear jacks (417-457)"))
+    P += standoffs()
     return P
+
+
+def _board_design(proj):
+    spec = importlib.util.spec_from_file_location(proj.replace("-", "_") + "_design",
+                                                  os.path.join(REPO, "hardware", proj, "gen", "design.py"))
+    m = importlib.util.module_from_spec(spec)
+    for d in (os.path.join(REPO, "hardware", proj, "gen"), os.path.join(REPO, "hardware", "common", "gen")):
+        if d not in sys.path:
+            sys.path.insert(0, d)
+    spec.loader.exec_module(m)
+    return m
+
+
+def standoffs():
+    """16.11.2026: the M3 holes of each board (gen/design.py HOLES) become 6 mm standoffs of the enclosure, so the holes and
+    the case are one source. Floor boards: from the inner floor (z = SKIN) to the board underside (z 6); P2: from its top face
+    up to the top skin. Floor boards: board x along model x, board y (KiCad, down) towards the rear."""
+    out = []
+    for proj, tag, x0, y0 in (("a1-digital", "A1", 20, 305), ("pw-power", "PW", 285 if COMPUTER == "H5REAR" else 300, 320)):
+        d = _board_design(proj)
+        for k, (hx, hy) in enumerate(d.HOLES):
+            out.append(box(f"Standoff {tag} H{k + 1}", "standoff", x0 + hx - 3, x0 + hx + 3, y0 + hy - 3, y0 + hy + 3, SKIN, 6.0,
+                           color="metal", note=f"M3 standoff under {tag} hole H{k + 1}"))
+    d = _board_design("p2-grid")
+    for k, (hx, hy) in enumerate(d.HOLES):
+        my = 4 + (d.H - hy)                              # P2 board y counts from the far edge (rev 0.4), the model from the front
+        out.append(box(f"Standoff P2 H{k + 1}", "standoff", 110 + hx - 3, 110 + hx + 3, my - 3, my + 3, PCB_TOP, TOP_Z - SKIN,
+                       color="metal", note=f"M3 standoff from P2 hole H{k + 1} up to the top skin"))
+    return out
 
 
 # ------------------------------------------------------------------ separating axis test
@@ -432,6 +496,7 @@ ALLOWED = {               # parts that are meant to touch (mounted on each other
     ("Wheel bearing housing", "Top skin"), ("Wheel magnet", "P4 Right"), ("Wheel AS5600", "P4 Right"),
     ("receptacle", "Pocket board"), ("M5 Gain", "Slope skin"), ("M5 module", "M5 Gain"), ("W1 Levels", "W1 "), ("SD socket", "W3 System"), ("Screen ", "Screen "),
     ("Trill Bar", "P2 Grid"), ("Front wall", ""), ("Rear wall", ""), ("Floor", ""), ("Side", ""),
+    ("Standoff A1", "A1 audio"), ("Standoff PW", "PW power"), ("Standoff P2", "P2 Grid"), ("Standoff P2", "Top skin"),
 }
 
 

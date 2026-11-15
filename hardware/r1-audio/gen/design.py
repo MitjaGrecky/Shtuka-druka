@@ -42,7 +42,8 @@ BUS_NOTE = ("R1 -> A1: 18 differential ADC pairs (FS 8 Vrms diff into the AN0635
 PWR_FLAG_NETS = ("+12V", "-12V")   # ERC: rails from the PW connector feed power inputs (op-amps)
 NO_PWR_FLAG = ("+3V3",)
 W, H = 238.0, 96.0          # rough: rear x 273-511, z 8-104 (doc 34, model blocks Audio Out + Audio In)
-HOLES = [(4.0, 4.0), (234.0, 4.0), (4.0, 92.0), (234.0, 92.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
+HOLES = [(4.0, 4.0), (234.0, 4.0), (4.0, 92.0), (234.0, 92.0),   # M3, board coordinates (KiCad, y down); 15.11.2026
+         (34.0, 79.0), (164.0, 6.0), (164.0, 31.0)]   # 16.11: beside the RCA pairs (RCJ-025 has no panel nut): the plug force goes into standoffs
 LAYERS = 4
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805

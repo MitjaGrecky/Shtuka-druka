@@ -12,7 +12,8 @@ import packer
 ANCHOR = ("U", "Q", "K", "Y", "L", "F", "ENC")
 
 
-def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top"):
+def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top", follow=()):
+    """follow: fixed parts (e.g. ICs placed by hand) whose small parts gather around them, on their side (16.11.2026, PW LDOs)."""
     P = D.parts()
     fixed = dict(fixed or {})
     byref = {p["ref"]: p for p in P}
@@ -69,7 +70,7 @@ def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top
             continue
         mine = {nn for nn in p["pins"].values() if nn in sig}
         best, bs = None, 0
-        for a in list(pos) + [c for c in conns if c in fixed]:
+        for a in list(follow) + list(pos) + [c for c in conns if c in fixed]:
             s = len(mine & {nn for nn in byref[a]["pins"].values() if nn in sig})
             if s > bs:
                 best, bs = a, s
@@ -79,7 +80,7 @@ def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top
     G = []
     for a, refs in groups.items():
         ax, ay = (pos[a] if a in pos else fixed[a][:2])
-        G.append((ax, ay, "bottom", refs, 0))
+        G.append((ax, ay, fixed[a][3] if a in follow else "bottom", refs, 0))
     return packer.pack(sys.modules[D.__name__], P, fixed, G, [(0, 0, W, H)], rmax=max(W, H))
 
 

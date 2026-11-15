@@ -62,8 +62,11 @@ def main():
     ident, proj = sys.argv[1], os.path.abspath(sys.argv[2])
     try:
         import playwright  # noqa: F401
+        if "--no-cli" in sys.argv:      # pack_for_routing.render() needs kicad-cli for the SVGs
+            raise ImportError
     except ImportError:
-        PK.render = lambda *a, **k: print("previews skipped (no playwright)")
+        import render_pcbnew            # pcbnew plot + PyMuPDF: no kicad-cli, no browser (16.11.2026)
+        PK.render = lambda pcb, out, w, h: print("previews (pcbnew):", render_pcbnew.render(pcb, out, w, h))
     if "--no-cli" in sys.argv:          # the PC blue-screens on kicad-cli: keep netlist/pdf/dxf of the last build
         sys.argv.remove("--no-cli")
         real = PK.subprocess.run

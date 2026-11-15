@@ -57,6 +57,21 @@ def conn_lcsc(fp, f):
         f["LCSC"] = CONN_LCSC[fp]
     return f
 
+
+# ------------------------------------------------------------------ M3 mounting holes (15.11.2026, Codex review: P2, A1, PW, R1, F1 had none)
+MOUNT_FP = "MountingHole:MountingHole_3.2mm_M3_ISO7380"     # as R2: plain hole, keep-out for the ISO 7380 button head
+
+
+def mount_holes(add, ref, holes, note):
+    """One H part per hole (no pins: not in the netlist or the BOM)."""
+    for _ in holes:
+        add(ref("H"), "Mechanical:MountingHole", "M3", MOUNT_FP, {}, Note=note)
+
+
+def hole_fixed(P, holes):
+    """placement() entries for the H parts made by mount_holes, in the same order as holes (board coordinates, top side)."""
+    return {r: (x, y, 0, "top") for r, (x, y) in zip([p["ref"] for p in P if p["ref"].startswith("H")], holes)}
+
 # ------------------------------------------------------------------ module bus (R123), 2 x 7, 1.27 mm
 CONN = {1: "+5V", 2: "+5V", 3: "GND", 4: "GND", 5: "+3V3", 6: "GND", 7: "SDA", 8: "SCL",
         9: "~{INT}", 10: "GND", 11: "~{SR_LOAD}", 12: "SR_CLK", 13: "SR_OUT", 14: "SR_IN"}

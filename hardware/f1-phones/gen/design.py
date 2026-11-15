@@ -31,6 +31,7 @@ BUS_NOTE = ("From A1: Phones 1 and 2 as differential pairs (2 Vrms FS) -> OPA162
 PWR_FLAG_NETS = ("+12V", "-12V")      # ERC: rails from the connector (+5V already gets the standard flag)
 NO_PWR_FLAG = ("+3V3",)
 W, H = 100.0, 42.0          # rough: front edge under the headphone columns (model: x 32 and 80 on the slope front); with the board
+HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, 38.0), (96.0, 38.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
 LAYERS = 2
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
@@ -45,7 +46,7 @@ PH = "Connector_JST:JST_PH_B{n}B-PH-K_1x0{n}_P2.00mm_Vertical"
 
 def parts():
     P = []
-    n = {"R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "K": 0}
+    n = {"H": 0, "R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "K": 0}
 
     def ref(k):
         n[k] += 1
@@ -111,6 +112,7 @@ def parts():
         add(ref("J"), "Connector_Audio:AudioJack3_Switch", f"PHONES {k}", JACK,
             {"T": f"{h}_TIP", "TN": None, "R": f"{h}_RING", "RN": None, "S": "GND", "SN": None},
             LCSC="C368502", Note=f"Phones {k}: Neutrik NMJ6HCD2, 6.35 mm stereo, right angle, switched (unused)")
+    K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 
 
@@ -127,6 +129,7 @@ def placement():
     heads = [p["ref"] for p in P if p["lib"].startswith("Connector_Generic") and p["ref"] not in jacks]
     for r, x in zip(heads, (20.0, 50.0, 80.0)):
         fixed[r] = (x, 38.0 if x < 30 else 34.0, 90, b)
+    fixed.update(K.hole_fixed(P, HOLES))
     grp = {1: [], 2: [], 0: []}
     for p in P:
         if p["ref"] in fixed:

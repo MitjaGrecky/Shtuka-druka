@@ -35,7 +35,11 @@ PCB_TOP = TOP_Z - SKIN - 6.5        # panel boards: encoder body (6.5) between b
 PCB = 1.6
 GAP_MIN = 1.0                        # below this a clearance is reported as tight
 COMPUTER = os.environ.get("COMPUTER", "H5")      # "H5" (ODROID-H5, R149) or "ITX" (Mini-ITX, the fallback of R36)
-H5_Z0 = float(os.environ.get("H5_Z0", "3.0"))    # underside of the H5 board above the floor (standoffs)
+# z = 0 is the OUTSIDE of the floor; the floor skin fills z 0..SKIN. H5_Z0 = underside of the H5 board in these coordinates.
+# Until 15.11.2026 the default was 3.0, i.e. the board lying on the inner floor, not on 3 mm standoffs (Codex review 15.11.2026).
+# Now: H5_STANDOFF above the inner floor (default 3 mm), or an absolute H5_Z0.
+H5_STANDOFF = float(os.environ.get("H5_STANDOFF", "3.0"))
+H5_Z0 = float(os.environ.get("H5_Z0", str(SKIN + H5_STANDOFF)))
 H5_H = float(os.environ.get("H5_H", "44.0"))     # overall height of the H5 above the board underside, mm
 
 
@@ -339,11 +343,15 @@ def parts(usb=None):
     # the volume pots stand on W1: see w1_parts()
 
     # under the slope and the rear wall (doc 27 section 6, doc 29)
-    a(box("A1 audio board", "rear", 20, 160, 315, 405, 6, 28, color="pcb"))
-    a(box("PW power", "rear", 350, 410, 335, 385, 6, 24, color="pcb"))
+    # 15.11.2026: real outlines of the placed boards (A1 rev 0.4 220 x 100, PW rev 0.6 100 x 80, R1 rev 0.5 238 x 96, R2 rev 0.6 L-shape
+    # 175 x 103); before they were the early estimates 140 x 90, 60 x 50, 238 x 104 and 258 x 104. Rear boards: model x = 515 - rear x.
+    a(box("A1 audio board", "rear", 20, 240, 305, 405, 6, 28, color="pcb", note="220 x 100, rev 0.4; position not fixed"))
+    a(box("PW power", "rear", 300, 400, 320, 400, 6, 24, color="pcb", note="100 x 80, rev 0.6; position not fixed"))
     a(box("Battery bay", "rear", 414, 504, 312, 398, 3, 48, color="battery"))
-    a(box("R1 audio rear board", "rear", 5, 243, 413.4, 415, 8, 112, color="pcb"))
-    a(box("R2 control rear board", "rear", 252, 510, 413.4, 415, 8, 112, color="pcb"))
+    a(box("R1 audio rear board", "rear", 4, 242, 413.4, 415, 8, 104, color="pcb", note="rear x 273-511, z 8-104"))
+    # R2 (hardware/r2-control/gen/design.py OUTLINE): rear x 88-263, z 10-113 without the DIN window rear x 88-156, z 38-113
+    a(box("R2 control rear board", "rear", 252, 359, 413.4, 415, 10, 113, color="pcb", note="L-shape, tall part"))
+    a(box("R2 control rear board, low arm", "rear", 359, 427, 413.4, 415, 10, 38, color="pcb", note="L-shape, arm under the DIN window"))
     a(box("Rear jacks", "rear", 5, 510, 415, D - SKIN, 8, 112, color="metal", est=True,
           note="envelope of all rear jacks (417-457)"))
     return P

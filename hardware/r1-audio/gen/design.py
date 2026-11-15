@@ -42,6 +42,7 @@ BUS_NOTE = ("R1 -> A1: 18 differential ADC pairs (FS 8 Vrms diff into the AN0635
 PWR_FLAG_NETS = ("+12V", "-12V")   # ERC: rails from the PW connector feed power inputs (op-amps)
 NO_PWR_FLAG = ("+3V3",)
 W, H = 238.0, 96.0          # rough: rear x 273-511, z 8-104 (doc 34, model blocks Audio Out + Audio In)
+HOLES = [(4.0, 4.0), (234.0, 4.0), (4.0, 92.0), (234.0, 92.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
 LAYERS = 4
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
@@ -60,7 +61,7 @@ MF = "Connector_Molex:Molex_Micro-Fit_3.0_{}_P3.00mm_Vertical"
 
 def parts():
     P = []
-    n = {"R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "K": 0}
+    n = {"H": 0, "R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "K": 0}
 
     def ref(k):
         n[k] += 1
@@ -302,6 +303,7 @@ def parts():
     R("1k", "R2_OK", "R2OK_G")
     R("100k", "R2OK_G", "GND")
     add(ref("D"), "Diode:1N4148W", "1N4148W", SOD123, {"1": "+5V", "2": "OUT_K"}, Note="flyback (3 coils)")
+    K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 
 
@@ -322,6 +324,7 @@ def placement():
             fixed[p["ref"]] = (xr - X0, Z0 - z, 0, "top")
     for ref, x in (("J4", 40.0), ("J1", 82.0), ("J5", 122.0), ("J2", 165.0), ("J3", 200.0)):
         fixed[ref] = (x, {"J1": 85.5, "J3": 90.5}.get(ref, 92.5), 90, "bottom")          # cable headers (2 x 25 and 2 x 20 to A1, small ones) along the bottom edge
+    fixed.update(K.hole_fixed(parts(), HOLES))
     return autoplace.place(sys.modules[__name__], fixed=fixed, conn_side="bottom")
 
 

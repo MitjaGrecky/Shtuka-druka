@@ -32,6 +32,7 @@ BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D), battery 4S 12.8-16
 PWR_FLAG_NETS = ("B19_VCC", "B19_VIN", "BAT_F", "BUS", "DC_F", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
 NO_PWR_FLAG = ("+3V3",)     # no 3.3 V rail on this board
 W, H = 100.0, 80.0          # rough: under the slope on the right next to the battery bay (R109); with the board
+HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, 76.0), (96.0, 76.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
 LAYERS = 4
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
@@ -48,7 +49,7 @@ FET = ("Transistor_FET:CSD18540Q5B", "Package_TO_SOT_SMD:TDSON-8-1")   # 60 V 1.
 
 def parts():
     P = []
-    n = {"R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "L": 0, "F": 0}
+    n = {"H": 0, "R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "L": 0, "F": 0}
 
     def ref(k):
         n[k] += 1
@@ -95,7 +96,8 @@ def parts():
          "15": "PD_DRAIN", "16": "GND", "17": "GND", "18": "PD_FAULT", "19": None, "20": "PD_OUT", "23": "PD_VBUS",
          "26": "PD_RSV26", "27": "PD_RSV27", "28": "PD_CC1", "29": "PD_CC2", "30": "PD_DRAIN", "31": "GND", "32": "PD_VBUS",
          "34": "GND", "36": "PD_RSV36", "37": None, "38": "GND", "39": "GND", "40": "PD_DRAIN"},
-        LCSC="C22438973", Note="USB PD sink without I2C (I2Ct_SDA/SCL grounded: allowed if unused): ADCIN1 = 3 (min 15 V), "
+        LCSC="C22438973", PadClearance="20,23:0.12",   # TI land pattern (REF0038A): PP_HV pads 20/23 are 0.125 mm apart, < 0.15 rule
+        Note="USB PD sink without I2C (I2Ct_SDA/SCL grounded: allowed if unused): ADCIN1 = 3 (min 15 V), "
         "ADCIN2 = 7 (max 20 V), ADCIN3 = 3 (operating 3 A), ADCIN4 = 3 (max 5 A); VIN_3V3 to GND = powered from VBUS only")
     R("42.2k", "PD_LDO3V3", "PD_ADCIN1", Note="ADCIN1 divider 0.19 -> decoded 3 = 15 V minimum")
     R("10k", "PD_ADCIN1", "GND")
@@ -343,6 +345,7 @@ def parts():
     for _ in range(3):
         C("22u 25V", "V15", fp=C1210)
 
+    K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 
 
@@ -350,7 +353,7 @@ def placement():
     """Rev 0.2: rough automatic placement (hardware/common/gen/autoplace.py): connectors in a row along the bottom edge,
     ICs on a grid, small parts around the IC they share signals with. A starting point for the routing; mechanics not fixed yet."""
     import autoplace
-    return autoplace.place(sys.modules[__name__])
+    return autoplace.place(sys.modules[__name__], fixed=K.hole_fixed(parts(), HOLES), conn_y=H - 8.5)   # header row clear of the bottom holes
 
 
 if __name__ == "__main__":

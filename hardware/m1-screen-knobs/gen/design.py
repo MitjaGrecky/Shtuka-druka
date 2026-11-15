@@ -254,7 +254,9 @@ def placement():
     # shift registers with their pull-up packs, rear strip
     for u, x, rn in (("U3", 15.0, ("RN1", "RN2")), ("U4", 101.0, ("RN3", "RN4")), ("U5", 212.0, ("RN5", "RN6"))):   # clear of the driver capacitors (x + 6.6) and the holes
         pl[u] = (x, y, 0, b)
-        pl[rn[0]], pl[rn[1]] = (x - 6.0, y, 90, b), (x + 6.0, y, 90, b)
+        # right pack 6.5 mm out (was 6.0): make_pcb.hug() puts C9-C11 at pin 16, and at 6.0 their courtyards touched RN2/RN4/RN6
+        # (3 DRC errors, Codex review 15.11.2026)
+        pl[rn[0]], pl[rn[1]] = (x - 6.0, y, 90, b), (x + 6.5, y, 90, b)
     pl["R18"] = (217.5, 9.5, 0, b)
     # bus connector at the front of gap 2, its bulk capacitors just behind it
     pl["J1"] = (GAP[2], H - 3.0, 90, b)

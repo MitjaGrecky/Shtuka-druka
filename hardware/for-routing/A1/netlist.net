@@ -608,6 +608,12 @@
     (comp (ref "C287") (value "47u 25V") (footprint "Capacitor_SMD:CP_Elec_6.3x7.7"))
     (comp (ref "C288") (value "47u 25V") (footprint "Capacitor_SMD:CP_Elec_6.3x7.7"))
     (comp (ref "C289") (value "47u 10V") (footprint "Capacitor_SMD:CP_Elec_6.3x7.7"))
+    (comp (ref "H1") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H2") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H3") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H4") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H5") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H6") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
   )
   (nets
     (net (code "1") (name "+5V")

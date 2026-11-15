@@ -33,6 +33,7 @@ BUS_NOTE = ("R1 -> A1: 18 ADC pairs (8 Vrms FS), A1 -> R1: Main/Aux DAC pairs, A
 PWR_FLAG_NETS = ("+12V", "-12V", "GNDPC", "PC_VBUS", "ISO_V1", "+0V9A", "+0V9B", "PLLA", "PLLB")   # ERC: R1 rails, computer side, buck outputs, filtered PLL supplies
 NO_PWR_FLAG = ("+3V3",)          # no plain +3V3 rail here (+3V3A and +3V3D): no standard power symbol for it
 W, H = 220.0, 100.0          # rough: under the slope on the left, about 220 x 100 mm (doc 29)
+HOLES = [(4.0, 4.0), (216.0, 4.0), (4.0, 96.0), (216.0, 96.0), (110.0, 4.0), (110.0, 96.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
 LAYERS = 4
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
@@ -57,7 +58,7 @@ def _fill(pins, count):
 
 def parts():
     P = []
-    n = {"R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Y": 0, "L": 0, "FB": 0}
+    n = {"H": 0, "R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Y": 0, "L": 0, "FB": 0}
 
     def ref(k):
         n[k] += 1
@@ -375,6 +376,7 @@ def parts():
         C("47u 25V", "+12V", fp="Capacitor_SMD:CP_Elec_6.3x7.7")
         C("47u 25V", "GND", "-12V", fp="Capacitor_SMD:CP_Elec_6.3x7.7")
     C("47u 10V", "+5V", fp="Capacitor_SMD:CP_Elec_6.3x7.7")
+    K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 
 
@@ -383,9 +385,10 @@ def placement():
     (top side), ICs on a grid, small parts around the IC they share signals with. Starting point for the routing."""
     import autoplace
     # the two TLV62568 buck converters (U4, U5) and their inductors (L1, L2) go to the empty top-right corner: in rev 0.3 they sat
-    # 16-32 mm from the 24.576 / 22.5792 MHz audio master clocks (Y1, Y2) and 63 mm from the CS5304P; now 51-85 mm from the clocks (measured on the rev 0.4 board, 15.11.2026)
+    # 16-32 mm from the 24.576 / 22.5792 MHz audio master clocks (Y1, Y2) and 63 mm from the CS5304P; now 38-55 mm from the clocks (measured 15.11.2026 after adding the holes; was 16-32)
     fixed = {"U4": (210.0, 10.0, 0, "top"), "L1": (196.0, 10.0, 0, "top"), "U5": (210.0, 24.0, 0, "top"), "L2": (196.0, 24.0, 0, "top")}   # inside W = 220
-    return autoplace.place(sys.modules[__name__], fixed=fixed)
+    fixed.update(K.hole_fixed(parts(), HOLES))
+    return autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 8.5)   # header row clear of the bottom holes
 
 
 if __name__ == "__main__":

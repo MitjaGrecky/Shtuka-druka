@@ -25,13 +25,14 @@ import kit as K  # noqa: E402
 NAME = "p2-grid"
 ID = "P2"
 TITLE = "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses"
-REV = "0.3"
+REV = "0.4"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8 x 74HC4051 + ADC128S102 (SPI0); 5 x LP5864 for 109 RGB; "
             "buses to P1, P3, P4 (2x8) and M1 (2x7); power and INA226 from PW")
 PWR_FLAG_NETS = ("+5V_PANEL", "DVDD", "VREG_AVDD", "ADC_AVDD", "+3V3A", "VAP")
 NO_PWR_FLAG = ("+3V3",)
 W, H = 224.0, 290.0
+HOLES = [(4.0, 4.0), (220.0, 4.0), (4.0, 286.0), (220.0, 286.0), (112.0, 286.0), (190.0, 4.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
 LAYERS = 4
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
@@ -50,7 +51,7 @@ GPIO = {0: "SDA", 1: "SCL", 2: "~{SR_LOAD}", 3: "SR_CLK", 4: "SR_P1", 5: "SR_P3"
 
 def parts():
     P = []
-    n = {"R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Y": 0, "L": 0, "FB": 0, "SW": 0, "FSR": 0, "RN": 0}
+    n = {"H": 0, "R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Y": 0, "L": 0, "FB": 0, "SW": 0, "FSR": 0, "RN": 0}
     sdl = {}
 
     def ref(k):
@@ -222,6 +223,7 @@ def parts():
     add(ref("J"), "Connector_Generic:Conn_01x04", "I2C power monitor (PW)", PH.format(n=4),
         {"1": "X_SDA", "2": "X_SCL", "3": "PM_ALERT", "4": "GND"}, Note="cable from PW (INA226, R146): SDA, SCL on mux channel 3, ALERT to a GPIO")
     R("100k", "PM_ALERT", "+3V3", Note="ALERT is open drain")
+    K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 
 
@@ -252,6 +254,24 @@ def placement():
         elif r.startswith("D") and note.startswith("Arrow "):
             x0 = 12.0 if note.startswith("Arrow left") else 211.5
             fixed[r] = (x0 + (-8.5 if note.endswith("left") else 8.5), 22.0, 0, "top")
+    # Rev 0.4 (15.11.2026): the y above is counted from the front edge (panel v7), but KiCad's y grows downwards in the top view.
+    # Rev 0.3 used it directly, so the strip and the arrows sat at the far edge and turning the board by 180 deg would also reverse
+    # the columns (Codex review 15.11.2026). Now board y = H - panel y, as P1, P3 and P4 do: front edge (strip, arrows) at the bottom
+    # of the KiCad view, scenes towards the screen at the top; column 1 stays on the musician's left.
+    fixed = {r: (x, round(H - y, 2), a, s) for r, (x, y, a, s) in fixed.items()}
+    # cable headers in a row along the far (rear) edge, top side - towards PW and R2 behind the panel (rev 0.3 had them there too)
+    import packer
+    byref = {p["ref"]: p for p in parts()}
+    x, y, rowh, margin = 12.0, 6.0, 0.0, 6.0
+    for r in [p["ref"] for p in parts() if p["ref"].startswith("J")]:
+        box, _ = packer._bbox(sys.modules[__name__], byref[r], 0, "top")
+        w, h = box[2] - box[0], box[3] - box[1]
+        if x + w > W - margin:
+            x, y, rowh = margin, y + rowh + 2, 0.0
+        fixed[r] = (round(x - box[0], 1), round(y - box[1], 1), 0, "top")
+        x += w + 2
+        rowh = max(rowh, h)
+    fixed.update(K.hole_fixed(parts(), HOLES))
     return autoplace.place(sys.modules[__name__], fixed=fixed)
 
 

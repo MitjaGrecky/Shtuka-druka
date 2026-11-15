@@ -392,6 +392,12 @@
     (comp (ref "J9") (value "Trill Bar B") (footprint "Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical"))
     (comp (ref "J10") (value "I2C power monitor (PW)") (footprint "Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical"))
     (comp (ref "R100") (value "100k") (footprint "Resistor_SMD:R_0402_1005Metric"))
+    (comp (ref "H1") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H2") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H3") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H4") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H5") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H6") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
   )
   (nets
     (net (code "1") (name "+3V3")

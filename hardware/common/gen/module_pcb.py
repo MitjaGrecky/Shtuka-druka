@@ -92,9 +92,14 @@ def build(D, silk):
         if p["ref"].startswith("H"):
             for pad in fp.Pads():
                 pad.SetLocalClearance(mm(0.35))
+        if p["fields"].get("PadClearance"):                # "20,23:0.12": local clearance (mm) on these pads, where the
+            nums, val = p["fields"]["PadClearance"].split(":")   # maker's land pattern is tighter than the board rule
+            for pad in fp.Pads():
+                if pad.GetNumber() in nums.split(","):
+                    pad.SetLocalClearance(mm(float(val)))
         if p["fields"].get("DNP") == "yes" and hasattr(fp, "SetDNP"):
             fp.SetDNP(True)
-        B.copy_fields(fp, {k: v for k, v in p["fields"].items() if k not in ("DNP", "Side")})
+        B.copy_fields(fp, {k: v for k, v in p["fields"].items() if k not in ("DNP", "Side", "PadClearance")})
         for pad in fp.Pads():
             num = pad.GetNumber()
             n = p["pins"].get(num)

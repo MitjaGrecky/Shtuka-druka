@@ -113,7 +113,7 @@ def write_bom(d, out):
     groups = OrderedDict()
     for p in d.parts():
         ref = p["ref"]
-        if ref.startswith("H"):
+        if ref.startswith(("H", "FSR")):      # holes; FSR = copper electrodes drawn on the board (P2)
             continue
         if p["fields"].get("DNP") == "yes":
             key = ("DNP", p["value"], p["fp"], "")

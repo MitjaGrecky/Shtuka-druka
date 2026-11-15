@@ -200,6 +200,10 @@
     (comp (ref "C93") (value "22u 25V") (footprint "Capacitor_SMD:C_1210_3225Metric"))
     (comp (ref "C94") (value "22u 25V") (footprint "Capacitor_SMD:C_1210_3225Metric"))
     (comp (ref "C95") (value "22u 25V") (footprint "Capacitor_SMD:C_1210_3225Metric"))
+    (comp (ref "H1") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H2") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H3") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
+    (comp (ref "H4") (value "M3") (footprint "MountingHole:MountingHole_3.2mm_M3_ISO7380"))
   )
   (nets
     (net (code "1") (name "+3V3")

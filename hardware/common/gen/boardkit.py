@@ -48,9 +48,12 @@ def pin_name(lib_id, num):
 
 def unconnected_net(ref, lib_id, num):
     """KiCad's name for the net of a single unconnected pin: unconnected-(REF-NAME-PadN), or unconnected-(REF-PadN) when the
-    pin has no name (CI 13.11: R2 J17 had "unconnected-(J17--PadTN)", 17 parity warnings). "~" counts as no name."""
+    pin has no name (CI 13.11: R2 J17 had "unconnected-(J17--PadTN)", 17 parity warnings). "~" counts as no name, and so does
+    a name equal to the pin number (KiCad eeschema/connectivity/conn_pin_name.cpp, RenderPinNetName: `aPin.name != aPin.shownNumber`;
+    15.11.2026: the G6K relay pins 12/22 gave 6 parity warnings on R1 and 4 on F1)."""
     nm = pin_name(lib_id, num)
-    return f"unconnected-({ref}-{nm}-Pad{num})" if nm and nm != "~" else f"unconnected-({ref}-Pad{num})"
+    named = nm and nm != "~" and nm != num
+    return f"unconnected-({ref}-{nm}-Pad{num})" if named else f"unconnected-({ref}-Pad{num})"
 
 
 def copy_fields(fp, fields):

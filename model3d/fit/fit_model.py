@@ -192,7 +192,45 @@ def slope_boards_and_pocket(usb):
     return out
 
 
+SCREEN = os.environ.get("SCREEN", "EP")      # "EP" = Waveshare 10.1EP-CAPLCD (R150), "DP" = the earlier 10.1DP-CAPLCD
+
+
+def screen_parts_ep():
+    """Waveshare 10.1EP-CAPLCD (R150) from its dimension drawing (wiki, 10.1EP-CAPLCD-details-size.png, 15.11.2026):
+    glass 239 x 147, metal back 230.7 x 145.1, 7.3 mm from the glass front to the back, 21.9 mm overall with the driver
+    board; driver board 86.5 wide, seen from behind 72.7-159.2 mm from the left glass edge, about 42-103 mm above the
+    lower glass edge (read off the picture: +-2 mm). Its three sockets (Type-C power, Type-C touch, HDMI, from the top)
+    are on the board edge that faces the device's left (seen from the front), about 91 / 73 / 57 mm above the lower glass
+    edge. Same glass position as the DP. d = depth behind the glass front, n = -SKIN - d; device x grows to the right."""
+    gx, gs = 220.75, s_of(365) + SCREEN_SHIFT
+    xl = gx - 119.5                                         # left glass edge (front view)
+
+    def ep(name, x0, x1, s0, s1, d0, d1, **kw):            # x from the left glass edge, s from the lower glass edge
+        return slope_box(name, "screen", xl + x0, xl + x1, gs - 73.5 + s0, gs - 73.5 + s1, -SKIN - d1, -SKIN - d0, **kw)
+
+    bx0, bx1 = 239.0 - 159.2, 239.0 - 72.7                  # driver board seen from the front: 79.8-166.3
+    out = [
+        ep("Screen glass", 0, 239, 0, 147, 0, 2.0, color="glass", note="239 x 147 lens"),
+        ep("Screen LCM + back", 4.15, 234.85, 0.95, 146.05, 2.0, 7.3, color="lcd", note="metal back 230.7 x 145.1, 7.3 mm behind the glass front"),
+        ep("Screen driver board", bx0, bx1, 42, 103, 7.3, 11.5, color="pcb", note="86.5 x ~61 board on posts"),
+        ep("Screen driver parts", bx0, bx1, 42, 103, 11.5, 21.9, color="parts", est=True, note="sockets and parts, 21.9 mm overall"),
+    ]
+    # plugs leave the board edge at bx0 towards the device's left, parallel to the glass; then the cables turn inwards (down)
+    for nm, sc, w, ln in (("HDMI", 57.0, 22.0, 40.0), ("USB-C touch", 73.0, 13.0, 30.0), ("USB-C power", 91.0, 13.0, 30.0)):
+        out.append(ep(f"Screen {nm} plug", bx0 - ln, bx0, sc - w / 2, sc + w / 2, 9.0, 21.0, color="plastic", est=True,
+                      note=f"straight {nm} plug, {ln:.0f} mm, lying behind the screen"))
+        out.append(ep(f"Screen {nm} cable bend", bx0 - ln - 25, bx0 - ln, sc - w / 2, sc + w / 2, 9.0, 21.0 + 30, color="plastic",
+                      est=True, note="cable turning inwards, bend radius about 25 mm"))
+    return out
+
+
 def screen_parts():
+    if SCREEN == "EP":
+        return screen_parts_ep()
+    return screen_parts_dp()
+
+
+def screen_parts_dp():
     """Waveshare 10.1DP-CAPLCD from its 3D model (STP from the Waveshare wiki, not kept in the repo:
     licence unclear). Bounding boxes read with OpenCascade, in the STP frame: x across the glass (147),
     y along it (239), z out of the glass (front at z = 4.81). Mounted with the connector edge of the

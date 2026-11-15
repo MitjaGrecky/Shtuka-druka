@@ -12,7 +12,7 @@ const tries = [
 const log = [];
 for (const saveTo of tries) {
   try {
-    const r = await eda.sys_FileManager.importProjectByProjectFile(file, 'KiCad', {}, saveTo);
+    const r = await eda.sys_FileManager.importProjectByProjectFile(file, 'KiCad', { importOption: 'ImportDocument', viaSolderMaskExpansion: 'cover', boardOutlineSource: 'keepout', schematicObjectStyle: 'system', associateFootprint: true, associate3DModel: true, importFootprintNotesLayer: true }, saveTo);
     log.push({ op: saveTo.operation, r: r ? JSON.parse(JSON.stringify(r)) : null });
     if (r) break;
   } catch (e) { log.push({ op: saveTo.operation, err: String(e) }); }

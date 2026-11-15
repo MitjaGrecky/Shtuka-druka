@@ -16,6 +16,7 @@ import argparse
 import csv
 import json
 import sys
+import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -24,43 +25,39 @@ sys.path.insert(0, str(HERE))
 import eda_check as E  # noqa: E402
 
 JS = r"""
+// One pass over one document type within a time budget: the bridge drops requests after 30 s,
+// so Python calls this repeatedly until "done". The API answers only for the active document.
 const want = __MAP__;
 const dry = __DRY__;
-const out = {sch: {set: 0, same: 0, other: []}, pcb: {set: 0, same: 0, other: [], error: null}, missing: []};
-const seen = new Set();
-// The API answers only for the active document: switch tabs before the schematic and the PCB pass.
+const kind = "__KIND__";
+const t0 = Date.now();
+const api = kind === "sch" ? eda.sch_PrimitiveComponent : eda.pcb_PrimitiveComponent;
+const out = {set: 0, same: 0, other: [], seen: [], done: false, error: null};
 const p = await eda.dmt_Project.getCurrentProjectInfo();
 const b = p && (p.data.find(x => x.itemType === "Board") || p.data[0]);
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-const page = b && b.schematic && b.schematic.page[0];
-if (page) { eda.dmt_EditorControl.openDocument(page.uuid); await sleep(3000); }
-const ids = await eda.sch_PrimitiveComponent.getAllPrimitiveId();
-for (const id of ids) {
-  const c = await eda.sch_PrimitiveComponent.get(id);
-  if (!c || c.componentType !== "part") continue;
-  const d = c.designator; if (!(d in want)) continue;
-  seen.add(d);
-  const cur = c.getState_SupplierId();
-  if (cur === want[d]) { out.sch.same++; continue; }
-  if (cur && cur !== want[d]) out.sch.other.push([d, cur, want[d]]);
-  if (!dry) await eda.sch_PrimitiveComponent.modify(id, {supplier: "LCSC", supplierId: want[d]});
-  out.sch.set++;
-}
-for (const d in want) if (!seen.has(d)) out.missing.push(d);
+const uuid = kind === "sch" ? (b && b.schematic && b.schematic.page[0].uuid) : (b && b.pcb && b.pcb.uuid);
+// The first call only switches tabs; Python waits (timers are throttled while EasyEDA is in the background).
+if (__SWITCH__) { if (uuid) eda.dmt_EditorControl.openDocument(uuid); out.next = 0; return out; }
 try {
-  if (b && b.pcb) { eda.dmt_EditorControl.openDocument(b.pcb.uuid); await sleep(3000); }
-  const pids = await eda.pcb_PrimitiveComponent.getAllPrimitiveId();
-  for (const id of pids) {
-    const c = await eda.pcb_PrimitiveComponent.get(id);
-    if (!c || !(c.designator in want)) continue;
-    if (typeof c.getState_SupplierId !== "function") { out.pcb.error = "no supplier fields on PCB parts"; break; }
+  const ids = await api.getAllPrimitiveId();
+  out.done = true; out.next = ids.length;
+  for (let i = __START__; i < ids.length; i++) {
+    if (Date.now() - t0 > 10000) { out.done = false; out.next = i; break; }
+    const id = ids[i];
+    const c = await api.get(id);
+    // Right after a tab switch get() returns empty objects: report "loading" and let Python retry.
+    if (c && !c.componentType && !c.designator) { out.done = false; out.next = i; out.loading = true; break; }
+    if (!c || (kind === "sch" && c.componentType !== "part")) continue;
+    const d = c.designator; if (!(d in want)) continue;
+    out.seen.push(d);
+    if (typeof c.getState_SupplierId !== "function") { out.error = "no supplier fields"; break; }
     const cur = c.getState_SupplierId();
-    if (cur === want[c.designator]) { out.pcb.same++; continue; }
-    if (cur && cur !== want[c.designator]) out.pcb.other.push([c.designator, cur, want[c.designator]]);
-    if (!dry) await eda.pcb_PrimitiveComponent.modify(id, {supplier: "LCSC", supplierId: want[c.designator]});
-    out.pcb.set++;
+    if (cur === want[d]) { out.same++; continue; }
+    if (cur && cur !== want[d]) out.other.push([d, cur, want[d]]);
+    if (!dry) await api.modify(id, {supplier: "LCSC", supplierId: want[d]});
+    out.set++;
   }
-} catch (e) { out.pcb.error = String(e); }
+} catch (e) { out.error = String(e); }
 return out;
 """
 
@@ -87,10 +84,23 @@ def main():
         sys.exit("BOM.csv has no LCSC numbers")
     bridge = E.find_bridge() or E.start_bridge()
     win, _ = E.live_connection(bridge, a.project)
-    code = JS.replace("__MAP__", json.dumps(m)).replace("__DRY__", "true" if a.dry_run else "false")
-    r = E.run(bridge, win, code, timeout=300)
     print(f"{len(m)} designators with LCSC numbers in BOM.csv" + (" (dry run)" if a.dry_run else ""))
-    print(json.dumps(r, ensure_ascii=False, indent=1))
+    for kind in ("sch", "pcb"):
+        tot = {"set": 0, "same": 0, "other": [], "seen": set()}
+        start = 0
+        for k in range(100):
+            code = (JS.replace("__MAP__", json.dumps(m)).replace("__DRY__", "true" if a.dry_run else "false")
+                    .replace("__KIND__", kind).replace("__SWITCH__", "true" if k == 0 else "false").replace("__START__", str(start)))
+            r = E.run(bridge, win, code, timeout=60)
+            tot["set"] += r["set"]; tot["same"] += r["same"]; tot["other"] += r["other"]; tot["seen"] |= set(r["seen"])
+            start = r.get("next", 0)
+            if k == 0 or r.get("loading"):
+                time.sleep(5)
+            if r["error"] or r["done"]:
+                break
+        same = tot["same"]
+        print(f"{kind}: written {tot['set']}, already right {same}, other number before {tot['other']}, "
+              f"missing {len(set(m) - tot['seen'])}, error {r['error']}")
     if not a.dry_run:
         print("Not saved: check, then Ctrl+S in EasyEDA; run eda_check.py to confirm nets.")
 

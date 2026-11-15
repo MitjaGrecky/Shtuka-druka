@@ -25,7 +25,13 @@ python tools/eda/eda_check.py M1 --project M1_v2 --md logs/m1_v2.md
 Импорт KiCad в EasyEDA оставляет наше свойство `LCSC` только пользовательским атрибутом, поле Supplier Part пустое.
 `eda_set_lcsc.py ID --project ИМЯ [--dry-run]` берёт номера из `hardware/for-routing/<ID>/BOM.csv` и записывает
 supplier = LCSC и supplierId в детали схемы и платы (сам переключает вкладки). Не сохраняет: проверить и нажать Ctrl+S,
-затем `eda_check.py` (цепи) — на F1_v2 ничего не сдвинулось.
+затем `eda_check.py` (цепи) — на F1_v2 ничего не сдвинулось. Мост обрывает запрос через 30 с, поэтому скрипт работает
+кусками; на больших платах повторять до «already right» на обеих вкладках. Номера есть только у деталей, у которых они есть в `BOM.csv`.
+
+## Импорт без GUI
+`eda_import.py ZIP ИМЯ` создаёт проект из KiCad-архива через API (нужны полные параметры импорта, они зашиты в `js/import_kicad.js`).
+Открыть: `eda.dmt_Project.openProject(uuid)`; вкладки схемы и платы лучше открыть двойным щелчком в дереве проекта.
+`sch_Document.save()` / `pcb_Document.save()` ненадёжны: после них смотреть время `*.eprj2`, при необходимости Ctrl+S.
 
 ## Расширения из jlcext.com, которые пригодились
 - **Netlist Explorer** (меню Advanced → Netlist Generator): таблица выводов и цепей, пары разъёмов, BOM, выгрузка CSV.

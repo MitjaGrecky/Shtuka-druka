@@ -52,7 +52,8 @@ SOIC8, VSSOP8 = "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm", "Package_SO:VSSOP-8_3x3mm
 SOT23, SOD123 = "Package_TO_SOT_SMD:SOT-23", "Diode_SMD:D_SOD-123"
 COMBO = "Connector_Audio:Jack_XLR-6.35mm_Neutrik_NCJ6FI-V_Vertical"
 TRS = "Connector_Audio:Jack_6.35mm_Neutrik_NJ3FD-V_Vertical"
-RCA = "ShtukaDruka:Jack_RCA_Vertical_Placeholder"                    # vertical-mount RCA with a nut - part to choose with the board
+RCA = "ShtukaDruka:Jack_RCA_SameSky_RCJ-02_Vertical"   # Same Sky (CUI) RCJ-025, LCSC C4991609: vertical, no panel nut (none in stock at JLC)
+RCA_LCSC = "C4991609"
 RELAY = ("Relay:Omron_G6K-2", "Relay_SMD:Relay_DPDT_Omron_G6K-2F-Y")
 MF = "Connector_Molex:Molex_Micro-Fit_3.0_{}_P3.00mm_Vertical"
 
@@ -66,7 +67,7 @@ def parts():
         return f"{k}{n[k]}"
 
     def add(r, lib, value, fp, pins, **f):
-        P.append(dict(ref=r, lib=lib, value=value, fp=fp, pins=pins, fields=f))
+        P.append(dict(ref=r, lib=lib, value=value, fp=fp, pins=pins, fields=K.conn_lcsc(fp, f)))
 
     def R(value, a, b, fp=R0402, **f):
         add(ref("R"), "Device:R", value, fp, {"1": a, "2": b}, **f)
@@ -222,8 +223,8 @@ def parts():
     riaa_pins = {"4": "-12V", "8": "+12V"}
     for k, side in ((1, "L"), (2, "R")):
         p = f"PH{side}"
-        add(ref("J"), "Connector_Audio:AudioJack2", f"PHONO {side}", RCA, {"T": f"{p}_J", "S": "GND"},
-            Note="RCA with a nut, vertical mount - part to choose with the board")
+        add(ref("J"), "Connector_Audio:AudioJack2", f"PHONO {side}", RCA, {"T": f"{p}_J", "S": "GND"}, LCSC=RCA_LCSC,
+            Note="RCA jack RCJ-025, vertical, front face 22.1 mm above the board, no panel nut")
         add(ref("K"), RELAY[0], "G6K-2F-Y 5V", RELAY[1],
             {"A1": "+5V", "A2": "PHONO_K", "11": f"{p}_J", "12": f"{p}_LIN", "14": f"{p}_RIN",
              "21": f"{p}_DRV", "22": f"{p}_LIN", "24": f"{p}_R75"},
@@ -283,8 +284,8 @@ def parts():
     for ch in ("ML", "MR"):
         R("100", f"{ch}_O", f"{ch}_RCAO", fp=R0603, Note="RCA = copy of Main (R23)")
     for side, ch in (("L", "ML"), ("R", "MR")):
-        add(ref("J"), "Connector_Audio:AudioJack2", f"RCA {side}", RCA, {"T": f"RCA{side}_TIP", "S": "GND"},
-            Note="RCA with a nut - part to choose with the board")
+        add(ref("J"), "Connector_Audio:AudioJack2", f"RCA {side}", RCA, {"T": f"RCA{side}_TIP", "S": "GND"}, LCSC=RCA_LCSC,
+            Note="RCA jack RCJ-025, vertical, front face 22.1 mm above the board, no panel nut")
     for (a, b), name in ((("ML", "MR"), "MAIN"), (("AL", "AR"), "AUX"), (("RCA_L", "RCA_R"), "RCA")):
         if name == "RCA":
             c1, d1, c2, d2 = "ML_RCAO", "RCAL_TIP", "MR_RCAO", "RCAR_TIP"

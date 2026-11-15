@@ -69,7 +69,7 @@ def parts():
         return f"{k}{n[k]}"
 
     def add(r, lib, value, fp, pins, **f):
-        P.append(dict(ref=r, lib=lib, value=value, fp=fp, pins=pins, fields=f))
+        P.append(dict(ref=r, lib=lib, value=value, fp=fp, pins=pins, fields=K.conn_lcsc(fp, f)))
         BLOCK[r] = G[0]
 
     def R(value, a, b, **f):

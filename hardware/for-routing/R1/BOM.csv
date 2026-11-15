@@ -1,8 +1,8 @@
 Comment,Designator,Footprint,LCSC Part #
-Power from PW,J1,Molex_Micro-Fit_3.0_43045-1012_2x05_P3.00mm_Vertical,
+Power from PW,J1,Molex_Micro-Fit_3.0_43045-1012_2x05_P3.00mm_Vertical,C277725
 47u 25V,"C1,C2,C3,C4",CP_Elec_6.3x7.7,
 from R2,J2,PinHeader_2x07_P2.54mm_Vertical,
-to F1 (mute),J3,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,
+to F1 (mute),J3,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339
 to A1 (ADC 1-10),J4,PinHeader_2x20_P2.54mm_Vertical,
 "to A1 (ADC 11-18, DAC 1-4, power)",J5,PinHeader_2x25_P2.54mm_Vertical,
 MMBTA92,"Q1,Q3",SOT-23,C3009890
@@ -45,7 +45,7 @@ OPA1642,U7,SOIC-8_3.9x4.9mm_P1.27mm,C67640
 13.7k,"R75,R76,R87,R88",R_0402_1005Metric,
 68p,"C43,C44,C53,C54",C_0603_1608Metric,
 137k,"R81,R82,R93,R94",R_0402_1005Metric,
-PHONO L,J10,Jack_RCA_Vertical_Placeholder,
+PHONO L,J10,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609
 47k,"R97,R110",R_0402_1005Metric,
 100,"R98,R111,R125,R126,R133,R134,R141,R142,R149,R150,R157,R158,R165,R166,R173,R174,R181,R182,R213,R214",R_0603_1608Metric,
 130,"R99,R112",R_0402_1005Metric,
@@ -56,7 +56,7 @@ PHONO L,J10,Jack_RCA_Vertical_Placeholder,
 100n C0G,"C66,C75",C_1206_3216Metric,
 41.2k,"R106,R107,R119,R120",R_0402_1005Metric,
 22p,"C67,C68,C76,C77",C_0603_1608Metric,
-PHONO R,J11,Jack_RCA_Vertical_Placeholder,
+PHONO R,J11,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609
 LINE 1,J12,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,
 LINE 2,J13,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,
 LINE 3,J14,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,
@@ -72,5 +72,5 @@ MAIN L,J20,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,
 MAIN R,J21,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,
 AUX L,J22,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,
 AUX R,J23,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,
-RCA L,J24,Jack_RCA_Vertical_Placeholder,
-RCA R,J25,Jack_RCA_Vertical_Placeholder,
+RCA L,J24,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609
+RCA R,J25,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609

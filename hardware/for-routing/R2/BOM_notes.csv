@@ -1,5 +1,5 @@
 Designator,Value,Footprint,LCSC,Status of the LCSC number
-J1,Power from PW,JST_PH_B5B-PH-K_1x05_P2.00mm_Vertical,,номера нет: выбрать деталь
+J1,Power from PW,JST_PH_B5B-PH-K_1x05_P2.00mm_Vertical,C157993,проверено 15.11.2026: 54 490 шт. (JLC)
 U1,AP2112K-3.3,SOT-23-5,C51118,проверить в EasyEDA
 "C1,C2,C8,C29",1u,C_0402_1005Metric,C52923,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05A105KA5NQNC 1 мкФ 25 В X5R 0402, Basic; наличие и цена не смотрелись"
 "C3,C4,C5,C6,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C24,C25,C26,C30,C31,C32,C33,C34,C35,C37,C38,C39,C40,C41,C42,C43,C44,C45,C46,C47,C48,C49,C50,C51,C52,C53,C54",100n,C_0402_1005Metric,C1525,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05B104KO5NNNC 100 нФ 16 В X7R 0402, Basic; наличие и цена не смотрелись"
@@ -14,21 +14,21 @@ Y1,12MHz,Crystal_SMD_3225-4Pin_3.2x2.5mm,C20625731,проверить в EasyEDA
 U3,W25Q128JVSIQ,SOIC-8_5.3x5.3mm_P1.27mm,C97521,проверить в EasyEDA
 SW1,BOOTSEL,SW_Push_1P1T_XKB_TS-1187A,C318884,проверено 06.11.2026 (док. 31)
 "R7,R8",27,R_0402_1005Metric,,номера нет: выбрать деталь
-J2,SWD,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,,номера нет: выбрать деталь
+J2,SWD,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339,проверено 15.11.2026: 92 966 шт. (JLC)
 D1,green,LED_0603_1608Metric,,номера нет: выбрать деталь
 U4,USB2514B,QFN-36-1EP_6x6mm_P0.5mm_EP3.7x3.7mm,C220679,проверить в EasyEDA
 R11,12k,R_0402_1005Metric,,номера нет: выбрать деталь
 Y2,24MHz,Crystal_SMD_3225-4Pin_3.2x2.5mm,C70590,проверить в EasyEDA
 "C27,C28",18p,C_0402_1005Metric,,номера нет: выбрать деталь
 "R13,R14,R16,R17,R18,R19,R20,R21,R22,R90,R93,R96,R99,R103,R106",100k,R_0402_1005Metric,,номера нет: выбрать деталь
-J3,USB up,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
-"J4,J5,J6",USB down,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
-J7,DIN OUT 1,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,,номера нет: выбрать деталь
-J8,DIN OUT 2,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,,номера нет: выбрать деталь
-J9,DIN OUT 3,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,,номера нет: выбрать деталь
-J10,DIN OUT 4,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,,номера нет: выбрать деталь
-J11,DIN IN 1,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,,номера нет: выбрать деталь
-J12,DIN IN 2,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,,номера нет: выбрать деталь
+J3,USB up,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334,проверено 15.11.2026: 195 585 шт. (JLC)
+"J4,J5,J6",USB down,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334,проверено 15.11.2026: 195 585 шт. (JLC)
+J7,DIN OUT 1,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339,проверено 15.11.2026: 92 966 шт. (JLC)
+J8,DIN OUT 2,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339,проверено 15.11.2026: 92 966 шт. (JLC)
+J9,DIN OUT 3,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339,проверено 15.11.2026: 92 966 шт. (JLC)
+J10,DIN OUT 4,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339,проверено 15.11.2026: 92 966 шт. (JLC)
+J11,DIN IN 1,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,C131337,проверено 15.11.2026: 289 254 шт. (JLC)
+J12,DIN IN 2,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,C131337,проверено 15.11.2026: 289 254 шт. (JLC)
 J13,to A1/R1,PinHeader_2x07_P2.54mm_Vertical,,номера нет: выбрать деталь
 U5,74HC595,SOIC-16_3.9x9.9mm_P1.27mm,C5947,проверить в EasyEDA
 "R23,R25,R27,R29",33,R_1206_3216Metric,,номера нет: выбрать деталь

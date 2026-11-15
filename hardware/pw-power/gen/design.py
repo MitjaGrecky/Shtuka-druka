@@ -55,7 +55,7 @@ def parts():
         return f"{k}{n[k]}"
 
     def add(r, lib, value, fp, pins, **f):
-        P.append(dict(ref=r, lib=lib, value=value, fp=fp, pins=pins, fields=f))
+        P.append(dict(ref=r, lib=lib, value=value, fp=fp, pins=pins, fields=K.conn_lcsc(fp, f)))
 
     def R(value, a, b, fp=R0402, **f):
         add(ref("R"), "Device:R", value, fp, {"1": a, "2": b}, **f)

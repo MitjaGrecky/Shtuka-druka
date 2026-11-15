@@ -40,7 +40,8 @@ R0603, R1206 = "Resistor_SMD:R_0603_1608Metric", "Resistor_SMD:R_1206_3216Metric
 C1210 = "Capacitor_SMD:C_1210_3225Metric"
 SOIC8 = "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 SOT235, SOT236 = "Package_TO_SOT_SMD:SOT-23-5", "Package_TO_SOT_SMD:SOT-23-6"
-QFN48 = "Package_DFN_QFN:QFN-48-1EP_6x6mm_P0.4mm_EP4.6x4.6mm"
+QFN48 = "Package_DFN_QFN:QFN-48-1EP_6x6mm_P0.4mm_EP4.6x4.6mm"   # CS5308P DS1314F2 / CS5304P: EP 4.6 nom (4.5-4.7)
+QFN48_DAC = "Package_DFN_QFN:QFN-48-1EP_6x6mm_P0.4mm_EP4.3x4.3mm"   # CS4308P DS1317F1 fig. 10-1: EP 4.3 nom (4.2-4.4), L 0.4
 PH = "Connector_JST:JST_PH_B{n}B-PH-K_1x0{n}_P2.00mm_Vertical"
 SOCKET = "Connector_PinSocket_2.54mm:PinSocket_2x{n:02d}_P2.54mm_Horizontal"
 HEADER = "Connector_PinHeader_2.54mm:PinHeader_{rows}x{n:02d}_P2.54mm_Vertical"
@@ -63,7 +64,7 @@ def parts():
         return f"{k}{n[k]}"
 
     def add(r, lib, value, fp, pins, **f):
-        P.append(dict(ref=r, lib=lib, value=value, fp=fp, pins=pins, fields=f))
+        P.append(dict(ref=r, lib=lib, value=value, fp=fp, pins=pins, fields=K.conn_lcsc(fp, f)))
 
     def R(value, a, b, fp=R0402, **f):
         add(ref("R"), "Device:R", value, fp, {"1": a, "2": b}, **f)
@@ -241,9 +242,10 @@ def parts():
     out_pins = {1: ("46", "45"), 2: ("44", "43"), 3: ("36", "35"), 4: ("34", "33"), 5: ("31", "30"), 6: ("29", "28"), 7: ("27", "26"), 8: ("25", "24")}
     for c, (pp, pn) in out_pins.items():
         dpins[pp], dpins[pn] = f"DO{c}_P", f"DO{c}_N"
-    add(ref("U"), "ShtukaDruka:CS4308P", "CS4308P", QFN48, _fill(dpins, 49),
+    add(ref("U"), "ShtukaDruka:CS4308P", "CS4308P", QFN48_DAC, _fill(dpins, 49),
         Note="CS4308P: 8 channels, current outputs (I-V on this board), TDM data in on DIN1, software control by SPI; not in the EasyEDA library "
-        "(R136): no LCSC number (a new part: order from Digikey/Cirrus); 48-QFN 6x6 P0.4 per Digikey; pad size from the package drawing, section 10 of the datasheet")
+        "(R136): no LCSC number, order CS4308P-DN from Digikey (598-CS4308P-DN-ND), hand-soldered; 48-QFN 6x6 P0.4, exposed pad 4.3 x 4.3 "
+        "(DS1317F1 fig. 10-1), smaller than the 4.6 pad of the ADCs")
     mclk_load("MCLK_DAC")
     R("100k", "RST_DAC", "GND")
     R("33", "CONV_RESET", "RST_DAC")
@@ -381,7 +383,7 @@ def placement():
     (top side), ICs on a grid, small parts around the IC they share signals with. Starting point for the routing."""
     import autoplace
     # the two TLV62568 buck converters (U4, U5) and their inductors (L1, L2) go to the empty top-right corner: in rev 0.3 they sat
-    # 16-32 mm from the 24.576 / 22.5792 MHz audio master clocks (Y1, Y2) and 63 mm from the CS5304P; now >= 80 mm from the clocks
+    # 16-32 mm from the 24.576 / 22.5792 MHz audio master clocks (Y1, Y2) and 63 mm from the CS5304P; now 51-85 mm from the clocks (measured on the rev 0.4 board, 15.11.2026)
     fixed = {"U4": (210.0, 10.0, 0, "top"), "L1": (196.0, 10.0, 0, "top"), "U5": (210.0, 24.0, 0, "top"), "L2": (196.0, 24.0, 0, "top")}   # inside W = 220
     return autoplace.place(sys.modules[__name__], fixed=fixed)
 

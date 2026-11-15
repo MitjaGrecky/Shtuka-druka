@@ -2,10 +2,10 @@ Designator,Value,Footprint,LCSC,Status of the LCSC number
 J1,from R1 (ADC 1-10),PinSocket_2x20_P2.54mm_Horizontal,,номера нет: выбрать деталь
 J2,"R1 (ADC 11-18, DAC 1-4, power)",PinSocket_2x25_P2.54mm_Horizontal,,номера нет: выбрать деталь
 J3,to F1,PinHeader_2x06_P2.54mm_Vertical,,номера нет: выбрать деталь
-J4,USB port A (hub),JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
-J5,USB-C PC,JST_PH_B6B-PH-K_1x06_P2.00mm_Vertical,,номера нет: выбрать деталь
-J6,spare ADC 19-20,JST_PH_B6B-PH-K_1x06_P2.00mm_Vertical,,номера нет: выбрать деталь
-J7,PDM mic,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
+J4,USB port A (hub),JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334,проверено 15.11.2026: 195 585 шт. (JLC)
+J5,USB-C PC,JST_PH_B6B-PH-K_1x06_P2.00mm_Vertical,C131342,проверено 15.11.2026: 71 421 шт. (JLC)
+J6,spare ADC 19-20,JST_PH_B6B-PH-K_1x06_P2.00mm_Vertical,C131342,проверено 15.11.2026: 71 421 шт. (JLC)
+J7,PDM mic,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334,проверено 15.11.2026: 195 585 шт. (JLC)
 U1,AP2112K-3.3,SOT-23-5,C51118,проверить в EasyEDA
 "C1,C3,C5,C22,C23,C37,C38,C52,C53,C203,C204,C258,C274",1u,C_0603_1608Metric,,номера нет: выбрать деталь
 "C2,C4,C28,C30,C43,C45,C56",2.2u,C_0603_1608Metric,,номера нет: выбрать деталь
@@ -40,7 +40,7 @@ U8,CS5304P,QFN-48-1EP_6x6mm_P0.4mm_EP4.6x4.6mm,C49192888,проверить в E
 "C61,C63,C68,C70,C75,C77,C82,C84,C89,C91,C96,C98,C103,C105,C110,C112,C117,C119,C124,C126,C131,C133,C138,C140,C145,C147,C152,C154,C159,C161,C166,C168,C173,C175,C180,C182,C187,C189,C194,C196",680p C0G,C_0603_1608Metric,,номера нет: выбрать деталь
 "R40,R43,R48,R51,R56,R59,R64,R67,R72,R75,R80,R83,R88,R91,R96,R99,R104,R107,R112,R115,R120,R123,R128,R131,R136,R139,R144,R147,R152,R155,R160,R163,R168,R171,R176,R179,R184,R187,R192,R195",10,R_0402_1005Metric,,номера нет: выбрать деталь
 "C64,C71,C78,C85,C92,C99,C106,C113,C120,C127,C134,C141,C148,C155,C162,C169,C176,C183,C190,C197",15n C0G,C_0603_1608Metric,,номера нет: выбрать деталь
-U29,CS4308P,QFN-48-1EP_6x6mm_P0.4mm_EP4.6x4.6mm,,номера нет: выбрать деталь
+U29,CS4308P,QFN-48-1EP_6x6mm_P0.4mm_EP4.3x4.3mm,,номера нет: выбрать деталь
 "C210,C211,C215,C216,C220,C221,C225,C226,C230,C231,C235,C236,C240,C241,C245,C246",620p C0G,C_0603_1608Metric,,номера нет: выбрать деталь
 "R207,R209,R211,R213,R215,R217,R219,R221,R223,R225,R227,R229,R231,R233,R235,R237",47,R_0603_1608Metric,,номера нет: выбрать деталь
 "C212,C217,C222,C227,C232,C237,C242,C247",1n C0G,C_0603_1608Metric,,номера нет: выбрать деталь
@@ -49,9 +49,9 @@ U29,CS4308P,QFN-48-1EP_6x6mm_P0.4mm_EP4.6x4.6mm,,номера нет: выбра
 "FB1,FB2",600R,R_0603_1608Metric,C14709,проверить в EasyEDA
 "Y3,Y4,Y5",24MHz,Crystal_SMD_3225-4Pin_3.2x2.5mm,C70590,проверить в EasyEDA
 "C260,C261,C276,C277",18p,C_0402_1005Metric,,номера нет: выбрать деталь
-J8,JTAG A,JST_PH_B6B-PH-K_1x06_P2.00mm_Vertical,,номера нет: выбрать деталь
+J8,JTAG A,JST_PH_B6B-PH-K_1x06_P2.00mm_Vertical,C131342,проверено 15.11.2026: 71 421 шт. (JLC)
 "U40,U41",W25Q32JVSSIQ,SOIC-8_5.3x5.3mm_P1.27mm,C179173,проверить в EasyEDA
-J9,JTAG B,JST_PH_B6B-PH-K_1x06_P2.00mm_Vertical,,номера нет: выбрать деталь
+J9,JTAG B,JST_PH_B6B-PH-K_1x06_P2.00mm_Vertical,C131342,проверено 15.11.2026: 71 421 шт. (JLC)
 "U42,U43",USBLC6-2SC6,SOT-23-6,C7519,проверить в EasyEDA
 R245,20k,R_0402_1005Metric,,номера нет: выбрать деталь
 "R246,R247",5.1k,R_0402_1005Metric,,номера нет: выбрать деталь

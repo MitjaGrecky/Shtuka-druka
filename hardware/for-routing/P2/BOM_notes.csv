@@ -1,5 +1,5 @@
 Designator,Value,Footprint,LCSC,Status of the LCSC number
-J1,+5V from PW,Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical,,номера нет: выбрать деталь
+J1,+5V from PW,Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical,C234188,"15.11.2026: 0 шт. на JLC — заказать у Digikey, паять вручную (В22)"
 "C1,C2",100u 10V,CP_Elec_6.3x7.7,,номера нет: выбрать деталь
 "C3,C6,C7,C27",10u,C_0805_2012Metric,C15850,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL21A106KAYNNNE 10 мкФ 25 В X5R 0805, Basic; наличие и цена не смотрелись"
 U1,AP2112K-3.3,SOT-23-5,C51118,проверить в EasyEDA
@@ -18,8 +18,8 @@ Y1,12MHz,Crystal_SMD_3225-4Pin_3.2x2.5mm,C20625731,проверить в EasyEDA
 U3,W25Q128JVSIQ,SOIC-8_5.3x5.3mm_P1.27mm,C97521,проверить в EasyEDA
 SW1,BOOTSEL,SW_Push_1P1T_XKB_TS-1187A,C318884,проверено 06.11.2026 (док. 31)
 "R7,R8",27,R_0402_1005Metric,,номера нет: выбрать деталь
-J2,SWD,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,,номера нет: выбрать деталь
-J3,USB to R2 hub,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
+J2,SWD,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339,проверено 15.11.2026: 92 966 шт. (JLC)
+J3,USB to R2 hub,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334,проверено 15.11.2026: 195 585 шт. (JLC)
 R10,20k,R_0402_1005Metric,,номера нет: выбрать деталь
 U4,USBLC6-2SC6,SOT-23-6,C7519,проверить в EasyEDA
 D1,green,LED_0603_1608Metric,,номера нет: выбрать деталь
@@ -102,7 +102,7 @@ J4,Module bus M1 (2x7),PinHeader_2x07_P1.27mm_Vertical,C5372811,"найден в
 J5,Deck bus to P1,PinHeader_2x08_P1.27mm_Vertical,C5372812,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-08-Z, штыри 2x8 1,27 выводные, Extended; наличие и цена не смотрелись"
 J6,Deck bus to P3,PinHeader_2x08_P1.27mm_Vertical,C5372812,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-08-Z, штыри 2x8 1,27 выводные, Extended; наличие и цена не смотрелись"
 J7,Deck bus to P4,PinHeader_2x08_P1.27mm_Vertical,C5372812,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-08-Z, штыри 2x8 1,27 выводные, Extended; наличие и цена не смотрелись"
-J8,Trill Bar A,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
-J9,Trill Bar B,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
-J10,I2C power monitor (PW),JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
+J8,Trill Bar A,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334,проверено 15.11.2026: 195 585 шт. (JLC)
+J9,Trill Bar B,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334,проверено 15.11.2026: 195 585 шт. (JLC)
+J10,I2C power monitor (PW),JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334,проверено 15.11.2026: 195 585 шт. (JLC)
 R100,100k,R_0402_1005Metric,,номера нет: выбрать деталь

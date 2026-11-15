@@ -33,6 +33,29 @@ LCSC = {"100n": "C1525", "1u": "C52923", "10u": "C15850", "4.7u": "C1779", "1n":
         "1k": "C11702", "0": "C17168", "560": "C25126"}
 # 1.27 mm headers: the footprint is through-hole, so the THT parts (C3975190 / C3975191 are the SMD variants -S of the same series)
 BUS_LCSC, DECK_LCSC = "C5372811", "C5372812"      # HCTL PZ127-2-07-Z, PZ127-2-08-Z (Extended)
+# Cable connectors by footprint (15.11.2026, PC): numbers from EasyEDA Pro's library (eda_parts.py), stock from jlcpcb.com/partdetail.
+# Genuine JST / Molex, all Extended. Micro-Fit 43045-0612 C234188 had 0 in stock: order it from Digikey and solder by hand (B22),
+# the number stays so the BOM names the part. JST B2B-PH-K-S C20504437 had 0: the (LF)(SN) variant C131337 instead.
+_PH = "Connector_JST:JST_PH_B{n}B-PH-K_1x0{n}_P2.00mm_Vertical"
+_MF = "Connector_Molex:Molex_Micro-Fit_3.0_{}_P3.00mm_Vertical"
+CONN_LCSC = {
+    _PH.format(n=2): "C131337",    # B2B-PH-K-S(LF)(SN), 289 254 in stock
+    _PH.format(n=3): "C131339",    # B3B-PH-K-S(LF)(SN), 92 966
+    _PH.format(n=4): "C131334",    # B4B-PH-K-S(LF)(SN), 195 585
+    _PH.format(n=5): "C157993",    # B5B-PH-K-S(LF)(SN), 54 490
+    _PH.format(n=6): "C131342",    # B6B-PH-K-S(LF)(SN), 71 421
+    _MF.format("43650-0215_1x02"): "C293740",    # 436500215, 2 649
+    _MF.format("43045-0412_2x02"): "C277721",    # 430450412, 50 687
+    _MF.format("43045-0612_2x03"): "C234188",    # 430450612, 0 at JLC: Digikey, hand-soldered
+    _MF.format("43045-1012_2x05"): "C277725",    # 430451012, 5 950
+}
+
+
+def conn_lcsc(fp, f):
+    """Fill the LCSC field of a cable connector from CONN_LCSC unless the board set one."""
+    if fp in CONN_LCSC and "LCSC" not in f:
+        f["LCSC"] = CONN_LCSC[fp]
+    return f
 
 # ------------------------------------------------------------------ module bus (R123), 2 x 7, 1.27 mm
 CONN = {1: "+5V", 2: "+5V", 3: "GND", 4: "GND", 5: "+3V3", 6: "GND", 7: "SDA", 8: "SCL",

@@ -80,7 +80,7 @@ def parts():
         u5["pins"][K.SR_D[len(bits) - 16]] = "WHEEL_PUSH"
         K.pullups(add, 1 + (len(bits) + 3) // 4, ["WHEEL_PUSH"])
         add("J4", "Connector_Generic:Conn_01x02", "Wheel push", "Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical",
-            {"1": "WHEEL_PUSH", "2": "GND"}, LCSC="C20504437", Side="bottom", Note="V10: switch in the wheel mechanism (to confirm)")
+            {"1": "WHEEL_PUSH", "2": "GND"}, LCSC="C131337", Side="bottom", Note="V10: switch in the wheel mechanism (to confirm)")
     # crossfader (P104): slide pot -> 1k / 100n -> ADS1115 AIN0; AIN1-3 unused (to GND)
     add("RV1", "Device:R_Potentiometer", "10k lin, 45 mm travel", "Potentiometer_THT:Potentiometer_Bourns_PTA4543_Single_Slide",
         {"1": "GND", "2": "XFADER", "3": "+3V3"}, LCSC="C17444183",

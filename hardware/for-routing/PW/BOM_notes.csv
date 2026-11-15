@@ -1,11 +1,11 @@
 Designator,Value,Footprint,LCSC,Status of the LCSC number
-J1,DC in,Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical,,номера нет: выбрать деталь
+J1,DC in,Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical,C293740,проверено 15.11.2026: 2 649 шт. (JLC)
 F1,7A,Fuse_2920_7451Metric,,номера нет: выбрать деталь
 D1,SMBJ28CA,D_SMB,C151259,проверить в EasyEDA
 "U1,U3,U4",LM74700-Q1,SOT-23-6,C2941042,проверить в EasyEDA
 "C1,C12,C13,C42,C52,C60,C67,C89",100n 25V,C_0603_1608Metric,,номера нет: выбрать деталь
 "Q1,Q2,Q3,Q4,Q5,Q6,Q7",CSD18540Q5B,TDSON-8-1,C86513,проверить в EasyEDA
-J2,USB-C Power in,Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical,,номера нет: выбрать деталь
+J2,USB-C Power in,Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical,C234188,"15.11.2026: 0 шт. на JLC — заказать у Digikey, паять вручную (В22)"
 D2,SMBJ22CA,D_SMB,C224016,проверить в EasyEDA
 U2,TPS25730D,Texas_REF0038A_WQFN-38-2EP_6x4mm_P0.4,C22438973,проверить в EasyEDA
 "R1,R3",42.2k,R_0402_1005Metric,,номера нет: выбрать деталь
@@ -18,10 +18,10 @@ C5,10n 50V,C_0603_1608Metric,,номера нет: выбрать деталь
 "C8,C9,C64,C65,C66,C71,C72,C73,C93,C94,C95",22u 25V,C_1210_3225Metric,,номера нет: выбрать деталь
 "C10,C75,C76,C79",10u 25V,C_1210_3225Metric,,номера нет: выбрать деталь
 C11,47u 35V,CP_Elec_8x10.5,,номера нет: выбрать деталь
-J3,Battery,Molex_Micro-Fit_3.0_43045-0412_2x02_P3.00mm_Vertical,,номера нет: выбрать деталь
+J3,Battery,Molex_Micro-Fit_3.0_43045-0412_2x02_P3.00mm_Vertical,C277721,проверено 15.11.2026: 50 687 шт. (JLC)
 F2,10A,Fuse_2920_7451Metric,,номера нет: выбрать деталь
 D3,SMBJ20CA,D_SMB,C151258,проверить в EasyEDA
-J4,On/Off switch,Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical,,номера нет: выбрать деталь
+J4,On/Off switch,Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical,C293740,проверено 15.11.2026: 2 649 шт. (JLC)
 R9,5m,R_2512_6332Metric,,номера нет: выбрать деталь
 U5,INA226,MSOP-10_3x3mm_P0.5mm,C49851,проверить в EasyEDA
 "R10,R11,R12",10,R_0603_1608Metric,,номера нет: выбрать деталь
@@ -29,7 +29,7 @@ U5,INA226,MSOP-10_3x3mm_P0.5mm,C49851,проверить в EasyEDA
 C15,100n,C_0603_1608Metric,,номера нет: выбрать деталь
 U6,AP2112K-3.3,SOT-23-5,C51118,проверить в EasyEDA
 "C16,C17,C61,C68,C74,C77,C90",1u,C_0603_1608Metric,,номера нет: выбрать деталь
-J5,I2C power monitor,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
+J5,I2C power monitor,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334,проверено 15.11.2026: 195 585 шт. (JLC)
 C18,100u 35V,CP_Elec_10x10.5,,номера нет: выбрать деталь
 "C19,C20,C62,C69,C70,C91",10u 50V,C_1210_3225Metric,,номера нет: выбрать деталь
 U7,LM5176,HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.4x9.5mm_ThermalVias,C442493,проверить в EasyEDA
@@ -52,7 +52,7 @@ L1,4.7uH,L_Bourns_SRP1245A,,номера нет: выбрать деталь
 "C30,C31,C32,C33",4.7u 50V,C_1210_3225Metric,,номера нет: выбрать деталь
 "C34,C35,C36,C37",10u 35V,C_1210_3225Metric,,номера нет: выбрать деталь
 "C38,C39",100u 35V,CP_Elec_8x10.5,,номера нет: выбрать деталь
-J6,15 V to H5,Molex_Micro-Fit_3.0_43045-0412_2x02_P3.00mm_Vertical,,номера нет: выбрать деталь
+J6,15 V to H5,Molex_Micro-Fit_3.0_43045-0412_2x02_P3.00mm_Vertical,C277721,проверено 15.11.2026: 50 687 шт. (JLC)
 "U8,U9",TPS54560B,Texas_R-PDSO-G8_EP2.95x4.9mm_Mask2.4x3.1mm_ThermalVias,C1850354,проверить в EasyEDA
 "R23,R29",442k,R_0402_1005Metric,,номера нет: выбрать деталь
 "R24,R30",90.9k,R_0402_1005Metric,,номера нет: выбрать деталь
@@ -92,11 +92,11 @@ D6,SS1H10,D_SMA,C3151624,проверить в EasyEDA
 U15,TPS7A4101,Texas_DGN0008B_VSSOP-8-1EP_3x3mm_P0.65mm_EP2x3mm_Mask1.88x1.98mm_ThermalVias,C111739,проверить в EasyEDA
 R49,383k,R_0402_1005Metric,,номера нет: выбрать деталь
 C87,1u 100V,C_1206_3216Metric,,номера нет: выбрать деталь
-J7,+5V panel,Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical,,номера нет: выбрать деталь
-J8,to R2,JST_PH_B5B-PH-K_1x05_P2.00mm_Vertical,,номера нет: выбрать деталь
-J9,to A1/R1,Molex_Micro-Fit_3.0_43045-1012_2x05_P3.00mm_Vertical,,номера нет: выбрать деталь
-J10,to F1,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,,номера нет: выбрать деталь
-J11,+5V screen,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,,номера нет: выбрать деталь
+J7,+5V panel,Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical,C234188,"15.11.2026: 0 шт. на JLC — заказать у Digikey, паять вручную (В22)"
+J8,to R2,JST_PH_B5B-PH-K_1x05_P2.00mm_Vertical,C157993,проверено 15.11.2026: 54 490 шт. (JLC)
+J9,to A1/R1,Molex_Micro-Fit_3.0_43045-1012_2x05_P3.00mm_Vertical,C277725,проверено 15.11.2026: 5 950 шт. (JLC)
+J10,to F1,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334,проверено 15.11.2026: 195 585 шт. (JLC)
+J11,+5V screen,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,C131337,проверено 15.11.2026: 289 254 шт. (JLC)
 R51,2.2k,R_0402_1005Metric,,номера нет: выбрать деталь
 D7,green,LED_0603_1608Metric,,номера нет: выбрать деталь
 R53,7.15k,R_0402_1005Metric,,номера нет: выбрать деталь

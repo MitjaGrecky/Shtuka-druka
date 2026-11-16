@@ -25,13 +25,15 @@ _spec = importlib.util.spec_from_file_location("w1_design", os.path.join(REPO, "
 W1 = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(W1)
 
-W, D = 515.0, 460.0
+FL = float(os.environ.get("FRONT_LIP", "0"))        # study: the case is longer in front by FL (a lip for the headphone jacks); y < 0 there
+RS = float(os.environ.get("REAR_SHIFT", "0"))   # study 16.11.2026: the shelf before the rear wall is longer by RS, R1 / R2 / rear jacks / A1 / PW move back with the wall
+W, D = 515.0, 460.0 + RS
 _T = float(os.environ.get("FRONT_Z", "68.0"))      # height of the front top surface; the slope keeps its 30 degrees
-FOLD_Y, FOLD_Z, SHELF_Y, TOP_Z, BACK_Z = 300.0, _T, 430.0, _T, _T + 75.0
+FOLD_Y, FOLD_Z, SHELF_Y, TOP_Z, BACK_Z = 300.0, _T, 430.0, float(os.environ.get("DECK", str(_T))), float(os.environ.get("BACK_H", str(_T + 75.0)))   # BACK_H: rear height, default front + 75 (30 degrees)
 SLOPE = math.atan2(BACK_Z - FOLD_Z, SHELF_Y - FOLD_Y)          # 30 degrees
 SLOPE_LEN = math.hypot(BACK_Z - FOLD_Z, SHELF_Y - FOLD_Y)       # 150.1 mm
 SKIN = 3.0
-PCB_TOP = TOP_Z - SKIN - 6.5        # panel boards: encoder body (6.5) between board and skin
+PCB_TOP = TOP_Z - SKIN - float(os.environ.get("PANEL_GAP", "6.5"))   # panel boards: encoder body (6.5) between board and skin
 PCB = 1.6
 GAP_MIN = 1.0                        # below this a clearance is reported as tight
 COMPUTER = os.environ.get("COMPUTER", "H5")      # "H5" (ODROID-H5, R149) or "ITX" (Mini-ITX, the fallback of R36)
@@ -41,6 +43,35 @@ COMPUTER = os.environ.get("COMPUTER", "H5")      # "H5" (ODROID-H5, R149) or "IT
 H5_STANDOFF = float(os.environ.get("H5_STANDOFF", "3.0"))
 H5_Z0 = float(os.environ.get("H5_Z0", str(SKIN + H5_STANDOFF)))
 H5_H = float(os.environ.get("H5_H", "44.0"))     # overall height of the H5 above the board underside, mm
+# --- parameters of the "lower case" study (docs/ru/37_lower_case_study.md); every default keeps the old behaviour ---
+PANEL_GAP = float(os.environ.get("PANEL_GAP", "6.5"))   # board top -> skin underside for P1, P3, P4, M1, W (encoder bodies, wheel, crossfader)
+P2_GAP = float(os.environ.get("P2_GAP", str(PANEL_GAP)))  # same for P2 Grid only (pads = FSR sheet, SMD buttons: needs less)
+P2_PARTS = float(os.environ.get("P2_PARTS", "4.0"))     # envelope of the parts under P2, mm (the design has 7.7 mm electrolytics and headers there)
+WHEEL_TRACK = os.environ.get("WHEEL_TRACK", "0") == "1"  # 1: the wheel housing follows the skin (the stack under the skin is 6.5 mm anyway)
+F1_MODE = os.environ.get("F1_MODE", "V")                 # V = vertical 44 mm board (as before), H = horizontal under the jacks (P94)
+F1_TOP = float(os.environ.get("F1_TOP", "50.0"))         # top of the vertical F1, z
+REAR_JACK_TOP = float(os.environ.get("REAR_JACK_TOP", "112.0"))      # top of the rear-jack envelope, z
+REAR_JACK_TOP_R = float(os.environ.get("REAR_JACK_TOP_R", str(REAR_JACK_TOP)))  # same for x > 340 (under W2 / W3)
+R2_TALL_X1 = float(os.environ.get("R2_TALL_X1", "359.0"))            # right end of the tall part of R2 (model x)
+A1_X0 = float(os.environ.get("A1_X0", "20"))               # A1 left edge (study: A1 moved under the grid)
+A1_Y0 = float(os.environ.get("A1_Y0", str(305 + RS)))              # A1 front edge
+PW_X0 = float(os.environ.get("PW_X0", "0"))              # H5REAR: left edge of PW (0 = old default 285)
+H5T_X = float(os.environ.get("H5T_X", "120.0"))             # H5TILT: left edge x of the H5 lying along the slope
+H5T_S0 = float(os.environ.get("H5T_S0", "20.0"))           # H5TILT: its lower edge along the slope from the fold
+H5T_N = float(os.environ.get("H5T_N", "-26.0"))            # H5TILT: top of the heatsink, n from the outer surface (screen back is at about -25)
+H5_PORT = os.environ.get("H5_PORT", "none")             # H5REAR: edge with the ports and plugs, N (+y) S (-y) E (+x) W (-x); a 25 mm clearance box is added
+H5_PORT_LEN = float(os.environ.get("H5_PORT_LEN", "25.0"))   # plug and cable bend beyond the board edge (estimate)
+BATT_LIPO = os.environ.get("BATT_LIPO", "0") == "1"       # R155: flat LiPo pack under P2, 170 x 100 x 12 (4S, about 99 Wh with the BMS)
+LIPO_H = float(os.environ.get("LIPO_H", "12.0"))
+BATT_BOXES = [tuple(float(v) for v in s.split(",")) for s in os.environ.get("BATT_BOXES", "").split(";") if s.strip()]
+FAN = tuple(float(v) for v in os.environ["FAN"].split(",")) if os.environ.get("FAN") else None   # "y,z0": 92 mm fan on the right wall
+PANEL_PARTS = float(os.environ.get("PANEL_PARTS", "4.0"))  # parts-below envelope of P1, P3, P4
+F1_SIDE_Z = float(os.environ.get("F1_SIDE_Z", "40.0"))    # F1_MODE=SIDE: axis height of the jacks on the left wall behind the riser
+BATT_FLAT = os.environ.get("BATT_FLAT", "0") == "1"      # battery as one flat row of 8 cells (155 x 75 x 25) instead of 90 x 86 x 45
+R1_TOP = float(os.environ.get("R1_TOP", "104.0"))          # top of the vertical R1 board, z
+R2_TOP = float(os.environ.get("R2_TOP", "113.0"))          # top of the tall part of R2, z
+H5_REAR_X = float(os.environ.get("H5_REAR_X", "451.0"))  # H5REAR centre x
+H5_REAR_Y = float(os.environ.get("H5_REAR_Y", "353.0"))  # H5REAR centre y
 
 
 class Box:
@@ -296,12 +327,14 @@ def parts(usb=None):
     a = P.append
     # shell
     sh = dict(color="shell", check=True)
-    a(box("Floor", "shell", 0, W, 0, D, 0, SKIN, **sh))
-    a(box("Front wall", "shell", 0, W, 0, SKIN, SKIN, TOP_Z, **sh))
+    a(box("Floor", "shell", 0, W, -FL, D, 0, SKIN, **sh))
+    a(box("Front wall", "shell", 0, W, -FL, -FL + SKIN, SKIN, TOP_Z, **sh))
     a(box("Rear wall", "shell", 0, W, D - SKIN, D, SKIN, BACK_Z, **sh))
-    a(box("Side left", "shell", 0, SKIN, SKIN, D - SKIN, SKIN, TOP_Z, **sh))
-    a(box("Side right", "shell", W - SKIN, W, SKIN, D - SKIN, SKIN, TOP_Z, **sh))
-    a(box("Top skin", "shell", SKIN, W - SKIN, SKIN, FOLD_Y, TOP_Z - SKIN, TOP_Z, **sh))
+    a(box("Side left", "shell", 0, SKIN, -FL + SKIN, D - SKIN, SKIN, TOP_Z, **sh))
+    a(box("Side right", "shell", W - SKIN, W, -FL + SKIN, D - SKIN, SKIN, TOP_Z, **sh))
+    a(box("Top skin", "shell", SKIN, W - SKIN, -FL + SKIN, FOLD_Y, TOP_Z - SKIN, TOP_Z, **sh))
+    if TOP_Z < FOLD_Z - 0.01:          # step case (DECK < FRONT_Z): the riser wall at the fold
+        a(box("Riser wall", "shell", SKIN, W - SKIN, FOLD_Y - SKIN, FOLD_Y, TOP_Z, FOLD_Z, **sh))
     # slope skin with the USB-A + SD pocket open down to W3 (R81); the pocket walls are left out
     P += slope_frame("Slope skin", "shell", SKIN, W - SKIN, 0, SLOPE_LEN, -SKIN, 0, POCKET, **sh)
     a(box("Shelf", "shell", SKIN, W - SKIN, SHELF_Y, D - SKIN, BACK_Z - SKIN, BACK_Z, **sh))
@@ -311,8 +344,10 @@ def parts(usb=None):
     for nm, x0, x1, y0, y1 in (("P1 Left", 10, 102, 4, 291), ("P2 Grid", 110, 334, 4, 262),   # 16.11.2026: P2 rev 0.4 outline 224 x 258 (was 221.5 x 257)
                               
                                ("P3 Tracks", 339, 405, 4, 291), ("P4 Right", 413, 505, 4, 291)):
-        a(box(nm, "panel", x0, x1, y0, y1, z0, z1, color="pcb"))
-        a(box(nm + " parts below", "panel", x0 + 2, x1 - 2, y0 + 2, y1 - 2, z0 - 4, z0, color="parts", est=True,
+        dz = (PANEL_GAP - P2_GAP) if nm.startswith("P2") else 0.0      # P2 closer to the skin by dz (study variants only)
+        ph = P2_PARTS if nm.startswith("P2") else PANEL_PARTS
+        a(box(nm, "panel", x0, x1, y0, y1, z0 + dz, z1 + dz, color="pcb"))
+        a(box(nm + " parts below", "panel", x0 + 2, x1 - 2, y0 + 2, y1 - 2, z0 + dz - ph, z0 + dz, color="parts", est=True,
               note="envelope of the components under the board"))
     a(box("Trill Bar x2", "panel", 130, 311.5, 13, 31, PCB_TOP, TOP_Z - SKIN, color="pcb",
           note="touch strip sensors right under the skin (R113)"))
@@ -324,9 +359,10 @@ def parts(usb=None):
     # 6700ZZ bearing (10 x 15 x 4) in a printed housing screwed under the skin. AS5600 datasheet:
     # magnet 6 mm, air gap 0.5-3 mm, SOIC-8 max 1.75 mm; here magnet -> die about 0.5 + 1.6 + 0.4 = 2.5 mm
     wx, wy = 459.0, 277.0
-    a(Box("Wheel bearing housing", "panel", (wx, wy, 63.25), (21, 21, 3.5), color="plastic", shape="cyl",
+    wz = (TOP_Z - 4.75) if WHEEL_TRACK else 63.25
+    a(Box("Wheel bearing housing", "panel", (wx, wy, wz), (21, 21, 3.5), color="plastic", shape="cyl",
           note="printed, holds the 6700ZZ bearing, screwed to the skin"))
-    a(Box("Wheel bearing 6700ZZ", "panel", (wx, wy, 63.5), (15, 15, 4), color="metal", shape="cyl", check=False,
+    a(Box("Wheel bearing 6700ZZ", "panel", (wx, wy, wz + 0.25), (15, 15, 4), color="metal", shape="cyl", check=False,
           note="10 x 15 x 4 mm; sits 0.5 mm into a counterbore of the skin"))
     a(Box("Wheel magnet", "panel", (wx, wy, PCB_TOP + 0.5 + 1.25), (6, 6, 2.5), color="metal", shape="cyl",
           note="6 x 2.5 mm diametric, on the shaft end; 0.5 mm above P4 by design"))
@@ -396,9 +432,37 @@ def parts(usb=None):
         a(box("Mini-ITX board", "itx", 136, 306, 45, 215, 9, 10.6, color="pcb"))
         a(box("Mini-ITX parts", "itx", 136, 306, 45, 215, 10.6, 45, color="parts", est=True,
               note="tallest: rear I/O stack and the heatsink (doc 27)"))
-    for nm, x in (("Phones 1 jack", 32), ("Phones 2 jack", 80)):
+    if F1_MODE == "SIDE":
+        # F1 on the left wall behind the riser (study): two NMJ6HCD2 through the wall (18.2 x 15.67 body, depth 25 estimate), board under them
+        for k, y0 in enumerate((FOLD_Y + 12, FOLD_Y + 40)):
+            a(box(f"Phones {k + 1} jack", "front", SKIN, SKIN + 25, y0, y0 + 18.2, F1_SIDE_Z - 7.8, F1_SIDE_Z + 7.8, color="metal", est=True,
+                  note="Neutrik NMJ6HCD2 through the left wall; body 18.2 x 15.67, depth 25 (estimate)"))
+        a(box("F1 headphone board", "front", SKIN, SKIN + 100, FOLD_Y + 5, FOLD_Y + 47, F1_SIDE_Z - 9.4, F1_SIDE_Z - 7.8, color="pcb",
+              note="F1 lying under the jacks, behind the riser, above A1"))
+        a(box("F1 headphone board parts below", "front", SKIN + 2, SKIN + 98, FOLD_Y + 7, FOLD_Y + 45, F1_SIDE_Z - 13.4, F1_SIDE_Z - 9.4,
+              color="parts", est=True))
+    elif F1_MODE in ("LIP", "POCKET"):
+        # study 16.11.2026: the jacks stay at the front. LIP = a 28 mm lip in front of P1 (jacks y -25..0, board on 3 mm standoffs);
+        # POCKET = jack bodies sink below the floor under P1 (a pocket in the bottom, feet >= 10 mm). NMJ6HCD2 body 18.2 x 15.67, depth 25 (estimate).
+        for k, x in enumerate((32, 80)):
+            if F1_MODE == "LIP":
+                a(box(f"Phones {k + 1} jack", "front", x - 9.1, x + 9.1, -(FL - SKIN) if FL else -25, 0, SKIN + 3 + 1.6, SKIN + 3 + 1.6 + 15.67, color="metal", est=True))
+            else:
+                a(box(f"Phones {k + 1} jack", "front", x - 9.1, x + 9.1, SKIN, SKIN + 25, -2.8, 12.87, color="metal", est=True))
+        if F1_MODE == "LIP":
+            a(box("F1 headphone board", "front", 15, 100, -(FL - SKIN) if FL else -27, 8, SKIN + 3, SKIN + 4.6, color="pcb"))
+        else:
+            a(box("F1 headphone board", "front", 15, 100, SKIN, 35, -4.4, -2.8, color="pcb"))
+            a(box("F1 headphone board parts below", "front", 17, 98, SKIN + 2, 33, -6.4, -4.4, color="parts", est=True))
+    else:
+      for nm, x in (("Phones 1 jack", 32), ("Phones 2 jack", 80)):
         a(box(nm, "front", x - 10, x + 10, SKIN, 35, 17, 33, color="metal", est=True))
-    a(box("F1 headphone board", "front", 15, 100, 35, 36.6, 6, 50, color="pcb"))
+    if F1_MODE in ("SIDE", "LIP", "POCKET"):
+        pass
+    elif F1_MODE == "H":      # P94: the board lies flat right under the jack bodies
+        a(box("F1 headphone board", "front", 15, 100, SKIN, 35, 15.4, 17, color="pcb", note="horizontal F1 (P94), under the jacks"))
+    else:
+        a(box("F1 headphone board", "front", 15, 100, 35, 36.6, 6, F1_TOP, color="pcb"))
 
     # slope: screen and the three slope boards
     P += screen_parts()
@@ -408,24 +472,62 @@ def parts(usb=None):
     # under the slope and the rear wall (doc 27 section 6, doc 29)
     # 15.11.2026: real outlines of the placed boards (A1 rev 0.4 220 x 100, PW rev 0.6 100 x 80, R1 rev 0.5 238 x 96, R2 rev 0.6 L-shape
     # 175 x 103); before they were the early estimates 140 x 90, 60 x 50, 238 x 104 and 258 x 104. Rear boards: model x = 515 - rear x.
-    a(box("A1 audio board", "rear", 20, 240, 305, 405, 6, 28, color="pcb", note="220 x 100, rev 0.4; position not fixed"))
-    if COMPUTER == "H5REAR":
+    a(box("A1 audio board", "rear", A1_X0, A1_X0 + 220, A1_Y0, A1_Y0 + 100, 6, 28, color="pcb", note="220 x 100, rev 0.4; position not fixed"))
+    if COMPUTER in ("H5REAR", "H5TILT"):
         # 16.11.2026, the user's idea: the H5 where the battery bay was (rear right, under the slope), lying flat; the battery
         # goes under the grid where the H5 used to be; PW moves 15 mm left to clear it.
-        a(box("PW power", "rear", 285, 385, 320, 400, 6, 24, color="pcb", note="100 x 80, rev 0.6; moved left for the H5"))
-        a(box("Mini-ITX board", "itx", 391, 511, 293, 413, H5_Z0, H5_Z0 + 1.6, color="pcb"))
-        a(box("Mini-ITX parts H5", "itx", 391, 511, 293, 413, H5_Z0 + 1.6, H5_Z0 + H5_H, color="parts", est=True,
-              note="ODROID-H5 in the old battery bay, 44 mm overall"))
-        a(box("Battery bay", "rear", 176, 266, 87, 173, 3, 48, color="battery", note="moved under the grid"))
+        px = PW_X0 or 285
+        a(box("PW power", "rear", px, px + 100, 320 + RS, 400 + RS, 6, 24, color="pcb", note="100 x 80, rev 0.6; moved for the H5"))
+        rx, ry = H5_REAR_X, H5_REAR_Y
+        if COMPUTER == "H5TILT":
+            # the H5 lies parallel to the slope under the screen (user's sketch, 16.11.2026): board away from the slope, heatsink towards it
+            nb = H5T_N - H5_H
+            a(slope_box("Mini-ITX board", "itx", H5T_X, H5T_X + 120, H5T_S0, H5T_S0 + 120, nb, nb + 1.6, color="pcb"))
+            a(slope_box("Mini-ITX parts H5", "itx", H5T_X, H5T_X + 120, H5T_S0, H5T_S0 + 120, nb + 1.6, H5T_N, color="parts", est=True,
+                        note="ODROID-H5 lying along the slope under the screen"))
+            if H5_PORT in ("E", "W"):
+                x0, x1 = (H5T_X + 120, H5T_X + 120 + H5_PORT_LEN) if H5_PORT == "E" else (H5T_X - H5_PORT_LEN, H5T_X)
+                a(slope_box("H5 plugs and cables", "itx", x0, x1, H5T_S0, H5T_S0 + 120, nb, nb + 22, color="plastic", est=True))
+        else:
+            a(box("Mini-ITX board", "itx", rx - 60, rx + 60, ry - 60, ry + 60, H5_Z0, H5_Z0 + 1.6, color="pcb"))
+            a(box("Mini-ITX parts H5", "itx", rx - 60, rx + 60, ry - 60, ry + 60, H5_Z0 + 1.6, H5_Z0 + H5_H, color="parts", est=True,
+                  note="ODROID-H5 in the old battery bay, 44 mm overall"))
+            if H5_PORT != "none":
+                L = H5_PORT_LEN
+                ex = {"N": (rx - 60, rx + 60, ry + 60, ry + 60 + L), "S": (rx - 60, rx + 60, ry - 60 - L, ry - 60),
+                      "E": (rx + 60, rx + 60 + L, ry - 60, ry + 60), "W": (rx - 60 - L, rx - 60, ry - 60, ry + 60)}[H5_PORT]
+                a(box("H5 plugs and cables", "itx", ex[0], ex[1], ex[2], ex[3], H5_Z0, H5_Z0 + 22, color="plastic", est=True,
+                      note="USB / HDMI / LAN plugs and the DC plug beyond the ports edge (estimate: 22 high)"))
+        if BATT_BOXES:      # study 16.11.2026 (user): packs under the screen on a 2 mm shelf, "x0,x1,y0,y1,z0;..." (z0 = shelf underside)
+            for k, (x0, x1, y0, y1, z0) in enumerate(BATT_BOXES):
+                a(box(f"Battery shelf {k + 1}", "rear", x0, x1, y0, y1, z0, z0 + 2, color="metal", note="2 mm aluminium shelf"))
+                a(box(f"Battery pack {k + 1}", "rear", x0, x1, y0, y1, z0 + 2, z0 + 2 + LIPO_H, color="battery",
+                      note="flat LiPo 4S, <= 99 Wh each (R59, R155)"))
+            if FAN:
+                fy, fz, fs = (FAN + (92.0,))[:3]
+                a(box(f"Fan {fs:g} x {fs:g} x 15", "rear", W - SKIN - 15, W - SKIN, fy - fs / 2, fy + fs / 2, fz, fz + fs, color="plastic",
+                      note="exhaust on the right wall above the H5 (user, 16.11.2026); intake vents on the left wall"))
+        elif BATT_LIPO:
+            a(box("Battery bay", "rear", 130, 300, 60, 160, 3, 3 + LIPO_H, color="battery", note="flat LiPo 4S under the grid (R155), 170 x 100"))
+        elif BATT_FLAT:
+            a(box("Battery bay", "rear", 150, 305, 100, 175, 3, 28, color="battery", note="flat row of 8 cells under the grid, 155 x 75 x 25"))
+        else:
+            a(box("Battery bay", "rear", 176, 266, 87, 173, 3, 48, color="battery", note="moved under the grid"))
     else:
-        a(box("PW power", "rear", 300, 400, 320, 400, 6, 24, color="pcb", note="100 x 80, rev 0.6; position not fixed"))
+        a(box("PW power", "rear", 300, 400, 320 + RS, 400 + RS, 6, 24, color="pcb", note="100 x 80, rev 0.6; position not fixed"))
         a(box("Battery bay", "rear", 414, 504, 312, 398, 3, 48, color="battery"))
-    a(box("R1 audio rear board", "rear", 4, 242, 413.4, 415, 8, 104, color="pcb", note="rear x 273-511, z 8-104"))
+    a(box("R1 audio rear board", "rear", 4, 242, 413.4 + RS, 415 + RS, 8, R1_TOP, color="pcb", note="rear x 273-511, z 8-104"))
     # R2 (hardware/r2-control/gen/design.py OUTLINE): rear x 88-263, z 10-113 without the DIN window rear x 88-156, z 38-113
-    a(box("R2 control rear board", "rear", 252, 359, 413.4, 415, 10, 113, color="pcb", note="L-shape, tall part"))
-    a(box("R2 control rear board, low arm", "rear", 359, 427, 413.4, 415, 10, 38, color="pcb", note="L-shape, arm under the DIN window"))
-    a(box("Rear jacks", "rear", 5, 510, 415, D - SKIN, 8, 112, color="metal", est=True,
-          note="envelope of all rear jacks (417-457)"))
+    a(box("R2 control rear board", "rear", 252, R2_TALL_X1, 413.4 + RS, 415 + RS, 10, R2_TOP, color="pcb", note="L-shape, tall part"))
+    a(box("R2 control rear board, low arm", "rear", R2_TALL_X1, 427, 413.4 + RS, 415 + RS, 10, 38, color="pcb", note="L-shape, arm under the DIN window"))
+    if REAR_JACK_TOP_R == REAR_JACK_TOP:
+        a(box("Rear jacks", "rear", 5, 510, 415 + RS, D - SKIN, 8, REAR_JACK_TOP, color="metal", est=True,
+              note="envelope of all rear jacks (417-457)"))
+    else:
+        a(box("Rear jacks", "rear", 5, 340, 415 + RS, D - SKIN, 8, REAR_JACK_TOP, color="metal", est=True,
+              note="envelope of the rear jacks, left of x 340"))
+        a(box("Rear jacks (right)", "rear", 340, 510, 415 + RS, D - SKIN, 8, REAR_JACK_TOP_R, color="metal", est=True,
+              note="rear jacks under W2 / W3"))
     P += standoffs()
     return P
 
@@ -446,7 +548,7 @@ def standoffs():
     the case are one source. Floor boards: from the inner floor (z = SKIN) to the board underside (z 6); P2: from its top face
     up to the top skin. Floor boards: board x along model x, board y (KiCad, down) towards the rear."""
     out = []
-    for proj, tag, x0, y0 in (("a1-digital", "A1", 20, 305), ("pw-power", "PW", 285 if COMPUTER == "H5REAR" else 300, 320)):
+    for proj, tag, x0, y0 in (("a1-digital", "A1", A1_X0, A1_Y0), ("pw-power", "PW", (PW_X0 or 285) if COMPUTER in ("H5REAR", "H5TILT") else 300, 320 + RS)):
         d = _board_design(proj)
         for k, (hx, hy) in enumerate(d.HOLES):
             out.append(box(f"Standoff {tag} H{k + 1}", "standoff", x0 + hx - 3, x0 + hx + 3, y0 + hy - 3, y0 + hy + 3, SKIN, 6.0,
@@ -454,7 +556,7 @@ def standoffs():
     d = _board_design("p2-grid")
     for k, (hx, hy) in enumerate(d.HOLES):
         my = 4 + (d.H - hy)                              # P2 board y counts from the far edge (rev 0.4), the model from the front
-        out.append(box(f"Standoff P2 H{k + 1}", "standoff", 110 + hx - 3, 110 + hx + 3, my - 3, my + 3, PCB_TOP, TOP_Z - SKIN,
+        out.append(box(f"Standoff P2 H{k + 1}", "standoff", 110 + hx - 3, 110 + hx + 3, my - 3, my + 3, PCB_TOP + (PANEL_GAP - P2_GAP), TOP_Z - SKIN,
                        color="metal", note=f"M3 standoff from P2 hole H{k + 1} up to the top skin"))
     return out
 
@@ -492,7 +594,7 @@ ALLOWED = {               # parts that are meant to touch (mounted on each other
     ("Trill Bar", "Top skin"), ("Screen glass", "Slope skin"), ("Screen glass", "Screen LCD"),
     ("Screen LCD", "Screen driver"), ("pot", "Slope skin"), ("pot", "W1 Levels"), ("receptacle", "W3 System"), ("microSD", "W3 System"),
     ("Battery bay", "Floor"), ("Rear jacks", "Rear wall"), ("Rear jacks", "rear board"),
-    ("Phones", "Front wall"), ("Phones", "F1 headphone"), ("Crossfader", "P4 Right"), ("Crossfader", "Top skin"),
+    ("Phones", "Front wall"), ("Phones", "Side left"), ("Phones", "F1 headphone"), ("Crossfader", "P4 Right"), ("Crossfader", "Top skin"),
     ("Wheel bearing housing", "Top skin"), ("Wheel magnet", "P4 Right"), ("Wheel AS5600", "P4 Right"),
     ("receptacle", "Pocket board"), ("M5 Gain", "Slope skin"), ("M5 module", "M5 Gain"), ("W1 Levels", "W1 "), ("SD socket", "W3 System"), ("Screen ", "Screen "),
     ("Trill Bar", "P2 Grid"), ("Front wall", ""), ("Rear wall", ""), ("Floor", ""), ("Side", ""),

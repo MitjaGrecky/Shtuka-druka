@@ -78,11 +78,17 @@ def hole_fixed(P, holes):
 CONN = {1: "+5V", 2: "+5V", 3: "GND", 4: "GND", 5: "+3V3", 6: "GND", 7: "SDA", 8: "SCL",
         9: "~{INT}", 10: "GND", 11: "~{SR_LOAD}", 12: "SR_CLK", 13: "SR_OUT", 14: "SR_IN"}
 BUS_FP = "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical"
+# R168 (16.11.2026): where the board is the lowest part of the stack (under P2 and M1 in the low case) the bus header lies flat: hanxia
+# HX PZ1.27-2x7P WZ / 2x8P WZ, right angle, 3.4 mm high (drawing: body 3.4 x 1.0, pins 4.0 out, 3.4 down), JLCPCB in stock 16.11.2026
+# (2 735 / 1 854), Extended. Unshrouded: no key, mark pin 1 on the silk and plug the ribbon with the red edge on pin 1.
+BUS_FP_RA = "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Horizontal"
+DECK_FP_RA = "Connector_PinHeader_1.27mm:PinHeader_2x08_P1.27mm_Horizontal"
+BUS_LCSC_RA, DECK_LCSC_RA = "C22438113", "C22438114"
 
 
-def bus(add, ref, value, conn=CONN):
-    add(ref, "Connector_Generic:Conn_02x07_Odd_Even", value, BUS_FP,
-        {str(p): n for p, n in conn.items()}, LCSC=BUS_LCSC, Side="bottom")
+def bus(add, ref, value, conn=CONN, lying=False):
+    add(ref, "Connector_Generic:Conn_02x07_Odd_Even", value, BUS_FP_RA if lying else BUS_FP,
+        {str(p): n for p, n in conn.items()}, LCSC=BUS_LCSC_RA if lying else BUS_LCSC, Side="bottom")
 
 
 def rc(add, ref, value, a, b, fp=None, **f):

@@ -127,8 +127,9 @@ def parts():
 
     R0402, C0402, C0805 = "Resistor_SMD:R_0402_1005Metric", "Capacitor_SMD:C_0402_1005Metric", "Capacitor_SMD:C_0805_2012Metric"
     add("J1", "Connector_Generic:Conn_02x07_Odd_Even", "Module bus 2x7 1.27",
-        "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical", {str(p): n for p, n in CONN.items()},
-        Side="bottom")
+        "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Horizontal", {str(p): n for p, n in CONN.items()},
+        Side="bottom", LCSC="C22438113",
+        Note="R168: right-angle (lying) hanxia HX PZ1.27-2x7P WZ, 3.4 mm high; the vertical 2x7 + IDC plug (7.5 mm) left 0.4 mm under M1 in the low case")
     # LED drivers, one per cell (P98); cell B repeats cell A with its own references and address
     cell_refs = CELL_REFS
     for cell in CELLS:

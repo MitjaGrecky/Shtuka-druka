@@ -26,6 +26,7 @@ NAME = "p2-grid"
 ID = "P2"
 TITLE = "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses"
 REV = "0.5"
+RA_ROT = 270        # right-angle 1.27 mm bus headers: rotation that opens them towards the rear edge (checked on the built board)
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8 x 74HC4051 + ADC128S102 (SPI0); 5 x LP5864 for 109 RGB; "
             "buses to P1, P3, P4 (2x8) and M1 (2x7); power and INA226 from PW")
@@ -214,13 +215,13 @@ def parts():
     m1 = {**K.CONN, 7: "M1_SDA", 8: "M1_SCL", 13: "SR_M1", 14: "SR_END", 5: "+3V3", 1: "+5V_PANEL", 2: "+5V_PANEL"}
     m1 = {p: ("+5V" if v == "+5V_PANEL" else v) for p, v in m1.items()}
     m1 = {p: ("+5V_PANEL" if v == "+5V" else v) for p, v in m1.items()}
-    K.bus(add, ref("J"), "Module bus M1 (2x7)", conn=m1)
+    K.bus(add, ref("J"), "Module bus M1 (2x7)", conn=m1, lying=True)
     for deck, sr in (("P1", "SR_P1"), ("P3", "SR_P3"), ("P4", "SR_P4")):
         conn = {**K.DECK_CONN}
         conn[1] = conn[2] = "+5V_PANEL"
         conn[13], conn[14] = sr, None
-        add(ref("J"), "Connector_Generic:Conn_02x08_Odd_Even", f"Deck bus to {deck}", K.DECK_FP, {str(p): v for p, v in conn.items()},
-            LCSC=K.DECK_LCSC, Note=f"R130: bus to {deck}; SR_OUT of the deck back to the controller, SR_IN (14) not used, AUX (15) reserved")
+        add(ref("J"), "Connector_Generic:Conn_02x08_Odd_Even", f"Deck bus to {deck}", K.DECK_FP_RA, {str(p): v for p, v in conn.items()},
+            LCSC=K.DECK_LCSC_RA, Note=f"R130: bus to {deck}; SR_OUT of the deck back to the controller, SR_IN (14) not used, AUX (15) reserved")
     for tag, (sd, sc) in (("A", ("T_SDA", "T_SCL")), ("B", ("X_SDA", "X_SCL"))):
         add(ref("J"), "Connector_Generic:Conn_01x04", f"Trill Bar {tag}", PH.format(n=4), {"1": "GND", "2": "+3V3", "3": sd, "4": sc},
             Note=f"Bela Trill Bar {tag} (R113), I2C on mux channel {'2' if tag == 'A' else '3'}; Qwiic order GND, 3.3 V, SDA, SCL (SH 1.0 on the sensor: cable SH-PH); address 0x20, no pull-ups on the sensor")
@@ -271,7 +272,7 @@ def placement():
     for r in [p["ref"] for p in parts() if p["ref"].startswith("J")]:
         # R168: lying connectors must open towards the rear edge (cables run on under M1 to PW and R2). The JST side-entry
         # footprints do at 0 deg; the right-angle Micro-Fit opens the other way, so it is turned by 180 deg.
-        rot = 180 if "Micro-Fit" in byref[r]["fp"] and "Horizontal" in byref[r]["fp"] else 0
+        rot = {"Micro-Fit": 180, "P1.27mm_Horizontal": RA_ROT}.get(next((k for k in ("Micro-Fit", "P1.27mm_Horizontal") if k in byref[r]["fp"]), ""), 0)
         box, _ = packer._bbox(sys.modules[__name__], byref[r], rot, "bottom")
         w, h = box[2] - box[0], box[3] - box[1]
         if x + w > W - margin:

@@ -34,10 +34,10 @@ U14,TCA9546APWR,TSSOP-16_4.4x5mm_P0.65mm,C201653,"найден в библиот
 "SW2,SW3,SW4,SW5,SW6,SW7,SW8,SW9,SW10,SW11",TS-1187A-B-A-B,SW_Push_1P1T_XKB_TS-1187A,C318884,проверено 06.11.2026 (док. 31)
 "U20,U21",74HC165PW,TSSOP-16_4.4x5mm_P0.65mm,C80696,проверено 06.11.2026 (док. 31)
 "RN1,RN2,RN3",4x10k,R_Array_Convex_4x0402,C25725,проверено 06.11.2026 (док. 31)
-J4,Module bus M1 (2x7),PinHeader_2x07_P1.27mm_Vertical,C5372811,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-07-Z, штыри 2x7 1,27 выводные, Extended; наличие и цена не смотрелись"
-J5,Deck bus to P1,PinHeader_2x08_P1.27mm_Vertical,C5372812,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-08-Z, штыри 2x8 1,27 выводные, Extended; наличие и цена не смотрелись"
-J6,Deck bus to P3,PinHeader_2x08_P1.27mm_Vertical,C5372812,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-08-Z, штыри 2x8 1,27 выводные, Extended; наличие и цена не смотрелись"
-J7,Deck bus to P4,PinHeader_2x08_P1.27mm_Vertical,C5372812,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-08-Z, штыри 2x8 1,27 выводные, Extended; наличие и цена не смотрелись"
+J4,Module bus M1 (2x7),PinHeader_2x07_P1.27mm_Horizontal,C22438113,проверить в EasyEDA
+J5,Deck bus to P1,PinHeader_2x08_P1.27mm_Horizontal,C22438114,проверить в EasyEDA
+J6,Deck bus to P3,PinHeader_2x08_P1.27mm_Horizontal,C22438114,проверить в EasyEDA
+J7,Deck bus to P4,PinHeader_2x08_P1.27mm_Horizontal,C22438114,проверить в EasyEDA
 J8,Trill Bar A,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926,проверить в EasyEDA
 J9,Trill Bar B,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926,проверить в EasyEDA
 J10,I2C power monitor (PW),JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926,проверить в EasyEDA

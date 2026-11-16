@@ -64,6 +64,10 @@ H5_PORT_LEN = float(os.environ.get("H5_PORT_LEN", "25.0"))   # plug and cable be
 BATT_LIPO = os.environ.get("BATT_LIPO", "0") == "1"       # R155: flat LiPo pack under P2, 170 x 100 x 12 (4S, about 99 Wh with the BMS)
 LIPO_H = float(os.environ.get("LIPO_H", "12.0"))
 BATT_BOXES = [tuple(float(v) for v in s.split(",")) for s in os.environ.get("BATT_BOXES", "").split(";") if s.strip()]
+JACK_H = float(os.environ.get("JACK_H", "15.67"))   # headphone jack body height above its board (NMJ6HCD2 15.67; Cliff S1 CL1115 12.70)
+JACK_W = float(os.environ.get("JACK_W", "18.2"))    # its width (NMJ6HCD2 18.2; Cliff S1 15.90)
+F1_STAND = float(os.environ.get("F1_STAND", "3.0"))  # F1 board above the inner floor in the lip (0 = on an insulating sheet on the floor)
+M1_J1_H = float(os.environ.get("M1_J1_H", "7.5"))   # M1 bus header + IDC plug below the board (vertical 7.5; right-angle header about 5, estimate)
 FAN = tuple(float(v) for v in os.environ["FAN"].split(",")) if os.environ.get("FAN") else None   # "y,z0": 92 mm fan on the right wall
 PANEL_PARTS = float(os.environ.get("PANEL_PARTS", "4.0"))  # parts-below envelope of P1, P3, P4
 F1_SIDE_Z = float(os.environ.get("F1_SIDE_Z", "40.0"))    # F1_MODE=SIDE: axis height of the jacks on the left wall behind the riser
@@ -415,7 +419,7 @@ def parts(usb=None):
         x, y = pl[ref][:2]
         a(Box(f"M1 {ref}", "m1", (bx(x), by(y), z0 - size[2] / 2), size, color="chip"))
     x, y = pl["J1"][:2]
-    a(Box("M1 J1 + IDC plug", "m1", (bx(x), by(y), z0 - 3.75), (11.5, 4.5, 7.5), color="plastic", est=True,
+    a(Box("M1 J1 + IDC plug", "m1", (bx(x), by(y), z0 - M1_J1_H / 2), (11.5, 4.5, M1_J1_H), color="plastic", est=True,
           note="2x7 1.27 mm header and the ribbon plug, from below"))
 
     # computer, front jacks
@@ -446,11 +450,12 @@ def parts(usb=None):
         # POCKET = jack bodies sink below the floor under P1 (a pocket in the bottom, feet >= 10 mm). NMJ6HCD2 body 18.2 x 15.67, depth 25 (estimate).
         for k, x in enumerate((32, 80)):
             if F1_MODE == "LIP":
-                a(box(f"Phones {k + 1} jack", "front", x - 9.1, x + 9.1, -(FL - SKIN) if FL else -25, 0, SKIN + 3 + 1.6, SKIN + 3 + 1.6 + 15.67, color="metal", est=True))
+                a(box(f"Phones {k + 1} jack", "front", x - JACK_W / 2, x + JACK_W / 2, -(FL - SKIN) if FL else -25, 0, SKIN + F1_STAND + 1.6,
+                      SKIN + F1_STAND + 1.6 + JACK_H, color="metal", est=True))
             else:
                 a(box(f"Phones {k + 1} jack", "front", x - 9.1, x + 9.1, SKIN, SKIN + 25, -2.8, 12.87, color="metal", est=True))
         if F1_MODE == "LIP":
-            a(box("F1 headphone board", "front", 15, 100, -(FL - SKIN) if FL else -27, 8, SKIN + 3, SKIN + 4.6, color="pcb"))
+            a(box("F1 headphone board", "front", 15, 100, -(FL - SKIN) if FL else -27, 8, SKIN + F1_STAND, SKIN + F1_STAND + 1.6, color="pcb"))
         else:
             a(box("F1 headphone board", "front", 15, 100, SKIN, 35, -4.4, -2.8, color="pcb"))
             a(box("F1 headphone board parts below", "front", 17, 98, SKIN + 2, 33, -6.4, -4.4, color="parts", est=True))

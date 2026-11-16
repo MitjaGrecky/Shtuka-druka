@@ -458,7 +458,8 @@ def parts(usb=None):
             else:
                 a(box(f"Phones {k + 1} jack", "front", x - 9.1, x + 9.1, SKIN, SKIN + 25, -2.8, 12.87, color="metal", est=True))
         if F1_MODE == "LIP":
-            a(box("F1 headphone board", "front", 15, 100, -(FL - SKIN) if FL else -27, 8, SKIN + F1_STAND, SKIN + F1_STAND + 1.6, color="pcb"))
+            f1 = _board_design("f1-phones")                    # rev 0.3: strip 135 x 27 in the lip, x 12..147 (jacks 20 and 68 on it = model x 32 and 80), all parts on top
+            a(box("F1 headphone board", "front", 12, 12 + f1.W, (-(FL - SKIN) if FL else -27) + 1, (-(FL - SKIN) if FL else -27) + 1 + f1.H, SKIN + F1_STAND, SKIN + F1_STAND + 1.6, color="pcb"))
         else:
             a(box("F1 headphone board", "front", 15, 100, SKIN, 35, -4.4, -2.8, color="pcb"))
             a(box("F1 headphone board parts below", "front", 17, 98, SKIN + 2, 33, -6.4, -4.4, color="parts", est=True))

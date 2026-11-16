@@ -1,7 +1,7 @@
 Comment,Designator,Footprint,LCSC Part #
-from A1,J1,PinHeader_2x06_P2.54mm_Vertical,
-from PW,J2,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334
-from R1 (mute),J3,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339
+from A1,J1,PinHeader_2x06_P2.54mm_Horizontal,
+from PW,J2,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926
+from R1 (mute),J3,JST_PH_S3B-PH-K_1x03_P2.00mm_Horizontal,C157929
 10u 25V,"C1,C2,C3,C4",C_1210_3225Metric,
 1k,"R1,R3,R5,R17",R_0402_1005Metric,C11702
 100k,"R2,R4,R6,R18",R_0402_1005Metric,
@@ -14,5 +14,5 @@ OPA1622,"U1,U2",Texas_S-PVSON-N10,C2876559
 22p C0G,"C7,C8,C11,C12",C_0603_1608Metric,
 10,"R11,R16,R23,R28",R_0603_1608Metric,
 G6K-2F-Y 5V,"K1,K2",Relay_DPDT_Omron_G6K-2F-Y,C2982926
-PHONES 1,J4,Jack_6.35mm_Neutrik_NMJ6HCD2_Horizontal,C368502
-PHONES 2,J5,Jack_6.35mm_Neutrik_NMJ6HCD2_Horizontal,C368502
+PHONES 1,J4,Jack_6.35mm_Cliff_S1_Horizontal,
+PHONES 2,J5,Jack_6.35mm_Cliff_S1_Horizontal,

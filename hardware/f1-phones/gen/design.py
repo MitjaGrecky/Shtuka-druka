@@ -1,4 +1,4 @@
-"""F1 - Headphone board (front edge, horizontal, P94): two 6.35 mm stereo jacks (Neutrik NMJ6HCD2, right angle) and one TI OPA1622
+"""F1 - Headphone board (front lip, horizontal, P94, R159, R165): two 6.35 mm stereo jacks (Cliff S1 CL1115, 12.7 mm high) and one TI OPA1622
 per jack. Each channel is a difference amplifier that takes the CS4308P I-V stage pair from A1 (2 Vrms differential full scale, DAC
 outputs 5-8 = Phones 1 / Phones 2, R87: the volume is the DAC's digital attenuator) and gives 4 Vrms single-ended: gain 20k / 10k = 2 =
 R67 (>= 4 V on 600 Ohm, >= 30 mA on 32 Ohm; the OPA1622 gives +145 / -130 mA).
@@ -12,6 +12,9 @@ on R1); the OPA1622 enable pin follows MUTE (held low while R2 boots, thresholds
 Connectors (contract with the other boards): from A1 2x6 audio header (pairs with a ground between them), from PW JST PH 4 (+12 V, GND, -12 V,
 +5 V for the relays), from R1 JST PH 3 (MUTE, R2_OK, GND).
 Rev 0.1 (14.11.2026, PC) = schematic only.
+Rev 0.3 (16.11.2026, PC, R165, doc 39): low case. The board lies on 1 mm standoffs in the 28 mm lip in front of P1, so EVERYTHING is on the top
+side (no room underneath): jacks Cliff S1/BBB CL1115 (Digikey 4654-CL1115-ND, hand-soldered, not at JLCPCB; 12.7 mm high instead of 15.67), the
+cable headers lie flat (2x6 right angle, JST PH side entry), board 135 x 27 mm.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -23,25 +26,25 @@ import kit as K  # noqa: E402
 
 NAME = "f1-phones"
 ID = "F1"
-TITLE = "F1 - Headphones: 2 x NMJ6HCD2, 2 x OPA1622 difference amplifiers x2, mute relays"
-REV = "0.2"
+TITLE = "F1 - Headphones: 2 x Cliff S1 6.35 mm, 2 x OPA1622 difference amplifiers x2, mute relays"
+REV = "0.3"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("From A1: Phones 1 and 2 as differential pairs (2 Vrms FS) -> OPA1622 difference amp x2 -> 10 R -> relay -> NMJ6HCD2; "
             "volume is the DAC's digital attenuator (R87); mute relays need MUTE and R2_OK (R66, R137)")
 PWR_FLAG_NETS = ("+12V", "-12V")      # ERC: rails from the connector (+5V already gets the standard flag)
 NO_PWR_FLAG = ("+3V3",)
-W, H = 100.0, 42.0          # rough: front edge under the headphone columns (model: x 32 and 80 on the slope front); with the board
-HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, 38.0), (96.0, 38.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
+W, H = 135.0, 27.0          # rev 0.3: strip in the 28 mm front lip, nose of the jacks towards the top edge (the front wall); y 0 = 1 mm behind the wall
+HOLES = [(4.0, 4.0), (131.0, 4.0), (4.0, 23.0), (131.0, 23.0), (44.0, 23.5)]   # M3, board coordinates (KiCad, y down); 16.11.2026
 LAYERS = 2
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
 R0603 = "Resistor_SMD:R_0603_1608Metric"
 C1210 = "Capacitor_SMD:C_1210_3225Metric"
 SOT23, SOD123 = "Package_TO_SOT_SMD:SOT-23", "Diode_SMD:D_SOD-123"
-JACK = "Connector_Audio:Jack_6.35mm_Neutrik_NMJ6HCD2_Horizontal"
+JACK = "ShtukaDruka:Jack_6.35mm_Cliff_S1_Horizontal"   # pads S R T (make, pins 4 5 6) and SN RN TN (break, 1 2 3) of the Cliff drawing CL1115
 VSON10 = "Package_SON:Texas_S-PVSON-N10"
 RELAY = ("Relay:Omron_G6K-2", "Relay_SMD:Relay_DPDT_Omron_G6K-2F-Y")
-PH = "Connector_JST:JST_PH_B{n}B-PH-K_1x0{n}_P2.00mm_Vertical"
+PH = "Connector_JST:JST_PH_S{n}B-PH-K_1x0{n}_P2.00mm_Horizontal"   # side entry, 4.8 mm high (R168 style)
 
 
 def parts():
@@ -63,7 +66,7 @@ def parts():
 
     # ---------------------------------------------------------------- connectors
     pairs = ["HP1L_P", "HP1L_N", "GND", "HP1R_P", "HP1R_N", "GND", "HP2L_P", "HP2L_N", "GND", "HP2R_P", "HP2R_N", "GND"]
-    add(ref("J"), "Connector_Generic:Conn_02x06_Odd_Even", "from A1", "Connector_PinHeader_2.54mm:PinHeader_2x06_P2.54mm_Vertical",
+    add(ref("J"), "Connector_Generic:Conn_02x06_Odd_Even", "from A1", "Connector_PinHeader_2.54mm:PinHeader_2x06_P2.54mm_Horizontal",
         {str(i + 1): net for i, net in enumerate(pairs)},
         Note="Phones 1/2 from the CS4308P I-V stages on A1 (outputs 5-8): L+ L- GND R+ R- GND per jack, pins 1-12; twisted pairs, "
         "2 Vrms differential full scale")
@@ -111,24 +114,26 @@ def parts():
             LCSC="C2982926", Note=f"Phones {k} mute relay: normally open, opens without power (R66, R137)")
         add(ref("J"), "Connector_Audio:AudioJack3_Switch", f"PHONES {k}", JACK,
             {"T": f"{h}_TIP", "TN": None, "R": f"{h}_RING", "RN": None, "S": "GND", "SN": None},
-            LCSC="C368502", Note=f"Phones {k}: Neutrik NMJ6HCD2, 6.35 mm stereo, right angle, switched (unused)")
+            Note=f"Phones {k}: Cliff S1/BBB CL1115 (Digikey 4654-CL1115-ND), 6.35 mm stereo, switched (break contacts unused), 12.7 mm high, "
+            "hand-soldered (not at JLCPCB). Wall 3 mm + fibre washer 1.6 + nut 5.0 is 9.6 mm, the thread 9.35 mm: leave the washer out")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 
 
 def placement():
-    """Rev 0.2: the two jacks at the front edge (top side, 50 mm apart), cable headers on the bottom along the back edge, the rest
-    packed on the bottom next to their jack (hardware/common/gen/packer.py). No routing."""
+    """Rev 0.3: everything on the TOP side (the board lies 1 mm above the floor in the lip). Jacks 48 mm apart, nose to the top edge; the cable
+    headers lie flat at the right end and open towards the rear edge; the amplifiers sit between and beside the jacks (hardware/common/gen/packer.py).
+    No routing."""
     import packer
     P = parts()
-    t, b = "top", "bottom"
+    t = "top"
     fixed = {}
     jacks = [p["ref"] for p in P if p["value"].startswith("PHONES")]
-    for r, x in zip(jacks, (25.0, 75.0)):
-        fixed[r] = (x, 14.0, 0, t)
+    for r, x in zip(jacks, (20.0, 68.0)):
+        fixed[r] = (x, 11.6, 0, t)                 # centre of the pad field: rows 4/1 at y 5.25, 2/5 at 11.6, 3/6 at 17.95
     heads = [p["ref"] for p in P if p["lib"].startswith("Connector_Generic") and p["ref"] not in jacks]
-    for r, x in zip(heads, (20.0, 50.0, 80.0)):
-        fixed[r] = (x, 38.0 if x < 30 else 34.0, 90, b)
+    for r, (x, y, rot) in zip(heads, ((118.0, 14.0, 270), (92.0, 18.0, 0), (102.5, 18.0, 0))):
+        fixed[r] = (x, y, rot, t)
     fixed.update(K.hole_fixed(P, HOLES))
     grp = {1: [], 2: [], 0: []}
     for p in P:
@@ -143,7 +148,7 @@ def placement():
         if p["value"].startswith("G6K"):
             side = 1 if "HP1" in str(p["pins"]) else 2
         grp[side].append(p["ref"])
-    G = [(25.0, 22.0, b, grp[1], 0), (75.0, 22.0, b, grp[2], 0), (50.0, 28.0, b, grp[0], 0)]
+    G = [(44.0, 13.0, t, grp[1], 0), (88.0, 8.0, t, grp[2], 0), (100.0, 8.0, t, grp[0], 0)]
     return packer.pack(sys.modules[__name__], P, fixed, G, [(0, 0, W, H)])
 
 

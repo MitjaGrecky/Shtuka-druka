@@ -1,12 +1,12 @@
 {
  "id": "F1",
  "name": "f1-phones",
- "title": "F1 - Headphones: 2 x NMJ6HCD2, 2 x OPA1622 difference amplifiers x2, mute relays",
- "rev": "0.2",
- "w": 100.0,
- "h": 42.0,
+ "title": "F1 - Headphones: 2 x Cliff S1 6.35 mm, 2 x OPA1622 difference amplifiers x2, mute relays",
+ "rev": "0.3",
+ "w": 135.0,
+ "h": 27.0,
  "layers": 2,
- "parts": 56,
+ "parts": 57,
  "holes": [
   [
    4.0,
@@ -14,15 +14,19 @@
   ],
   [
    4.0,
-   38.0
+   23.0
   ],
   [
-   96.0,
+   44.0,
+   23.5
+  ],
+  [
+   131.0,
    4.0
   ],
   [
-   96.0,
-   38.0
+   131.0,
+   23.0
   ]
  ],
  "connectors": [

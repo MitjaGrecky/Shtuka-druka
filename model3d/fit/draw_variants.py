@@ -11,8 +11,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 VARIANTS = {
     "drawing": {},
-    # doc 39: the agreed low case, shelf +60 (R161), fold 44 with 8 mm under the H5
-    "drawing_low_case": dict(__import__("low_case_final").config(60), FRONT_Z=44),
+    # doc 39: the agreed low case, shelf +40 (R166), fold 56 with 8 mm under the H5
+    "drawing_low_case": dict(__import__("low_case_final").config(40), FRONT_Z=56),
 }
 KEEP = ("PATH", "SYSTEMROOT", "TEMP", "TMP", "USERPROFILE", "PYTHONPATH", "KICAD_SYMBOL_DIR", "KICAD_FOOTPRINT_DIR", "APPDATA", "LOCALAPPDATA")
 for name, env in VARIANTS.items():

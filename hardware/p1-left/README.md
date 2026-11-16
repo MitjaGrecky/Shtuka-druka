@@ -24,3 +24,5 @@ Open: LCSC number of TCA9546APWR (to choose, P99); J2/J3 places at the rear edge
 Generators: `gen/design.py`, `gen/make_sch.py`, `gen/check_netlist.py`, `gen/make_pcb.py` (shared blocks: `hardware/common/gen/kit.py` - `deck_inputs`, `i2c_mux`, `deck_bus`).
 
 License: CERN-OHL-S-2.0 (hardware), AGPL-3.0-or-later (scripts).
+
+Rev 0.2 (16.11.2026): R170 (16.11.2026): шинные разъёмы снизу лежачие (угловые): HX PZ1.27-2x7P WZ / 2x8P WZ (C22438113 / C22438114), J1 открыт к P2 (у P1 вправо, у P3 и P4 влево), J2–J4 к заднему краю; на P4 штекер колеса — JST S2B-PH-K-S (C173752, 179 611 шт.). Вертикальная вилка с IDC (≈ 7,5 мм) при 8 мм до дна не оставляла места на изгиб кабеля.

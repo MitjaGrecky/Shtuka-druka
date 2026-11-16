@@ -1,7 +1,7 @@
 Designator,Value,Footprint,LCSC,Status of the LCSC number
-J1,Deck bus to P2 2x8 1.27,PinHeader_2x08_P1.27mm_Vertical,C5372812,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-08-Z, штыри 2x8 1,27 выводные, Extended; наличие и цена не смотрелись"
-J2,Module bus to M3 2x7 1.27,PinHeader_2x07_P1.27mm_Vertical,C5372811,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-07-Z, штыри 2x7 1,27 выводные, Extended; наличие и цена не смотрелись"
-J3,Module bus to W1 2x7 1.27,PinHeader_2x07_P1.27mm_Vertical,C5372811,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-07-Z, штыри 2x7 1,27 выводные, Extended; наличие и цена не смотрелись"
+J1,Deck bus to P2 2x8 1.27,PinHeader_2x08_P1.27mm_Horizontal,C22438114,проверить в EasyEDA
+J2,Module bus to M3 2x7 1.27,PinHeader_2x07_P1.27mm_Horizontal,C22438113,проверить в EasyEDA
+J3,Module bus to W1 2x7 1.27,PinHeader_2x07_P1.27mm_Horizontal,C22438113,проверить в EasyEDA
 C1,10u,C_0805_2012Metric,C15850,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL21A106KAYNNNE 10 мкФ 25 В X5R 0805, Basic; наличие и цена не смотрелись"
 "C2,C3,C5,C7,C9",1u,C_0402_1005Metric,C52923,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05A105KA5NQNC 1 мкФ 25 В X5R 0402, Basic; наличие и цена не смотрелись"
 "R1,R2",10k,R_0402_1005Metric,C25744,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1002TCE 10 кОм 1% 0402, Basic; наличие и цена не смотрелись"

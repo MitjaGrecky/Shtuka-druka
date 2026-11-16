@@ -1,7 +1,7 @@
 Comment,Designator,Footprint,LCSC Part #
-Deck bus to P2 2x8 1.27,J1,PinHeader_2x08_P1.27mm_Vertical,C5372812
-Module bus to M3 2x7 1.27,J2,PinHeader_2x07_P1.27mm_Vertical,C5372811
-Module bus to W1 2x7 1.27,J3,PinHeader_2x07_P1.27mm_Vertical,C5372811
+Deck bus to P2 2x8 1.27,J1,PinHeader_2x08_P1.27mm_Horizontal,C22438114
+Module bus to M3 2x7 1.27,J2,PinHeader_2x07_P1.27mm_Horizontal,C22438113
+Module bus to W1 2x7 1.27,J3,PinHeader_2x07_P1.27mm_Horizontal,C22438113
 10u,C1,C_0805_2012Metric,C15850
 1u,"C2,C3,C5,C7,C9",C_0402_1005Metric,C52923
 10k,"R1,R2",R_0402_1005Metric,C25744

@@ -64,8 +64,8 @@ def parts():
     def add(ref, lib, value, fp, pins, **f):
         P.append(dict(ref=ref, lib=lib, value=value, fp=fp, pins=pins, fields=f))
 
-    K.deck_bus(add, "J1", "Deck bus to P2 2x8 1.27")
-    K.bus(add, "J3", "Module bus to W3 2x7 1.27", {**K.CONN, 7: "SD1", 8: "SC1", 13: "SR_W3", 14: "SR_END"})
+    K.deck_bus(add, "J1", "Deck bus to P2 2x8 1.27", lying=True)
+    K.bus(add, "J3", "Module bus to W3 2x7 1.27", {**K.CONN, 7: "SD1", 8: "SC1", 13: "SR_W3", 14: "SR_END"}, lying=True)
     K.rc(add, "C1", "10u", "+5V", "GND", K.C0805)
     K.rc(add, "C2", "1u", "+3V3", "GND")
     K.rc(add, "R1", "10k", "SR_END", "+3V3", Note="end of the chain (W3 SR_IN) reads 1s")
@@ -79,8 +79,8 @@ def parts():
         u5 = next(p for p in P if p["ref"] == "U5")
         u5["pins"][K.SR_D[len(bits) - 16]] = "WHEEL_PUSH"
         K.pullups(add, 1 + (len(bits) + 3) // 4, ["WHEEL_PUSH"])
-        add("J4", "Connector_Generic:Conn_01x02", "Wheel push", "Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical",
-            {"1": "WHEEL_PUSH", "2": "GND"}, LCSC="C131337", Side="bottom", Note="V10: switch in the wheel mechanism (to confirm)")
+        add("J4", "Connector_Generic:Conn_01x02", "Wheel push", "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal",
+            {"1": "WHEEL_PUSH", "2": "GND"}, LCSC="C173752", Side="bottom", Note="V10: switch in the wheel mechanism (to confirm)")
     # crossfader (P104): slide pot -> 1k / 100n -> ADS1115 AIN0; AIN1-3 unused (to GND)
     add("RV1", "Device:R_Potentiometer", "10k lin, 45 mm travel", "Potentiometer_THT:Potentiometer_Bourns_PTA4543_Single_Slide",
         {"1": "GND", "2": "XFADER", "3": "+3V3"}, LCSC="C17444183",
@@ -133,9 +133,9 @@ def placement():
     for n, ref in enumerate(r for r in rs if r not in ("R1", rx)):   # mux reset, address, channel pull-ups
         pl[ref] = (10.0 + 2.0 * (n % 5), 156.0 + 2.0 * (n // 5), 90, b)
     pl[rx] = (mx + 16.0, 267.0, 0, b)                                # crossfader RC, at the ADC
-    pl["J1"] = (3.0, 150.0, 0, b)
+    pl["J1"] = (3.0, 150.0, 180, b)
     pl["C1"], pl["C2"] = (3.0, 159.0, 0, b), (3.0, 161.0, 0, b)
-    pl["J3"], pl["R1"] = (60.0, 3.0, 90, b), (60.0, 7.5, 0, b)  # rear edge, over the fold to W3 (W3's J1 at panel x 473)
+    pl["J3"], pl["R1"] = (60.0, 3.0, 270, b), (60.0, 7.5, 0, b)  # rear edge, over the fold to W3 (W3's J1 at panel x 473)
     pl["J4"] = (34.0, 6.0, 0, b)                                 # beside the wheel
     for n, (hx, hy) in enumerate(HOLES):
         pl[f"H{n + 1}"] = (hx, hy, 0, t)

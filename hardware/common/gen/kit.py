@@ -44,6 +44,7 @@ CONN_LCSC = {
     _PH.format(n=4): "C131334",    # B4B-PH-K-S(LF)(SN), 195 585
     _PH.format(n=5): "C157993",    # B5B-PH-K-S(LF)(SN), 54 490
     _PH.format(n=6): "C131342",    # B6B-PH-K-S(LF)(SN), 71 421
+    "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal": "C173752",    # S2B-PH-K-S(LF)(SN), 179 611 (16.11.2026)
     "Connector_JST:JST_PH_S3B-PH-K_1x03_P2.00mm_Horizontal": "C157929",    # S3B-PH-K-S(LF)(SN), 98 305 (16.11.2026)
     "Connector_JST:JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal": "C157926",    # S4B-PH-K-S(LF)(SN), 27 782 (16.11.2026)
     _MF.format("43650-0215_1x02"): "C293740",    # 436500215, 2 649
@@ -222,9 +223,9 @@ DECK_FP = "Connector_PinHeader_1.27mm:PinHeader_2x08_P1.27mm_Vertical"
 DECK_CONN = {**CONN, 15: None, 16: "GND"}
 
 
-def deck_bus(add, ref, value):
-    add(ref, "Connector_Generic:Conn_02x08_Odd_Even", value, DECK_FP,
-        {str(p): n for p, n in DECK_CONN.items()}, LCSC=DECK_LCSC, Side="bottom", Note="P100: deck bus to P2, pin 15 AUX not used")
+def deck_bus(add, ref, value, lying=False):
+    add(ref, "Connector_Generic:Conn_02x08_Odd_Even", value, DECK_FP_RA if lying else DECK_FP,
+        {str(p): n for p, n in DECK_CONN.items()}, LCSC=DECK_LCSC_RA if lying else DECK_LCSC, Side="bottom", Note="P100: deck bus to P2, pin 15 AUX not used")
 
 
 def i2c_mux(add, ref, addr, chans, caps, res_first):

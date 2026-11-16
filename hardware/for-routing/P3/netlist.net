@@ -1,9 +1,9 @@
 (export (version "E")
   (design (source "design.py") (tool "tools/pack_easyeda.py design_netlist"))
   (components
-    (comp (ref "J1") (value "Deck bus to P2 2x8 1.27") (footprint "Connector_PinHeader_1.27mm:PinHeader_2x08_P1.27mm_Vertical"))
-    (comp (ref "J3") (value "Module bus to M4 2x7 1.27") (footprint "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical"))
-    (comp (ref "J4") (value "Module bus to W2 2x7 1.27") (footprint "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Vertical"))
+    (comp (ref "J1") (value "Deck bus to P2 2x8 1.27") (footprint "Connector_PinHeader_1.27mm:PinHeader_2x08_P1.27mm_Horizontal"))
+    (comp (ref "J3") (value "Module bus to M4 2x7 1.27") (footprint "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Horizontal"))
+    (comp (ref "J4") (value "Module bus to W2 2x7 1.27") (footprint "Connector_PinHeader_1.27mm:PinHeader_2x07_P1.27mm_Horizontal"))
     (comp (ref "C1") (value "10u") (footprint "Capacitor_SMD:C_0805_2012Metric"))
     (comp (ref "C2") (value "1u") (footprint "Capacitor_SMD:C_0402_1005Metric"))
     (comp (ref "R1") (value "10k") (footprint "Resistor_SMD:R_0402_1005Metric"))

@@ -56,10 +56,10 @@ def parts():
     def add(ref, lib, value, fp, pins, **f):
         P.append(dict(ref=ref, lib=lib, value=value, fp=fp, pins=pins, fields=f))
 
-    K.deck_bus(add, "J1", "Deck bus to P2 2x8 1.27")
+    K.deck_bus(add, "J1", "Deck bus to P2 2x8 1.27", lying=True)
     mod = lambda sda, scl, sr_out, sr_in: {**K.CONN, 7: sda, 8: scl, 13: sr_out, 14: sr_in}  # noqa: E731
-    K.bus(add, "J2", "Module bus to M3 2x7 1.27", mod("SD1", "SC1", "SR_M3", "SR_W1"))
-    K.bus(add, "J3", "Module bus to W1 2x7 1.27", mod("SD2", "SC2", "SR_W1", "SR_END"))
+    K.bus(add, "J2", "Module bus to M3 2x7 1.27", mod("SD1", "SC1", "SR_M3", "SR_W1"), lying=True)
+    K.bus(add, "J3", "Module bus to W1 2x7 1.27", mod("SD2", "SC2", "SR_W1", "SR_END"), lying=True)
     K.rc(add, "C1", "10u", "+5V", "GND", K.C0805)
     K.rc(add, "C2", "1u", "+3V3", "GND")
     K.rc(add, "R1", "10k", "SR_END", "+3V3", Note="end of the chain (W1 SR_IN) reads 1s")
@@ -100,7 +100,7 @@ def placement():
         pl[f"R{n}"] = (mx + 14.0 + 2.0 * ((n - 2) % 5), 126.0 + 2.0 * ((n - 2) // 5), 90, b)
     pl["J1"] = (W - 3.0, 124.0, 0, b)                                              # to P2 (the grid deck) on the right
     pl["C1"], pl["C2"] = (W - 3.0, 133.0, 0, b), (W - 3.0, 135.0, 0, b)
-    pl["J2"], pl["J3"] = (30.0, 3.0, 90, b), (62.0, 3.0, 90, b)                    # rear edge: M3 behind, W1 over the fold
+    pl["J2"], pl["J3"] = (30.0, 3.0, 270, b), (62.0, 3.0, 270, b)                    # rear edge: M3 behind, W1 over the fold
     pl["R1"] = (62.0, 7.5, 0, b)
     for n, (hx, hy) in enumerate(HOLES):
         pl[f"H{n + 1}"] = (hx, hy, 0, t)

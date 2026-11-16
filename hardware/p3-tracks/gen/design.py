@@ -81,10 +81,10 @@ def _own_parts():
     def add(ref, lib, value, fp, pins, **f):
         P.append(dict(ref=ref, lib=lib, value=value, fp=fp, pins=pins, fields=f))
 
-    K.deck_bus(add, "J1", "Deck bus to P2 2x8 1.27")
+    K.deck_bus(add, "J1", "Deck bus to P2 2x8 1.27", lying=True)
     mod = lambda sda, scl, sr_out, sr_in: {**K.CONN, 7: sda, 8: scl, 13: sr_out, 14: sr_in}  # noqa: E731
-    K.bus(add, "J3", "Module bus to M4 2x7 1.27", mod("SD2", "SC2", "SR_M4", "SR_END"))
-    K.bus(add, "J4", "Module bus to W2 2x7 1.27", mod("SD3", "SC3", None, None))
+    K.bus(add, "J3", "Module bus to M4 2x7 1.27", mod("SD2", "SC2", "SR_M4", "SR_END"), lying=True)
+    K.bus(add, "J4", "Module bus to W2 2x7 1.27", mod("SD3", "SC3", None, None), lying=True)
     K.rc(add, "C1", "10u", "+5V", "GND", K.C0805)
     K.rc(add, "C2", "1u", "+3V3", "GND")
     K.rc(add, "R1", "10k", "SR_END", "+3V3", Note="end of the chain (M4 SR_IN) reads 1s")
@@ -147,7 +147,7 @@ def placement():
         pl[cap] = (14.5, y, 90, b)
     for n in range(6):
         pl[f"RN{n + 1}"] = (36.0, 230.0 - 36.0 * n, 90, b)
-    pl["J1"] = (3.0, 123.0, 0, b)                                   # left edge: P2 (the grid) is to the left
+    pl["J1"] = (3.0, 123.0, 180, b)                                   # left edge: P2 (the grid) is to the left
     pl["C1"], pl["C2"] = (3.0, 132.0, 0, b), (3.0, 134.0, 0, b)
     pl["U6"], pl["C14"] = (14.0, 123.0, 0, b), (14.0, 118.0, 0, b)
     own = _own_parts()
@@ -155,8 +155,8 @@ def placement():
                 key=lambda s: int(s[1:]))
     for n, ref in enumerate(rs):
         pl[ref] = (10.0 + 2.0 * (n % 6), 128.0 + 2.0 * (n // 6), 90, b)
-    pl["J3"], pl["R1"] = (26.0, 3.0, 90, b), (26.0, 7.5, 0, b)      # rear edge: M4 right behind P3
-    pl["J4"] = (52.0, 3.0, 90, b)                                    # rear edge, behind the Level knobs: W2 over the fold
+    pl["J3"], pl["R1"] = (26.0, 3.0, 270, b), (26.0, 7.5, 0, b)      # rear edge: M4 right behind P3
+    pl["J4"] = (52.0, 3.0, 270, b)                                    # rear edge, behind the Level knobs: W2 over the fold
     m2pl = M2.placement()
     for old, new in _m2_refs(own).items():                          # the Level block where it was on M2, shifted
         x, y, r, side = m2pl[old]

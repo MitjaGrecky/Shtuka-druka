@@ -556,9 +556,15 @@ def standoffs():
     out = []
     for proj, tag, x0, y0 in (("a1-digital", "A1", A1_X0, A1_Y0), ("pw-power", "PW", (PW_X0 or 285) if COMPUTER in ("H5REAR", "H5TILT") else 300, 320 + RS)):
         d = _board_design(proj)
+        tray = tag == "A1" and A1_Z0 > 6.01          # A1 raised above the battery: a 2 mm tray on the four corner posts only
+        if tray:
+            out.append(box("A1 tray", "standoff", x0, x0 + d.W, y0, y0 + d.H, A1_Z0 - 2, A1_Z0, color="metal",
+                           note="2 mm aluminium tray under the raised A1; the middle holes of A1 fasten to it"))
         for k, (hx, hy) in enumerate(d.HOLES):
-            out.append(box(f"Standoff {tag} H{k + 1}", "standoff", x0 + hx - 3, x0 + hx + 3, y0 + hy - 3, y0 + hy + 3, SKIN, 6.0,
-                           color="metal", note=f"M3 standoff under {tag} hole H{k + 1}"))
+            if tray and 10 < hx < d.W - 10:
+                continue
+            out.append(box(f"Standoff {tag} H{k + 1}", "standoff", x0 + hx - 3, x0 + hx + 3, y0 + hy - 3, y0 + hy + 3, SKIN,
+                           A1_Z0 - 2 if tray else 6.0, color="metal", note=f"M3 standoff under {tag} hole H{k + 1}"))
     d = _board_design("p2-grid")
     for k, (hx, hy) in enumerate(d.HOLES):
         my = 4 + (d.H - hy)                              # P2 board y counts from the far edge (rev 0.4), the model from the front

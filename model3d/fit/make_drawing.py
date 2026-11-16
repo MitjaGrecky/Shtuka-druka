@@ -142,7 +142,7 @@ def main():
             v2.poly(b, 0.55 if b.color in ("pcb", "parts") else 0.9)
     labels = {"P1 Left": "P1", "P2 Grid": "P2 Grid", "P3 Tracks": "P3", "P4 Right": "P4", "M1 board": "M1",
               "Mini-ITX board": "ODROID-H5", "A1 audio board": "A1", "PW power": "PW", "Battery bay": "АКБ",
-              "R1 audio rear board": "R1", "R2 control rear board": "R2", "F1 headphone board": "F1", "Battery pack 1": "АКБ 1", "Battery pack 2": "АКБ 2"}
+              "R1 audio rear board": "R1", "R2 control rear board": "R2", "F1 headphone board": "F1", "Battery pack 1": "АКБ (под A1)" if getattr(F, "A1_Z0", 6) > 6.01 else "АКБ 1", "Battery pack 2": "АКБ 2"}
     for b in P:
         if b.name in labels:
             dy = {"P2 Grid": 40, "Mini-ITX board": -10}.get(b.name, -3)

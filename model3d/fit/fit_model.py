@@ -27,9 +27,11 @@ _spec.loader.exec_module(W1)
 
 FL = float(os.environ.get("FRONT_LIP", "0"))        # study: the case is longer in front by FL (a lip for the headphone jacks); y < 0 there
 RS = float(os.environ.get("REAR_SHIFT", "0"))   # study 16.11.2026: the shelf before the rear wall is longer by RS, R1 / R2 / rear jacks / A1 / PW move back with the wall
+FS = float(os.environ.get("FOLD_SHIFT", "0"))   # study 16.11.2026: the riser and everything behind it move back by FS (finger room behind the knob row)
+RS += FS                                        # rear boards follow the fold; the shelf itself is longer by REAR_SHIFT only
 W, D = 515.0, 460.0 + RS
 _T = float(os.environ.get("FRONT_Z", "68.0"))      # height of the front top surface; the slope keeps its 30 degrees
-FOLD_Y, FOLD_Z, SHELF_Y, TOP_Z, BACK_Z = 300.0, _T, 430.0, float(os.environ.get("DECK", str(_T))), float(os.environ.get("BACK_H", str(_T + 75.0)))   # BACK_H: rear height, default front + 75 (30 degrees)
+FOLD_Y, FOLD_Z, SHELF_Y, TOP_Z, BACK_Z = 300.0 + FS, _T, 430.0 + FS, float(os.environ.get("DECK", str(_T))), float(os.environ.get("BACK_H", str(_T + 75.0)))   # BACK_H: rear height, default front + 75 (30 degrees)
 SLOPE = math.atan2(BACK_Z - FOLD_Z, SHELF_Y - FOLD_Y)          # 30 degrees
 SLOPE_LEN = math.hypot(BACK_Z - FOLD_Z, SHELF_Y - FOLD_Y)       # 150.1 mm
 SKIN = 3.0
@@ -107,7 +109,7 @@ def slope_box(name, group, x0, x1, s0, s1, n0, n1, **kw):
 
 def s_of(y):
     """Slope coordinate of a projected y (top view) on the outer surface."""
-    return (y - FOLD_Y) / math.cos(SLOPE)
+    return (y - 300.0) / math.cos(SLOPE)        # y in panel coordinates (fold at 300), whatever FOLD_SHIFT is
 
 
 def slope_frame(name, group, x0, x1, s0, s1, n0, n1, hole, **kw):
@@ -388,7 +390,7 @@ def parts(usb=None):
         w, d = (e["w"], e["h"]) if k != "pad" else (25.5, 21.0)
         shape = "cyl" if k in ("encoder", "pot") else "box"
         nm = e["name"] if k != "pad" else f"Pad {e['x']:g},{e['y']:g}"
-        if e["y"] < FOLD_Y:
+        if e["y"] < 300.0:
             a(Box(nm, "top", (e["x"], e["y"], TOP_Z + hgt / 2 + 0.2), (w, d, hgt), color=colors.get(k, "grey"),
                   shape=shape, check=False))
         else:

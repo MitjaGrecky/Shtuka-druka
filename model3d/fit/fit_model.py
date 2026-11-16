@@ -64,6 +64,7 @@ H5_PORT_LEN = float(os.environ.get("H5_PORT_LEN", "25.0"))   # plug and cable be
 BATT_LIPO = os.environ.get("BATT_LIPO", "0") == "1"       # R155: flat LiPo pack under P2, 170 x 100 x 12 (4S, about 99 Wh with the BMS)
 LIPO_H = float(os.environ.get("LIPO_H", "12.0"))
 BATT_BOXES = [tuple(float(v) for v in s.split(",")) for s in os.environ.get("BATT_BOXES", "").split(";") if s.strip()]
+A1_Z0 = float(os.environ.get("A1_Z0", "6"))          # A1 envelope bottom (6 = on standoffs; higher = on a shelf above the battery)
 JACK_H = float(os.environ.get("JACK_H", "15.67"))   # headphone jack body height above its board (NMJ6HCD2 15.67; Cliff S1 CL1115 12.70)
 JACK_W = float(os.environ.get("JACK_W", "18.2"))    # its width (NMJ6HCD2 18.2; Cliff S1 15.90)
 F1_STAND = float(os.environ.get("F1_STAND", "3.0"))  # F1 board above the inner floor in the lip (0 = on an insulating sheet on the floor)
@@ -477,7 +478,7 @@ def parts(usb=None):
     # under the slope and the rear wall (doc 27 section 6, doc 29)
     # 15.11.2026: real outlines of the placed boards (A1 rev 0.4 220 x 100, PW rev 0.6 100 x 80, R1 rev 0.5 238 x 96, R2 rev 0.6 L-shape
     # 175 x 103); before they were the early estimates 140 x 90, 60 x 50, 238 x 104 and 258 x 104. Rear boards: model x = 515 - rear x.
-    a(box("A1 audio board", "rear", A1_X0, A1_X0 + 220, A1_Y0, A1_Y0 + 100, 6, 28, color="pcb", note="220 x 100, rev 0.4; position not fixed"))
+    a(box("A1 audio board", "rear", A1_X0, A1_X0 + 220, A1_Y0, A1_Y0 + 100, A1_Z0, A1_Z0 + 22, color="pcb", note="220 x 100, rev 0.4; position not fixed"))
     if COMPUTER in ("H5REAR", "H5TILT"):
         # 16.11.2026, the user's idea: the H5 where the battery bay was (rear right, under the slope), lying flat; the battery
         # goes under the grid where the H5 used to be; PW moves 15 mm left to clear it.

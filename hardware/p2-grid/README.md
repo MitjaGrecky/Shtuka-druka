@@ -11,7 +11,7 @@ Rev 0.2 (14.11.2026, cloud datasheet review #27; rev 0.1 by PC): **schematic onl
 | 109 RGB LEDs | 5 × LP5864 (A–D 24 each, E 13) | 20 button + 64 pad + 25 strip; on TCA9546A 0x73 channels 0 and 2 |
 | Buttons | 8 scenes + 2 arrows on 2 × 74HC165 | chained into the M1 module bus |
 | Buses | M1 (2×7), P1/P3/P4 (2×8), Trill Bar A/B (PH4), PW monitor (PH4) | pull-ups for the main I²C bus are here only |
-| Power | Micro-Fit 2×3 «+5V panel» from PW | all decks and modules are fed from here |
+| Power | Micro-Fit 1×6 right-angle 43650-0600 (C492352) «+5V panel» from PW; rev 0.5, R168: lying connectors for the low case (7.9 mm under the board). Cable: 2×3 plug on PW → 1×6 plug here | all decks and modules are fed from here |
 
 GPIO: GP0/1 I²C, GP2 ~SR_LOAD, GP3 SR_CLK, GP4–7 SR_P1/P3/P4/P2, GP8 ~INT, GP9 PM_ALERT, GP10 status LED,
 GP16–19 SPI0 to the ADC, GP20–22 mux address.
@@ -26,7 +26,8 @@ GP16–19 SPI0 to the ADC, GP20–22 mux address.
 - **I²C addresses:** TCA9546A 0x73 (decks 0x70–0x72), LP5864 on chip address bits `1 0 0 ADDR1 ADDR0` (four chips A–D on channel 0, E on channel 2), Trill Bar 0x20 (default), INA226 0x40. No address is used twice anywhere, and the INA226 and Trill B share channel 3 only with each other. Pull-ups: 4.7 k on the main bus and on every used mux channel (the Trill Bar has none).
 - **Trill Bar connector:** the sensor uses a Qwiic/SH 1.0 connector, order GND, 3.3 V, SDA, SCL. Our PH4 header (rev 0.1: SDA, SCL, 3.3 V, GND) now follows that order so a plain 1:1 SH–PH cable works.
 - **RP2350A block:** pin map identical to R2 (compared in code), and R2 follows the Raspberry Pi minimal design (3.3 µH inductor, 33 Ω + 4.7 µF on VREG_AVDD, 4.7 µF DVDD, 12 MHz with 1 k, 15 pF, W25Q128 on QSPI, 10 k RUN).
-- **+5 V through one Micro-Fit 2×3:** worst case 5.6 A (PW README) over three +5 V pins = 1.9 A per pin, within what Micro-Fit 3.0 contacts are rated for (about 5 A per circuit with tin plating and 18 AWG, from memory: confirm on the Molex 43045 sheet). The weak places are the wire (use 18 AWG or thicker) and the copper: the +5V_PANEL pour on the PCB must carry 5.6 A (≥ 4 mm wide on 1 oz outer layers, or a plane). The 2 × 100 µF + 10 µF on the input stay.
+- **Rev 0.5 (16.11.2026, R168):** JST PH headers are side-entry S3B/S4B-PH-K-S (4.8 mm high, C157929 / C157926), the power header is the single-row right-angle Micro-Fit (mated height 6.98 mm per the Molex listing: the drawing itself was not opened, check before ordering), bulk capacitors 100 µF 16 V 6.3 × 5.4 (C7469977). All four in stock at JLCPCB on 16.11.2026. **Still vertical:** the 1.27 mm bus headers J4–J7 (2×7, 2×8) - a right-angle 1.27 mm part in stock is not found yet.
+- **+5 V through one Micro-Fit (three +5 V pins, as before):** worst case 5.6 A (PW README) over three +5 V pins = 1.9 A per pin, within what Micro-Fit 3.0 contacts are rated for (about 5 A per circuit with tin plating and 18 AWG, from memory: confirm on the Molex 43045 sheet). The weak places are the wire (use 18 AWG or thicker) and the copper: the +5V_PANEL pour on the PCB must carry 5.6 A (≥ 4 mm wide on 1 oz outer layers, or a plane). The 2 × 100 µF + 10 µF on the input stay.
 
 ## Still open
 - PCB, electrodes of the 64 pads (placeholders), the +5 V pour width.

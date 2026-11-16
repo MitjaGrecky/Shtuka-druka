@@ -25,7 +25,7 @@ import kit as K  # noqa: E402
 NAME = "p2-grid"
 ID = "P2"
 TITLE = "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses"
-REV = "0.4"
+REV = "0.5"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8 x 74HC4051 + ADC128S102 (SPI0); 5 x LP5864 for 109 RGB; "
             "buses to P1, P3, P4 (2x8) and M1 (2x7); power and INA226 from PW")
@@ -39,7 +39,7 @@ LAYERS = 4
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
 SOT235, SOT236 = "Package_TO_SOT_SMD:SOT-23-5", "Package_TO_SOT_SMD:SOT-23-6"
 TSSOP16 = "Package_SO:TSSOP-16_4.4x5mm_P0.65mm"
-PH = "Connector_JST:JST_PH_B{n}B-PH-K_1x0{n}_P2.00mm_Vertical"
+PH = "Connector_JST:JST_PH_S{n}B-PH-K_1x0{n}_P2.00mm_Horizontal"   # R168 (16.11.2026): side entry, 4.8 mm high (JST ePH), cable along the board - 7.9 mm to the floor under P2 in the low case
 MF = "Connector_Molex:Molex_Micro-Fit_3.0_{}_P3.00mm_Vertical"
 
 # GPIO -> RP2350A QFN-60 pin (same package as on R2)
@@ -69,11 +69,14 @@ def parts():
         K.rc(add, ref("C"), value, a, b, fp, **f)
 
     # ================================================================ power in, 3.3 V
-    add(ref("J"), "Connector_Generic:Conn_02x03_Odd_Even", "+5V from PW", MF.format("43045-0612_2x03"),
-        {"1": "+5V_PANEL", "2": "+5V_PANEL", "3": "+5V_PANEL", "4": "GND", "5": "GND", "6": "GND"},
+    # R168: single-row right-angle Micro-Fit 43650-0600 (mated height 6.98 mm by the Molex listing; the 2 x 3 header is about 10 mm high
+    # and does not fit under P2 in the low case). Cable: 2 x 3 plug on PW -> 1 x 6 plug here, pin for pin by net.
+    add(ref("J"), "Connector_Generic:Conn_01x06", "+5V from PW", "Connector_Molex:Molex_Micro-Fit_3.0_43650-0600_1x06_P3.00mm_Horizontal",
+        {"1": "+5V_PANEL", "2": "+5V_PANEL", "3": "+5V_PANEL", "4": "GND", "5": "GND", "6": "GND"}, LCSC="C492352",
         Note="PW '+5V panel': the whole panel (all decks, modules and LEDs) is fed from here through the deck buses - worst case in the README")
     for _ in range(2):
-        C("100u 10V", "+5V_PANEL", fp="Capacitor_SMD:CP_Elec_6.3x7.7")
+        C("100u 16V", "+5V_PANEL", fp="Capacitor_SMD:CP_Elec_6.3x5.4", LCSC="C7469977",
+          Note="R168: 5.4 mm high FVH016ADA101M0654 instead of the 7.7 mm can (low case)")
     C("10u", "+5V_PANEL", fp=C0805)
     add(ref("U"), "Regulator_Linear:AP2112K-3.3", "AP2112K-3.3", SOT235, {"1": "+5V_PANEL", "2": "GND", "3": "+5V_PANEL", "4": None, "5": "+3V3"},
         LCSC="C51118", Note="3.3 V for the RP2350, the muxes' logic and the buses (modules and decks use it for logic only)")
@@ -266,11 +269,14 @@ def placement():
     byref = {p["ref"]: p for p in parts()}
     x, y, rowh, margin = 12.0, 14.0, 0.0, 6.0
     for r in [p["ref"] for p in parts() if p["ref"].startswith("J")]:
-        box, _ = packer._bbox(sys.modules[__name__], byref[r], 0, "bottom")
+        # R168: lying connectors must open towards the rear edge (cables run on under M1 to PW and R2). The JST side-entry
+        # footprints do at 0 deg; the right-angle Micro-Fit opens the other way, so it is turned by 180 deg.
+        rot = 180 if "Micro-Fit" in byref[r]["fp"] and "Horizontal" in byref[r]["fp"] else 0
+        box, _ = packer._bbox(sys.modules[__name__], byref[r], rot, "bottom")
         w, h = box[2] - box[0], box[3] - box[1]
         if x + w > W - margin:
             x, y, rowh = margin, y + rowh + 2, 0.0
-        fixed[r] = (round(x - box[0], 1), round(y - box[1], 1), 0, "bottom")
+        fixed[r] = (round(x - box[0], 1), round(y - box[1], 1), rot, "bottom")
         x += w + 2
         rowh = max(rowh, h)
     fixed.update(K.hole_fixed(parts(), HOLES))

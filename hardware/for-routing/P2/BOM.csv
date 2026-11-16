@@ -1,6 +1,6 @@
 Comment,Designator,Footprint,LCSC Part #
-+5V from PW,J1,Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical,C234188
-100u 10V,"C1,C2",CP_Elec_6.3x7.7,
++5V from PW,J1,Molex_Micro-Fit_3.0_43650-0600_1x06_P3.00mm_Horizontal,C492352
+100u 16V,"C1,C2",CP_Elec_6.3x5.4,C7469977
 10u,"C3,C6,C7,C27",C_0805_2012Metric,C15850
 AP2112K-3.3,U1,SOT-23-5,C51118
 1u,"C4,C5",C_0603_1608Metric,C52923
@@ -18,8 +18,8 @@ RP2350A,U2,QFN-60-1EP_7x7mm_P0.4mm_EP3.4x3.4mm,C42411118
 W25Q128JVSIQ,U3,SOIC-8_5.3x5.3mm_P1.27mm,C97521
 BOOTSEL,SW1,SW_Push_1P1T_XKB_TS-1187A,C318884
 27,"R7,R8",R_0402_1005Metric,
-SWD,J2,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339
-USB to R2 hub,J3,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334
+SWD,J2,JST_PH_S3B-PH-K_1x03_P2.00mm_Horizontal,C157929
+USB to R2 hub,J3,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926
 20k,R10,R_0402_1005Metric,
 USBLC6-2SC6,U4,SOT-23-6,C7519
 green,D1,LED_0603_1608Metric,
@@ -38,7 +38,7 @@ Module bus M1 (2x7),J4,PinHeader_2x07_P1.27mm_Vertical,C5372811
 Deck bus to P1,J5,PinHeader_2x08_P1.27mm_Vertical,C5372812
 Deck bus to P3,J6,PinHeader_2x08_P1.27mm_Vertical,C5372812
 Deck bus to P4,J7,PinHeader_2x08_P1.27mm_Vertical,C5372812
-Trill Bar A,J8,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334
-Trill Bar B,J9,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334
-I2C power monitor (PW),J10,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334
+Trill Bar A,J8,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926
+Trill Bar B,J9,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926
+I2C power monitor (PW),J10,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926
 100k,R100,R_0402_1005Metric,

@@ -44,6 +44,8 @@ CONN_LCSC = {
     _PH.format(n=4): "C131334",    # B4B-PH-K-S(LF)(SN), 195 585
     _PH.format(n=5): "C157993",    # B5B-PH-K-S(LF)(SN), 54 490
     _PH.format(n=6): "C131342",    # B6B-PH-K-S(LF)(SN), 71 421
+    "Connector_JST:JST_PH_S3B-PH-K_1x03_P2.00mm_Horizontal": "C157929",    # S3B-PH-K-S(LF)(SN), 98 305 (16.11.2026)
+    "Connector_JST:JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal": "C157926",    # S4B-PH-K-S(LF)(SN), 27 782 (16.11.2026)
     _MF.format("43650-0215_1x02"): "C293740",    # 436500215, 2 649
     _MF.format("43045-0412_2x02"): "C277721",    # 430450412, 50 687
     _MF.format("43045-0612_2x03"): "C234188",    # 430450612, 0 at JLC: Digikey, hand-soldered

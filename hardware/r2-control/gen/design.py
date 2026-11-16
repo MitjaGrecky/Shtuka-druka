@@ -32,7 +32,7 @@ TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3
 REV = "0.6"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
-            "4 CV in, sync 3 out / 2 in; USB2514B hub: up = Mini-ITX, down = RP2350, panel P2, A1 port A, spare")
+            "4 CV in, sync 3 out / 2 in; USB2514B hub: up = ODROID-H5, down = RP2350, panel P2, A1 port A, spare")
 PWR_FLAG_NETS = ("+12V", "-12V", "DVDD", "VREG_AVDD", "ADC_AVDD")   # ERC: rails from a connector, inductor or RC filter
 NO_PWR_FLAG = ("+3V3",)                                               # +3V3 is driven by the AP2112K (power output pin)
 W, H = 175.0, 103.0         # Control block: rear x 88-263, z 10-113 (OUTLINE below, without the DIN window)
@@ -168,12 +168,12 @@ def parts():
     C("18p", "HUB_XO")
     R("10k", "HUB_RESET", "+3V3")
     C("1u", "HUB_RESET")
-    R("100k", "UP_VBUS", "HUB_VBUSDET", Note="VBUS_DET from the Mini-ITX port: 2:1 divider, 2 x 100k (datasheet)")
+    R("100k", "UP_VBUS", "HUB_VBUSDET", Note="VBUS_DET from 5V_RUN of the ODROID-H5 header (pin 2, on only while H5 runs): 2:1 divider, 2 x 100k (datasheet)")
     R("100k", "HUB_VBUSDET", "GND")
     for _ in range(6):                    # VDDA33 x 4, VDD33 x 2
         C("100n", "+3V3")
     C("4.7u", "+3V3", fp=C0805)
-    for note, pins in (("USB up: from the Mini-ITX USB header", {"1": "UP_VBUS", "2": "UP_DM", "3": "UP_DP", "4": "GND"}),
+    for note, pins in (("USB up: from the ODROID-H5 24-pin header (1 GND, 2 5V_RUN, 3 USB2_P7_DP, 5 USB2_P7_DN; doc 35 sec. 2a)",{"1": "UP_VBUS", "2": "UP_DM", "3": "UP_DP", "4": "GND"}),
                        ("USB down: panel P2 (R86)", {"1": "+5V", "2": "P2_DM", "3": "P2_DP", "4": "GND"}),
                        ("USB down: A1 port A (R82)", {"1": "+5V", "2": "A1_DM", "3": "A1_DP", "4": "GND"}),
                        ("USB down: spare", {"1": "+5V", "2": "SP_DM", "3": "SP_DP", "4": "GND"})):

@@ -350,12 +350,13 @@ def parts():
         {"1": "PC_DP", "6": "PC_DP", "3": "PC_DM", "4": "PC_DM", "2": "GNDPC", "5": "PC_VBUS"}, LCSC="C7519", Note="ESD on the computer side")
     R("5.1k", "PC_CC1", "GNDPC", Note="device (Rd)")
     R("5.1k", "PC_CC2", "GNDPC", Note="device (Rd)")
-    add(ref("U"), "ShtukaDruka:ADuM4166", "ADuM4166", "Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm",
+    add(ref("U"), "ShtukaDruka:ADuM4166", "ADuM4166", "Package_SO:SOIC-20W_7.5x15.4mm_P1.27mm",
         {"1": "PC_VBUS", "3": "ISO_V1", "8": "PC_DP", "9": "PC_DM", "2": "GNDPC", "4": "GNDPC", "5": "GNDPC", "6": "GNDPC", "7": "GNDPC", "10": "GNDPC",
          "20": "+3V3D", "18": "+3V3D", "12": "UDP", "13": "UDM", "14": None, "15": "ISO_XO", "16": "ISO_XI", "11": "GND", "17": "GND", "19": "GND"},
         LCSC="C5367256", Note="USB 2.0 HS isolator: side 1 = computer (VBUS1 = PC VBUS 5 V, the internal LDO makes VDD1 3.3 V), side 2 = xcore B "
         "(VBUS2 tied to VDD2 = +3V3D, LDO bypassed: an LDO next to the external 3.3 V would fight it); PGOOD open; "
-        "footprint SOIC-20 300 mil (LCSC label) - check the body length against the datasheet drawing")
+        "package ADI RI-20-1 (SOIC_IC, MS-013-AD): body 7.5 x 15.4 mm, not the 12.8 mm SOIC-20W - pads are the same, "
+        "the body and courtyard are 2.6 mm longer (checked against the ADI drawing ri_20_1.pdf, 16.11.2026)")
     C("100n", "PC_VBUS", "GNDPC", fp=C0603, Note="VBUS1: 0.1 uF within 10 mm of the pin (datasheet)")
     C("100n", "ISO_V1", "GNDPC", fp=C0603, Note="VDD1: exactly 0.1 uF (more disturbs the LDO start-up)")
     C("100n", "+3V3D", fp=C0603, Note="VDD2 / VBUS2: 0.1 uF within 10 mm of the pins")

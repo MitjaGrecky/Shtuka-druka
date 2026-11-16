@@ -587,7 +587,7 @@
     (comp (ref "U43") (value "USBLC6-2SC6") (footprint "Package_TO_SOT_SMD:SOT-23-6"))
     (comp (ref "R246") (value "5.1k") (footprint "Resistor_SMD:R_0402_1005Metric"))
     (comp (ref "R247") (value "5.1k") (footprint "Resistor_SMD:R_0402_1005Metric"))
-    (comp (ref "U44") (value "ADuM4166") (footprint "Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm"))
+    (comp (ref "U44") (value "ADuM4166") (footprint "Package_SO:SOIC-20W_7.5x15.4mm_P1.27mm"))
     (comp (ref "C280") (value "100n") (footprint "Capacitor_SMD:C_0603_1608Metric"))
     (comp (ref "C281") (value "100n") (footprint "Capacitor_SMD:C_0603_1608Metric"))
     (comp (ref "C282") (value "100n") (footprint "Capacitor_SMD:C_0603_1608Metric"))

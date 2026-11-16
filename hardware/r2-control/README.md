@@ -12,7 +12,7 @@ x 88-263, z 10-113, without the window behind the DIN sockets (rear x 88-156, z 
 | Block | Parts | Notes |
 |---|---|---|
 | MCU | RP2350A (C42411118), W25Q128JVSIQ (C97521, 16 MB QSPI), 12 MHz ABM8-272-T3 (C20625731), core regulator with 3.3 uH AOTA-B201610S3R3 (C42411119), BOOTSEL button | As Raspberry Pi's minimal design (Hardware design with RP2350) |
-| USB hub | USB2514B (C220679), 24 MHz X322524MOB4SI (C70590) | Up: Mini-ITX USB header. Down: 1 RP2350, 2 panel P2 (R86), 3 A1 port A (R82), 4 spare. Straps low by the internal pull-downs = default configuration |
+| USB hub | USB2514B (C220679), 24 MHz X322524MOB4SI (C70590) | Up: ODROID-H5 24-pin header (pins 1, 2, 3, 5; doc 35 sec. 2a). Down: 1 RP2350, 2 panel P2 (R86), 3 A1 port A (R82), 4 spare. Straps low by the internal pull-downs = default configuration |
 | MIDI DIN | 2 in (TLP2361 at 3.3 V), 4 out; sockets on the wall, one cable each to a JST PH header (out: 3 pins 4, 5, shield; in: 2 pins 4, 5) | CA-033 3.3 V: 33 R 0.5 W + 10 R per output; every output has its own port (R34). Any MIDI output (DIN 1-4, TRS O1/O2) can be **Thru** from In 1 or In 2, set in the menu: the RP2350 PIO copies the input bit by bit (microseconds, no CPU); no Thru labels on the panel, R144 |
 | MIDI TRS | 1 in, 2 out: stereo Hroparts PJ-3920-3A (C707259, R143) | Out: tip and ring each from a GPIO through 22 R - type A/B is swapped in firmware (R32). In: two optos back to back, type A and B both work |
 | CV/Gate out 1-8 | 2 x DAC80504RTET (C2862796; internal 2.5 V ref divided by 2, gain 2 = 0-2.5 V), 3 x OPA4197 (C2057327) on +-12 V | Vout = 8.06 (Vdac - 1.25 V) = -10.1 ... +10.1 V around a buffered REF/2; reset to mid-scale = 0 V; 1k output resistors. Step 0.31 mV = 0.37 cent at 1 V/oct |

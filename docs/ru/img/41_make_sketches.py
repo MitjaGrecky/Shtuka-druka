@@ -227,10 +227,65 @@ def ergonomics():
     return dict(eye_elev=el, dist=dist, normal_elev=nel, off_axis=off, glare_elev=rel)
 
 
+
+# ------------------------------------------------------------------ 4. analogues: side silhouettes in one scale
+ANALOGS = [  # name, depth mm, height mm, note (max height from retail / maker specs, 17.11.2026 web search; see doc 41 section 10)
+    ("Ableton Move", 146.3, 34, ""),
+    ("Push 3 (standalone)", 318, 44.5, "29–44,5: источники расходятся"),
+    ("Maschine MK3", 301, 41, ""),
+    ("MPC Live II", 243.8, 45.7, ""),
+    ("Maschine+", 301, 51, ""),
+    ("MPC One", 272, 53, ""),
+    ("Roland MC-707", 263, 60, ""),
+    ("Digitakt II / Syntakt", 176, 63, ""),
+    ("Octatrack MKII", 184, 63, ""),
+    ("SP-404 MKII", 275.8, 70.5, ""),
+    ("Akai Force", 389, 72.5, ""),
+    ("MPC X (экран лёжа)", 424, 86, "с поднятым экраном 214"),
+]
+
+
+def analogs():
+    X0, SC, GAP = 215, 0.95, 24
+    W = X0 + 548 * SC + 40
+    out = ['<title>Аналоги: боковые силуэты в одном масштабе</title><rect width="100%" height="100%" fill="#ffffff"/>',
+           '<text x="20" y="28" font-size="15" font-weight="700" fill="#1f2933">Аналоги и Штука Дрюка: вид сбоку, один масштаб (глубина × высота, мм)</text>',
+           '<text x="20" y="46" font-size="11" fill="#52606d">Аналоги — габариты из спецификаций магазинов и производителей (максимальная высота, форма условная). Штука — из модели.</text>']
+    y = 62
+
+    def label(yb, h, name, dh):
+        ym = yb - h * SC / 2
+        out.append(f'<text x="{X0 - 10}" y="{ym - 1:.0f}" font-size="12" fill="#1f2933" text-anchor="end">{name}</text>')
+        out.append(f'<text x="{X0 - 10}" y="{ym + 12:.0f}" font-size="10" fill="#6b7785" text-anchor="end">{dh}</text>')
+
+    for name, d, h, note in ANALOGS:
+        yb = y + h * SC
+        out.append(f'<rect x="{X0}" y="{y:.1f}" width="{d * SC:.1f}" height="{h * SC:.1f}" rx="3" fill="#c9d1d9" stroke="#1f2933" stroke-width="1.5"/>')
+        label(yb, h, name, f"{d:g} × {h:g}" + (f" ({note})" if note else ""))
+        y = yb + GAP * 0.6
+    y += 14
+    ours = [("Штука: первый вариант (R44)", 460, [(0, 68), (300, 68), (430, 143), (460, 143)], "68 / 143"),
+            ("Штука: версия со скриншотов", 548, [(0, 28), (297, 28), (297, 41), (367, 41), (497, 116), (548, 116)], "28 / 41 / 116"),
+            ("Штука: итог сейчас", 548, [(0, 22), (345, 22), (345, 56), (348, 56), (478, 131), (548, 131)], "22 / 56 / 131")]
+    for name, d, prof, dh in ours:
+        hmax = max(z for _, z in prof)
+        yb = y + hmax * SC
+        pts = [(X0, yb)] + [(X0 + x * SC, yb - z * SC) for x, z in prof] + [(X0 + d * SC, yb)]
+        out.append('<polygon points="' + " ".join(f"{a:.1f},{b:.1f}" for a, b in pts) + '" fill="#f5c6c6" stroke="#d64545" stroke-width="2"/>')
+        label(yb, 40, name, f"{d} × {dh}")
+        y = yb + GAP
+    H = y + 6
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W:.0f} {H:.0f}" width="{W:.0f}" height="{H:.0f}" '
+           f'font-family="Segoe UI, Arial, sans-serif">' + "".join(out) + "</svg>")
+    with open(os.path.join(HERE, "41_analogs.svg"), "w", encoding="utf-8") as f:
+        f.write(svg)
+
+
 if __name__ == "__main__":
     anatomy()
     t = silhouettes()
     e = ergonomics()
+    analogs()
     print("tilt B, deg:", round(t, 2))
     print({k: round(v, 1) for k, v in e.items()})
     # knee blend for B: radius 100 mm tangent length

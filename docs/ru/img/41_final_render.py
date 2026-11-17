@@ -20,6 +20,8 @@ SLOPE = math.atan2(BACK - STEP_Z, SHELF_Y - STEP_Y)
 PROFILE = [(0, 0), (0, DECK - 3), (3, DECK), (STEP_Y, DECK), (STEP_Y, STEP_Z - CH), (STEP_Y + CH, STEP_Z),
            (SHELF_Y, BACK), (D - 3, BACK), (D, BACK - 3), (D, 0)]
 SCREEN_SHIFT = 30.0
+SCREEN_X, SCREEN_G, SCREEN_A = 220.75, (239.0, 147.0), (217.0, 136.0)   # centre x, glass, active area
+SKIP_KINDS = ()
 
 GRAPHITE = (44, 48, 54)
 EDGE = (70, 76, 84)
@@ -100,6 +102,8 @@ def controls():
     deck, slope = frame_deck(), frame_slope()
     for e in LAY["elements"]:
         k, x, y, w, h = e["kind"], e["x"], e["y"], e["w"], e["h"]
+        if k in SKIP_KINDS:
+            continue
         on_slope = y >= 300
         fr = slope if on_slope else deck
         v = s_of(y) if on_slope else y
@@ -135,16 +139,18 @@ def controls():
             prism(circ(x, v, 2, 8), 0, 0.4, fr, (232, 86, 74))
     # Param 1-8 knobs (M1) are in the layout as encoders already. Screen: glass + simple UI.
     sc = s_of(365) + SCREEN_SHIFT
-    prism(rect(220.75, sc, 239, 147), -0.2, 0.15, slope, (14, 16, 20))
-    prism(rect(220.75, sc, 217, 136), 0.15, 0.2, slope, (22, 30, 42))
+    prism(rect(SCREEN_X, sc, *SCREEN_G), -0.2, 0.15, slope, (14, 16, 20))
+    prism(rect(SCREEN_X, sc, *SCREEN_A), 0.15, 0.2, slope, (22, 30, 42))
     cols = ["#e8564a", "#f0a23a", "#e7d24a", "#55c26b", "#3fc39d", "#4aa8e8", "#7f77dd", "#d4537e"]
     for i in range(8):
         cx = 122.75 + 28 * i
         for j in range(4):
             if (i + j) % 3 == 2:
                 continue
+            if abs(45 - j * 22) + 8 > SCREEN_A[1] / 2:
+                continue
             prism(rect(cx, sc + 45 - j * 22, 24, 16), 0.2, 0.25, slope, rgb(cols[(7 - j) % 8]) if j else rgb(cols[i]))
-    prism(rect(220.75, sc - 58, 200, 4), 0.2, 0.25, slope, (120, 130, 145))
+    prism(rect(220.75, sc - SCREEN_A[1] / 2 + 10, 200, 4), 0.2, 0.25, slope, (120, 130, 145))
     # headphone jacks (3.5 mm, front wall) and the front edge
     for x in (32.0, 80.0):
         FACES.append(([(x - 4 + 4 * math.cos(a), 0, 11 + 4 * math.sin(a)) for a in [2 * math.pi * i / 16 for i in range(16)]],
@@ -181,7 +187,7 @@ def cam_top():
 LIGHT = norm((-0.35, -0.55, 0.75))
 
 
-def render(cam, fname, title, scale, notes=(), dims=None, inside=False, size=None):
+def render(cam, fname, title, scale, notes=(), dims=None, inside=False, size=None, inset=None):
     c, r, u = cam
     pts2 = lambda p: (dot(p, r) * scale, -dot(p, u) * scale)
     vis = []
@@ -224,6 +230,18 @@ def render(cam, fname, title, scale, notes=(), dims=None, inside=False, size=Non
                 el.append(f'<circle cx="{X:.1f}" cy="{Y:.1f}" r="2" fill="#d64545"/>')
             el.append(f'<text x="{(x1 + x2) / 2 + (6 if kind == "v" else 0):.1f}" y="{(y1 + y2) / 2 + (4 if kind == "v" else -6):.1f}" '
                       f'font-size="12" fill="#d64545" text-anchor="{"start" if kind == "v" else "middle"}">{lab}</text>')
+    if inset:
+        prof, boxes, lab = inset
+        k = 0.62
+        x0, y0 = Wd - 548 * k - 30, Hd - 40 - 16 * len(notes) - 10
+        P = lambda yy, zz: (x0 + yy * k, y0 - zz * k)
+        el.append(f'<rect x="{x0 - 10:.0f}" y="{y0 - 150 * k - 30:.0f}" width="{548 * k + 20:.0f}" height="{150 * k + 50:.0f}" fill="#fff" stroke="#c9d1d9"/>')
+        el.append(f'<text x="{x0:.0f}" y="{y0 - 150 * k - 12:.0f}" font-size="12" font-weight="700" fill="#1f2933">{lab}</text>')
+        el.append('<polygon points="' + " ".join(f"{P(a, b)[0]:.1f},{P(a, b)[1]:.1f}" for a, b in prof) + '" fill="#3a3f45" fill-opacity="0.85" stroke="#1f2933"/>')
+        for nm, (ya, yb, za, zb), col in boxes:
+            (ax, ay), (bx, by) = P(ya, za), P(yb, zb)
+            el.append(f'<rect x="{ax:.1f}" y="{by:.1f}" width="{bx - ax:.1f}" height="{ay - by:.1f}" fill="none" stroke="{col}" stroke-width="1.5" stroke-dasharray="4 2"/>')
+            el.append(f'<text x="{(ax + bx) / 2:.1f}" y="{(ay + by) / 2 + 4:.1f}" font-size="10" fill="{col}" text-anchor="middle" font-weight="700">{nm}</text>')
     for i, t in enumerate(notes):
         el.append(f'<text x="20" y="{Hd - 14 - 16 * (len(notes) - 1 - i):.0f}" font-size="12" fill="#52606d">{t}</text>')
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {Wd:.0f} {Hd:.0f}" width="{Wd:.0f}" height="{Hd:.0f}" '

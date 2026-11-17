@@ -223,9 +223,13 @@ def parts():
         C("100n 25V", "+12V", fp=C0603)
         C("100n 25V", "-12V", fp=C0603)
         for leg, src, out_net, adc_net in (("A", f"ADC{ch}_P", f"B{ch}_OA", f"ADC{ch}_BN"), ("B", f"ADC{ch}_N", f"B{ch}_OB", f"ADC{ch}_BP")):
-            C("47u 10V X5R", src, f"B{ch}_C{leg}", fp=C1210,
-              Note="series coupling, non-polar MLCC: the buffer side sits at 1.6 V and each leg swings +-5.7 V at FS, so a polarised cap would "
-                   "see reverse voltage; 2.8 Hz corner with 1.2k (Cirrus 68 uF = 1.95 Hz); peak 7.3 V < 10 V")
+            # R172 (17.11.2026): Cirrus AN0556 4.1 asks for stable dielectrics, C0G or electrolytic; X5R (rev 0.4) is neither and its capacitance
+            # follows the signal. A 1 uF C0G is not in stock at JLC, a bipolar SMD electrolytic was not found there, so each coupling cap is
+            # a pair of polarised electrolytics back to back (negatives together): 2 x 100 uF = 50 uF, corner 2.65 Hz with 1.2k.
+            # Each cap sees half the voltage and cannot be reversed for good (the other one blocks it).
+            for half, (pa, pb) in (("S", (src, f"B{ch}_M{leg}")), ("B", (f"B{ch}_C{leg}", f"B{ch}_M{leg}"))):
+                add(ref("C"), "Device:C_Polarized", "100u 16V", "Capacitor_SMD:CP_Elec_6.3x5.4", {"1": pa, "2": pb}, LCSC="C7469977",
+                    Note="coupling pair (negatives together at the middle node): 2 x 100 uF = 50 uF; Cirrus AN0556 4.1: electrolytic or C0G")
             R("1.2k", f"B{ch}_C{leg}", f"B{ch}_I{leg}", Note="0.1 %")
             R("300", out_net, f"B{ch}_I{leg}", Note="0.1 %: gain 1/4")
             C("680p C0G", out_net, f"B{ch}_I{leg}", fp=C0603)

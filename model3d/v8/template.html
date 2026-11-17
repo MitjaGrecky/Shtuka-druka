@@ -28,6 +28,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 canvas{display:block;width:100%;height:100%;touch-action:none}
 #hint{position:absolute;left:12px;bottom:10px;right:12px;font-size:12.5px;color:var(--muted);pointer-events:none;min-height:18px}
 #hint b{color:var(--fg);font-weight:500}
+[hidden]{display:none!important}
 .hot{color:var(--hot)}
 #info{position:absolute;left:12px;top:12px;max-width:min(380px,calc(100% - 24px));background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.4;box-shadow:0 4px 18px rgba(0,0,0,.25)}
 #info b.t{display:block;font-size:14px;font-weight:500;margin-bottom:2px}#info .d{color:var(--muted);margin:2px 0 6px}#info table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}#info td{padding:1px 0}#info td:last-child{text-align:right}#info button{float:right;padding:0 7px;margin:-2px -4px 0 6px}.gh{color:var(--ghost)}
@@ -37,8 +38,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 <aside>
 <h1>Штука Дрюка 3D v8</h1>
 <p class="sub">Итоговая линия корпуса (R174) из одной модели посадки (fit_model.py), 17.11.2026. Размеры в мм.</p>
-<h2>Вариант</h2>
-<div class="views vars" id="vars"></div>
+<div class="views vars" id="vars" hidden></div>
 
 <div class="sub" style="margin:10px 0 4px">Корпус</div>
 <div class="views" id="shellmode" role="group" aria-label="Корпус"><button data-m="0" class="on">Прозрачный (контуры)</button><button data-m="1">Глухой</button></div>
@@ -52,7 +52,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 <h2>Показать</h2>
 <div id="groups"></div>
 <label class="row" style="margin-top:6px"><input type="checkbox" id="hot" checked><span class="hot">Тесные места (&lt; 1 мм)</span></label>
-<label class="row"><input type="checkbox" id="ghost" checked><span class="gh">Контур «было» поверх (красный)</span></label>
+<input type="checkbox" id="ghost" hidden>
 <h2>Срез по ширине</h2>
 <label class="row"><input type="checkbox" id="cut"><span>Включить срез</span></label>
 <input type="range" id="cutx" min="5" max="510" value="260" aria-label="Положение среза по x">
@@ -151,6 +151,7 @@ function build(key){
  buildGhost();apply();
 }
 function buildGhost(){
+ if(!VARIANTS.was){for(const o of ghostObjs)scene.remove(o);ghostObjs=[];return}
  for(const o of ghostObjs)scene.remove(o);ghostObjs=[];
  {const g=profGeo(VARIANTS.was.profile,515,0.01,0.01);const f=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:0xff4d4d,transparent:true,opacity:.12,depthWrite:false,side:THREE.DoubleSide}));f.visible=false;scene.add(f);ghostObjs.push(f);
   const e=new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color:0xff4d4d}));e.visible=false;scene.add(e);ghostObjs.push(e)}

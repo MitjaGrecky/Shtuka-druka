@@ -136,7 +136,7 @@ def main():
     m, P, _c, _t = g3.build(30, 0, 117.0, 20, 0)
     V["g3"] = variant_data(m, P, "Зелёная-2 сжатая (500)", "Пересборка по вашему наброску: дека 30; два аккумулятора под P2 (отсеки по 106 × 220 × 11 мм, зазор 1,4 мм до деталей P2, 1 мм по краям); макушка 117 мм вплотную к плате R2 (её верх 113 + обшивка 3 + зазор 1); скат 33,1° кончается на 20 мм раньше передней кромки коробки гнёзд; задник не сдвигается (глубина 500); вентилятор на правой стенке, H5 у задней стенки; угловые штекеры у экрана (принято). Перебор 1 600 вариантов: ниже 117 мм не проходит, глубже 500 не нужно. Все зазоры не меньше 1 мм.",
                            [["Гнёзда наушников", "6,35 мм под P1"], ["Аккумуляторы", "2 отсека 106 × 220 × 11, ≈ 148 Вт·ч (оценка)"], ["H5", "у задней стенки, порты вперёд"], ["Вентилятор", "на правой стенке"], ["Штекеры экрана", "угловые 90° (принято)"], ["Зазоры", "все ≥ 1 мм"]])
-    V = {"was": dict(V["was"], hidden=True, parts=[p for p in V["was"]["parts"] if p["g"] == "shell"]), "g3": V["g3"]}   # 17.11.2026 (user): only the main line stays; "was" is the hidden reference of the red contour
+    V = {"g3": V["g3"]}   # 17.11.2026 (user): only the main line stays; "was" is the hidden reference of the red contour
     tpl = open(os.path.join(HERE, "template.html"), encoding="utf-8").read()
     # data for the solid ("glukhoy") mode, the same sources as the v7 page: layout_v7.json elements and the element descriptions (INFO)
     import runpy, tempfile

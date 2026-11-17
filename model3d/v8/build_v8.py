@@ -43,6 +43,19 @@ def HARNESS(m):
     return _H["h"]
 
 
+def profile(m):
+    """Side profile (y, z) of the outer shell: front wall, deck, step, slope, roof / ridge, rear wall (for the solid view)."""
+    y0 = -m.FL
+    pts = [(y0, 0), (y0, m.TOP_Z), (m.FOLD_Y, m.TOP_Z)]
+    if m.FOLD_Z > m.TOP_Z + 0.5:
+        pts.append((m.FOLD_Y, m.FOLD_Z))
+    if getattr(m, "RIDGE", None):
+        pass
+    pts += [(m.SHELF_Y, m.BACK_Z)]
+    pts += [(m.D, m.BACK_Z), (m.D, 0)]
+    return [[round(a, 1), round(b, 1)] for a, b in pts]
+
+
 def variant_data(m, P, name, note, extra):
     res = m.check(P)
     tight = [dict(gap=round(g, 1), a=a, b=b) for g, a, b, e in res if g < 1.0]
@@ -53,7 +66,8 @@ def variant_data(m, P, name, note, extra):
         parts.append(dict(n=p.name, g=g, c=[round(x, 2) for x in p.c], s=[round(2 * h, 2) for h in p.h], rx=round(p.rx, 3), col=p.color, sh=p.shape, est=bool(p.est)))
     dims = [["Дека с пэдами", f"{m.TOP_Z:g}"], ["Свес спереди", f"{m.FL:g}"], ["Скат экрана", f"{math.degrees(m.SLOPE):.1f}°"],
             ["Зад (высота)", f"{m.BACK_Z:g}"], ["Глубина", f"{m.D + m.FL:g}"], ["Ширина", "515"], ["Столкновений (> 0,05 мм)", str(len(col))]] + extra
-    return dict(name=name, note=note, parts=parts, tight=[dict(gap=t["gap"], a=t["a"], b=t["b"]) for t in tight if t["gap"] >= -0.05], dims=dims)
+    prof = profile(m)
+    return dict(name=name, note=note, profile=prof, parts=parts, tight=[dict(gap=t["gap"], a=t["a"], b=t["b"]) for t in tight if t["gap"] >= -0.05], dims=dims)
 
 
 def load_was():
@@ -98,6 +112,7 @@ def main():
     m, P = concepts.concept("k3", ang=47.4, shift=12)
     V["k3"] = variant_data(m, P, "К3 Конёк (500)", "Концепт дизайнера К3, проверен инженером: передний скат 32° до гребня на y 440, z 117, дальше задний скат ≈ 47° вниз к низкой задней стенке 55. Экран сдвинут по скату вниз на 12 мм (на 30 не проходит: упирается в задний скат). H5 под гребнем, вентилятор на заднем скате, R1/R2 лёжа. Столкновений нет. Разъёмы питания/USB пока не размещены (идут в полосу R1/R2), оболочка сложнее, тепло не считалось.",
                            [["Гнёзда наушников", "6,35 мм под P1"], ["Аккумулятор", "под пэдами"], ["H5", "под гребнем, 8 мм"], ["Экран", "на 12 мм ниже по скату"]])
+    V["k3"]["profile"] = [[0, 0], [0, 30], [300, 30], [440, 117], [497, 55], [500, 55], [500, 0]]
     tpl = open(os.path.join(HERE, "template.html"), encoding="utf-8").read()
     out = tpl.replace("__VARIANTS__", json.dumps(V, ensure_ascii=False, separators=(",", ":")))
     open(os.path.join(HERE, "v8.html"), "w", encoding="utf-8").write(out)

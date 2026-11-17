@@ -43,7 +43,8 @@ PWR_FLAG_NETS = ("+12V", "-12V")   # ERC: rails from the PW connector feed power
 NO_PWR_FLAG = ("+3V3",)
 W, H = 238.0, 96.0          # rough: rear x 273-511, z 8-104 (doc 34, model blocks Audio Out + Audio In)
 HOLES = [(4.0, 4.0), (234.0, 4.0), (4.0, 92.0), (234.0, 92.0),   # M3, board coordinates (KiCad, y down); 15.11.2026
-         (34.0, 79.0), (164.0, 6.0), (164.0, 31.0)]   # 16.11: beside the RCA pairs (RCJ-025 has no panel nut): the plug force goes into standoffs
+         (34.0, 86.0), (164.0, 6.0), (164.0, 31.0)]   # 16.11: beside the RCA pairs (RCJ-025 has no panel nut): the plug force goes into standoffs
+A1_RISE = 19.0       # mm, see placement(); socket row height is an estimate (+-1 mm): check against the real A1 standoff height
 LAYERS = 4
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
@@ -324,7 +325,10 @@ def placement():
             xr, z = JACKS[p["value"]]
             fixed[p["ref"]] = (xr - X0, Z0 - z, 0, "top")
     for ref, x in (("J4", 40.0), ("J1", 82.0), ("J5", 122.0), ("J2", 165.0), ("J3", 200.0)):
-        fixed[ref] = (x, {"J1": 85.5, "J3": 90.5}.get(ref, 92.5), 90, "bottom")          # cable headers (2 x 25 and 2 x 20 to A1, small ones) along the bottom edge
+        # R171 (17.11.2026): the two A1 headers (J4, J5) are raised by A1_RISE so they meet A1's sockets: A1 now stands on a tray
+        # over the battery (R162), the socket rows are about 30.4 / 32.9 mm above the floor, the old row was at 11.5 / 14.0
+        y = {"J1": 85.5, "J3": 90.5}.get(ref, 92.5) - (A1_RISE if ref in ("J4", "J5") else 0.0)
+        fixed[ref] = (x, y, 90, "bottom")          # cable headers (2 x 25 and 2 x 20 to A1, small ones) along the bottom edge
     fixed.update(K.hole_fixed(parts(), HOLES))
     return autoplace.place(sys.modules[__name__], fixed=fixed, conn_side="bottom")
 

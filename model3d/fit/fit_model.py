@@ -366,7 +366,7 @@ def parts(usb=None):
     # wheel (R74): AS5600 under P4 (bottom side), 6 x 2.5 mm diametric magnet 0.5 mm above the board,
     # 6700ZZ bearing (10 x 15 x 4) in a printed housing screwed under the skin. AS5600 datasheet:
     # magnet 6 mm, air gap 0.5-3 mm, SOIC-8 max 1.75 mm; here magnet -> die about 0.5 + 1.6 + 0.4 = 2.5 mm
-    wx, wy = 459.0, 277.0
+    wx, wy = 459.0, float(os.environ.get("WHEEL_Y", "277.0"))   # WHEEL_Y: study, the wheel between Page / Back and the riser
     wz = (TOP_Z - 4.75) if WHEEL_TRACK else 63.25
     a(Box("Wheel bearing housing", "panel", (wx, wy, wz), (21, 21, 3.5), color="plastic", shape="cyl",
           note="printed, holds the 6700ZZ bearing, screwed to the skin"))

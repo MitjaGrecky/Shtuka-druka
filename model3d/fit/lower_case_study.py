@@ -9,7 +9,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 KEYS = ("FRONT_Z", "COMPUTER", "H5_STANDOFF", "H5_H", "H5_X", "H5_Y", "PANEL_GAP", "P2_GAP", "P2_PARTS", "WHEEL_TRACK", "F1_MODE",
-        "F1_TOP", "REAR_JACK_TOP", "REAR_JACK_TOP_R", "R2_TALL_X1", "R1_TOP", "R2_TOP", "BACK_H", "DECK", "FRONT_LIP", "REAR_SHIFT", "H5T_X", "H5T_S0", "H5T_N", "H5_PORT", "H5_PORT_LEN", "BATT_LIPO", "LIPO_H", "PANEL_PARTS", "F1_SIDE_Z", "BATT_FLAT", "PW_X0", "A1_X0", "A1_Y0", "H5_REAR_X", "H5_REAR_Y", "H5_Z0", "BATT_BOXES", "FAN")
+        "F1_TOP", "REAR_JACK_TOP", "REAR_JACK_TOP_R", "R2_TALL_X1", "R1_TOP", "R2_TOP", "BACK_H", "WHEEL_Y", "DECK", "FRONT_LIP", "REAR_SHIFT", "H5T_X", "H5T_S0", "H5T_N", "H5_PORT", "H5_PORT_LEN", "BATT_LIPO", "LIPO_H", "PANEL_PARTS", "F1_SIDE_Z", "BATT_FLAT", "PW_X0", "A1_X0", "A1_Y0", "H5_REAR_X", "H5_REAR_Y", "H5_Z0", "BATT_BOXES", "FAN")
 
 
 def run(env, z):

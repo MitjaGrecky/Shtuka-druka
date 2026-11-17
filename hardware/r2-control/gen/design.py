@@ -35,7 +35,7 @@ BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmw
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = ODROID-H5, down = RP2350, panel P2, A1 port A, spare")
 PWR_FLAG_NETS = ("+12V", "-12V", "DVDD", "VREG_AVDD", "ADC_AVDD")   # ERC: rails from a connector, inductor or RC filter
 NO_PWR_FLAG = ("+3V3",)                                               # +3V3 is driven by the AP2112K (power output pin)
-W, H = 175.0, 103.0         # Control block: rear x 88-263, z 10-113 (OUTLINE below, without the DIN window)
+W, H = 107.0, 103.0         # Rev 0.7 (R178, 17.11.2026): rectangle, rear x 156-263, z 10-113 (the low arm under the DIN window is gone: H5 sits in the rear corner)
 LAYERS = 4
 
 R0402, C0402, C0805 = K.R0402, K.C0402, K.C0805
@@ -318,18 +318,18 @@ def parts():
 # Mounting (rev 0.6, review 14.11.2026): 7 x M3 on standoffs to the rear wall, board coordinates (x, y), proposal to settle with the
 # enclosure: four corners of the L, one in the bottom strip between the TRS jacks, two inside between the jack columns/rows
 # (7.5 mm gaps). The jacks' own nuts carry the plug force into the wall; the standoffs only hold the board against flexing.
-HOLES = [(80.0, 4.0), (162.0, 4.0), (171.0, 99.0), (4.0, 99.0), (23.0, 79.0), (126.5, 56.0), (92.5, 34.0)]
+HOLES = [(12.0, 4.0), (94.0, 4.0), (103.0, 99.0), (4.0, 99.0), (58.5, 56.0), (24.5, 34.0)]   # rev 0.7: shifted by -68, the two holes of the arm dropped
 MOUNT_FP = "MountingHole:MountingHole_3.2mm_M3_ISO7380"
 
 # Board: vertical, F side (jacks) faces the rear wall; seen from behind (rear view): board x = x_rear - 88, y = 113 - z.
 # Outline = the Control block of the 3D model (rear x 88-263, z 10-113) without the window behind the six panel DIN sockets
 # (rear x 88-156, z 38-113): an L shape. Everything but the jacks sits on the B side (inside), cable headers too.
-X0, Z0 = 88.0, 113.0
-OUTLINE = [(68, 0), (175, 0), (175, 103), (0, 103), (0, 75), (68, 75)]
-AREAS = [(68, 0, 175, 103), (0, 75, 175, 103)]
+X0, Z0 = 156.0, 113.0      # board x = x_rear - 156 (rev 0.7; was 88)
+OUTLINE = [(0, 0), (107, 0), (107, 103), (0, 103)]
+AREAS = [(0, 0, 107, 103)]
 AXIS = {"PJ398SM": 0.78, "PJ-3920-3A": 1.29}   # jack axis below the pad-field centre (rotation 0), from the footprints
 # the 3D model of panel v7 (model3d/index.html, R142): (x_rear, z) of the jack axes
-JACKS = {"MIDI TRS IN": (100, 22), "MIDI TRS OUT 1": (122, 22), "MIDI TRS OUT 2": (144, 22),
+JACKS = {"MIDI TRS IN": (240, 68), "MIDI TRS OUT 1": (240, 46), "MIDI TRS OUT 2": (240, 24),   # rev 0.7: the three TRS jacks take the free 5th column of the CV block
          "CLOCK OUT 1": (172, 90), "CLOCK OUT 2": (189, 90), "RESET/RUN OUT": (206, 90), "CLOCK IN": (223, 90),
          "RESET/RUN IN": (240, 90), **{f"CV IN {c + 1}": (172 + 17 * c, 68) for c in range(4)},
          **{f"CV/GATE OUT {c + 1}": (172 + 17 * (c % 4), 46 if c < 4 else 24) for c in range(8)}}
@@ -355,13 +355,13 @@ def placement():
             fixed[p["ref"]] = (x, y - AXIS[p["value"]], 0, t)
     by = {p["value"]: p["ref"] for p in P}
     for k, name in enumerate(("DIN IN 1", "DIN OUT 1", "DIN OUT 3", "DIN IN 2", "DIN OUT 2", "DIN OUT 4")):
-        fixed[by[name]] = (73.0, 6.0 + 11.5 * k, 90, b)                      # DIN cables: along the window edge
+        fixed[by[name]] = (5.0, 6.0 + 11.5 * k, 90, b)                      # DIN cables: along the window edge
     hdr = [p["ref"] for p in P if p["lib"].endswith("Conn_01x04")]          # USB up, P2, A1, spare
-    fixed[by["Power from PW"]] = (169.0, 9.0, 90, b)
+    fixed[by["Power from PW"]] = (101.0, 9.0, 90, b)
     for k, r in enumerate(hdr):
-        fixed[r] = (169.0, 25.0 + 13.0 * k, 90, b)
-    fixed[by["to A1/R1"]] = (168.0, 85.0, 0, b)
-    fixed[by["SWD"]] = (160.0, 99.0, 0, b)
+        fixed[r] = (101.0, 25.0 + 13.0 * k, 90, b)
+    fixed[by["to A1/R1"]] = (100.0, 85.0, 0, b)
+    fixed[by["SWD"]] = (92.0, 99.0, 0, b)
     for hx, (x, y) in zip([p["ref"] for p in P if p["ref"].startswith("H")], HOLES):
         fixed[hx] = (x, y, 0, t)
     groups = {}
@@ -372,8 +372,8 @@ def placement():
     for p in P:
         if p["ref"] in fixed and p["value"] in AXIS:
             jack_of[BLOCK[p["ref"]]] = fixed[p["ref"]][:2]
-    anchors = {"power": (160, 12, b), "mcu": (110, 30, b), "hub": (150, 45, b), "ctrl": (160, 80, b), "midi": (78, 60, b),
-               "dac": (125, 58, b), "opa": (110, 80, b)}
+    anchors = {"power": (92, 12, b), "mcu": (42, 30, b), "hub": (82, 45, b), "ctrl": (92, 80, b), "midi": (10, 60, b),
+               "dac": (57, 58, b), "opa": (42, 80, b)}
     G = []
     for name, refs in groups.items():
         ax, ay, side = anchors[name] if name in anchors else (*jack_of[name], b)

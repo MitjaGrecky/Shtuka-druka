@@ -90,3 +90,5 @@ Board "panel" = parts on nuts with a cable (R141); "R2" = on this board.
 Generators: `gen/design.py`, `gen/make_sch.py` (shared writer `hardware/common/gen/module_sch.py`, multi-unit symbols placed unit by unit).
 
 License: CERN-OHL-S-2.0 (hardware), AGPL-3.0-or-later (scripts).
+
+Rev 0.7 (17.11.2026, R178): rectangle 107 x 103 mm (rear x 156-263, z 10-113): the low arm under the DIN window is gone (the H5 sits in the rear right corner, x 376-496). The six DIN sockets move to the rear wall above the H5 (x 376-510, z 70-110) on nuts with cables to the six JST headers on the left edge of R2; the three MIDI TRS jacks take the free 5th column of the CV block (x_rear 240, z 68 / 46 / 24). Generator: `X0` = 156, `OUTLINE` rectangle, `AREAS` one rectangle, holes shifted by -68. Placement: 0 courtyard overlaps, nothing outside the outline, netcheck 707 pins / 0 mismatches. The rear wall layout (v4) has to follow: this is the doc 41 task T-2.

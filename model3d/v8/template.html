@@ -1,0 +1,135 @@
+<title>Штука Дрюка 3D v8</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap">
+<style>
+/* layout: full-height viewer; controls column on the left, stacked under the scene on a phone. One source: every variant is generated from fit_model.py */
+:root{--bg:#eef0f2;--panel:#f8f9fa;--fg:#1c2226;--muted:#5d6970;--line:#d5dade;--accent:#0f7d6b;--hot:#e07a00;--ghost:#d64545;--scene:#e4e8eb;--font:'Inter',system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14181b;--panel:#1c2125;--fg:#e6eaec;--muted:#98a4ab;--line:#2f373d;--accent:#3dc2a8;--hot:#ffa23a;--ghost:#ff6b6b;--scene:#101417;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14181b;--panel:#1c2125;--fg:#e6eaec;--muted:#98a4ab;--line:#2f373d;--accent:#3dc2a8;--hot:#ffa23a;--ghost:#ff6b6b;--scene:#101417;color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:14px;line-height:1.45;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px;box-sizing:border-box}
+.app{display:grid;grid-template-columns:292px minmax(0,1fr);gap:16px;height:100%;min-height:520px}
+aside{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;overflow:auto;min-width:0}
+h1{font-size:17px;font-weight:500;margin:0 0 2px}
+.sub{color:var(--muted);font-size:12.5px;margin:0 0 10px}
+h2{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+.dims{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-variant-numeric:tabular-nums}
+.dims span:nth-child(even){text-align:right;font-weight:500}
+.views{display:flex;flex-wrap:wrap;gap:6px}
+button{font:inherit;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer}
+button:hover{border-color:var(--accent)}button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.on{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.vars button{flex:1 1 auto;text-align:left}
+.vnote{color:var(--muted);font-size:12.5px;margin:6px 0 0;min-height:54px}
+label.row{display:flex;align-items:center;gap:8px;padding:2px 0;cursor:pointer}
+.sw{width:11px;height:11px;border-radius:3px;border:1px solid var(--line);flex:none}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.stage{position:relative;min-width:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--scene)}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+#hint{position:absolute;left:12px;bottom:10px;right:12px;font-size:12.5px;color:var(--muted);pointer-events:none;min-height:18px}
+#hint b{color:var(--fg);font-weight:500}
+.hot{color:var(--hot)}.gh{color:var(--ghost)}
+@media (max-width:820px){.app{grid-template-columns:minmax(0,1fr);grid-template-rows:62vh auto;height:auto}.stage{order:-1;height:62vh}aside{overflow:visible}}
+</style>
+<div class="app">
+<aside>
+<h1>Штука Дрюка 3D v8</h1>
+<p class="sub">Итоговые варианты корпуса из одной модели посадки (fit_model.py), 17.11.2026. Размеры в мм.</p>
+<h2>Вариант</h2>
+<div class="views vars" id="vars"></div>
+<p class="vnote" id="vnote"></p>
+<h2>Размеры</h2>
+<div class="dims" id="dims"></div>
+<h2>Вид</h2>
+<div class="views" id="views"></div>
+<h2>Показать</h2>
+<div id="groups"></div>
+<label class="row" style="margin-top:6px"><input type="checkbox" id="hot" checked><span class="hot">Тесные места (&lt; 1 мм)</span></label>
+<label class="row"><input type="checkbox" id="solid"><span>Корпус сплошной, графит (внешний вид)</span></label>
+<label class="row"><input type="checkbox" id="ghost"><span class="gh">Контур «было» поверх (красный)</span></label>
+<h2>Срез по ширине</h2>
+<label class="row"><input type="checkbox" id="cut"><span>Включить срез</span></label>
+<input type="range" id="cutx" min="5" max="510" value="260" aria-label="Положение среза по x">
+<p class="sub" id="cutv" style="margin:2px 0 0">x = 260</p>
+<h2>Источники</h2>
+<p class="sub">Размеры плат и деталей из fit_model.py; H5, разъёмы, гнёзда, радиатор — оценки (при наведении «оценка»). Скругления и фаски корпуса не показаны. Документы 38, 39, 41.</p>
+</aside>
+<div class="stage" id="stage"><div id="hint"></div></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const VARIANTS=__VARIANTS__;
+const GROUPS={shell:['Обшивка','#9aa3aa'],top:['Пэды и ручки','#d9dde3'],panel:['Платы панели P1–P4','#3f8f5a'],m1:['M1: ручки экрана','#5aa879'],front:['Наушники F1','#f0997b'],slope:['Платы на скате W1–W3','#7fb28f'],screen:['Экран','#78aac8'],itx:['Компьютер H5','#afa9ec'],rear:['Задние платы, A1, PW, аккумулятор','#ef9f27'],standoff:['Стойки','#a7adb5'],clear:['Зоны под жгуты (оценка)','#c9a3e0']};
+const COLORS={pcb:0x3f8f5a,parts:0x9aa5af,metal:0xa7adb5,plastic:0xd9dde3,battery:0xef9f27,glass:0x78aac8,lcd:0x323c4b,chip:0x2a2a2a,knob:0x40444c,led:0xf0dc78,shell:0xcfd4d8,grey:0xb4b4b4};
+const stage=document.getElementById('stage'),hint=document.getElementById('hint');
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));stage.prepend(renderer.domElement);renderer.localClippingEnabled=true;
+const scene=new THREE.Scene();const camera=new THREE.PerspectiveCamera(32,1,10,6000);
+const controls=new THREE.OrbitControls(camera,renderer.domElement);controls.enableDamping=true;
+const C=new THREE.Vector3(257,40,-270);controls.target.copy(C);
+scene.add(new THREE.HemisphereLight(0xffffff,0x778088,0.95));const dl=new THREE.DirectionalLight(0xffffff,0.7);dl.position.set(-300,700,400);scene.add(dl);
+const plane=new THREE.Plane(new THREE.Vector3(-1,0,0),260);
+function M(x,y,z){return[x,z,-y]}
+let meshes=[],byGroup={},tightNames=new Set(),cur=null,ghostObjs=[];
+const vis={};const gbox=document.getElementById('groups');
+function mk(p,wire){
+ const a=p.rx*Math.PI/180,s=Math.sin(a),c=Math.cos(a);
+ const ex=new THREE.Vector3(1,0,0),ey=new THREE.Vector3(0,s,-c),ez=new THREE.Vector3(0,c,s);
+ const geo=p.sh==='cyl'?new THREE.CylinderGeometry(p.s[0]/2,p.s[0]/2,p.s[2],20).rotateX(Math.PI/2):new THREE.BoxGeometry(p.s[0],p.s[1],p.s[2]);
+ const mx=new THREE.Matrix4().makeBasis(ex,ey,ez);mx.setPosition(...M(...p.c));
+ return{geo,mx};
+}
+function clearScene(){for(const m of meshes){scene.remove(m);if(m.userData.edge)scene.remove(m.userData.edge);m.geometry.dispose()}meshes=[];byGroup={}}
+function build(key){
+ clearScene();cur=key;const V=VARIANTS[key];tightNames=new Set(V.tight.flatMap(t=>[t.a,t.b]));
+ for(const p of V.parts){
+  const {geo,mx}=mk(p);const glass=p.col==='glass',shell=p.g==='shell';
+  const mat=new THREE.MeshStandardMaterial({color:COLORS[p.col]||0xb4b4b4,roughness:.75,metalness:p.col==='metal'?.5:.05,transparent:glass||shell,opacity:glass?.45:(shell?.16:1),depthWrite:!(glass||shell),side:shell?THREE.DoubleSide:THREE.FrontSide});
+  const m=new THREE.Mesh(geo,mat);m.matrixAutoUpdate=false;m.matrix.copy(mx);m.userData={p,base:mat.color.getHex(),shell};
+  if(!shell){const e=new THREE.LineSegments(new THREE.EdgesGeometry(geo),new THREE.LineBasicMaterial({color:0x000000,transparent:true,opacity:.28}));e.matrixAutoUpdate=false;e.matrix.copy(mx);m.userData.edge=e;scene.add(e)}
+  scene.add(m);meshes.push(m);(byGroup[p.g]=byGroup[p.g]||[]).push(m);
+ }
+ gbox.innerHTML='';
+ for(const[k,[label,col]]of Object.entries(GROUPS)){if(!byGroup[k])continue;if(!(k in vis))vis[k]=!(k==='top'||k==='standoff'||k==='clear');
+  const l=document.createElement('label');l.className='row';l.innerHTML='<input type="checkbox"'+(vis[k]?' checked':'')+'><span class="sw" style="background:'+col+'"></span><span>'+label+'</span>';
+  l.firstChild.addEventListener('change',e=>{vis[k]=e.target.checked;apply();setView(null)});gbox.appendChild(l)}
+ document.getElementById('vnote').textContent=V.note;
+ const d=document.getElementById('dims');d.innerHTML='';for(const[a,b]of V.dims){d.insertAdjacentHTML('beforeend','<span>'+a+'</span><span>'+b+'</span>')}
+ [...document.getElementById('vars').children].forEach(b=>b.classList.toggle('on',b.dataset.k===key));
+ buildGhost();apply();
+}
+function buildGhost(){
+ for(const o of ghostObjs)scene.remove(o);ghostObjs=[];
+ const W=VARIANTS.was;
+ for(const p of W.parts){if(p.g!=='shell'||/Floor|Side|Front wall|Rear wall/.test(p.n))continue;
+  const {geo,mx}=mk(p);const e=new THREE.LineSegments(new THREE.EdgesGeometry(geo),new THREE.LineBasicMaterial({color:0xff4d4d}));e.matrixAutoUpdate=false;e.matrix.copy(mx);e.visible=false;scene.add(e);ghostObjs.push(e)}
+}
+function apply(){
+ const hot=document.getElementById('hot').checked,solid=document.getElementById('solid').checked;
+ for(const m of meshes){const g=m.userData.p.g;m.visible=vis[g];if(m.userData.edge)m.userData.edge.visible=vis[g];
+  if(m.userData.shell){m.material.opacity=solid?.96:.16;m.material.color.setHex(solid?0x2d3036:0xcfd4d8);m.material.depthWrite=solid;m.material.needsUpdate=true}
+  else m.material.color.setHex(hot&&tightNames.has(m.userData.p.n)?0xff9a1f:m.userData.base);}
+ const gh=document.getElementById('ghost').checked&&cur!=='was';for(const o of ghostObjs)o.visible=gh;
+ renderer.clippingPlanes=document.getElementById('cut').checked?[plane]:[];
+}
+const vb=document.getElementById('vars');
+for(const[k,V]of Object.entries(VARIANTS)){const b=document.createElement('button');b.textContent=V.name;b.dataset.k=k;b.addEventListener('click',()=>build(k));vb.appendChild(b)}
+for(const id of['hot','solid','ghost','cut'])document.getElementById(id).addEventListener('change',apply);
+document.getElementById('cutx').addEventListener('input',e=>{plane.constant=+e.target.value;document.getElementById('cutv').textContent='x = '+e.target.value;apply()});
+const VIEWS={'Спереди слева':[-520,380,520,{}],'Сбоку':[1100,60,-270,{}],'Сверху':[257,1150,-268,{}],'Сзади':[330,330,-1000,{}],'Внутри':[-480,520,420,{shell:0,top:0}],'Снаружи':[-520,380,520,{shell:1,top:1,standoff:0}]};
+const vwb=document.getElementById('views');let curV=null;
+function setView(n){curV=n;[...vwb.children].forEach(b=>b.classList.toggle('on',b.textContent===n))}
+for(const[n,[x,y,z,g]]of Object.entries(VIEWS)){const b=document.createElement('button');b.textContent=n;b.addEventListener('click',()=>{camera.position.set(x,y,z);controls.target.copy(C);controls.update();
+ for(const k of Object.keys(g)){vis[k]=!!g[k]}
+ gbox.querySelectorAll('label').forEach((l,i)=>{const k=Object.keys(GROUPS).filter(q=>byGroup[q])[i];l.firstChild.checked=vis[k]});apply();setView(n)});vwb.appendChild(b)}
+camera.position.set(-520,420,560);
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+new ResizeObserver(resize).observe(stage);resize();
+const ray=new THREE.Raycaster(),mouse=new THREE.Vector2(),HINT='Вращение — перетаскивание, масштаб — колесо или щипок, наведите на деталь.';
+renderer.domElement.addEventListener('pointermove',e=>{const r=renderer.domElement.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(mouse,camera);
+ const hit=ray.intersectObjects(meshes.filter(m=>m.visible&&!m.userData.shell),false)[0];
+ if(hit){const p=hit.object.userData.p;hint.innerHTML='<b>'+p.n+'</b> · '+p.s.map(v=>v.toFixed(1)).join(' × ')+' мм'+(p.est?' · оценка':'')}else hint.textContent=HINT});
+hint.textContent=HINT;
+build('green');
+(function loop(){controls.update();const cs=getComputedStyle(document.documentElement).getPropertyValue('--scene').trim();renderer.setClearColor(cs||'#e4e8eb');renderer.render(scene,camera);requestAnimationFrame(loop)})();
+</script>

@@ -262,3 +262,77 @@ if __name__ == "__main__" and os.environ.get("DRAW", "1") == "1":
     profiles()
     print("final", eye(mf))
     draw(mf, mf.parts(), "41_wedge_final_side.svg", "Сейчас: дека 22, стенка 34, сгиб 56, зад 131 (вид слева)", "side")
+
+
+# ------------------------------------------------------------------ answers to the main session (17.11.2026): slope angle, fan, harness room
+def corner_rework2(h5x0=391.0, fan_x=(421.0, 481.0), fan_z=(6.0, 66.0), harness=None, rear_top=None):
+    """H5 15 mm off the rear wall, 60 mm fan on the rear wall in line with the H5 (low, z 6-66), panel-mount cluster above (z 70+)."""
+    def f(m, P):
+        keep = [p for p in P if p.name not in ("R2 control rear board, low arm", "Rear jacks", "Rear jacks (right)")]
+        y0 = 413.4 + m.RS
+        jt = rear_top or m.REAR_JACK_TOP
+        keep.append(m.box("R2 low arm (shortened)", "rear", m.R2_TALL_X1, h5x0 - 3, y0, y0 + 1.6, 10, 38, color="pcb"))
+        keep.append(m.box("Rear jacks (left)", "rear", 5, h5x0 - 3, y0 + 1.6, m.D - m.SKIN, 8, jt, color="metal", est=True))
+        keep.append(m.box("Rear panel-mount jacks over the H5", "rear", h5x0, 510, m.D - m.SKIN - 25, m.D - m.SKIN, 70, min(jt, 112),
+                          color="metal", est=True))
+        keep.append(m.box("Fan 60 x 60 x 15 (rear wall, behind H5)", "rear", fan_x[0], fan_x[1], m.D - m.SKIN - 15, m.D - m.SKIN,
+                          fan_z[0], fan_z[1], color="plastic"))
+        if harness:
+            keep.append(m.box("H5 harness room", "rear", *harness, color="plastic", est=True))
+        return keep
+    return f
+
+
+def answers():
+    out = []
+    fs = 15
+    rl, D = 453.4 + fs, 500 + fs
+    for ang in (33, 28, 25, 22):
+        for roof in (41, 10):
+            run_len = D - 3 - roof - (300 + fs)
+            back = round(31 + run_len * math.tan(math.radians(ang)), 1)
+            rtop = back - 3 - 8                      # rear boards / jacks must stay under the roof
+            h5y = D - 3 - 15 - 60 - 0.5              # 15 mm room for the rear fan
+            e = env(22, 31, fs, rl - 101, 20, f"40,210,{rl - 101},{rl - 1},3", h5y)
+            e.update(R1_TOP=min(104, rtop), R2_TOP=min(113, rtop), REAR_JACK_TOP=min(112, rtop + 4), REAR_JACK_TOP_R=min(112, rtop + 4))
+            harness = (391, 511, h5y - 60 - 45, h5y - 60, 3.5, 35)
+            best = None
+            for sh in (0, 15, 30, 45):
+                m = load(e, D - 3 - roof, back, sh)
+                col = collisions(m, corner_rework2(harness=harness, rear_top=min(112, rtop + 4)))
+                if best is None or len(col) < len(best[1]):
+                    best = (m, col, sh)
+            m, col, sh = best
+            ey = eye(m)
+            out.append((ang, roof, back, rtop, sh, len(col), sorted(col, reverse=True)[:6], ey))
+            print(f"\nangle {ang}, roof {roof}: rear {back}, rear boards <= {rtop}, screen shift {sh}: {len(col)} collisions; {ey}")
+            for g, a, b in sorted(col, reverse=True)[:8]:
+                print(f"   {g:6.1f}  {a}  /  {b}")
+    return out
+
+
+if __name__ == "__main__" and os.environ.get("ANS") == "1":
+    answers()
+
+
+def answer_draw():
+    fs, ang, roof = 15, 33, 41
+    rl, D = 453.4 + fs, 500 + fs
+    run_len = D - 3 - roof - (300 + fs)
+    back = round(31 + run_len * math.tan(math.radians(ang)), 1)
+    h5y = D - 3 - 15 - 60 - 0.5
+    for st in (8, 5):
+        e = env(22, 31, fs, rl - 101, 20, f"40,210,{rl - 101},{rl - 1},3", h5y, h5_st=st)
+        harness = (391, 511, h5y - 60 - 45, h5y - 60 - 25, 3.5, 26)     # beyond the model's own 25 mm plug box
+        m = load(e, D - 3 - roof, back, 30)
+        rw = corner_rework2(harness=harness)
+        col = collisions(m, rw)
+        print(f"33 deg, H5 standoff {st}: {len(col)} collisions", sorted(col, reverse=True)[:5])
+        if st == 5:
+            P = rw(m, m.parts())
+            draw(m, P, "41_wedge_orange_top_v2.svg", "«Оранжевая» v2: H5 на 15 мм от стенки, вентилятор за ним, место под жгуты (сверху)", "top")
+            draw(m, P, "41_wedge_orange_side_v2.svg", "«Оранжевая» v2 (вид слева)", "side")
+
+
+if __name__ == "__main__" and os.environ.get("ANS") == "2":
+    answer_draw()

@@ -14,9 +14,26 @@ spec = importlib.util.spec_from_file_location("ws", os.path.join(REPO, "docs", "
 ws = importlib.util.module_from_spec(spec); spec.loader.exec_module(ws)
 
 
-def rw_factory(jacks):
+def rework_right(m, P0, h5c, y1):
+    """Fan on the RIGHT wall (as R163), H5 against the rear wall and 15 mm left of the right wall (x 376-496), R2 low arm to 373."""
+    keep = [p for p in P0 if p.name not in ("R2 control rear board, low arm", "Rear jacks", "Rear jacks (right)")]
+    y0 = 413.4 + m.RS
+    jt = m.REAR_JACK_TOP
+    h0 = h5c - 60
+    keep.append(m.box("R2 low arm (shortened)", "rear", m.R2_TALL_X1, 373, y0, y0 + 1.6, 10, 38, color="pcb"))
+    keep.append(m.box("Rear jacks (left)", "rear", 5, 373, y0 + 1.6, y1, 8, jt, color="metal", est=True))
+    keep.append(m.box("Rear panel-mount jacks over the H5", "rear", 376, 510, y1 - 25, y1, 70, min(jt, 112), color="metal", est=True))
+    keep.append(m.box("H5 harness room", "rear", 376, 496, h0 - 45, h0 - 25, 3.5, 26, color="plastic", est=True))
+    keep.append(m.box("Fan 60 x 60 x 15 (right wall)", "rear", 497, 512, h5c - 30, h5c + 30, 6, 66, color="plastic"))
+    return keep
+
+
+def rw_factory(jacks, fan="rear"):
     def rw(m, P0):
-        P = ws.corner_rework2(harness=HARNESS(m))(m, P0)
+        if fan == "right":
+            P = rework_right(m, P0, FAN_H5C["c"], m.D - m.SKIN)
+        else:
+            P = ws.corner_rework2(harness=HARNESS(m))(m, P0)
         S = m.SKIN
         P = [p for p in P if p.name not in ("Phones 1 jack", "Phones 2 jack", "F1 headphone board", "F1 headphone board parts below")]
         for p in list(P):
@@ -39,6 +56,7 @@ def rw_factory(jacks):
 
 
 _H = {}
+FAN_H5C = {}
 def HARNESS(m):
     return _H["h"]
 
@@ -79,19 +97,22 @@ def load_was():
     return m, m.parts()
 
 
-def build_wedge(deck, ang, jacks, h5st=8, roof=41, fs=0):
+def build_wedge(deck, ang, jacks, h5st=8, roof=41, fs=0, fan="rear"):
     rl, D = 453.4 + fs, 500 + fs
-    h5y = D - 3 - 15 - 60 - 0.5
+    h5y = D - 3 - 15 - 60 - 0.5 if fan == "rear" else D - 3 - 60 - 0.5
+    FAN_H5C["c"] = h5y
     if deck >= 28:
         e = ws.env(deck, deck, fs, rl - 101, 6, "130,300,60,160,3", h5y, h5_st=h5st)
     else:
         e = ws.env(22, 31, fs, rl - 101, 20, f"40,210,{rl - 101},{rl - 1},3", h5y, h5_st=h5st)
     e.update(FRONT_LIP=0)
+    if fan == "right":
+        e.update(H5_REAR_X=436)
     run_len = D - 3 - roof - (300 + fs)
     back = round((deck if deck >= 28 else 31) + run_len * math.tan(math.radians(ang)), 1)
     m = ws.load(e, D - 3 - roof, back, 30)
     _H["h"] = (391, 511, h5y - 60 - 45, h5y - 60 - 25, 3.5, 26)
-    return m, rw_factory(jacks)(m, m.parts())
+    return m, rw_factory(jacks, fan)(m, m.parts())
 
 
 def main():
@@ -99,12 +120,12 @@ def main():
     m, P = load_was()
     V["was"] = variant_data(m, P, "Было (548)", "Итоговая модель на 16.11.2026: дека 22, передний свес 28 мм под плату наушников, ступенька со стенкой 34 мм, сгиб 56, скат 30°, аккумулятор на подносе под A1.",
                             [["Гнёзда наушников", "6,35 мм в свесе"], ["Аккумулятор", "на полу под A1"], ["H5", "справа, порты вправо"]])
-    m, P = build_wedge(22, 33, "3.5")
-    V["orange"] = variant_data(m, P, "Оранжевая (515)", "Без свеса: гнёзда 3,5 мм в передней стенке, плата F1 ≈ 90 × 35 на полу под передним краем P1. Ступенька 9 мм, скат 33°, H5 в заднем правом углу на стойках 8 мм, вентилятор на задней стенке. Остаются 4 известных столкновения: карман USB/SD и платы W3 о H5 (до 2,8 мм); лечится сдвигом кармана по скату вперёд.",
-                            [["Гнёзда наушников", "3,5 мм угловые"], ["Аккумулятор", "на полу под A1 (поднос)"], ["H5", "в заднем углу, порты вперёд"]])
-    m, P = build_wedge(30, 33, "6.35")
-    V["green"] = variant_data(m, P, "Зелёная (500)", "Дека 30: гнёзда 6,35 мм под передним краем P1 (без свеса), аккумулятор под пэдами (1–2 пакета), A1 на полу, скат 33° от деки без ступеньки, H5 в заднем углу. Колесо пока на y 277: 4 мм до начала ската, дизайнер просит 268 (решение за вами). Остаются известные столкновения: карман USB/SD и платы W3 о H5 (до 3,8 мм), 1 мм детали W3 о зону жгутов.",
-                            [["Гнёзда наушников", "6,35 мм под P1"], ["Аккумулятор", "под пэдами"], ["H5", "в заднем углу, порты вперёд"]])
+    m, P = build_wedge(22, 33, "3.5", fan="right")
+    V["orange"] = variant_data(m, P, "Оранжевая (515)", "Без свеса: гнёзда 3,5 мм в передней стенке, плата F1 ≈ 90 × 35 на полу под передним краем P1. Ступенька 9 мм, скат 33°. Вентилятор перенесён на ПРАВУЮ стенку (как R163), поэтому H5 стоит вплотную к задней стенке, на 15 мм левее правой (x 376–496); плечо R2 до x 373. Столкновений нет.",
+                            [["Гнёзда наушников", "3,5 мм угловые"], ["Аккумулятор", "на полу под A1 (поднос)"], ["H5", "у задней стенки, порты вперёд"], ["Вентилятор", "на правой стенке"]])
+    m, P = build_wedge(30, 33, "6.35", fan="right")
+    V["green"] = variant_data(m, P, "Зелёная (500)", "Дека 30: гнёзда 6,35 мм под передним краем P1 (без свеса), аккумулятор под пэдами (1–2 пакета), A1 на полу, скат 33° от деки без ступеньки. Вентилятор на правой стенке, H5 вплотную к задней стенке (x 376–496), плечо R2 до x 373. Столкновений нет. Колесо пока на y 277: 4 мм до начала ската, дизайнер просит 268 (решение за вами).",
+                            [["Гнёзда наушников", "6,35 мм под P1"], ["Аккумулятор", "под пэдами"], ["H5", "у задней стенки, порты вперёд"], ["Вентилятор", "на правой стенке"]])
     import concepts
     m, P = concepts.concept("k1", ang=30.0)
     V["k1"] = variant_data(m, P, "К1 Низкий клин (500)", "Концепт дизайнера К1, проверен инженером: дека 30, скат 30° от y 300 без ступеньки, зад 120 (на 28° зад 113, но W3 входит в H5 на 4,3 мм: не проходит). R1 и R2 лёжа полосой вдоль задней стенки, карман USB/SD и детали W3 с-под ската убраны, у экрана угловые штекеры (изгибы кабелей убраны, допущение). Остаётся 1 столкновение: плата W3 о H5 на 2,0 мм.",

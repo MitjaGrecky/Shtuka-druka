@@ -57,6 +57,7 @@ REAR_JACK_TOP_R = float(os.environ.get("REAR_JACK_TOP_R", str(REAR_JACK_TOP)))  
 R2_TALL_X1 = float(os.environ.get("R2_TALL_X1", "359.0"))            # right end of the tall part of R2 (model x)
 A1_X0 = float(os.environ.get("A1_X0", "20"))               # A1 left edge (study: A1 moved under the grid)
 A1_Y0 = float(os.environ.get("A1_Y0", str(305 + RS)))              # A1 front edge
+PW_TOP = float(os.environ.get("PW_TOP", "24.0"))            # top of PW envelope: 10.5 mm electrolytics below + board + connectors above (checked 17.11.2026)
 PW_X0 = float(os.environ.get("PW_X0", "0"))              # H5REAR: left edge of PW (0 = old default 285)
 H5T_X = float(os.environ.get("H5T_X", "120.0"))             # H5TILT: left edge x of the H5 lying along the slope
 H5T_S0 = float(os.environ.get("H5T_S0", "20.0"))           # H5TILT: its lower edge along the slope from the fold
@@ -486,7 +487,7 @@ def parts(usb=None):
         # 16.11.2026, the user's idea: the H5 where the battery bay was (rear right, under the slope), lying flat; the battery
         # goes under the grid where the H5 used to be; PW moves 15 mm left to clear it.
         px = PW_X0 or 285
-        a(box("PW power", "rear", px, px + 100, 320 + RS, 400 + RS, 6, 24, color="pcb", note="100 x 80, rev 0.6; moved for the H5"))
+        a(box("PW power", "rear", px, px + 100, 320 + RS, 400 + RS, 6, PW_TOP, color="pcb", note="100 x 80, rev 0.6; moved for the H5"))
         rx, ry = H5_REAR_X, H5_REAR_Y
         if COMPUTER == "H5TILT":
             # the H5 lies parallel to the slope under the screen (user's sketch, 16.11.2026): board away from the slope, heatsink towards it

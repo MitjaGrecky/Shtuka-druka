@@ -8,7 +8,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import lower_case_study as L  # noqa: E402
 
-L.KEYS = tuple(dict.fromkeys(L.KEYS + ("FOLD_SHIFT", "JACK_H", "JACK_W", "F1_STAND", "M1_J1_H", "A1_Z0", "BATT_BOXES", "FAN")))
+L.KEYS = tuple(dict.fromkeys(L.KEYS + ("FOLD_SHIFT", "JACK_H", "JACK_W", "F1_STAND", "M1_J1_H", "A1_Z0", "BATT_BOXES", "FAN", "PW_TOP")))
 
 
 def config(rs, deck=22.0, h5_stand=8.0, fs=0.0):
@@ -18,7 +18,7 @@ def config(rs, deck=22.0, h5_stand=8.0, fs=0.0):
     a1y = 305 + rs
     return dict(WHEEL_TRACK=1, COMPUTER="H5REAR", BATT_LIPO=0, P2_PARTS=1.5, PANEL_PARTS=3, PW_X0=245, A1_X0=20, H5_PORT="E",
                 F1_MODE="LIP", FRONT_LIP=28, REAR_SHIFT=sh, FOLD_SHIFT=fs, DECK=deck, H5_REAR_X=410, H5_REAR_Y=413.4 + rs - 4.0 - 60,
-                H5_STANDOFF=h5_stand, JACK_H=12.7, JACK_W=15.9, F1_STAND=1, M1_J1_H=5, A1_Z0=20,
+                H5_STANDOFF=h5_stand, JACK_H=12.7, JACK_W=15.9, F1_STAND=1, M1_J1_H=5, A1_Z0=20, PW_TOP=25,
                 BATT_BOXES=f"40,210,{a1y},{a1y + 100},3", FAN=f"{400 + rs - 20},4,60")
 
 

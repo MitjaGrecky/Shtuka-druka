@@ -141,6 +141,19 @@ def main():
                            [["Гнёзда наушников", "6,35 мм под P1"], ["Аккумулятор", "под пэдами"], ["H5", "под гребнем, 8 мм"], ["Экран", "на 12 мм ниже по скату"]])
     V["k3"]["profile"] = [[0, 0], [0, 30], [300, 30], [440, 117], [497, 55], [500, 55], [500, 0]]
     tpl = open(os.path.join(HERE, "template.html"), encoding="utf-8").read()
+    # data for the solid ("glukhoy") mode, the same sources as the v7 page: layout_v7.json elements and the element descriptions (INFO)
+    import runpy, tempfile
+    lay = json.load(open(os.path.join(REPO, "mockup", "layout", "layout_v7.json"), encoding="utf-8"))
+    cwd = os.getcwd(); tmp = tempfile.mkdtemp(); os.chdir(tmp)
+    try:
+        g7 = runpy.run_path(os.path.join(REPO, "model3d", "build_model3d_v7.py"))
+    finally:
+        os.chdir(cwd)
+    info7 = g7["info"]
+    tpl = tpl_pre = None
+    tpl = open(os.path.join(HERE, "template.html"), encoding="utf-8").read()
+    tpl = tpl.replace("/*LAYOUT*/", json.dumps({k: lay[k] for k in ("W", "D", "F0", "F1")} | {"E": lay["elements"]}, ensure_ascii=False, separators=(",", ":")))
+    tpl = tpl.replace("/*INFO*/", json.dumps(info7, ensure_ascii=False, separators=(",", ":")))
     out = tpl.replace("__VARIANTS__", json.dumps(V, ensure_ascii=False, separators=(",", ":")))
     open(os.path.join(HERE, "v8.html"), "w", encoding="utf-8").write(out)
     for k, v in V.items():

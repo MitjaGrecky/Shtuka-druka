@@ -226,7 +226,8 @@ def parts():
             # R172 (17.11.2026): Cirrus AN0556 4.1 asks for stable dielectrics, C0G or electrolytic; X5R (rev 0.4) is neither and its capacitance
             # follows the signal. A 1 uF C0G is not in stock at JLC, a bipolar SMD electrolytic was not found there, so each coupling cap is
             # a pair of polarised electrolytics back to back (negatives together): 2 x 100 uF = 50 uF, corner 2.65 Hz with 1.2k.
-            # Each cap sees half the voltage and cannot be reversed for good (the other one blocks it).
+            # UNVERIFIED (17.11.2026): the reverse-voltage rating of FVH016ADA101M0654 was not found (datasheet text not reachable); polarised
+            # aluminium caps usually tolerate only about 1 V reverse, here each cap would see up to about 2.8 V reverse at 20 Hz and full scale. Provisional: replace with a bipolar part.
             for half, (pa, pb) in (("S", (src, f"B{ch}_M{leg}")), ("B", (f"B{ch}_C{leg}", f"B{ch}_M{leg}"))):
                 add(ref("C"), "Device:C_Polarized", "100u 16V", "Capacitor_SMD:CP_Elec_6.3x5.4", {"1": pa, "2": pb}, LCSC="C7469977",
                     Note="coupling pair (negatives together at the middle node): 2 x 100 uF = 50 uF; Cirrus AN0556 4.1: electrolytic or C0G")

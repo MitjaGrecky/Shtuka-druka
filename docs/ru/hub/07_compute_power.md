@@ -1,0 +1,53 @@
+<!-- сгенерировано tools/build_hubs.py; не править руками (правки в docs/ru/README.md и в самих документах) -->
+# Хаб: Вычислитель, питание, аккумуляторы, тепло
+
+Решения темы: [`decisions/07_compute_power.md`](../decisions/07_compute_power.md) (2.2 КБ, читать, если задача касается решений темы).
+
+## 12. Вычислительная мощность
+Платформы, бенчмарки, сменный модуль (5, 6)
+- [Штука Дрюка: вычислительная мощность под 16 → 32 → 64 дорожки](../12_compute_research/00_nachalo.md) · 0.3 КБ
+- [Решение](../12_compute_research/01_reshenie.md) · 0.1 КБ
+- [1. Сколько дорожек у других и почему](../12_compute_research/02_1-skolko-dorozhek-u-drugih-i.md) · 2.8 КБ
+- [2. Платформы и бенчмарки](../12_compute_research/03_2-platformy-i-benchmarki.md) · 3.3 КБ
+- [3. Что занимает процессор (вывод)](../12_compute_research/04_3-chto-zanimaet-processor-vyvod.md) · 1.8 КБ
+- [4. План замера (вывод)](../12_compute_research/05_4-plan-zamera-vyvod.md) · 3.1 КБ
+- [5. Архитектурный вывод: вычислительный модуль должен быть сменным](../12_compute_research/06_5-arhitekturnyy-vyvod-vychislitelnyy-modul-dolzhen.md) · 1.9 КБ
+- [Открытые вопросы](../12_compute_research/07_otkrytye-voprosy.md) · 0.4 КБ
+- [6. Сменные процессорные модули: варианты (29.10.2026)](../12_compute_research/08_6-smennye-processornye-moduli-varianty-29.md) · 7.2 КБ
+
+## 18. Замер мощности
+Как мерить дорожки на M93; результат на Dell (раздел 5); ждёт запуска
+- [Замер мощности](../18_benchmark_m93.md) · 10.5 КБ
+
+## 34. Платы задней стенки
+R1, A1, R2, F1, PW: что на какой плате, живые микросхемы вместо снятых THAT, фантом, MIDI 3,3 В, CV, питание 19 В для Mini-ITX, номера LCSC
+- [Штука Дрюка: платы задней стенки — входы, предусилители, выходы, управление, питание](../34_rear_boards_research/00_nachalo.md) · 1.2 КБ
+- [0. Коротко](../34_rear_boards_research/01_0-korotko.md) · 3.3 КБ
+- [1. Что на какой плате (вывод, по R120 и документу 29)](../34_rear_boards_research/02_1-chto-na-kakoy-plate-vyvod.md) · 2.4 КБ
+- [2. Входы (R1 → A1)](../34_rear_boards_research/03_2-vhody-r1-a1.md) · 6.6 КБ
+- [3. Выходы (A1 → R1, F1)](../34_rear_boards_research/04_3-vyhody-a1-r1-f1.md) · 1.9 КБ
+- [4. Управление (R2)](../34_rear_boards_research/05_4-upravlenie-r2.md) · 2.6 КБ
+- [5. Питание (PW)](../34_rear_boards_research/06_5-pitanie-pw.md) · 2.3 КБ
+- [6. Гнёзда задней стенки (из библиотеки EasyEDA)](../34_rear_boards_research/07_6-gnezda-zadney-stenki-iz-biblioteki.md) · 0.8 КБ
+- [7. Что проверить на макете (вывод)](../34_rear_boards_research/08_7-chto-proverit-na-makete-vyvod.md) · 0.5 КБ
+- [Открытые вопросы](../34_rear_boards_research/09_otkrytye-voprosy.md) · 3.1 КБ
+
+## 35. ODROID-H5 и экран: жгут и посадка
+Жгут PW/R2 → H5, посадка по высоте (потолок ≈ 53 мм над полом), окно экрана EP-CAPLCD; распиновка колодки H5 и жгут по контактам (раздел 2а, 16.11.2026)
+- [35. ODROID-H5 и Waveshare 10.1EP-CAPLCD: жгут и посадка (R149, R150, R151)](../35_compute_display_fit/00_nachalo.md) · 0.3 КБ
+- [1. Что подтверждено, чего нет](../35_compute_display_fit/01_1-chto-podtverzhdeno-chego-net.md) · 1.2 КБ
+- [2. Жгут PW / R2 → H5](../35_compute_display_fit/02_2-zhgut-pw-r2-h5.md) · 1.9 КБ
+- [2а. Колодка H5 и жгут по контактам (ПК, 16.11.2026)](../35_compute_display_fit/03_2a-kolodka-h5-i-zhgut-po.md) · 3.1 КБ
+- [3. Посадка H5 в корпусе (`model3d/fit/fit_model.py`)](../35_compute_display_fit/04_3-posadka-h5-v-korpuse-model3d.md) · 6.6 КБ
+- [4. Экран 10.1EP-CAPLCD и окно панели v7](../35_compute_display_fit/05_4-ekran-10-1ep-caplcd-i.md) · 2.0 КБ
+- [5. Что дальше](../35_compute_display_fit/06_5-chto-dalshe.md) · 0.6 КБ
+- [3б. H5 на месте отсека аккумулятора (16.11.2026, ПК; идея пользователя)](../35_compute_display_fit/07_3b-h5-na-meste-otseka-akkumulyatora.md) · 2.1 КБ
+- [3в. Экран EP повёрнут на 180° (16.11.2026, решение пользователя)](../35_compute_display_fit/08_3v-ekran-ep-povernut-na-180.md) · 2.6 КБ
+
+## 36. Бюджет питания
+Бюджет мощности с H5 и EP-CAPLCD: 51 Вт пик без огней, огни до 38 Вт, что дают PD 65/100 Вт и адаптер; питание H5 15 В (R151)
+- [Бюджет питания](../36_power_budget.md) · 5.3 КБ
+
+## 43. Аккумуляторы, BMS и зарядка
+PW rev 0.8: два пакета 4S с BMS, два зарядника BQ25798 от EXT, NTC, вентилятор 12 В PWM; пакеты на заказ; сравнение с IP2368 (R183, выбор инженера P109)
+- [Аккумуляторы, BMS и зарядка](../43_battery_power.md) · 25.4 КБ

@@ -1,0 +1,61 @@
+<!-- сгенерировано tools/build_hubs.py; не править руками (правки в docs/ru/README.md и в самих документах) -->
+# Хаб: Корпус, форма, размеры, посадка деталей, внешний вид
+
+Решения темы: [`decisions/04_enclosure.md`](../decisions/04_enclosure.md) (11.6 КБ, читать, если задача касается решений темы).
+
+## 13. Корпус и компоновка
+Габариты конкурентов (1), нормы (2),  задняя панель (3) — действует , Kickstarter (5). Макет v3 (раздел 4) устарел
+- [Штука Дрюка: корпус, компоновка и макет v3](../13_enclosure_layout_research/00_nachalo.md) · 0.6 КБ
+- [1. Габариты конкурентов](../13_enclosure_layout_research/01_1-gabarity-konkurentov.md) · 1.7 КБ
+- [2. Нормы эргономики, которые применимы](../13_enclosure_layout_research/02_2-normy-ergonomiki-kotorye-primenimy.md) · 2.3 КБ
+- [3. Разъёмы: где что](../13_enclosure_layout_research/03_3-razemy-gde-chto.md) · 2.1 КБ
+- [3.1 Что берём у AudioFuse (решено: задняя панель разграничена по типу и направлению, «идея](../13_enclosure_layout_research/04_3-1-chto-berem-u-audiofuse.md) · 2.1 КБ
+- [3.2 Правила против ошибочного подключения (вывод с опорой на источники)](../13_enclosure_layout_research/05_3-2-pravila-protiv-oshibochnogo-podklyucheniya.md) · 4.2 КБ
+- [3.3 Состав задней панели (вид сзади, слева направо)](../13_enclosure_layout_research/06_3-3-sostav-zadney-paneli-vid.md) · 1.0 КБ
+- [3.4 Помещается ли (оценка)](../13_enclosure_layout_research/07_3-4-pomeschaetsya-li-ocenka.md) · 0.6 КБ
+- [3.5 Задняя панель после решений R32–R37 (31.10.2026, оценка)](../13_enclosure_layout_research/08_3-5-zadnyaya-panel-posle-resheniy.md) · 1.8 КБ
+- [3.6 Проверка объёма: помещаются ли гнёзда и плата (31.10.2026)](../13_enclosure_layout_research/09_3-6-proverka-obema-pomeschayutsya-li.md) · 1.9 КБ
+- [4. Макет v3](../13_enclosure_layout_research/10_4-maket-v3.md) · 6.7 КБ
+- [5. Если когда-нибудь Kickstarter: что решать уже сейчас](../13_enclosure_layout_research/11_5-esli-kogda-nibud-kickstarter-chto.md) · 2.8 КБ
+- [Открытые вопросы](../13_enclosure_layout_research/12_otkrytye-voprosy.md) · 0.4 КБ
+
+## 32. Реальные детали в корпусе
+Кроссфейдер, колесо, экран, USB-A по даташитам; P90–P96
+- [Штука Дрюка: проверка корпуса на реальных деталях](../32_fit_real_parts/00_nachalo.md) · 0.9 КБ
+- [0. Коротко](../32_fit_real_parts/01_0-korotko.md) · 1.3 КБ
+- [1. Кроссфейдер](../32_fit_real_parts/02_1-krossfeyder.md) · 2.0 КБ
+- [2. Колесо навигации (R74: магнитный датчик AS5600)](../32_fit_real_parts/03_2-koleso-navigacii-r74-magnitnyy-datchik.md) · 2.0 КБ
+- [3. Экран: настоящая 3D-модель](../32_fit_real_parts/04_3-ekran-nastoyaschaya-3d-model.md) · 3.4 КБ
+- [4. USB-A в кармане System (R81)](../32_fit_real_parts/05_4-usb-a-v-karmane-system.md) · 4.1 КБ
+- [5. Таблица итогов](../32_fit_real_parts/06_5-tablica-itogov.md) · 2.0 КБ
+- [6. Что осталось прикидкой](../32_fit_real_parts/07_6-chto-ostalos-prikidkoy.md) · 1.5 КБ
+- [7. Предложения и вопросы](../32_fit_real_parts/08_7-predlozheniya-i-voprosy.md) · 1.7 КБ
+- [Открытые вопросы](../32_fit_real_parts/09_otkrytye-voprosy.md) · 1.7 КБ
+
+## 39. Низкий корпус: принятая компоновка и план работ
+История низкого корпуса (устарел по R174–R180; главный источник — артефакт v8 и решения R174–R180).  Компоновка (дека 22 мм, губа, ступенька, H5 сзади справа с 
+- [Низкий корпус: принятая компоновка и план работ](../39_low_case_plan.md) · 19.7 КБ
+
+## 41. Дизайнерский разбор корпуса
+Почему «принтер и будка»; аналоги (размеры, эргономика, ссылки); откуда высота зада и идеи перестановки; прогон линий пользователя в модели (H5 в заднем углу, с
+- [10. Аналоги: размеры и форма (поиск 17.11.2026)](../41_design_review/08_10-analogi-razmery-i-forma-poisk.md) · 4.9 КБ
+- [11. Эргономика: что нашлось и что из этого следует](../41_design_review/09_11-ergonomika-chto-nashlos-i-chto.md) · 3.6 КБ
+- [19. «Зелёная» линия: дека 30, без ступеньки, глубина 500 (17.11.2026)](../41_design_review/20_19-zelenaya-liniya-deka-30-bez.md) · 5.6 КБ
+- [22. Вентилятор на правой стенке, H5 вплотную к задней (идея пользователя, проверено главно](../41_design_review/23_22-ventilyator-na-pravoy-stenke-h5.md) · 2.3 КБ
+- [23. Набросок пользователя на v8: макушку ниже, зад назад, экран краем к коробке задних гнё](../41_design_review/24_23-nabrosok-polzovatelya-na-v8-makushku.md) · 4.5 КБ
+- [24. Задняя стенка v5 и щели в люке (18.11.2026)](../41_design_review/25_24-zadnyaya-stenka-v5-i-scheli.md) · 1.0 КБ
+- [24.1 Раскладка v5 (v4 отклонена пользователем)](../41_design_review/26_24-1-raskladka-v5-v4-otklonena.md) · 3.5 КБ
+- [24.2 v5.2: единая сетка (пользователь: «криво, косо, некрасиво»)](../41_design_review/27_24-2-v5-2-edinaya-setka.md) · 2.0 КБ
+- [24.4 v6: по карте свободных зон главного инженера (18.11.2026)](../41_design_review/28_24-4-v6-po-karte-svobodnyh.md) · 3.2 КБ
+- [24.5 Вентилятор решён (инженер, 18.11.2026): один 80 × 80 × 25, прорезь, ножки](../41_design_review/29_24-5-ventilyator-reshen-inzhener-18.md) · 2.1 КБ
+- [24.3 Вентиляция: только щели в люке под аккумуляторами (R185)](../41_design_review/30_24-3-ventilyaciya-tolko-scheli-v.md) · 0.7 КБ
+- [25. Источники](../41_design_review/31_25-istochniki.md) · 0.7 КБ
+- [26. Что не сделано](../41_design_review/32_26-chto-ne-sdelano.md) · 0.9 КБ
+
+## 42. Тепловой расчёт текущей версии корпуса (v8) (оценка)
+Тепло внутри 35 / 59 Вт, расход воздуха, вентилятор 60 мм, аккумуляторы под пэдами при 41–50 °C, что нужно измерить
+- [Тепловой расчёт текущей версии корпуса (v8) (оценка)](../42_thermal_green2.md) · 11.1 КБ
+
+## 44. Щелчки главного колеса
+Выбор механизма (R188, P110): 24 щелчка, внутренние зубья и две собачки, расчёт момента 7–9 мН·м, размеры в стеке по fit_model.py, нажатие R134, детали
+- [Щелчки главного колеса](../44_wheel_detents.md) · 7.4 КБ

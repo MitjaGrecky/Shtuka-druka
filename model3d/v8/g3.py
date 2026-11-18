@@ -24,6 +24,11 @@ def vents_and_feet(m):
             for r in range(6):
                 y0 = 20.0 + r * 34.0
                 out.append(m.box(f"Hatch vent slot {k + 1}.{int(cx)}.{r}", "vents", cx - 2, cx + 2, y0, y0 + 40, -0.4, 0.0, color="grey", est=True, check=False))
+    # R187: fan exhaust = one flat slot 60 x 3 in the right wall opposite the fan; 4 square feet 20 x 20 x 3
+    out.append(m.box("Fan exhaust slot (right wall)", "vents", 512, 515, 400.5, 460.5, 38.5, 41.5, color="grey", est=True, check=False))
+    for fx in (25.0, 470.0):
+        for fy in (25.0, 455.0):
+            out.append(m.box("Foot 20 x 20 x 3", "vents", fx, fx + 20, fy, fy + 20, -3.0, 0.0, color="grey", est=True, check=False))
     return out
 
 

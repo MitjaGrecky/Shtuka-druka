@@ -28,12 +28,15 @@ for i in range(4):
     J.append(("mini", cv[i], 70, f"CV In {i + 1}", 0))
     J.append(("mini", cv[i], 48, f"CV Out {i + 1}", 1))
     J.append(("mini", cv[i], 26, f"CV Out {i + 5}", 1))
-J += [("trs", 292, 88, "Main L", 1), ("trs", 322, 88, "Main R", 1), ("trs", 292, 57, "Aux L", 1), ("trs", 322, 57, "Aux R", 1),
-      ("rca", 292, 26, "RCA L", 1), ("rca", 322, 26, "RCA R", 1)]
-J += [("xlr", 370, 88, "Mic/Line 1", 0), ("xlr", 400, 88, "Mic/Line 2", 0), ("trs", 370, 35, "Hi-Z 1", 0), ("trs", 400, 35, "Hi-Z 2", 0),
-      ("rca", 428, 95, "Phono L", 0), ("rca", 446, 95, "Phono R", 0), ("post", 468, 95, "GND", 0), ("switch", 490, 95, "Phono/Line", 0)]
+# Audio: one grid for both blocks (18.11.2026, user: "Аудиовходы вообще не по сетке стоят"): rows z 90 / 60 / 31;
+# Audio Out columns r 292 / 322; Audio In: XLR column pair r 372 / 404, then four columns r 436 / 458 / 480 / 502 (pitch 22)
+J += [("trs", 292, 90, "Main L", 1), ("trs", 322, 90, "Main R", 1), ("trs", 292, 60, "Aux L", 1), ("trs", 322, 60, "Aux R", 1),
+      ("rca", 292, 31, "RCA L", 1), ("rca", 322, 31, "RCA R", 1)]
+AC = [436, 458, 480, 502]
+J += [("xlr", 372, 90, "Mic/Line 1", 0), ("xlr", 404, 90, "Mic/Line 2", 0), ("trs", 372, 60, "Hi-Z 1", 0), ("trs", 404, 60, "Hi-Z 2", 0),
+      ("rca", AC[0], 90, "Phono L", 0), ("rca", AC[1], 90, "Phono R", 0), ("post", AC[2], 90, "GND", 0), ("switch", AC[3], 90, "Ph/Line", 0)]
 for i in range(8):
-    J.append(("trs", 428 + (i % 4) * 22, 62 if i < 4 else 31, f"Line {i + 1}", 0))
+    J.append(("trs", AC[i % 4], 60 if i < 4 else 31, f"Line {i + 1}", 0))
 
 FRAMES = [("Power", 4, 25, 40, 113), ("USB/LAN", 28, 53, 54, 113), ("MIDI", 57, 177, 40, 113), ("Sync", 178, 263, 84, 113),
           ("CV", 186, 258, 14, 82), ("Audio Out", 273, 342, 14, 112), ("Audio In", 352, 510, 14, 112)]

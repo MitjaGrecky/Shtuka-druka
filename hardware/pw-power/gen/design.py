@@ -12,6 +12,8 @@ Rev 0.2 (14.11.2026, cloud, task #23): checked against the datasheets - TPS25730
 +47 uF on PPHV; LM5176 RMODE to AGND (was to VCC = no hiccup); TPS7A33 thermal pad to GND (was IN) and 10 nF FB-OUT;
 LM5156H DITHOFF to VCC (dithering off) and a 100 V FET; boost 48.5 V and phantom 46.1 V (TPS7A4101 input max 50 V).
 Rev 0.3 (14.11.2026, PC, R146): INA226 input power monitor on a 5 mOhm shunt after the On/Off switch, I2C cable to P2.
+Rev 0.9 (18.11.2026, engineer's audit): charge enable only with the switch on and P2 alive (CE pulled up, two series 2N7002: gate 1 = CHG_EN from P2,
+gate 2 = +3V3 behind the switch); hardware 45 C cut-off by the BQ25798 itself (TS divider RT1 only, T5 = 45 C). Doc 43.
 Rev 0.8 (18.11.2026, R183): two 4S battery inputs, each with its own BQ25798 charger (charger-only, system stays on the
 ideal-diode bus), NTC per pack, I2C mux, 12 V fan stage + PWM/tach to P2. Doc 43.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
@@ -26,7 +28,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "0.8"
+REV = "0.9"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 4S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 12-24 V -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -116,9 +118,13 @@ def parts():
         R("17.4k", f"{c}_PROG", "GND", Note="PROG: 4S, 1.5 MHz (table 7-1; 27.0k would be 750 kHz with a 2.2 uH inductor)")
         R("47k", f"{c}_REGN", f"{c}_ILIM", Note="ILIM_HIZ = 1 V + 0.8 ohm x I: REGN 5 V x 100/147 = 3.4 V = 3.0 A ceiling (lower of pin and IINDPM)")
         R("100k", f"{c}_ILIM", "GND")
-        R("5.23k", f"{c}_REGN", f"{c}_TS", Note="TS divider RT1 5.24k / RT2 30.31k for a 103AT pack NTC (T1 0 C, T3 45 C default, T5 60 C)")
-        R("30.1k", f"{c}_TS", "GND", Note="RT2 (30.31k in the datasheet; nearest E96)")
-        R("10k", f"{c}_CE", "GND", Note="CE low = charging allowed (also needs EN_CHG): must not float")
+        R("9.31k", f"{c}_REGN", f"{c}_TS", Note="TS: RT1 only (no RT2), 103AT pack NTC to GND: T5 comparator (34.2 % of REGN, charge suspended below it) trips at 45 C "
+          "(44.4-45.7 C by the tolerance 33.7-34.7 %, B-model of the NTC), resumes at 43 C (35.5 %); cold cut-off T1 (73.3 %) about 2.5 C; no host needed; doc 43")
+        R("100k", f"{c}_REGN", f"{c}_CE", Note="CE high = charging off by default (the charger's own REGN)")
+        add(ref("Q"), "Transistor_FET:2N7002", "2N7002", "Package_TO_SOT_SMD:SOT-23", {"1": "CHG_EN", "2": f"{c}_CEM", "3": f"{c}_CE"}, LCSC="C8545",
+            Note="CE pull-down 1/2: opens only while P2 holds CHG_EN high")
+        add(ref("Q"), "Transistor_FET:2N7002", "2N7002", "Package_TO_SOT_SMD:SOT-23", {"1": "+3V3", "2": "GND", "3": f"{c}_CEM"}, LCSC="C8545",
+            Note="CE pull-down 2/2: opens only while +3V3 exists = the On/Off switch is on (the +3V3 comes from +5V from BUS behind the switch)")
         R("2.2k", f"{c}_REGN", f"{c}_LEDA", Note="STAT LED: on = charging, blink = fault")
         add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": f"{c}_LEDA", "1": f"{c}_STAT"})
         R("10k", f"{c}_SCL", "+3V3", Note="I2C pull-up (downstream of the mux channel)")
@@ -203,9 +209,9 @@ def parts():
     C("1u", "+5V", fp=C0603)
     C("1u", "+3V3", fp=C0603)
     add(ref("J"), "Connector_Generic:Conn_01x08", "Power telemetry to P2", PH.format(n=8),
-        {"1": "PM_SDA", "2": "PM_SCL", "3": "PM_ALERT", "4": "CHG_INT", "5": "FAN_PWM_IN", "6": "FAN_TACH_OUT", "7": "GND", "8": "GND"},
+        {"1": "PM_SDA", "2": "PM_SCL", "3": "PM_ALERT", "4": "CHG_INT", "5": "FAN_PWM_IN", "6": "FAN_TACH_OUT", "7": "GND", "8": "CHG_EN"},
         LCSC="C157974", Note="to the panel hub P2 (R146, R183): I2C (INA226 0x40, mux 0x70 -> chargers 0x6B x 2), ALERT = over-limit, CHG_INT = "
-        "charger interrupt (wired-AND), fan PWM in (3.3 V, 25 kHz) and tach out; pull-ups of SDA/SCL to 3.3 V on P2")
+        "charger interrupt (wired-AND), fan PWM in (3.3 V, 25 kHz), tach out and CHG_EN (3.3 V from P2: charging allowed; low or open = no charge); pull-ups of SDA/SCL to 3.3 V on P2")
     # two BQ25798 have the same I2C address 0x6B: TCA9546A mux (0x70), channel 0 = charger 1, channel 1 = charger 2
     add(ref("U"), "Interface_Expansion:TCA9546APW", "TCA9546APW", "Package_SO:TSSOP-16_4.4x5mm_P0.65mm",
         {"1": "GND", "2": "GND", "3": "MUX_RST", "4": "CH1_SDA", "5": "CH1_SCL", "6": "CH2_SDA", "7": "CH2_SCL", "8": "GND",
@@ -214,6 +220,7 @@ def parts():
     R("10k", "MUX_RST", "+3V3")
     C("100n", "+3V3", fp=C0603, Note="mux VCC")
     R("10k", "CHG_INT", "+3V3", Note="pull-up of the wired-AND charger INT")
+    R("100k", "CHG_EN", "GND", Note="open or dead P2 = charging disabled")
     CP("100u 35V", "BUS", fp=CP10, Note="bulk")
     for _ in range(2):
         C("10u 50V", "BUS", fp=C1210)

@@ -11,7 +11,6 @@
 | [03_chto-pokazalo-issledovanie-po-temam](06_ergonomics_research/03_chto-pokazalo-issledovanie-po-temam.md) | Что показало исследование (по темам) | 7.0 |
 | [04_klassifikaciya-vyvod](06_ergonomics_research/04_klassifikaciya-vyvod.md) | Классификация (вывод) | 1.7 |
 | [05_chto-eto-znachit-dlya-improvizacii-iz](06_ergonomics_research/05_chto-eto-znachit-dlya-improvizacii-iz.md) | Что это значит для «импровизации из всего вокруг» | 0.9 |
-| [06_otkrytye-voprosy](06_ergonomics_research/06_otkrytye-voprosy.md) | Открытые вопросы | 0.5 |
 | [07_istochniki](06_ergonomics_research/07_istochniki.md) | Источники | 2.1 |
 
 Проверка полноты: `python tools/split_docs.py --verify docs/ru/06_ergonomics_research.md`.

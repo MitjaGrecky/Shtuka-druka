@@ -15,7 +15,6 @@
 - [Что показало исследование (по темам)](../06_ergonomics_research/03_chto-pokazalo-issledovanie-po-temam.md) · 7.0 КБ
 - [Классификация (вывод)](../06_ergonomics_research/04_klassifikaciya-vyvod.md) · 1.7 КБ
 - [Что это значит для «импровизации из всего вокруг»](../06_ergonomics_research/05_chto-eto-znachit-dlya-improvizacii-iz.md) · 0.9 КБ
-- [Открытые вопросы](../06_ergonomics_research/06_otkrytye-voprosy.md) · 0.5 КБ
 - [Источники](../06_ergonomics_research/07_istochniki.md) · 2.1 КБ
 
 ## 16. Эффекты и открытый проект

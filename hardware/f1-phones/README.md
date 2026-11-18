@@ -22,8 +22,8 @@ OPA1622 (C2876559) per jack. Research: `docs/ru/21_audio_board.md`, `docs/ru/34_
 | J | From | Pins |
 |---|---|---|
 | from A1, 2x6 2.54 mm | A1 (to design) | 1 HP1 L+, 2 HP1 L-, 3 GND, 4 HP1 R+, 5 HP1 R-, 6 GND, 7 HP2 L+, 8 HP2 L-, 9 GND, 10 HP2 R+, 11 HP2 R-, 12 GND (twisted pairs) |
-| from PW, JST PH 4 | PW rev 0.5 "to F1" | +12V, GND, -12V, +5V (relay coils) |
-| from R1 (mute), JST PH 3 | R1 rev 0.4 "to F1 (mute)" | MUTE, R2_OK, GND |
+| from PW, JST PH 4 | PW "to F1" | +12V, GND, -12V, +5V (relay coils) |
+| from R1 (mute), JST PH 3 | R1 "to F1 (mute)" | MUTE, R2_OK, GND |
 
 ## To check
 

@@ -15,16 +15,19 @@ ws = importlib.util.module_from_spec(spec); spec.loader.exec_module(ws)
 
 
 def rework_right(m, P0, h5c, y1):
-    """Fan on the RIGHT wall (as R163), H5 against the rear wall and 15 mm left of the right wall (x 376-496), R2 low arm to 373."""
+    """Fan on the RIGHT wall (as R163), H5 against the rear wall and off the fan by 1 mm. Fan size/thickness from FAN_SPEC."""
+    fs, ft = FAN_SPEC["s"], FAN_SPEC["T"]
+    h5x1 = 512 - ft - 1.0
+    h5x0 = h5x1 - 120.0
     keep = [p for p in P0 if p.name not in ("R2 control rear board, low arm", "Rear jacks", "Rear jacks (right)")]
     y0 = 413.4 + m.RS
     jt = m.REAR_JACK_TOP
     h0 = h5c - 60
     # R2 rev 0.7 (R178): no low arm, the tall part ends at R2_TALL_X1 (359)
     keep.append(m.box("Rear jacks (left)", "rear", 5, 359, y0 + 1.6, y1, 8, jt, color="metal", est=True))
-    keep.append(m.box("Rear panel-mount jacks over the H5", "rear", 376, 510, y1 - 25, y1, 70, min(jt, 112), color="metal", est=True))
-    keep.append(m.box("H5 harness room", "rear", 376, 496, h0 - 45, h0 - 25, 3.5, 26, color="plastic", est=True))
-    keep.append(m.box("Fan 60 x 60 x 15 (right wall)", "rear", 497, 512, h5c - 30, h5c + 30, 6, 66, color="plastic"))
+    keep.append(m.box("Rear panel-mount jacks over the H5", "rear", h5x0, 510, y1 - 25, y1, 70, min(jt, 112), color="metal", est=True))
+    keep.append(m.box("H5 harness room", "rear", h5x0, h5x1, h0 - 45, h0 - 25, 3.5, 26, color="plastic", est=True))
+    keep.append(m.box(f"Fan {fs:g} x {fs:g} x {ft:g} (right wall)", "rear", 512 - ft, 512, h5c + FAN_SPEC["dy"] - fs / 2, h5c + FAN_SPEC["dy"] + fs / 2, FAN_SPEC["z0"], FAN_SPEC["z0"] + fs, color="plastic"))
     return keep
 
 
@@ -57,6 +60,7 @@ def rw_factory(jacks, fan="rear"):
 
 _H = {}
 FAN_H5C = {}
+FAN_SPEC = {"s": 60.0, "T": 15.0, "dy": 0.0, "z0": 6.0}      # fan on the right wall: size (square, mm) and thickness; the H5 stands 1 mm off the fan
 def HARNESS(m):
     return _H["h"]
 
@@ -134,8 +138,8 @@ def main():
                            [["Гнёзда наушников", "6,35 мм под P1"], ["Аккумулятор", "под пэдами"], ["H5", "у задней стенки, порты вперёд"], ["Вентилятор", "на правой стенке"], ["Штекеры экрана", "угловые 90° (допущение)"]])
     import g3
     m, P, _c, _t = g3.build(30, 0, 117.0, 20, 0)
-    V["g3"] = variant_data(m, P, "Зелёная-2 сжатая (500)", "Пересборка по вашему наброску: дека 30; два аккумулятора под P2 (отсеки по 106 × 220 × 11 мм, зазор 1,4 мм до деталей P2, 1 мм по краям); макушка 117 мм вплотную к плате R2 (её верх 113 + обшивка 3 + зазор 1); скат 33,1° кончается на 20 мм раньше передней кромки коробки гнёзд; задник не сдвигается (глубина 500); вентилятор на правой стенке, H5 у задней стенки; угловые штекеры у экрана (принято). Перебор 1 600 вариантов: ниже 117 мм не проходит, глубже 500 не нужно. Все зазоры не меньше 1 мм.",
-                           [["Гнёзда наушников", "6,35 мм под P1"], ["Аккумуляторы", "2 отсека 106 × 220 × 11, ≈ 148 Вт·ч (оценка)"], ["H5", "у задней стенки, порты вперёд"], ["Вентилятор", "на правой стенке"], ["Штекеры экрана", "угловые 90° (принято)"], ["Зазоры", "все ≥ 1 мм"]])
+    V["g3"] = variant_data(m, P, "Зелёная-2 сжатая (500)", "Пересборка по вашему наброску: дека 30; два аккумулятора под P2 (отсеки по 106 × 220 × 11 мм, зазор 1,4 мм до деталей P2, 1 мм по краям); макушка 117 мм вплотную к плате R2 (её верх 113 + обшивка 3 + зазор 1); скат 33,1° кончается на 20 мм раньше передней кромки коробки гнёзд; задник не сдвигается (глубина 500); вентилятор 80 × 80 × 25 мм на правой стенке (R182), H5 у задней стенки; щели в полу под обоими аккумуляторами (24 щели 4 × 40 мм) и ножки 5 мм; угловые штекеры у экрана (принято). Перебор 1 600 вариантов: ниже 117 мм не проходит, глубже 500 не нужно. Все зазоры не меньше 1 мм.",
+                           [["Гнёзда наушников", "6,35 мм под P1"], ["Аккумуляторы", "2 отсека 106 × 220 × 11, ≈ 148 Вт·ч (оценка)"], ["H5", "у задней стенки, порты вперёд"], ["Вентилятор", "80 × 80 × 25 на правой стенке"], ["Вентиляция", "24 щели 4 × 40 мм в полу + ножки 5 мм"], ["Штекеры экрана", "угловые 90° (принято)"], ["Зазоры", "все ≥ 1 мм"]])
     V = {"g3": V["g3"]}   # 17.11.2026 (user): only the main line stays; "was" is the hidden reference of the red contour
     tpl = open(os.path.join(HERE, "template.html"), encoding="utf-8").read()
     # data for the solid ("glukhoy") mode, the same sources as the v7 page: layout_v7.json elements and the element descriptions (INFO)

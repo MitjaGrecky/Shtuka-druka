@@ -57,6 +57,8 @@ REAR_JACK_TOP_R = float(os.environ.get("REAR_JACK_TOP_R", str(REAR_JACK_TOP)))  
 R2_TALL_X1 = float(os.environ.get("R2_TALL_X1", "359.0"))            # right end of the tall part of R2 (model x)
 A1_X0 = float(os.environ.get("A1_X0", "20"))               # A1 left edge (study: A1 moved under the grid)
 A1_Y0 = float(os.environ.get("A1_Y0", str(305 + RS)))              # A1 front edge
+W3_S1 = float(os.environ.get("W3_S1", "138.0"))      # end of W3 along the slope, s from the fold; the real board (hardware/w3-system) ends at s 60.2, before the pocket; 138 = the old slab over the whole slope
+W3_X1 = float(os.environ.get("W3_X1", "505.0"))      # right end of W3 (model x); 505 = 92 mm wide board; shortened to make room for a bigger fan on the right wall (R182)
 PW_TOP = float(os.environ.get("PW_TOP", "24.0"))            # top of PW envelope: 10.5 mm electrolytics below + board + connectors above (checked 17.11.2026)
 PW_X0 = float(os.environ.get("PW_X0", "0"))              # H5REAR: left edge of PW (0 = old default 285)
 H5T_X = float(os.environ.get("H5T_X", "120.0"))             # H5TILT: left edge x of the H5 lying along the slope
@@ -208,12 +210,13 @@ def slope_boards_and_pocket(usb):
     out = []
     sp = (POCKET[2] + POCKET[3]) / 2
     out += w1_parts()
-    for nm, x0, x1 in (("W2 Meters", 355, 390), ("W3 System", 413, 505)):
+    for nm, x0, x1 in (("W2 Meters", 355, 390), ("W3 System", 413, W3_X1)):
         if nm.startswith("W3") and USB_VARIANTS[usb][0] == "sub":
             cut = (USB_X - 8.5, USB_X + 8.5, sp - 4.5, sp + 4.5)            # receptacle passes through W3
             keep = (USB_X - 16, USB_X + 16, sp - 11, sp + 11)               # no W3 parts over the pocket board
-            out += slope_frame(nm, "slope", x0, x1, 12, 138, WZ0, WZ1, cut, color="pcb")
-            out += slope_frame(nm + " parts below", "slope", x0 + 2, x1 - 2, 14, 136, WZ0 - 4, WZ0, keep,
+            s1 = W3_S1 if nm.startswith("W3") else 138
+            out += slope_frame(nm, "slope", x0, x1, 12, s1, WZ0, WZ1, cut, color="pcb")
+            out += slope_frame(nm + " parts below", "slope", x0 + 2, x1 - 2, 14, s1 - 2, WZ0 - 4, WZ0, keep,
                                color="parts", est=True)
         else:
             out.append(slope_box(nm, "slope", x0, x1, 12, 138, WZ0, WZ1, color="pcb"))

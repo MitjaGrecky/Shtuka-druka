@@ -42,7 +42,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 
 <div class="sub" style="margin:10px 0 4px">Корпус</div>
 <div class="views" id="shellmode" role="group" aria-label="Корпус"><button data-m="0" class="on">Прозрачный (контуры)</button><button data-m="1">Глухой</button></div>
-<p class="sub" style="margin:6px 0 0">Глухой: графитовый корпус с подписями, огнями, экраном и задней стенкой, как в v7; нажмите на орган — его описание.</p>
+<p class="sub" style="margin:6px 0 0">Глухой: корпус с подписями, огнями, экраном и задней стенкой, как в v7; нажмите на орган — его описание. Графит и скругления 4 мм — предложение дизайнера, не решение.</p>
 <p class="vnote" id="vnote"></p>
 
 <h2>Размеры</h2>
@@ -67,7 +67,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 <script>
 const VARIANTS=__VARIANTS__;
 const LAYOUT=/*LAYOUT*/;const INFO7=/*INFO*/;
-const GROUPS={shell:['Обшивка','#9aa3aa'],top:['Пэды и ручки','#d9dde3'],panel:['Платы панели P1–P4','#3f8f5a'],m1:['M1: ручки экрана','#5aa879'],front:['Наушники F1','#f0997b'],slope:['Платы на скате W1–W3','#7fb28f'],screen:['Экран','#78aac8'],itx:['Компьютер H5','#afa9ec'],rear:['Задние платы, A1, PW, аккумулятор','#ef9f27'],standoff:['Стойки','#a7adb5'],clear:['Зоны под жгуты (оценка)','#c9a3e0']};
+const GROUPS={shell:['Обшивка','#9aa3aa'],top:['Пэды и ручки','#d9dde3'],panel:['Платы панели P1–P4','#3f8f5a'],m1:['M1: ручки экрана','#5aa879'],front:['Наушники F1','#f0997b'],slope:['Платы на скате W1–W3','#7fb28f'],screen:['Экран','#78aac8'],itx:['Компьютер H5','#afa9ec'],rear:['Задние платы, A1, PW, аккумулятор','#ef9f27'],standoff:['Стойки','#a7adb5'],clear:['Зоны под жгуты (оценка)','#c9a3e0'],vents:['Вентиляция: щели в полу, ножки','#6b7078']};
 const BTN=0x3c4148;const COLORS={pcb:0x3f8f5a,parts:0x9aa5af,metal:0xa7adb5,plastic:0xd9dde3,battery:0xef9f27,glass:0x78aac8,lcd:0x323c4b,chip:0x2a2a2a,knob:0x26292e,led:0xf0dc78,shell:0xcfd4d8,grey:0xb4b4b4};
 const stage=document.getElementById('stage'),hint=document.getElementById('hint');
 const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));stage.prepend(renderer.domElement);renderer.localClippingEnabled=true;renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
@@ -146,7 +146,7 @@ function build(key){
  document.getElementById('vnote').textContent=V.note;
  const d=document.getElementById('dims');d.innerHTML='';for(const[a,b]of V.dims){d.insertAdjacentHTML('beforeend','<span>'+a+'</span><span>'+b+'</span>')}
  [...document.getElementById('vars').children].forEach(b=>b.classList.toggle('on',b.dataset.k===key));
- const sg=profGeo(V.profile,515,4,4);solidMesh=new THREE.Mesh(sg,new THREE.MeshStandardMaterial({color:0x24272b,metalness:.35,roughness:.55,side:THREE.DoubleSide}));solidMesh.userData.solidInfo={name:'Корпус',group:'Обшивка',desc:'Графитовый корпус: дека, скат с экраном, задняя стенка с гнёздами. Скругления 4 мм.'};scene.add(solidMesh);
+ const sg=profGeo(V.profile,515,4,4);solidMesh=new THREE.Mesh(sg,new THREE.MeshStandardMaterial({color:0x24272b,metalness:.35,roughness:.55,side:THREE.DoubleSide}));solidMesh.userData.solidInfo={name:'Корпус',group:'Обшивка',desc:'Корпус: дека, скат с экраном, задняя стенка с гнёздами. Графит и скругления 4 мм — предложение дизайнера, не решение.'};scene.add(solidMesh);
  if(solidOn)buildSolid(V);
  buildGhost();apply();
 }
@@ -349,11 +349,11 @@ function setSolid(on){solidOn=on;[...smb.children].forEach(b=>b.classList.toggle
 [...smb.children].forEach(b=>b.addEventListener('click',()=>setSolid(b.dataset.m==='1')));
 fontsReady.then(()=>{if(solidOn&&cur){clearSolid();buildSolid(VARIANTS[cur]);apply()}});
 document.getElementById('cutx').addEventListener('input',e=>{plane.constant=+e.target.value;document.getElementById('cutv').textContent='x = '+e.target.value;apply()});
-const VIEWS={'Спереди слева':[-520,380,520,{}],'Сбоку':[1100,70,-262,{ortho:1}],'Сверху':[257,1150,-262,{ortho:2}],'Сзади':[330,330,-1000,{}],'Внутри':[-480,520,420,{shell:0,top:0}],'Снаружи':[-520,380,520,{shell:1,top:1,standoff:0}]};
+const VIEWS={'Спереди слева':[-520,380,520,{}],'Сбоку':[1100,70,-262,{ortho:1}],'Сверху':[257,1150,-262,{ortho:2}],'Сзади':[330,330,-1000,{}],'Снизу':[257,-900,-262,{ortho:3}],'Внутри':[-480,520,420,{shell:0,top:0}],'Снаружи':[-520,380,520,{shell:1,top:1,standoff:0}]};
 const vwb=document.getElementById('views');let curV=null;
 function setView(n){curV=n;[...vwb.children].forEach(b=>b.classList.toggle('on',b.textContent===n))}
 for(const[n,[x,y,z,g]]of Object.entries(VIEWS)){const b=document.createElement('button');b.textContent=n;b.addEventListener('click',()=>{const o=g.ortho||0;activeCam=o?ocam:camera;controls.enabled=!o;octl.enabled=!!o;orthoHalf=o===1?215:330;
-  if(o){ocam.position.set(x,y,z);ocam.up.set(o===2?0:0,o===2?0:1,o===2?-1:0);octl.target.set(257,o===1?70:40,-262);ocam.zoom=1;ocam.lookAt(octl.target);octl.update();resize()}else{camera.position.set(x,y,z);controls.target.copy(C);controls.update()}
+  if(o){ocam.position.set(x,y,z);ocam.up.set(0,(o>=2?0:1),(o>=2?-1:0));octl.target.set(257,o===1?70:40,-262);ocam.zoom=1;ocam.lookAt(octl.target);octl.update();resize()}else{camera.position.set(x,y,z);controls.target.copy(C);controls.update()}
  for(const k of Object.keys(g)){if(k!=='ortho')vis[k]=!!g[k]}
  gbox.querySelectorAll('label').forEach((l,i)=>{const k=Object.keys(GROUPS).filter(q=>byGroup[q])[i];l.firstChild.checked=vis[k]});apply();setView(n)});vwb.appendChild(b)}
 camera.position.set(-520,420,560);

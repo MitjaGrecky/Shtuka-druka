@@ -10,7 +10,7 @@ cs = importlib.util.module_from_spec(spec); spec.loader.exec_module(cs)
 import os
 os.environ["W3_X1"] = "505"
 os.environ["W3_S1"] = "60.2"       # the real W3 (hardware/w3-system) ends at s 60.2 before the pocket; the old model slab over the whole slope was an overestimate
-B.FAN_SPEC.update(s=80.0, T=25.0, dy=-6.0, z0=3.5)   # R182: 80 x 80 x 25 fan on the right wall
+B.FAN_SPEC.update(s=80.0, T=25.0, dy=-6.0, z0=3.5, gap=5.0)   # R182: 80 x 80 x 25 fan on the right wall
 PACKS = "113,219,6,226,3;225,331,6,226,3"      # two packs under P2 (x0,x1,y0,y1,shelf z0); P2 tall bottom parts start at y 227.8
 LIPO = 11.0
 
@@ -33,7 +33,7 @@ def build(deck, E, crest, s_off, shift, packs=PACKS, lipo=LIPO, pwx=245, jacks="
     h5y = D - 3 - 60 - 0.5
     B.FAN_H5C["c"] = h5y
     e = ws.env(deck, deck, 0, rl - 101, 6, packs, h5y)
-    e.update(FRONT_LIP=0, REAR_SHIFT=rs, H5_REAR_X=451 - B.FAN_SPEC["T"], PW_X0=pwx, LIPO_H=lipo)
+    e.update(FRONT_LIP=0, REAR_SHIFT=rs, H5_REAR_X=452 - B.FAN_SPEC["T"] - B.FAN_SPEC["gap"], PW_X0=pwx, LIPO_H=lipo)
     m = ws.load(e, rl - s_off, crest, shift)
     B._H["h"] = (391, 511, h5y - 60 - 45, h5y - 60 - 25, 3.5, 26)
     P = B.rw_factory(jacks, "right")(m, m.parts())

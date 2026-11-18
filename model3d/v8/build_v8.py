@@ -17,7 +17,7 @@ ws = importlib.util.module_from_spec(spec); spec.loader.exec_module(ws)
 def rework_right(m, P0, h5c, y1):
     """Fan on the RIGHT wall (as R163), H5 against the rear wall and off the fan by 1 mm. Fan size/thickness from FAN_SPEC."""
     fs, ft = FAN_SPEC["s"], FAN_SPEC["T"]
-    h5x1 = 512 - ft - 1.0
+    h5x1 = 512 - ft - FAN_SPEC["gap"]
     h5x0 = h5x1 - 120.0
     keep = [p for p in P0 if p.name not in ("R2 control rear board, low arm", "Rear jacks", "Rear jacks (right)")]
     y0 = 413.4 + m.RS
@@ -60,7 +60,7 @@ def rw_factory(jacks, fan="rear"):
 
 _H = {}
 FAN_H5C = {}
-FAN_SPEC = {"s": 60.0, "T": 15.0, "dy": 0.0, "z0": 6.0}      # fan on the right wall: size (square, mm) and thickness; the H5 stands 1 mm off the fan
+FAN_SPEC = {"s": 60.0, "T": 15.0, "dy": 0.0, "z0": 6.0, "gap": 1.0}      # fan on the right wall: size (square, mm) and thickness; the H5 stands 1 mm off the fan
 def HARNESS(m):
     return _H["h"]
 

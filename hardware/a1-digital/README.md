@@ -1,5 +1,7 @@
 # A1 - Digital audio board (under the slope, left; mates R1 at a right angle)
 
+> **НЕ ЗАКАЗЫВАТЬ rev 0.5 до решения по конденсаторам связи (P108).** Пары полярных электролитов FVH016 встречно временные: обратное напряжение до ≈ 2,85 В на конденсатор при допустимом около 1 В, не подтверждённом даташитом. Кандидат на настоящую замену: двуполярный Würth WCAP-ASNP 865250349007 (47 мкФ 16 В, SMD, по данным RS 6,5 × 7,85 мм), наличие и размеры проверить по даташиту.
+
 20 differential ADC channels, 8 DAC channels, two XMOS xcore.ai, USB isolation, two clock sources, quiet supplies.
 Plan, pinouts and sources: `PLAN.md`. Decisions: R82-R84 (two USB ports, TDM, 96 kHz hardware), R87 (volume in the DAC), R88 (two spare
 channels), R114 (two oscillators), R116/R117 (converters, two paths per mic), R136 (CS4308P, current outputs).

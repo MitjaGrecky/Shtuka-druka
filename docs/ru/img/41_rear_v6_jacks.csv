@@ -1,0 +1,55 @@
+tag,kind,r_mm,model_x_mm,z_mm,direction
+Power,switch,16,499,99,in
+DC In,dc,16,499,73,in
+USB-C,usbc,16,499,47,in
+LAN,lan,53,462,99,in
+USB-A,usba,44,471,73,in
+USB-C,usbc,62,453,73,in
+In 1,din,88,427,99,in
+In 2,din,88,427,73,in
+Out 1,din,110,405,99,out
+Out 2,din,110,405,73,out
+Out 3,din,132,383,99,out
+Out 4,din,132,383,73,out
+In,mini,167,348,99,in
+Out 1,mini,167,348,73,out
+Out 2,mini,167,348,47,out
+Clk 1,mini,190,325,99,out
+Clk 2,mini,207,308,99,out
+Reset,mini,224,291,99,out
+Clk In,mini,241,274,99,in
+Rst In,mini,258,257,99,in
+In 1,mini,190,325,73,in
+Out 1,mini,190,325,47,out
+Out 5,mini,190,325,21,out
+In 2,mini,207,308,73,in
+Out 2,mini,207,308,47,out
+Out 6,mini,207,308,21,out
+In 3,mini,224,291,73,in
+Out 3,mini,224,291,47,out
+Out 7,mini,224,291,21,out
+In 4,mini,241,274,73,in
+Out 4,mini,241,274,47,out
+Out 8,mini,241,274,21,out
+Main L,trs,292,223,99,out
+Main R,trs,314,201,99,out
+Aux L,trs,292,223,73,out
+Aux R,trs,314,201,73,out
+RCA L,rca,292,223,47,out
+RCA R,rca,314,201,47,out
+Mic/Line 1,xlr,362,153,99,in
+Mic/Line 2,xlr,394,121,99,in
+Hi-Z 1,trs,362,153,73,in
+Hi-Z 2,trs,394,121,73,in
+Phono L,rca,434,81,99,in
+Phono R,rca,456,59,99,in
+GND,post,478,37,99,in
+Ph/Line,switch,500,15,99,in
+Line 1,trs,434,81,73,in
+Line 2,trs,456,59,73,in
+Line 3,trs,478,37,73,in
+Line 4,trs,500,15,73,in
+Line 5,trs,434,81,47,in
+Line 6,trs,456,59,47,in
+Line 7,trs,478,37,47,in
+Line 8,trs,500,15,47,in

@@ -23,6 +23,8 @@ Level plan (rev 0.2, checked by the cloud, task #24: CS53A04P DS1397 (CS5304P/8P
   closed only when MUTE and R2_OK are both high (R118).
 
 Rev 0.1 (14.11.2026, PC) = schematic only; rev 0.2 (14.11.2026, cloud #24) = levels and values checked; rev 0.3 = -12 dB attenuator relay per combo (ATT1/ATT2 from R2); jacks vertical-mount (Neutrik NCJ6FI-V, NJ3FD-V), RCA part to choose.
+Rev 0.9 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md, B2): phantom hot-plug: SMBJ18CA per Mic/Line leg at the far side of the 47 uF blocking
+cap and the series 10 R -> 47 R (0805); MUTE / R2_OK series FETs 2N7002 -> AO3400A (coil voltage margin); everything else unchanged.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -35,7 +37,7 @@ import kit as K  # noqa: E402
 NAME = "r1-audio"
 ID = "R1"
 TITLE = "R1 - Audio jacks and analog front end: mic/Hi-Z two paths, line 1-8, phono, Main/Aux/RCA out on relays"
-REV = "0.8"
+REV = "0.9"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 differential ADC pairs (FS 8 Vrms diff into the AN0635 buffers), A1 -> R1: 4 DAC pairs; phantom per channel and phono/line "
             "from R2 (R118); output relays need MUTE and R2_OK (R137)")
@@ -53,6 +55,7 @@ C1206, C1210 = "Capacitor_SMD:C_1206_3216Metric", "Capacitor_SMD:C_1210_3225Metr
 CP8, CP63 = "Capacitor_SMD:CP_Elec_8x10.5", "Capacitor_SMD:CP_Elec_6.3x7.7"
 SOIC8, VSSOP8 = "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm", "Package_SO:VSSOP-8_3x3mm_P0.65mm"
 SOT23, SOD123 = "Package_TO_SOT_SMD:SOT-23", "Diode_SMD:D_SOD-123"
+SMB, R0805 = "Diode_SMD:D_SMB", "Resistor_SMD:R_0805_2012Metric"
 COMBO = "Connector_Audio:Jack_XLR-6.35mm_Neutrik_NCJ6FI-V_Vertical"
 TRS = "Connector_Audio:Jack_6.35mm_Neutrik_NJ3FD-V_Vertical"
 RCA = "ShtukaDruka:Jack_RCA_SameSky_RCJ-02_Vertical"   # Same Sky (CUI) RCJ-025, LCSC C4991609: vertical, no panel nut (none in stock at JLC)
@@ -171,7 +174,13 @@ def parts():
         R("0", f"{m}_TR", f"{m}_N")
         for leg in ("P", "N"):
             R("10k", f"{m}_{leg}", "GND", Note="discharge / bias")
-            R("10", f"{m}_{leg}", f"{m}_{leg}X", fp=R0603, Note="series, current limit into the clamps")
+            # rev 0.9 (audit 18.11.2026, B2): hot-plugging an unbalanced XLR (pin 3 to shield) with phantom on moves the far side of the charged 47 uF
+            # (46 V) to about -46 V. Before: 10 R into 1N4148W clamps = about 3.5 A for 0.5 ms and the -12 V rail pulled. Now a bidirectional TVS
+            # (SMBJ18CA: 18 V standoff above the +24 dBu TS line peak 17.4 V; breakdown 20-22 V) takes the first peak at the cap, and 47 R (0805) limits the
+            # tail into the clamps to 0.2 A for 1.5 ms (cap 47 uF x 47 R; 7.6 mJ in the resistor). Noise: 2 x 47 R adds about 1 dB to the 150 R mic.
+            add(ref("D"), "Device:D_TVS", "SMBJ18CA", SMB, {"1": f"{m}_{leg}", "2": "GND"}, LCSC="C83327",
+                Note="phantom hot-plug: clamps the far side of the blocking cap (rev 0.9, audit B2); Littelfuse C83327, 10042 pcs at JLC 18.11.2026")
+            R("47", f"{m}_{leg}", f"{m}_{leg}X", fp=R0805, LCSC="C17714", Note="series 47 R (rev 0.9; was 10 R): limits the hot-plug tail into the clamps, 0.2 A / 1.5 ms")
             R("15k", f"{m}_{leg}X", f"{m}_{leg}A", fp=R0603, Note="attenuator -12 dB: series 15k, 0.1 %")
             R("4.99k", f"{m}_{leg}A", "GND", fp=R0603, Note="attenuator -12 dB: shunt 4.99k, 0.1 % (ratio 0.250)")
             clamp(f"{m}_{leg}S")
@@ -297,9 +306,10 @@ def parts():
         add(ref("K"), RELAY[0], "G6K-2F-Y 5V", RELAY[1],
             {"A1": "+5V", "A2": "OUT_K", "11": c1, "12": None, "14": d1, "21": c2, "22": None, "24": d2},
             LCSC="C2982926", Note=f"{name} output relay: normally open, opens without power (R66, R137)")
-    add(ref("Q"), "Transistor_FET:2N7002", "2N7002", SOT23, {"1": "MUTE_G", "2": "OUT_KS", "3": "OUT_K"},
-        Note="MUTE and R2_OK in series: relays close only when both are high")
-    add(ref("Q"), "Transistor_FET:2N7002", "2N7002", SOT23, {"1": "R2OK_G", "2": "GND", "3": "OUT_KS"})
+    add(ref("Q"), "Transistor_FET:2N7002", "AO3400A", SOT23, {"1": "MUTE_G", "2": "OUT_KS", "3": "OUT_K"}, LCSC="C20917",
+        Note="MUTE and R2_OK in series: relays close only when both are high. Rev 0.9 (audit): AO3400A (Rds 0.06 R at 2.5 V) instead of 2N7002: 3 coils of 21 mA "
+        "(G6K-2F-Y 5 V, 237 R, must operate 4.0 V) through two 2N7002 at Vgs 3.3 V left 3.8-4.0 V at +5 V -5 %")
+    add(ref("Q"), "Transistor_FET:2N7002", "AO3400A", SOT23, {"1": "R2OK_G", "2": "GND", "3": "OUT_KS"}, LCSC="C20917")
     R("1k", "MUTE", "MUTE_G")
     R("100k", "MUTE_G", "GND")
     R("1k", "R2_OK", "R2OK_G")

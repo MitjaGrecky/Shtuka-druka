@@ -14,6 +14,8 @@ Output stage (AN0679 fig. 1): inverting I-V per leg, Rf 1.2k || 620 pF, non-inve
 Rev 0.1 (14.11.2026, PC) = schematic only. Rev 0.2 (14.11.2026, cloud #26) = checked against the datasheets CS4308P DS1317, CS53A04P DS1397,
 XU316-1024-QF60B, ADuM4165/4166: converter capacitors, 47 uF X5R coupling capacitors, PLL_AVDD filter, ADuM4166 supplies (VBUS2 = VDD2),
 oscillator parts. The CS5308P / CS5304P datasheets were not reachable: their pins are compared with the CS53A04P (same family).
+Rev 0.5 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md, B1): BAT54S overload clamp (3V3A / GND) on every ADC input pin (40 pins), CS5308P DS1314F2
+table 3-3: -0.3 ... VDD_A + 0.3 V and 10 mA.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -26,7 +28,7 @@ import kit as K  # noqa: E402
 NAME = "a1-digital"
 ID = "A1"
 TITLE = "A1 - Digital audio: 3 ADC, 1 DAC, 2 xcore.ai, USB isolator, clocks, quiet supplies"
-REV = "0.4"
+REV = "0.5"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 ADC pairs (8 Vrms FS), A1 -> R1: Main/Aux DAC pairs, A1 -> F1: Phones pairs; xcore A: TDM master, SPI to the "
             "converters, USB port A (hub on R2), xcore B: USB port B through the ADuM4166 (isolated ground GNDPC)")
@@ -41,6 +43,7 @@ R0603, R1206 = "Resistor_SMD:R_0603_1608Metric", "Resistor_SMD:R_1206_3216Metric
 C1210 = "Capacitor_SMD:C_1210_3225Metric"
 SOIC8 = "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 SOT235, SOT236 = "Package_TO_SOT_SMD:SOT-23-5", "Package_TO_SOT_SMD:SOT-23-6"
+SOT23 = "Package_TO_SOT_SMD:SOT-23"
 QFN48 = "Package_DFN_QFN:QFN-48-1EP_6x6mm_P0.4mm_EP4.6x4.6mm"   # CS5308P DS1314F2 / CS5304P: EP 4.6 nom (4.5-4.7)
 QFN48_DAC = "Package_DFN_QFN:QFN-48-1EP_6x6mm_P0.4mm_EP4.3x4.3mm"   # CS4308P DS1317F1 fig. 10-1: EP 4.3 nom (4.2-4.4), L 0.4
 PH = "Connector_JST:JST_PH_B{n}B-PH-K_1x0{n}_P2.00mm_Vertical"
@@ -234,6 +237,10 @@ def parts():
             R("300", out_net, f"B{ch}_I{leg}", Note="0.1 %: gain 1/4")
             C("680p C0G", out_net, f"B{ch}_I{leg}", fp=C0603)
             R("10", out_net, adc_net, Note="series to the ADC pin")
+            # rev 0.5 (audit 18.11.2026, B1): CS5308P DS1314F2 table 3-3: analog inputs -0.3 ... VDD_A + 0.3 V, +-10 mA. A clipped R1 stage (about +-11 V) leaves
+            # this buffer at 1.65 V +- 2.75 V = -1.1 ... +4.4 V: about 70 mA through 10 R into the ADC's own diodes. A BAT54S Schottky pair per pin (3V3A / GND) takes it.
+            add(ref("D"), "Diode:BAT54S", "BAT54S", SOT23, {"1": "GND", "2": "+3V3A", "3": adc_net}, LCSC="C19726",
+                Note="overload clamp at the ADC pin (CS5308P abs. max -0.3 ... VDD_A+0.3 V, 10 mA): Schottky conducts before the ADC's internal diodes; onsemi C19726")
         C("15n C0G", f"ADC{ch}_BP", f"ADC{ch}_BN", fp=C0603, Note="across the pair at the ADC pins")
         R("100k", f"B{ch}_CA", "GND", Note="DC reference for the coupling cap when the source is open")
         R("100k", f"B{ch}_CB", "GND")

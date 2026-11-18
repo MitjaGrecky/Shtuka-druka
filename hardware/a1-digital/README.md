@@ -111,3 +111,6 @@ Rev 0.5 (17.11.2026, R172): 80 x FVH016 electrolytics in back-to-back pairs inst
 
 
 Rev 0.6 (18.11.2026): 80 FVH016 заменены 40 одиночными WCAP-ASNP (47 мкФ, угол ≈ 2,8 Гц с 1,2 к). 613 деталей, 0 несовпадений нетлиста, 0 перекрытий. Footprint CP_Elec_8x6.5 приблизителен к даташиту.
+
+## Rev 0.5: ADC overload clamps (audit 18.11.2026)
+CS5308P DS1314F2 table 3-3: analog inputs -0.3 ... VDD_A + 0.3 V, +-10 mA. A clipped R1 stage leaves the buffer at -1.1 ... +4.4 V (about 70 mA through 10 R into the ADC diodes). One **BAT54S** (onsemi C19726, Schottky pair to +3V3A / GND) per ADC pin: 40 parts, near the pins. Stock: the CS5308P itself has 0 pcs at JLC on 18.11.2026 (Digikey or direct from Cirrus).

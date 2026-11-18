@@ -14,6 +14,5 @@
 | [06_5-pitanie-pw](34_rear_boards_research/06_5-pitanie-pw.md) | 5. Питание (PW) | 2.3 |
 | [07_6-gnezda-zadney-stenki-iz-biblioteki](34_rear_boards_research/07_6-gnezda-zadney-stenki-iz-biblioteki.md) | 6. Гнёзда задней стенки (из библиотеки EasyEDA) | 0.8 |
 | [08_7-chto-proverit-na-makete-vyvod](34_rear_boards_research/08_7-chto-proverit-na-makete-vyvod.md) | 7. Что проверить на макете (вывод) | 0.5 |
-| [09_otkrytye-voprosy](34_rear_boards_research/09_otkrytye-voprosy.md) | Открытые вопросы | 3.1 |
 
 Проверка полноты: `python tools/split_docs.py --verify docs/ru/34_rear_boards_research.md`.

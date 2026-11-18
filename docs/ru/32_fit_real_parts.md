@@ -13,7 +13,5 @@
 | [05_4-usb-a-v-karmane-system](32_fit_real_parts/05_4-usb-a-v-karmane-system.md) | 4. USB-A в кармане System (R81) | 4.1 |
 | [06_5-tablica-itogov](32_fit_real_parts/06_5-tablica-itogov.md) | 5. Таблица итогов | 2.0 |
 | [07_6-chto-ostalos-prikidkoy](32_fit_real_parts/07_6-chto-ostalos-prikidkoy.md) | 6. Что осталось прикидкой | 1.5 |
-| [08_7-predlozheniya-i-voprosy](32_fit_real_parts/08_7-predlozheniya-i-voprosy.md) | 7. Предложения и вопросы | 1.7 |
-| [09_otkrytye-voprosy](32_fit_real_parts/09_otkrytye-voprosy.md) | Открытые вопросы | 1.7 |
 
 Проверка полноты: `python tools/split_docs.py --verify docs/ru/32_fit_real_parts.md`.

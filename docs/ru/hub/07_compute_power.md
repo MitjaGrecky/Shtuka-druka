@@ -30,7 +30,6 @@ R1, A1, R2, F1, PW: что на какой плате, живые микросх
 - [5. Питание (PW)](../34_rear_boards_research/06_5-pitanie-pw.md) · 2.3 КБ
 - [6. Гнёзда задней стенки (из библиотеки EasyEDA)](../34_rear_boards_research/07_6-gnezda-zadney-stenki-iz-biblioteki.md) · 0.8 КБ
 - [7. Что проверить на макете (вывод)](../34_rear_boards_research/08_7-chto-proverit-na-makete-vyvod.md) · 0.5 КБ
-- [Открытые вопросы](../34_rear_boards_research/09_otkrytye-voprosy.md) · 3.1 КБ
 
 ## 35. ODROID-H5 и экран: жгут и посадка
 Жгут PW/R2 → H5, посадка по высоте (потолок ≈ 53 мм над полом), окно экрана EP-CAPLCD; распиновка колодки H5 и жгут по контактам (раздел 2а, 16.11.2026)

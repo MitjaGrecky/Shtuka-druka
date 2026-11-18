@@ -29,8 +29,6 @@
 - [4. USB-A в кармане System (R81)](../32_fit_real_parts/05_4-usb-a-v-karmane-system.md) · 4.1 КБ
 - [5. Таблица итогов](../32_fit_real_parts/06_5-tablica-itogov.md) · 2.0 КБ
 - [6. Что осталось прикидкой](../32_fit_real_parts/07_6-chto-ostalos-prikidkoy.md) · 1.5 КБ
-- [7. Предложения и вопросы](../32_fit_real_parts/08_7-predlozheniya-i-voprosy.md) · 1.7 КБ
-- [Открытые вопросы](../32_fit_real_parts/09_otkrytye-voprosy.md) · 1.7 КБ
 
 ## 39. Корпус: текущая компоновка (v8)
 Размеры, где что лежит, что не проверено, работы

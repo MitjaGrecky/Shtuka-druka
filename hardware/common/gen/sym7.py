@@ -54,6 +54,8 @@ EXTRA["Interface_USB"].append("TPS25730D")
 EXTRA["Regulator_Linear"] += ["TPS7A4701xRGW", "TPS7A3301RGW", "TPS7A4101DGN"]
 EXTRA["Connector_Generic"] += ["Conn_02x02_Odd_Even", "Conn_02x03_Odd_Even"]
 EXTRA.setdefault("Sensor_Energy", []).append("INA226")    # PW power monitor (R146)
+EXTRA.setdefault("Battery_Management", []).append("BQ25798")   # PW battery chargers (R183)
+EXTRA["Connector_Generic"] += ["Conn_01x08"]
 EXTRA.setdefault("74xx", []).append("74HC595")              # R2 output expander (task #25)
 EXTRA.setdefault("74xx", []).append("74HC4051")          # P2 pad multiplexers
 # A1 digital audio board (14.11.2026)
@@ -78,6 +80,7 @@ EXTRA.setdefault("Amplifier_Operational", []).append("OPA1612AxD")
 # Pin types changed in the copies: a second OUT pin of the same regulator as power_out would make ERC report two
 # power outputs on one net; the copy keeps one power_out and marks the other passive (as KiCad does for TPS7A3301).
 PIN_TYPE = {"TPS7A4701xRGW": {"20": "passive"},
+            "BQ25798": {"22": "passive", "23": "passive"},   # BAT: the pack drives it, and a PWR_FLAG sits on the net (no second power output)
             "LM5175PWP": {"12": "input"}}      # VOSNS senses the output (an input), typed output in the library;
                                                # LM5176PWP extends LM5175PWP, so the base symbol is patched
 KSYM10 = os.environ.get("KICAD10_SYMBOL_DIR", r"C:\Program Files\KiCad\10.0\share\kicad\symbols")

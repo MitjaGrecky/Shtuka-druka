@@ -2,11 +2,11 @@
  "id": "PW",
  "name": "pw-power",
  "title": "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom",
- "rev": "0.7",
+ "rev": "0.8",
  "w": 100.0,
- "h": 80.0,
+ "h": 110.0,
  "layers": 4,
- "parts": 203,
+ "parts": 300,
  "holes": [
   [
    4.0,
@@ -14,7 +14,7 @@
   ],
   [
    4.0,
-   76.0
+   106.0
   ],
   [
    96.0,
@@ -22,7 +22,7 @@
   ],
   [
    96.0,
-   76.0
+   106.0
   ]
  ],
  "connectors": [
@@ -36,40 +36,48 @@
   ],
   [
    "J3",
-   "Battery"
+   "Battery 1"
   ],
   [
    "J4",
-   "On/Off switch"
+   "Battery 2"
   ],
   [
    "J5",
-   "I2C power monitor"
+   "On/Off switch"
   ],
   [
    "J6",
-   "15 V to H5"
+   "Power telemetry to P2"
   ],
   [
    "J7",
-   "+5V panel"
+   "15 V to H5"
   ],
   [
    "J8",
-   "to R2"
+   "+5V panel"
   ],
   [
    "J9",
-   "to A1/R1"
+   "to R2"
   ],
   [
    "J10",
-   "to F1"
+   "to A1/R1"
   ],
   [
    "J11",
+   "to F1"
+  ],
+  [
+   "J12",
    "+5V screen"
+  ],
+  [
+   "J13",
+   "Fan 12 V PWM"
   ]
  ],
- "bom_lines": 101
+ "bom_lines": 119
 }

@@ -12,6 +12,8 @@ Rev 0.2 (14.11.2026, cloud, task #23): checked against the datasheets - TPS25730
 +47 uF on PPHV; LM5176 RMODE to AGND (was to VCC = no hiccup); TPS7A33 thermal pad to GND (was IN) and 10 nF FB-OUT;
 LM5156H DITHOFF to VCC (dithering off) and a 100 V FET; boost 48.5 V and phantom 46.1 V (TPS7A4101 input max 50 V).
 Rev 0.3 (14.11.2026, PC, R146): INA226 input power monitor on a 5 mOhm shunt after the On/Off switch, I2C cable to P2.
+Rev 0.8 (18.11.2026, R183): two 4S battery inputs, each with its own BQ25798 charger (charger-only, system stays on the
+ideal-diode bus), NTC per pack, I2C mux, 12 V fan stage + PWM/tach to P2. Doc 43.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -24,19 +26,20 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "0.7"
+REV = "0.8"
 M1_LIB = K.M1_LIB
-BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D), battery 4S 12.8-16.8 V -> ideal diodes (LM74700) -> rear On/Off "
+BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 4S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 12-24 V -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
             "+-12 V (TPS7A47 / TPS7A33), +48 V (LM5156H + TPS7A4101)")
-PWR_FLAG_NETS = ("B19_VCC", "B19_VIN", "BAT_F", "BUS", "DC_F", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
+PWR_FLAG_NETS = ("B19_VCC", "B19_VIN", "BAT1_F", "BAT2_F", "BUS", "DC_F", "EXT", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "V12F", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
 NO_PWR_FLAG = ("+3V3",)     # no 3.3 V rail on this board
-W, H = 100.0, 80.0          # rough: under the slope on the right next to the battery bay (R109); with the board
-HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, 76.0), (96.0, 76.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
+W, H = 100.0, 110.0         # rough: under the slope on the right next to the battery bay (R109); with the board
+HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, 106.0), (96.0, 106.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
 LAYERS = 4
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
 R0603 = "Resistor_SMD:R_0603_1608Metric"
+R0805 = "Resistor_SMD:R_0805_2012Metric"
 C1206, C1210 = "Capacitor_SMD:C_1206_3216Metric", "Capacitor_SMD:C_1210_3225Metric"
 CP8, CP10 = "Capacitor_SMD:CP_Elec_8x10.5", "Capacitor_SMD:CP_Elec_10x10.5"
 R2512, R1206 = "Resistor_SMD:R_2512_6332Metric", "Resistor_SMD:R_1206_3216Metric"
@@ -76,14 +79,57 @@ def parts():
             {"1": f"{name}_VCAP", "2": "GND", "3": anode, "4": cathode, "5": f"{name}_GATE", "6": anode},
             LCSC="C2941042", Note=f"ideal diode {name}: reverse polarity and ORing (EN tied to ANODE = always on)")
         C("100n 25V", f"{name}_VCAP", anode, fp=C0603, Note="VCAP to ANODE (charge pump)")
-        fet(f"{name}_GATE", anode, cathode, Note="ideal-diode FET: source = input, drain = BUS_IN")
+        fet(f"{name}_GATE", anode, cathode, Note="ideal-diode FET: source = input, drain = output node")
+
+    def charger(k, bat):
+        """BQ25798 (TI SLUSDV2C fig. 8-1: single input, no ship FET), 4S, 1.5 MHz / 1 uH: the pack on BAT, the system pin SYS only
+        has its capacitors (charger-only use; the instrument is fed by the ideal diodes). Host: I2C through the mux, INT wired-AND."""
+        c = f"CH{k}"
+        u = ref("U")
+        add(u, "Battery_Management:BQ25798", "BQ25798", "Package_DFN_QFN:Texas_RQM0029A_VQFN-29_4x4mm_P0.4mm",
+            {"1": f"{c}_STAT", "2": "EXT", "3": "EXT", "4": f"{c}_BTST1", "5": f"{c}_REGN", "6": None, "7": None, "8": "EXT", "9": "EXT",
+             "10": "GND", "11": "GND", "12": None, "13": f"{c}_CE", "14": f"{c}_SCL", "15": f"{c}_SDA", "16": f"{c}_TS",
+             "17": f"{c}_ILIM", "18": f"{c}_BATP", "19": f"{c}_BTST2", "20": f"{c}_PROG", "21": "CHG_INT", "22": bat, "23": bat,
+             "24": f"{c}_SDRV", "25": f"{c}_SYS", "26": f"{c}_SW2", "27": "GND", "28": f"{c}_SW1", "29": f"{c}_PMID"},
+            LCSC="C2876593", Note=f"charger {k}: 1-4 cell buck-boost, I2C 0x6B behind the mux; PROG 17.4k = 4S / 1.5 MHz (default VREG 16.8 V, "
+            "ICHG 1 A, VSYSMIN 12 V); no ACFET/RBFET (ACDRV1/2 to GND, VAC1/2 to VBUS); QON open; D+/D- open")
+        add(ref("L"), "Device:L", "1uH", "Inductor_SMD:L_Bourns_SRP7028A_7.3x6.6mm", {"1": f"{c}_SW1", "2": f"{c}_SW2"}, LCSC="C87572",
+            Note="TDK SPM6530T-1R0M120, Isat 14.1 A (datasheet example fig. 8-4); 1.5 MHz only works with 1 uH; footprint is an approximation of 7.1 x 6.5 x 3")
+        C("47n 25V", f"{c}_BTST1", f"{c}_SW1", fp=C0603)
+        C("47n 25V", f"{c}_BTST2", f"{c}_SW2", fp=C0603)
+        C("4.7u 10V", f"{c}_REGN", fp=C0603, Note="REGN 4.7 uF, 10 V")
+        C("100n 50V", "EXT", fp=C0603, Note="VBUS 0.1 uF next to the IC")
+        for _ in range(2):
+            C("10u 35V", "EXT", fp=C1206, Note="VBUS 2 x 10 uF")
+        R("2", "EXT", f"{c}_SNUB", fp=R0805, Note="hot-plug snubber 2 ohm + 2.2 uF (fig. 8-1 note 1: adapters above 15 V)")
+        C("2.2u 35V", f"{c}_SNUB", fp=C0805)
+        C("100n 50V", f"{c}_PMID", fp=C0603, Note="PMID 0.1 uF next to the IC")
+        for _ in range(3):
+            C("10u 35V", f"{c}_PMID", fp=C1206, Note="PMID 3 x 10 uF (up to 3.3 A input)")
+        C("100n 25V", f"{c}_SYS", fp=C0603, Note="SYS 0.1 uF next to the IC")
+        for _ in range(5):
+            C("10u 25V", f"{c}_SYS", fp=C1206, Note="SYS 5 x 10 uF (up to 5 A charge); no system load on SYS")
+        for _ in range(2):
+            C("10u 25V", bat, fp=C1206, Note="BAT 2 x 10 uF")
+        R("100", bat, f"{c}_BATP", Note="BATP sense: 100 ohm to the pack positive")
+        C("1n 50V", f"{c}_SDRV", Note="SDRV 1 nF to GND: no ship FET")
+        R("17.4k", f"{c}_PROG", "GND", Note="PROG: 4S, 1.5 MHz (table 7-1; 27.0k would be 750 kHz with a 2.2 uH inductor)")
+        R("47k", f"{c}_REGN", f"{c}_ILIM", Note="ILIM_HIZ = 1 V + 0.8 ohm x I: REGN 5 V x 100/147 = 3.4 V = 3.0 A ceiling (lower of pin and IINDPM)")
+        R("100k", f"{c}_ILIM", "GND")
+        R("5.23k", f"{c}_REGN", f"{c}_TS", Note="TS divider RT1 5.24k / RT2 30.31k for a 103AT pack NTC (T1 0 C, T3 45 C default, T5 60 C)")
+        R("30.1k", f"{c}_TS", "GND", Note="RT2 (30.31k in the datasheet; nearest E96)")
+        R("10k", f"{c}_CE", "GND", Note="CE low = charging allowed (also needs EN_CHG): must not float")
+        R("2.2k", f"{c}_REGN", f"{c}_LEDA", Note="STAT LED: on = charging, blink = fault")
+        add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": f"{c}_LEDA", "1": f"{c}_STAT"})
+        R("10k", f"{c}_SCL", "+3V3", Note="I2C pull-up (downstream of the mux channel)")
+        R("10k", f"{c}_SDA", "+3V3")
 
     # ---------------------------------------------------------------- inputs
     add(ref("J"), "Connector_Generic:Conn_01x02", "DC in", MF.format("43650-0215_1x02"), {"1": "DC_RAW", "2": "GND"},
         Note="cable from the locking DC jack on the rear wall (R141; Kycon KLDHCX-0202-BC-1, 5 A 24 V)")
     add(ref("F"), "Device:Fuse", "7A", "Fuse:Fuse_2920_7451Metric", {"1": "DC_RAW", "2": "DC_F"}, Note="resettable fuse, 7 A hold - check")
     add(ref("D"), "Device:D_TVS", "SMBJ28CA", SMB, {"1": "DC_F", "2": "GND"}, LCSC="C151259", Note="DC input surge, 28 V standoff (R72)")
-    ideal_diode("IDC", "DC_F", "BUS_IN")
+    ideal_diode("IDC", "DC_F", "EXT")
 
     add(ref("J"), "Connector_Generic:Conn_02x03_Odd_Even", "USB-C Power in", MF.format("43045-0612_2x03"),
         {"1": "PD_VBUS", "2": "PD_VBUS", "3": "GND", "4": "GND", "5": "PD_CC1", "6": "PD_CC2"},
@@ -116,14 +162,25 @@ def parts():
         C("22u 25V", "PD_OUT", fp=C1210, Note="C_PPHV 47-100 uF in total")
     C("10u 25V", "PD_OUT", fp=C1210)
     CP("47u 35V", "PD_OUT", fp=CP8, Note="C_PPHV 47-100 uF: the 25 V ceramics lose most of their value at 20 V")
-    ideal_diode("IPD", "PD_OUT", "BUS_IN")
+    ideal_diode("IPD", "PD_OUT", "EXT")
 
-    add(ref("J"), "Connector_Generic:Conn_02x02_Odd_Even", "Battery", MF.format("43045-0412_2x02"),
-        {"1": "BAT_RAW", "2": "BAT_RAW", "3": "GND", "4": "GND"},
-        Note="removable 4S2P pack with its own BMS (R109), 12.8-16.8 V; charger later (R40)")
-    add(ref("F"), "Device:Fuse", "10A", "Fuse:Fuse_2920_7451Metric", {"1": "BAT_RAW", "2": "BAT_F"}, Note="check rating")
-    add(ref("D"), "Device:D_TVS", "SMBJ20CA", SMB, {"1": "BAT_F", "2": "GND"}, LCSC="C151258")
-    ideal_diode("IBAT", "BAT_F", "BUS_IN")
+    # ---- EXT = DC or PD (whichever is higher); it feeds the two chargers and, through its own ideal diode, the bus. The batteries
+    # never feed EXT (so a pack cannot charge the other pack through the chargers).
+    add(ref("D"), "Device:D_TVS", "SMBJ24CA", SMB, {"1": "EXT", "2": "GND"}, LCSC="C49211287",
+        Note="EXT clamp: the chargers' VBUS/VAC pins are 30 V absolute maximum (BQ25798); 24 V standoff; 157 in stock at JLC 18.11.2026")
+    ideal_diode("IEXT", "EXT", "BUS_IN")
+
+    # ---- two battery inputs, each: pack harness (power + NTC), fuse, TVS, ideal diode to the bus, BQ25798 charger from EXT
+    for k in (1, 2):
+        b, bf, cs = f"BAT{k}_RAW", f"BAT{k}_F", f"CH{k}"
+        add(ref("J"), "Connector_Generic:Conn_02x03_Odd_Even", f"Battery {k}", MF.format("43045-0612_2x03"),
+            {"1": b, "2": b, "3": "GND", "4": "GND", "5": f"{cs}_TS", "6": "GND"},
+            Note=f"4S pack {k} with its own BMS (R183): BAT+ x 2, GND x 2, NTC 10k (103AT, B 3435) between pin 5 and pin 6; harness 150-250 mm")
+        add(ref("F"), "Device:Fuse", "10A", "Fuse:Fuse_2920_7451Metric", {"1": b, "2": bf}, Note="resettable, check rating (BMS of the pack <= 15 A)")
+        add(ref("D"), "Device:D_TVS", "SMBJ20CA", SMB, {"1": bf, "2": "GND"}, LCSC="C151258",
+            Note="also the hot-plug TVS at BAT that TI recommends for 4S packs on long leads (BQ25798 fig. 8-1, note 2)")
+        ideal_diode(f"IBAT{k}", bf, "BUS_IN")
+        charger(k, bf)
 
     # ---------------------------------------------------------------- On/Off switch and BUS
     add(ref("J"), "Connector_Generic:Conn_01x02", "On/Off switch", MF.format("43650-0215_1x02"), {"1": "BUS_IN", "2": "BUS_SW"},
@@ -145,9 +202,18 @@ def parts():
         Note="3.3 V for the INA226 only (VIH = 0.7 x VS); the same level as the pull-ups on P2")
     C("1u", "+5V", fp=C0603)
     C("1u", "+3V3", fp=C0603)
-    add(ref("J"), "Connector_Generic:Conn_01x04", "I2C power monitor", PH.format(n=4),
-        {"1": "PM_SDA", "2": "PM_SCL", "3": "PM_ALERT", "4": "GND"},
-        Note="to the panel hub P2, which drives the LEDs (R146): pull-ups to 3.3 V on P2; ALERT open drain = over-limit")
+    add(ref("J"), "Connector_Generic:Conn_01x08", "Power telemetry to P2", PH.format(n=8),
+        {"1": "PM_SDA", "2": "PM_SCL", "3": "PM_ALERT", "4": "CHG_INT", "5": "FAN_PWM_IN", "6": "FAN_TACH_OUT", "7": "GND", "8": "GND"},
+        LCSC="C157974", Note="to the panel hub P2 (R146, R183): I2C (INA226 0x40, mux 0x70 -> chargers 0x6B x 2), ALERT = over-limit, CHG_INT = "
+        "charger interrupt (wired-AND), fan PWM in (3.3 V, 25 kHz) and tach out; pull-ups of SDA/SCL to 3.3 V on P2")
+    # two BQ25798 have the same I2C address 0x6B: TCA9546A mux (0x70), channel 0 = charger 1, channel 1 = charger 2
+    add(ref("U"), "Interface_Expansion:TCA9546APW", "TCA9546APW", "Package_SO:TSSOP-16_4.4x5mm_P0.65mm",
+        {"1": "GND", "2": "GND", "3": "MUX_RST", "4": "CH1_SDA", "5": "CH1_SCL", "6": "CH2_SDA", "7": "CH2_SCL", "8": "GND",
+         "9": None, "10": None, "11": None, "12": None, "13": "GND", "14": "PM_SCL", "15": "PM_SDA", "16": "+3V3"},
+        LCSC="C201653", Note="I2C switch 0x70 (A0-A2 GND): channels 0 and 1 = the two chargers; INA226 stays on the main bus")
+    R("10k", "MUX_RST", "+3V3")
+    C("100n", "+3V3", fp=C0603, Note="mux VCC")
+    R("10k", "CHG_INT", "+3V3", Note="pull-up of the wired-AND charger INT")
     CP("100u 35V", "BUS", fp=CP10, Note="bulk")
     for _ in range(2):
         C("10u 50V", "BUS", fp=C1210)
@@ -345,6 +411,27 @@ def parts():
     for _ in range(3):
         C("22u 25V", "V15", fp=C1210)
 
+    # ---------------------------------------------------------------- 12 V for the case fan (80 x 80 x 25, PWM, 4-pin): LMR33640 buck from V19
+    u = ref("U")
+    add(u, "Regulator_Switching:LMR33640ADDA", "LMR33640", "Package_SO:Texas_HSOP-8-1EP_3.9x4.9mm_P1.27mm_ThermalVias",
+        {"1": "GND", "2": "V19", "3": "V19", "4": None, "5": "V12F_FB", "6": "V12F_VCC", "7": "V12F_BOOT", "8": "V12F_SW", "9": "GND"},
+        LCSC="C2836966", Note="19 V -> 12 V for the fan (an 80 x 25 mm fan takes 0.2-0.5 A; the part gives 4 A): same stage as the 15 V one, 400 kHz")
+    R("100k", "V12F", "V12F_FB", Note="1.0 V x (1 + 100k / 9.09k) = 12.0 V")
+    R("9.09k", "V12F_FB", "GND")
+    C("100n 25V", "V12F_BOOT", "V12F_SW", fp=C0603)
+    C("1u", "V12F_VCC", fp=C0603)
+    C("10u 50V", "V19", fp=C1210)
+    C("220n 50V", "V19", fp=C0603)
+    add(ref("L"), "Device:L", "10uH", "Inductor_SMD:L_Bourns_SRN6045TA", {"1": "V12F_SW", "2": "V12F"}, Note="10 uH, Isat >= 1 A - check")
+    for _ in range(3):
+        C("22u 25V", "V12F", fp=C1210)
+    add(ref("J"), "Connector_Generic:Conn_01x04", "Fan 12 V PWM", "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+        {"1": "GND", "2": "V12F", "3": "FAN_TACH", "4": "FAN_PWM"}, LCSC="C2691448",
+        Note="4-pin PC fan (Intel pinout: 1 GND, 2 +12 V, 3 tach, 4 PWM): one 80 x 80 x 25 fan; speed = max of the H5 and the pack NTC temperatures, set by P2")
+    R("100", "FAN_PWM_IN", "FAN_PWM", Note="PWM from P2 (3.3 V, 25 kHz); no signal = the fan runs full speed (Intel spec)")
+    R("10k", "FAN_TACH", "+3V3", Note="tach is open collector: pull-up to 3.3 V")
+    R("100", "FAN_TACH", "FAN_TACH_OUT")
+
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 
@@ -368,11 +455,13 @@ def placement():
 
 
 QUIET_XY = {"TPS7A4701": (12.0, 12.0), "TPS7A3301": (12.0, 30.0), "TPS7A4101": (28.0, 12.0)}
-# (IC, its inductor) by value order of parts(): U7 LM5176 + L1, U8/U9 TPS54560B + L2/L3, U10 LMR33640 +14 V + L4, U11 -14 V + L5,
-# U14 LM5156H phantom + L6, U16 LMR33640 15 V + L7; all on the bottom, right of x 40 (the quiet corner is x < 36, y < 38)
-NOISY_XY = {"U7": (46.0, 10.0), "L1": (62.0, 12.0), "U14": (80.0, 8.0), "L6": (93.0, 10.0),
-            "U8": (45.0, 28.0), "L2": (57.0, 30.0), "U9": (71.0, 28.0), "L3": (83.0, 30.0), "L7": (95.0, 34.0),
-            "U10": (43.0, 45.0), "L4": (53.0, 45.0), "U11": (64.0, 45.0), "L5": (74.0, 45.0), "U16": (85.0, 46.0)}
+# (IC, its inductor) by the refs of parts() (rev 0.8): U12 LM5176 + L3, U13/U14 TPS54560B + L4/L5, U15 LMR33640 +14 V + L6, U16 -14 V + L7,
+# U19 LM5156H phantom + L8, U21 LMR33640 15 V + L9, U22 LMR33640 12 V fan + L10; all on the bottom, right of x 40 (the quiet corner is
+# x < 36, y < 38); the chargers (U6, U8 with L1, L2) and the rest are placed by autoplace in the lower part of the board
+NOISY_XY = {"U12": (46.0, 10.0), "L3": (62.0, 12.0), "U19": (80.0, 8.0), "L8": (93.0, 10.0),
+            "U13": (45.0, 28.0), "L4": (57.0, 30.0), "U14": (71.0, 28.0), "L5": (83.0, 30.0), "L9": (95.0, 34.0),
+            "U15": (43.0, 45.0), "L6": (53.0, 45.0), "U16": (64.0, 45.0), "L7": (74.0, 45.0), "U21": (85.0, 46.0),
+            "U22": (78.0, 62.0), "L10": (92.0, 63.0)}
 
 
 if __name__ == "__main__":

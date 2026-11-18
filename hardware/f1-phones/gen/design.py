@@ -17,6 +17,7 @@ front wall (nose to the wall), all parts on the top side, height <= 12 mm (jacks
 Rev 0.3 (16.11.2026, PC, R165, doc 39): low case. The board lies on 1 mm standoffs in the 28 mm lip in front of P1, so EVERYTHING is on the top
 side (no room underneath): jacks Cliff S1/BBB CL1115 (Digikey 4654-CL1115-ND, hand-soldered, not at JLCPCB; 12.7 mm high instead of 15.67), the
 cable headers lie flat (2x6 right angle, JST PH side entry), board 135 x 27 mm.
+Rev 0.5 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md): mute-chain FETs 2N7002 -> AO3400A (C20917), nothing else changed.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -29,7 +30,7 @@ import kit as K  # noqa: E402
 NAME = "f1-phones"
 ID = "F1"
 TITLE = "F1 - Headphones: 2 x Cliff S1 6.35 mm, 2 x OPA1622 difference amplifiers x2, mute relays"
-REV = "0.4"
+REV = "0.5"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("From A1: Phones 1 and 2 as differential pairs (2 Vrms FS) -> OPA1622 difference amp x2 -> 10 R -> relay -> NMJ6HCD2; "
             "volume is the DAC's digital attenuator (R87); mute relays need MUTE and R2_OK (R66, R137)")
@@ -85,9 +86,10 @@ def parts():
     R("100k", "MUTE_G", "GND")
     R("1k", "R2_OK", "R2OK_G")
     R("100k", "R2OK_G", "GND")
-    add(ref("Q"), "Transistor_FET:2N7002", "2N7002", SOT23, {"1": "MUTE_G", "2": "COIL_KS", "3": "COIL_K"},
-        Note="MUTE and R2_OK in series: the relays close only when both are high")
-    add(ref("Q"), "Transistor_FET:2N7002", "2N7002", SOT23, {"1": "R2OK_G", "2": "GND", "3": "COIL_KS"})
+    add(ref("Q"), "Transistor_FET:2N7002", "AO3400A", SOT23, {"1": "MUTE_G", "2": "COIL_KS", "3": "COIL_K"}, LCSC="C20917",
+        Note="MUTE and R2_OK in series: the relays close only when both are high. Rev 0.5 (audit 18.11.2026): AO3400A instead of 2N7002 (two coils of 21 mA "
+        "through two 2N7002 at Vgs 3.3 V: coil voltage close to the 4.0 V must-operate of the G6K-2F-Y 5 V)")
+    add(ref("Q"), "Transistor_FET:2N7002", "AO3400A", SOT23, {"1": "R2OK_G", "2": "GND", "3": "COIL_KS"}, LCSC="C20917")
     add(ref("D"), "Diode:1N4148W", "1N4148W", SOD123, {"1": "+5V", "2": "COIL_K"}, Note="flyback")
 
     # ---------------------------------------------------------------- per jack: OPA1622 difference amps, relay, jack

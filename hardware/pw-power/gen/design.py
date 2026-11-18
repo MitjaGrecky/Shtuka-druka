@@ -1,5 +1,5 @@
 """PW - Power board under the slope (right, next to the battery bay, R109): inputs DC 12-24 V (locking jack on the rear
-wall), USB-C Power (PD 20 V / 5 A, R145) and the 4S battery (R40, R59), joined by ideal diodes; the rear On/Off switch;
+wall), USB-C Power (PD 20 V / 5 A, R145) and the 3S batteries (R40, R59; rev 1.0), joined by ideal diodes; the rear On/Off switch;
 rails: 15 V for the ODROID-H5 (R149, P106; H5 window 11-20 V) from the internal 19 V rail, +5V_PANEL (panel boards and their LEDs), +5V (screen,
 R2, USB, logic), +-14 V pre-regulators and quiet +-12 V for the audio boards (TIDA-01458 scheme), +48 V phantom (R118).
 Single source of truth for the schematic. Research: docs/ru/34_rear_boards_research.md (section 5), decisions R36, R40,
@@ -16,6 +16,10 @@ Rev 0.9 (18.11.2026, engineer's audit): charge enable only with the switch on an
 gate 2 = +3V3 behind the switch); hardware 45 C cut-off by the BQ25798 itself (TS divider RT1 only, T5 = 45 C). Doc 43.
 Rev 0.8 (18.11.2026, R183): two 4S battery inputs, each with its own BQ25798 charger (charger-only, system stays on the
 ideal-diode bus), NTC per pack, I2C mux, 12 V fan stage + PWM/tach to P2. Doc 43.
+Rev 1.0 (18.11.2026, engineer, R186, P111, doc 43 5c): packs 3S (3 x Jauch LP906090JH, Digikey in stock) instead of 4S: PROG 10.5k = 3S / 1.5 MHz
+(POR VREG 12.6 V, ICHG 1 A, VSYSMIN 9 V), pack TVS SMBJ13CA (SMBJ20CA clamped above the 20 V BAT limit), bus 9-12.6 V from the packs, LM5176
+UVLO start 10.1 V / stop 9.3 V (was 9.45 / 8.7 V; boost mode from 9.3 V in); 15 V / 12 V fan / 5 V stages unchanged (fed from the 19 V rail or from a BUS >= 8.7 V).
+The pack BMS is a separate small board in each pack (BQ7791500, doc 43 5c); the PW 45 C hardware charge stop and the charge-only-with-switch-on gate stay.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -28,10 +32,10 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "0.9"
+REV = "1.0"
 M1_LIB = K.M1_LIB
-BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 4S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
-            "switch -> BUS 12-24 V -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
+BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
+            "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
             "+-12 V (TPS7A47 / TPS7A33), +48 V (LM5156H + TPS7A4101)")
 PWR_FLAG_NETS = ("B19_VCC", "B19_VIN", "BAT1_F", "BAT2_F", "BUS", "DC_F", "EXT", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "V12F", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
 NO_PWR_FLAG = ("+3V3",)     # no 3.3 V rail on this board
@@ -84,7 +88,7 @@ def parts():
         fet(f"{name}_GATE", anode, cathode, Note="ideal-diode FET: source = input, drain = output node")
 
     def charger(k, bat):
-        """BQ25798 (TI SLUSDV2C fig. 8-1: single input, no ship FET), 4S, 1.5 MHz / 1 uH: the pack on BAT, the system pin SYS only
+        """BQ25798 (TI SLUSDV2C fig. 8-1: single input, no ship FET), 3S, 1.5 MHz / 1 uH: the pack on BAT, the system pin SYS only
         has its capacitors (charger-only use; the instrument is fed by the ideal diodes). Host: I2C through the mux, INT wired-AND."""
         c = f"CH{k}"
         u = ref("U")
@@ -93,8 +97,8 @@ def parts():
              "10": "GND", "11": "GND", "12": None, "13": f"{c}_CE", "14": f"{c}_SCL", "15": f"{c}_SDA", "16": f"{c}_TS",
              "17": f"{c}_ILIM", "18": f"{c}_BATP", "19": f"{c}_BTST2", "20": f"{c}_PROG", "21": "CHG_INT", "22": bat, "23": bat,
              "24": f"{c}_SDRV", "25": f"{c}_SYS", "26": f"{c}_SW2", "27": "GND", "28": f"{c}_SW1", "29": f"{c}_PMID"},
-            LCSC="C2876593", Note=f"charger {k}: 1-4 cell buck-boost, I2C 0x6B behind the mux; PROG 17.4k = 4S / 1.5 MHz (default VREG 16.8 V, "
-            "ICHG 1 A, VSYSMIN 12 V); no ACFET/RBFET (ACDRV1/2 to GND, VAC1/2 to VBUS); QON open; D+/D- open")
+            LCSC="C2876593", Note=f"charger {k}: 1-4 cell buck-boost, I2C 0x6B behind the mux; PROG 10.5k = 3S / 1.5 MHz (POR VREG 12.6 V, "
+            "ICHG 1 A, VSYSMIN 9 V; the host sets VREG 12.45 V = 4.15 V per cell under the BMS OV 4.20 V, doc 43 5c); no ACFET/RBFET (ACDRV1/2 to GND, VAC1/2 to VBUS); QON open; D+/D- open")
         add(ref("L"), "Device:L", "1uH", "Inductor_SMD:L_Bourns_SRP7028A_7.3x6.6mm", {"1": f"{c}_SW1", "2": f"{c}_SW2"}, LCSC="C87572",
             Note="TDK SPM6530T-1R0M120, Isat 14.1 A (datasheet example fig. 8-4); 1.5 MHz only works with 1 uH; footprint is an approximation of 7.1 x 6.5 x 3")
         C("47n 25V", f"{c}_BTST1", f"{c}_SW1", fp=C0603)
@@ -115,7 +119,7 @@ def parts():
             C("10u 25V", bat, fp=C1206, Note="BAT 2 x 10 uF")
         R("100", bat, f"{c}_BATP", Note="BATP sense: 100 ohm to the pack positive")
         C("1n 50V", f"{c}_SDRV", Note="SDRV 1 nF to GND: no ship FET")
-        R("17.4k", f"{c}_PROG", "GND", Note="PROG: 4S, 1.5 MHz (table 7-1; 27.0k would be 750 kHz with a 2.2 uH inductor)")
+        R("10.5k", f"{c}_PROG", "GND", Note="PROG: 3S, 1.5 MHz (table 7-1; 13.7k would be 3S at 750 kHz with a 2.2 uH inductor)")
         R("47k", f"{c}_REGN", f"{c}_ILIM", Note="ILIM_HIZ = 1 V + 0.8 ohm x I: REGN 5 V x 100/147 = 3.4 V = 3.0 A ceiling (lower of pin and IINDPM)")
         R("100k", f"{c}_ILIM", "GND")
         R("9.31k", f"{c}_REGN", f"{c}_TS", Note="TS: RT1 only (no RT2), 103AT pack NTC to GND: T5 comparator (34.2 % of REGN, charge suspended below it) trips at 45 C "
@@ -181,16 +185,16 @@ def parts():
         b, bf, cs = f"BAT{k}_RAW", f"BAT{k}_F", f"CH{k}"
         add(ref("J"), "Connector_Generic:Conn_02x03_Odd_Even", f"Battery {k}", MF.format("43045-0612_2x03"),
             {"1": b, "2": b, "3": "GND", "4": "GND", "5": f"{cs}_TS", "6": "GND"},
-            Note=f"4S pack {k} with its own BMS (R183): BAT+ x 2, GND x 2, NTC 10k (103AT, B 3435) between pin 5 and pin 6; harness 150-250 mm")
-        add(ref("F"), "Device:Fuse", "10A", "Fuse:Fuse_2920_7451Metric", {"1": b, "2": bf}, Note="resettable, check rating (BMS of the pack <= 15 A)")
-        add(ref("D"), "Device:D_TVS", "SMBJ20CA", SMB, {"1": bf, "2": "GND"}, LCSC="C151258",
-            Note="also the hot-plug TVS at BAT that TI recommends for 4S packs on long leads (BQ25798 fig. 8-1, note 2)")
+            Note=f"3S pack {k} (3 x Jauch LP906090JH, doc 43 5c) with its own BMS board (BQ7791500, R183): BAT+ x 2, GND x 2, NTC 10k (103AT, B 3435) between pin 5 and pin 6; harness 150-250 mm")
+        add(ref("F"), "Device:Fuse", "10A", "Fuse:Fuse_2920_7451Metric", {"1": b, "2": bf}, Note="resettable, 10 A hold: the pack is 6 A (1C of the cell, Jauch datasheet), the BMS trips at 9.6-14.4 A")
+        add(ref("D"), "Device:D_TVS", "SMBJ13CA", SMB, {"1": bf, "2": "GND"}, LCSC="C132568",
+            Note="hot-plug TVS at BAT (BQ25798 fig. 8-1, note 2): 13 V standoff above the 12.6 V pack, clamp 21.5 V at 28 A and about 16-17 V at a few A; BAT/BATP absolute maximum is 20 V (SMBJ20CA clamped at 32 V)")
         ideal_diode(f"IBAT{k}", bf, "BUS_IN")
         charger(k, bf)
 
     # ---------------------------------------------------------------- On/Off switch and BUS
     add(ref("J"), "Connector_Generic:Conn_01x02", "On/Off switch", MF.format("43650-0215_1x02"), {"1": "BUS_IN", "2": "BUS_SW"},
-        Note="mechanical On/Off on the rear wall (model): rocker rated 10 A DC or more in series with the bus")
+        Note="mechanical On/Off on the rear wall (model): rocker rated 15 A DC or more in series with the bus (rev 1.0: 95 W from a 9.3 V pack = 10.2 A)")
     # input power monitor (R146): everything the instrument draws passes the shunt; P2 reads it and caps the LEDs
     R("5m", "BUS_SW", "BUS", fp=R2512, Note="shunt 5 mOhm 1 % 3 W: 8 A -> 40 mV (INA226 range 81.9 mV)")
     u = ref("U")
@@ -233,12 +237,12 @@ def parts():
          "15": "GND", "16": "B19_CS", "17": "B19_PG", "18": "B19_SW2", "19": "B19_HDRV2", "20": "B19_BOOT2",
          "21": "B19_LDRV2", "22": "GND", "23": "B19_VCC", "24": "V19", "25": "B19_LDRV1", "26": "B19_BOOT1",
          "27": "B19_HDRV1", "28": "B19_SW1", "29": "GND"},
-        LCSC="C442493", Note="12-24 V -> 19 V 5 A (95 W), 300 kHz; values after fig. 8-1 (6-50 V -> 12 V 6 A); ISNS+/- "
+        LCSC="C442493", Note="9-24 V (rev 1.0: 3S packs 9-12.6 V) -> 19 V 5 A (95 W), 300 kHz; values after fig. 8-1 (6-50 V -> 12 V 6 A); ISNS+/- "
         "shorted = average current loop off; DITH to AGND = no dithering; BIAS from VOUT (8-36 V)")
     R("10", "BUS", "B19_VIN", fp=R0603, Note="VIN filter")
     C("1u 50V", "B19_VIN", fp=C0805)
-    R("249k", "BUS", "B19_UVLO", Note="UVLO: start ~ 10 V")
-    R("34.8k", "B19_UVLO", "GND")
+    R("249k", "BUS", "B19_UVLO", Note="UVLO rev 1.0 (datasheet eq. 1-2): start 1.22 V x (1 + 249k / 32.4k) - 249k x 2 uA = 10.1 V, stop 10.1 V - 3.15 uA x 249k = 9.3 V (was 9.45 / 8.7 V): the converter stops before the cell PCMs cut at about 9.0 V and restarts only above 10.1 V (no restart loop on a flat 3S pack)")
+    R("32.4k", "B19_UVLO", "GND")
     R("93.1k", "B19_MODE", "GND", Note="RMODE to AGND: 1.38-2.22 V = CCM, hiccup enabled (datasheet; to VCC = no hiccup)")
     R("27.4k", "B19_RT", "GND", Note="300 kHz")
     C("220p", "B19_SLOPE", Note="CSLOPE = L gm / (Rs Acs) = 4.7u x 2u / (8m x 5) = 235 pF")
@@ -257,7 +261,8 @@ def parts():
     fet("B19_HDRV2", "B19_SW2", "V19", Note="QH2")
     fet("B19_LDRV2", "B19_CSN", "B19_SW2", Note="QL2")
     R("8m", "B19_CSN", "GND", fp=R2512, Note="Rsense 8 mOhm: buck <= 80 mV / 5 A = 16 mOhm; boost limit 100-140 mV / 8 mOhm "
-      "= 12.5-17.5 A > 9.9 A peak at 12 V in; ~0.6 W at 12 V")
+      "= 12.5-17.5 A > 9.9 A peak at 12 V in; ~0.6 W at 12 V; rev 1.0 at 9.3 V in: ripple 3.4 A, average limit >= 10.3 A = 96 W in, "
+      "about 86 W out against 45-50 W on the 19 V rail (H5 25 W, audio, phantom, fan)")
     R("100", "B19_CSN", "B19_CS", fp=R0603, Note="CS filter")
     C("47p", "B19_CS", Note="CS filter")
     add(ref("L"), "Device:L", "4.7uH", "Inductor_SMD:L_Bourns_SRP1245A", {"1": "B19_SW1", "2": "B19_SW2"},

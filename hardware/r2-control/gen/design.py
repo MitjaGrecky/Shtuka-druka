@@ -29,7 +29,7 @@ import kit as K  # noqa: E402
 NAME = "r2-control"
 ID = "R2"
 TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables"
-REV = "0.6"
+REV = "0.9"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = ODROID-H5, down = RP2350, panel P2, A1 port A, spare")
@@ -318,7 +318,7 @@ def parts():
 # Mounting (rev 0.6, review 14.11.2026): 7 x M3 on standoffs to the rear wall, board coordinates (x, y), proposal to settle with the
 # enclosure: four corners of the L, one in the bottom strip between the TRS jacks, two inside between the jack columns/rows
 # (7.5 mm gaps). The jacks' own nuts carry the plug force into the wall; the standoffs only hold the board against flexing.
-HOLES = [(12.0, 4.0), (94.0, 4.0), (103.0, 99.0), (4.0, 99.0), (48.0, 53.0), (24.5, 34.0)]   # rev 0.7: shifted by -68, the two holes of the arm dropped
+HOLES = [(22.5, 27.0), (93.5, 27.0), (103.0, 99.0), (4.0, 99.0), (48.0, 53.0), (22.5, 53.0)]   # rev 0.7: shifted by -68, the two holes of the arm dropped
 MOUNT_FP = "MountingHole:MountingHole_3.2mm_M3_ISO7380"
 
 # Board: vertical, F side (jacks) faces the rear wall; seen from behind (rear view): board x = x_rear - 88, y = 113 - z.
@@ -329,10 +329,10 @@ OUTLINE = [(0, 0), (110, 0), (110, 103), (0, 103)]
 AREAS = [(0, 0, 110, 103)]
 AXIS = {"PJ398SM": 0.78, "PJ-3920-3A": 1.29}   # jack axis below the pad-field centre (rotation 0), from the footprints
 # the 3D model of panel v7 (model3d/index.html, R142): (x_rear, z) of the jack axes
-JACKS = {"MIDI TRS IN": (166, 96), "MIDI TRS OUT 1": (166, 74), "MIDI TRS OUT 2": (166, 52),   # rev 0.8 (rear wall v5, designer, doc 41 sect. 24): TRS in the MIDI block, left column of R2
-         "CLOCK OUT 1": (186, 96), "CLOCK OUT 2": (204, 96), "RESET/RUN OUT": (222, 96), "CLOCK IN": (240, 96),
-         "RESET/RUN IN": (258, 96), **{f"CV IN {c + 1}": (195 + 18 * c, 70) for c in range(4)},
-         **{f"CV/GATE OUT {c + 1}": (195 + 18 * (c % 4), 48 if c < 4 else 26) for c in range(8)}}
+JACKS = {"MIDI TRS IN": (167, 99), "MIDI TRS OUT 1": (167, 73), "MIDI TRS OUT 2": (167, 47),   # rev 0.9 (rear wall v6, doc 41 sect. 24.4): rows z 99 / 73 / 47 / 21, TRS column r 167
+         "CLOCK OUT 1": (190, 99), "CLOCK OUT 2": (207, 99), "RESET/RUN OUT": (224, 99), "CLOCK IN": (241, 99),
+         "RESET/RUN IN": (258, 99), **{f"CV IN {c + 1}": (190 + 17 * c, 73) for c in range(4)},
+         **{f"CV/GATE OUT {c + 1}": (190 + 17 * (c % 4), 47 if c < 4 else 21) for c in range(8)}}
 
 
 def jack_xy(note):

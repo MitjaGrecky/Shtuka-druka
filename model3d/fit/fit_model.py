@@ -78,7 +78,7 @@ FAN = tuple(float(v) for v in os.environ["FAN"].split(",")) if os.environ.get("F
 PANEL_PARTS = float(os.environ.get("PANEL_PARTS", "4.0"))  # parts-below envelope of P1, P3, P4
 F1_SIDE_Z = float(os.environ.get("F1_SIDE_Z", "40.0"))    # F1_MODE=SIDE: axis height of the jacks on the left wall behind the riser
 BATT_FLAT = os.environ.get("BATT_FLAT", "0") == "1"      # battery as one flat row of 8 cells (155 x 75 x 25) instead of 90 x 86 x 45
-R1_TOP = float(os.environ.get("R1_TOP", "104.0"))          # top of the vertical R1 board, z
+R1_TOP = float(os.environ.get("R1_TOP", "117.0"))          # top of the vertical R1 board, z
 R2_TOP = float(os.environ.get("R2_TOP", "113.0"))          # top of the tall part of R2, z
 H5_REAR_X = float(os.environ.get("H5_REAR_X", "451.0"))  # H5REAR centre x
 H5_REAR_Y = float(os.environ.get("H5_REAR_Y", "353.0"))  # H5REAR centre y
@@ -529,7 +529,7 @@ def parts(usb=None):
     else:
         a(box("PW power", "rear", 300, 400, 320 + RS, 400 + RS, 6, 24, color="pcb", note="100 x 80, rev 0.6; position not fixed"))
         a(box("Battery bay", "rear", 414, 504, 312, 398, 3, 48, color="battery"))
-    a(box("R1 audio rear board", "rear", 4, 242, 413.4 + RS, 415 + RS, 8, R1_TOP, color="pcb", note="rear x 273-511, z 8-104"))
+    a(box("R1 audio rear board", "rear", 4, 242, 413.4 + RS, 415 + RS, 8, R1_TOP, color="pcb", note="rear x 273-511, z 8-117"))
     # R2 (hardware/r2-control/gen/design.py OUTLINE): rear x 88-263, z 10-113 without the DIN window rear x 88-156, z 38-113
     a(box("R2 control rear board", "rear", 252, R2_TALL_X1, 413.4 + RS, 415 + RS, 10, R2_TOP, color="pcb", note="L-shape, tall part"))
     a(box("R2 control rear board, low arm", "rear", R2_TALL_X1, 427, 413.4 + RS, 415 + RS, 10, 38, color="pcb", note="L-shape, arm under the DIN window"))

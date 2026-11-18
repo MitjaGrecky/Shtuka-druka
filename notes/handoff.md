@@ -1387,3 +1387,5 @@ unconnected остался 20, hole_clearance упал с 199 до 81, друг�
 - По слову пользователя схемы M2–M5, P1, P3, P4, W2, W3 делает ПК-сессия. ТЗ: `hardware/for-routing/SPEC_boards.md`.
 - Предложения P99–P105 записаны в `docs/ru/decisions/08_boards.md` (ждут пользователя); в схемах делать по ним, но через константы.
 - [x] ПК: генераторы и схемы по ТЗ (сделано: M2–M5, P1, P3, P4, W2, W3), ERC + check_netlist, пакеты for-routing, импорт в EasyEDA через мост. Порядок: M3, M4, M5 (простые, один образец), W2, W3, P1, P4, P3, M2.
+
+- [18.11 Riga] TODO R1 rev 0.8: designer moved rear-wall v5 Audio grid (doc 41 §24): Out r292/322, In r372/404 and r436/458/480/502; rows z 90/60/31 (R1 JACKS now z 80/52/24, Hi-Z 32, Phono 86). Update JACKS and Z0/board height after A1 rev 0.6.

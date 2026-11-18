@@ -223,14 +223,13 @@ def parts():
         C("100n 25V", "+12V", fp=C0603)
         C("100n 25V", "-12V", fp=C0603)
         for leg, src, out_net, adc_net in (("A", f"ADC{ch}_P", f"B{ch}_OA", f"ADC{ch}_BN"), ("B", f"ADC{ch}_N", f"B{ch}_OB", f"ADC{ch}_BP")):
-            # R172 (17.11.2026): Cirrus AN0556 4.1 asks for stable dielectrics, C0G or electrolytic; X5R (rev 0.4) is neither and its capacitance
-            # follows the signal. A 1 uF C0G is not in stock at JLC, a bipolar SMD electrolytic was not found there, so each coupling cap is
-            # a pair of polarised electrolytics back to back (negatives together): 2 x 100 uF = 50 uF, corner 2.65 Hz with 1.2k.
-            # UNVERIFIED (17.11.2026): the reverse-voltage rating of FVH016ADA101M0654 was not found (datasheet text not reachable); polarised
-            # aluminium caps usually tolerate only about 1 V reverse, here each cap would see up to about 2.8 V reverse at 20 Hz and full scale. Provisional: replace with a bipolar part.
-            for half, (pa, pb) in (("S", (src, f"B{ch}_M{leg}")), ("B", (f"B{ch}_C{leg}", f"B{ch}_M{leg}"))):
-                add(ref("C"), "Device:C_Polarized", "100u 16V", "Capacitor_SMD:CP_Elec_6.3x5.4", {"1": pa, "2": pb}, LCSC="C7469977",
-                    Note="coupling pair (negatives together at the middle node): 2 x 100 uF = 50 uF; Cirrus AN0556 4.1: electrolytic or C0G")
+            # P108 (18.11.2026, chief engineer): Cirrus AN0556 4.1 asks for C0G or electrolytic coupling capacitors. A truly NON-POLARISED SMD
+            # electrolytic exists: Wuerth WCAP-ASNP 865250349007, 47 uF 16 V, 8.0 x 6.5 mm (datasheet rev 002.000: non-polarized, no reverse voltage),
+            # 239 pcs at Digikey 18.11.2026, LCSC C5530373 (0 in stock at JLCPCB: hand-soldered, 40 pcs). Same corner as rev 0.4 (2.8 Hz with 1.2k);
+            # THD+N at 20-50 Hz is not in the datasheet: measure on the first board. Footprint: KiCad CP_Elec_8x6.5 (8 x 6.5 mm) as an approximation of the
+            # datasheet land pattern (check before ordering boards). One lot per board (tolerance +-20 %).
+            add(ref("C"), "Device:C", "47u 16V NP", "Capacitor_SMD:CP_Elec_8x6.5", {"1": src, "2": f"B{ch}_C{leg}"}, LCSC="C5530373",
+                Note="coupling capacitor, non-polarised (Wuerth WCAP-ASNP 865250349007); Cirrus AN0556 4.1: electrolytic or C0G; hand-soldered (not in stock at JLCPCB)")
             R("1.2k", f"B{ch}_C{leg}", f"B{ch}_I{leg}", Note="0.1 %")
             R("300", out_net, f"B{ch}_I{leg}", Note="0.1 %: gain 1/4")
             C("680p C0G", out_net, f"B{ch}_I{leg}", fp=C0603)

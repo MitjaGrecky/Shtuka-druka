@@ -13,6 +13,5 @@
 | [05_4-plan-zamera-vyvod](12_compute_research/05_4-plan-zamera-vyvod.md) | 4. План замера (вывод) | 3.1 |
 | [06_5-arhitekturnyy-vyvod-vychislitelnyy-modul-dolzhen](12_compute_research/06_5-arhitekturnyy-vyvod-vychislitelnyy-modul-dolzhen.md) | 5. Архитектурный вывод: вычислительный модуль должен быть сменным | 1.9 |
 | [07_otkrytye-voprosy](12_compute_research/07_otkrytye-voprosy.md) | Открытые вопросы | 0.4 |
-| [08_6-smennye-processornye-moduli-varianty-29](12_compute_research/08_6-smennye-processornye-moduli-varianty-29.md) | 6. Сменные процессорные модули: варианты (29.10.2026) | 7.2 |
 
 Проверка полноты: `python tools/split_docs.py --verify docs/ru/12_compute_research.md`.

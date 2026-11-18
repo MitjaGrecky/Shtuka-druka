@@ -44,3 +44,5 @@ The PW cable was a 4-pin connector (SDA, SCL, ALERT, GND); PW sends eight signal
 Geometry: pcb_geomcheck 5 problems (HEAD 3): the 8-pin telemetry connector J10 lies 0.2 mm from the pads of strip LED D83, same kind as the existing D79/J2 and D80/J4: move the connector row (or the strip) when the board is routed.
 
 EasyEDA (18.11.2026, PC, rev 0.6): project `P2_v6` imported; PCB LCSC 317 written and re-checked, positions 397 / 397, saved. Schematic LCSC: 249 written, 67 missing (EasyEDA error "cmdKey", re-run `eda_set_lcsc.py P2 --project P2_v6`). Parts / nets line not captured: repeat `eda_check.py P2 --project P2_v6`.
+
+EasyEDA (19.11.2026): P2 0.6 = P2_v6: детали 397/397, цепи 266/266, LCSC (схема 68 дописано), позиции 397/397, сохранено.

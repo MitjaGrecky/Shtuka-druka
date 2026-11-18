@@ -311,26 +311,26 @@ function rearPanel(S){const H=S.rear,Wd=515;if(H<90)return;const rp=canvasMM(Wd,
   if(out){rg.fillStyle=PRINT7;rg.fill();lab7(rg,text,cx,cy,2.5,PANEL7,600,'center',TF)}else{rg.strokeStyle=PRINT7;rg.lineWidth=.35*KPX;rg.stroke();lab7(rg,text,cx,cy,2.5,PRINT7,600,'center',TF)}};
  const J=(kind,r,y,tag,out,info)=>{jack7(kind,R(r),y*YS,S.D,false,info);rtag(tag,r,y-(kind==='xlr'?15.5:kind==='din'?12:kind==='trs'?9:7.5)/(YS/1.2),out)};
  const hole=HOLE7(),knob=KNOB7(),G1='Сзади · питание и USB';
- // ---- rear wall v4 (designer, doc 41 section 24; R2 rev 0.7 and the H5 in the corner): r from the left seen from behind, z from the floor, YS = 1
+ // ---- rear wall v5 (designer, doc 41 section 24, the user's order: Power -> USB/LAN -> MIDI -> Sync -> CV -> Audio); r from the left seen from behind, z from the floor, YS = 1
  const zf=(r0,r1,z0,z1,tt)=>frame7(rg,r0,r1,H-z1,H-z0,PRINT7,tt,PANEL7);
  const G2='Сзади · управление · MIDI';
- zf(6,137,84,113,'MIDI');
+ zf(4,25,40,113,'Power');
+ rbox7(12,8,R(14),98,S.D,knob,{name:'Выключатель',group:G1,desc:'Механический выключатель питания, у края, чтобы дотянуться.'});rtag('On/Off',14,89,false);
+ jack7('dc',R(14),74,S.D,false,{name:'DC 12–24 В',group:G1,desc:'Разъём с фиксацией, защита от переполюсовки и перенапряжения.'});rtag('DC 12–24V',14,65,false);
+ rbox7(9,3.5,R(14),52,S.D,hole,{name:'USB-C (питание PD)',group:G1,desc:'Вход питания USB-C PD 15–20 В, отдельно от порта PC (R145).'});rtag('USB-C PD',14,44,false);
+ zf(28,53,54,113,'USB/LAN');
+ rbox7(16,13,R(40),98,S.D,hole,{name:'Ethernet',group:G1,desc:'LAN 2,5 GbE: проходное гнездо с кабелем до порта H5 (R158).'});rtag('LAN',40,89,false);
+ rbox7(13,5.5,R(40),80,S.D,hole,{name:'USB-A',group:G1,desc:'Внешний накопитель и обновления.'});rtag('USB-A',40,72,false);
+ rbox7(9,3.5,R(40),64,S.D,hole,{name:'USB-C (PC)',group:G1,desc:'Штука как звуковая карта и MIDI для внешнего компьютера (R78).'});rtag('USB-C PC',40,56,false);
+ zf(57,177,40,113,'MIDI');
  const midi=(n,io)=>({name:'MIDI '+n,group:G2,desc:io==='in'?'Вход MIDI DIN на оптроне (R32); гнездо на гайке, кабель к JST на левой кромке R2.':'Выход MIDI DIN, свой порт (R34); гнездо на гайке, кабель к JST на R2.'});
- [['In 1',17,0],['In 2',39,0],['Out 1',61,1],['Out 2',83,1],['Out 3',105,1],['Out 4',127,1]].forEach(m=>J('din',m[1],101,m[0],m[2],midi(m[0],m[2]?'out':'in')));
- zf(6,137,56,79,'Power / USB');
- rbox7(16,13,R(18),71,S.D,hole,{name:'Ethernet',group:G1,desc:'LAN 2,5 GbE: проходное гнездо с кабелем до порта H5 (R158).'});rtag('LAN',18,62,false);
- rbox7(13,5.5,R(39),71,S.D,hole,{name:'USB-A',group:G1,desc:'Внешний накопитель и обновления.'});rtag('USB-A',39,62,false);
- rbox7(9,3.5,R(60),71,S.D,hole,{name:'USB-C (PC)',group:G1,desc:'Штука как звуковая карта и MIDI для внешнего компьютера (R78).'});rtag('USB-C PC',60,62,false);
- jack7('dc',R(82),71,S.D,false,{name:'DC 12–24 В',group:G1,desc:'Разъём с фиксацией, защита от переполюсовки и перенапряжения.'});rtag('DC 12–24V',82,62,false);
- rbox7(9,3.5,R(104),71,S.D,hole,{name:'USB-C (питание PD)',group:G1,desc:'Вход питания USB-C PD 15–20 В, отдельно от порта PC (R145).'});rtag('USB-C PD',104,62,false);
- rbox7(12,8,R(125),71,S.D,knob,{name:'Выключатель',group:G1,desc:'Механический выключатель питания.'});rtag('On/Off',125,62,false);
- // field opposite the H5 (r 19-139, z 11-55): no jacks, the fan and the ports are behind it
- lab7(rg,'SHTUKA DRUKA',72*KPX,ry(36)*KPX,5,PRINT7,600,'center',TF);rr7(rg,52*KPX,ry(24)*KPX,40*KPX,9*KPX,1*KPX);rg.strokeStyle=PRINT7;rg.lineWidth=.3*KPX;rg.stroke();lab7(rg,'type plate',72*KPX,ry(19.5)*KPX,2.2,PRINT7,500,'center',TF);
- zf(157,262,14,112,'Control');
- [['Clk O1',1],['Clk O2',1],['Rst O',1],['Clk In',0],['Rst In',0]].forEach((s,i)=>J('mini',171+i*18,96,s[0],s[1],{name:s[0],group:'Сзади · управление · синхро',desc:'Блок «Синхро» (R33).'}));
- for(let i=0;i<4;i++)J('mini',171+i*18,74,'CV In '+(i+1),0,{name:'CV-вход '+(i+1),group:'Сзади · управление · CV',desc:'Вход управляющего напряжения.'});
- for(let i=0;i<8;i++)J('mini',171+(i%4)*18,i<4?52:30,'CV '+(i+1),1,{name:'CV/Gate '+(i+1),group:'Сзади · управление · CV',desc:'Универсальный выход: CV ±10 В, 1 В/окт, Gate, триггер или клок (R35).'});
- [['TRS In',74,0],['TRS O1',52,1],['TRS O2',30,1]].forEach(m=>J('mini',243,m[1],m[0],m[2],{name:'MIDI '+m[0],group:'Сзади · управление · MIDI 3,5 мм',desc:'Мини-джек MIDI, тип A/B в меню (R32, R34).'}));
+ [['In 1',70,98,0],['In 2',70,72,0],['Out 1',94,98,1],['Out 2',94,72,1],['Out 3',118,98,1],['Out 4',118,72,1]].forEach(m=>J('din',m[1],m[2],m[0],m[3],midi(m[0],m[3]?'out':'in')));
+ [['TRS In',96,0],['TRS Out 1',74,1],['TRS Out 2',52,1]].forEach(m=>J('mini',166,m[1],m[0],m[2],{name:'MIDI '+m[0],group:'Сзади · управление · MIDI 3,5 мм',desc:'Мини-джек MIDI, тип A/B в меню (R32, R34); в блоке MIDI, не рядом с CV.'}));
+ zf(178,263,84,113,'Sync');
+ [['Clock 1',186,1],['Clock 2',204,1],['Reset',222,1],['Clk In',240,0],['Rst In',258,0]].forEach(s=>J('mini',s[1],96,s[0],s[2],{name:s[0],group:'Сзади · управление · синхро',desc:'Блок «Синхро» (R33).'}));
+ zf(186,258,14,82,'CV');
+ for(let i=0;i<4;i++)J('mini',195+i*18,70,'CV In '+(i+1),0,{name:'CV-вход '+(i+1),group:'Сзади · управление · CV',desc:'Вход управляющего напряжения.'});
+ for(let i=0;i<8;i++)J('mini',195+(i%4)*18,i<4?48:26,'CV Out '+(i+1),1,{name:'CV/Gate '+(i+1),group:'Сзади · управление · CV',desc:'Универсальный выход: CV ±10 В, 1 В/окт, Gate, триггер или клок (R35).'});
  zf(273,342,14,112,'Audio Out');
  [['Main L',292,88],['Main R',322,88],['Aux L',292,57],['Aux R',322,57]].forEach(o=>J('trs',o[1],o[2],o[0],1,{name:o[0],group:'Сзади · аудиовыходы',desc:o[0].startsWith('Main')?'Импедансно-балансный TRS.':'Балансный TRS; режим «Педали».'}));
  [['RCA L',292,26],['RCA R',322,26]].forEach(o=>J('rca',o[1],o[2],o[0],1,{name:o[0],group:'Сзади · аудиовыходы',desc:'Копия Main для DJ-мониторов (R23).'}));

@@ -12,6 +12,8 @@ on R1); the OPA1622 enable pin follows MUTE (held low while R2 boots, thresholds
 Connectors (contract with the other boards): from A1 2x6 audio header (pairs with a ground between them), from PW JST PH 4 (+12 V, GND, -12 V,
 +5 V for the relays), from R1 JST PH 3 (MUTE, R2_OK, GND).
 Rev 0.1 (14.11.2026, PC) = schematic only.
+Rev 0.4 (18.11.2026, PC, R174/R176): no front lip. The board (100 x 38 mm) lies on the floor under the front edge of P1, the jacks stand on the
+front wall (nose to the wall), all parts on the top side, height <= 12 mm (jacks 12.7 mm, relays 5.4 mm), cable headers lie flat in the rear strip.
 Rev 0.3 (16.11.2026, PC, R165, doc 39): low case. The board lies on 1 mm standoffs in the 28 mm lip in front of P1, so EVERYTHING is on the top
 side (no room underneath): jacks Cliff S1/BBB CL1115 (Digikey 4654-CL1115-ND, hand-soldered, not at JLCPCB; 12.7 mm high instead of 15.67), the
 cable headers lie flat (2x6 right angle, JST PH side entry), board 135 x 27 mm.
@@ -27,14 +29,14 @@ import kit as K  # noqa: E402
 NAME = "f1-phones"
 ID = "F1"
 TITLE = "F1 - Headphones: 2 x Cliff S1 6.35 mm, 2 x OPA1622 difference amplifiers x2, mute relays"
-REV = "0.3"
+REV = "0.4"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("From A1: Phones 1 and 2 as differential pairs (2 Vrms FS) -> OPA1622 difference amp x2 -> 10 R -> relay -> NMJ6HCD2; "
             "volume is the DAC's digital attenuator (R87); mute relays need MUTE and R2_OK (R66, R137)")
 PWR_FLAG_NETS = ("+12V", "-12V")      # ERC: rails from the connector (+5V already gets the standard flag)
 NO_PWR_FLAG = ("+3V3",)
-W, H = 135.0, 27.0          # rev 0.3: strip in the 28 mm front lip, nose of the jacks towards the top edge (the front wall); y 0 = 1 mm behind the wall
-HOLES = [(4.0, 4.0), (131.0, 4.0), (4.0, 23.0), (131.0, 23.0), (44.0, 23.5)]   # M3, board coordinates (KiCad, y down); 16.11.2026
+W, H = 100.0, 38.0          # rev 0.4 (R174/R176, no front lip): board on the floor under the front edge of P1; y 0 = 1.5 mm behind the front wall inside, nose of the jacks towards the top edge
+HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, 34.0), (96.0, 34.0), (30.0, 31.0)]   # M3, board coordinates (KiCad, y down); 18.11.2026
 LAYERS = 2
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
@@ -121,18 +123,19 @@ def parts():
 
 
 def placement():
-    """Rev 0.3: everything on the TOP side (the board lies 1 mm above the floor in the lip). Jacks 48 mm apart, nose to the top edge; the cable
-    headers lie flat at the right end and open towards the rear edge; the amplifiers sit between and beside the jacks (hardware/common/gen/packer.py).
-    No routing."""
+    """Rev 0.4 (R174/R176): the board lies on the floor under the front edge of P1, 100 x 38 mm, EVERYTHING on the top side. The wall is at board
+    y -1.5 (inside face); the Cliff jacks sit on it nose to the top edge, centres 48 mm apart (x 27 / 75 = model x 32 / 80 with the board at model
+    x 5); the body of a jack is 24.25 mm deep (to y 22.75), so the rest of the parts go between the jacks and in the rear strip y 23.5-37.4. The cable
+    headers lie flat in the rear strip and open towards the rear edge (towards P1's rear / A1). Parts are packed by hardware/common/gen/packer.py. No routing."""
     import packer
     P = parts()
     t = "top"
     fixed = {}
     jacks = [p["ref"] for p in P if p["value"].startswith("PHONES")]
-    for r, x in zip(jacks, (20.0, 68.0)):
-        fixed[r] = (x, 11.6, 0, t)                 # centre of the pad field: rows 4/1 at y 5.25, 2/5 at 11.6, 3/6 at 17.95
+    for r, x in zip(jacks, (27.0, 75.0)):
+        fixed[r] = (x, 9.1, 0, t)                  # centre of the pad field: rows 4/1 at y 2.75, 2/5 at 9.1, 3/6 at 15.45; body to y 22.75
     heads = [p["ref"] for p in P if p["lib"].startswith("Connector_Generic") and p["ref"] not in jacks]
-    for r, (x, y, rot) in zip(heads, ((118.0, 14.0, 270), (92.0, 18.0, 0), (102.5, 18.0, 0))):
+    for r, (x, y, rot) in zip(heads, ((51.0, 25.5, 270), (70.0, 30.6, 0), (81.0, 30.6, 0))):
         fixed[r] = (x, y, rot, t)
     fixed.update(K.hole_fixed(P, HOLES))
     grp = {1: [], 2: [], 0: []}
@@ -148,7 +151,7 @@ def placement():
         if p["value"].startswith("G6K"):
             side = 1 if "HP1" in str(p["pins"]) else 2
         grp[side].append(p["ref"])
-    G = [(44.0, 13.0, t, grp[1], 0), (88.0, 8.0, t, grp[2], 0), (100.0, 8.0, t, grp[0], 0)]
+    G = [(24.0, 29.0, t, grp[1], 0), (52.0, 10.0, t, grp[2], 0), (90.0, 14.0, t, grp[0], 0)]
     return packer.pack(sys.modules[__name__], P, fixed, G, [(0, 0, W, H)])
 
 

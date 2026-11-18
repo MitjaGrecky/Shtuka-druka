@@ -1,4 +1,5 @@
-"""1:1 cardboard mockup templates for panel v7, positions from layout_v7.json. AGPL-3.0-or-later.
+"""УСТАРЕЛО (R152 снята пользователем: подставки под запястья нет). Логика не правилась; блок про подставку не применять.
+1:1 cardboard mockup templates for panel v7, positions from layout_v7.json. AGPL-3.0-or-later.
 Usage: make_templates.py out.pdf"""
 import math
 from reportlab.pdfgen import canvas

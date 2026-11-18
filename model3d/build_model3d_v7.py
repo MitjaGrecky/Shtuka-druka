@@ -3,6 +3,7 @@
 
 Usage: build_model3d_v7.py [out.html] [--standalone]. Writes shtuka_3d_v7.html by default: three.js r128 scene with the top panel generated from the layout,
 the rear panel (jacks), front jacks, internals and the detachable wrist rest.
+УСТАРЕЛО: подставка под запястья снята (R152, решение пользователя); код её ещё строит, логику не правили.
 License: AGPL-3.0-or-later (code), CERN-OHL-S-2.0 (hardware data).
 """
 import json, os, sys

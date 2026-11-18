@@ -18,7 +18,7 @@ U3,TPS7A4701,Texas_RGW0020A_VQFN-20-1EP_5x5mm_P0.65mm_EP3.15x3.15mm_ThermalVias,
 "R1,R3,R10,R20,R30,R44,R45,R52,R53,R60,R61,R68,R69,R76,R77,R84,R85,R92,R93,R100,R101,R108,R109,R116,R117,R124,R125,R132,R133,R140,R141,R148,R149,R156,R157,R164,R165,R172,R173,R180,R181,R188,R189,R196,R197,R199,R250,R251,R252,R253,R254,R255,R256",100k,R_0402_1005Metric,,номера нет: выбрать деталь
 "R2,R4",200k,R_0402_1005Metric,,номера нет: выбрать деталь
 "L1,L2",2.2uH,L_Bourns-SRN4018,,номера нет: выбрать деталь
-Y1,24.576MHz,Oscillator_SMD_Abracon_ASE-4Pin_3.2x2.5mm,C5203547,проверить в EasyEDA
+Y1,24.576MHz,Oscillator_SMD_Abracon_ASE-4Pin_3.2x2.5mm,C7431342,проверить в EasyEDA
 "R5,R7,R16,R26,R36,R202,R203,R204,R205,R239,R240,R242,R243,R244",10k,R_0402_1005Metric,C25744,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1002TCE 10 кОм 1% 0402, Basic; наличие и цена не смотрелись"
 "R6,R8,R11,R21,R31,R200",33,R_0402_1005Metric,,номера нет: выбрать деталь
 Y2,22.5792MHz,Oscillator_SMD_Abracon_ASE-4Pin_3.2x2.5mm,C7431341,проверить в EasyEDA

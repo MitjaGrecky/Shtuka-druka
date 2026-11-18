@@ -16,6 +16,7 @@ XU316-1024-QF60B, ADuM4165/4166: converter capacitors, 47 uF X5R coupling capaci
 oscillator parts. The CS5308P / CS5304P datasheets were not reachable: their pins are compared with the CS53A04P (same family).
 Rev 0.5 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md, B1): BAT54S overload clamp (3V3A / GND) on every ADC input pin (40 pins), CS5308P DS1314F2
 table 3-3: -0.3 ... VDD_A + 0.3 V and 10 mA.
+Rev 0.6 (18.11.2026, audit): 24.576 MHz oscillator YXC OT2EL4C4JI (OE-low state unknown) -> SCTF SX3M24.576B10F20TNN (tri-state, same family as the 22.5792 one).
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -28,7 +29,7 @@ import kit as K  # noqa: E402
 NAME = "a1-digital"
 ID = "A1"
 TITLE = "A1 - Digital audio: 3 ADC, 1 DAC, 2 xcore.ai, USB isolator, clocks, quiet supplies"
-REV = "0.5"
+REV = "0.6"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 ADC pairs (8 Vrms FS), A1 -> R1: Main/Aux DAC pairs, A1 -> F1: Phones pairs; xcore A: TDM master, SPI to the "
             "converters, USB port A (hub on R2), xcore B: USB port B through the ADuM4166 (isolated ground GNDPC)")
@@ -143,9 +144,10 @@ def parts():
         C("22u", core, fp=C0805)
 
     # ================================================================ clocks
-    osc_lcsc = {"OSC48": "C5203547", "OSC44": "C7431341"}
-    osc_note = {"OSC48": "YXC YSO110TR OT2EL4C4JI-111OLP-24.576M (LCSC C5203547), 1.8-3.3 V CMOS, +-10 ppm, phase jitter 12 kHz-20 MHz 0.7 ps max, "
-                         "pin 1 OE (high or open = on), 9419 in stock on 14.11.2026; replaces the SiT8208 (out of stock, B19; datasheet read)",
+    osc_lcsc = {"OSC48": "C7431342", "OSC44": "C7431341"}
+    osc_note = {"OSC48": "SCTF SX3M24.576B10F20TNN (LCSC C7431342), same series as the 22.5792 one: 3.3 V CMOS, +-10 ppm, pin 1 tri-state (high or open = on), 922 in stock on "
+                         "18.11.2026; rev 0.6 (audit): replaces the YXC OT2EL4C4JI-111OLP (C5203547, jitter 0.7 ps) whose datasheet could not be downloaded, so the output state "
+                         "at OE low (Hi-Z or low) is unknown: with outputs tied a low-driving disabled oscillator would halve the other one. Jitter of the SCTF is NOT in its datasheet: measure (B19)",
                 "OSC44": "SCTF SX3M22.5792B10F20TNN (LCSC C7431341), 3.3 V CMOS, +-10 ppm, pin 1 tri-state (high or open = on), 641 in stock on "
                          "14.11.2026; jitter is NOT in the datasheet: measure on the first board (B19)"}
     for nm, freq, en_pull in (("OSC48", "24.576MHz", "+3V3D"), ("OSC44", "22.5792MHz", "GND")):

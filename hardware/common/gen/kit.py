@@ -58,6 +58,9 @@ def conn_lcsc(fp, f):
     """Fill the LCSC field of a cable connector from CONN_LCSC unless the board set one."""
     if fp in CONN_LCSC and "LCSC" not in f:
         f["LCSC"] = CONN_LCSC[fp]
+    for k, v in list(f.items()):                       # EasyEDA refuses attribute values over 255 characters
+        if isinstance(v, str) and len(v) > 250:
+            f[k] = v[:247] + "..."
     return f
 
 

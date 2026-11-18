@@ -147,5 +147,13 @@ def adc128s102():
               "TI 12-bit 8-channel SPI ADC, 500 ksps to 1 MSPS, 2.7-5.25 V, TSSOP-16", left, right, top, bottom)
 
 
+def tps2051b():
+    left = [("5", "IN", P), ("4", "EN", I)]
+    right = [("1", "OUT", O), ("3", "OC", O)]
+    return ic("TPS2051B", "TPS2051B", "U", "Package_TO_SOT_SMD:SOT-23-5",
+              "https://www.ti.com/lit/ds/symlink/tps2051b.pdf", "C24593",
+              "TI current-limited USB power switch, 0.5 A, 2.7-5.5 V, EN active high, OC open drain (DBV pins: 1 OUT, 2 GND, 3 OC, 4 EN, 5 IN)", left, right, [], [("2", "GND", P)])
+
+
 def all_symbols():
-    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166() + adc128s102()
+    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166() + adc128s102() + tps2051b()

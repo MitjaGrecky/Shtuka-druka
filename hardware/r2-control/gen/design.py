@@ -17,6 +17,8 @@ Rev 0.4 (14.11.2026, PC, R141-R143): rear wall as the 3D model of panel v7; DIN,
 = the Control block without the window behind the DIN sockets.
 Rev 0.3 (14.11.2026, PC, R139, superseded): the right-angle jacks (MIDI DIN x 6, USB-C PC, USB-A, USB-C PD, DC) moved to the shelf
 board R2b (hardware/r2b-jacks) with their ESD and cables; R2 keeps the MIDI parts and gets a 2x7 comb to R2b.
+Rev 1.0 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md): USB hub ports P2, A1 and spare each get a TPS2051B current-limited switch (0.75-1.25 A, OC to the
+hub's OCS_N2-4, enable = PRTPWR2-4, USB2514B DS00001692: OCS_N1-4 = pins 13, 17, 19, 21; PRTPWR1-4 = 12, 16, 18, 20); DAC80504 REF capacitors 100 nF -> 220 nF (datasheet: 150 nF minimum).
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -29,7 +31,7 @@ import kit as K  # noqa: E402
 NAME = "r2-control"
 ID = "R2"
 TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables"
-REV = "0.9"
+REV = "1.0"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = ODROID-H5, down = RP2350, panel P2, A1 port A, spare")
@@ -151,13 +153,13 @@ def parts():
     add(u, "Interface_USB:USB2514B_Bi", "USB2514B", "Package_DFN_QFN:QFN-36-1EP_6x6mm_P0.5mm_EP3.7x3.7mm",
         {"1": "MCU_DM", "2": "MCU_DP", "3": "P2_DM", "4": "P2_DP", "6": "A1_DM", "7": "A1_DP", "8": "SP_DM", "9": "SP_DP",
          "5": "+3V3", "10": "+3V3", "29": "+3V3", "36": "+3V3", "15": "+3V3", "23": "+3V3", "37": "GND", "11": "GND",
-         "12": None, "16": None, "18": None, "20": None, "13": "HUB_OCS", "17": "HUB_OCS", "19": "HUB_OCS", "21": "HUB_OCS",
+         "12": None, "16": "P2_PWR", "18": "A1_PWR", "20": "SP_PWR", "13": "HUB_OCS", "17": "P2_OC", "19": "A1_OC", "21": "SP_OC",
          "14": "HUB_CRFILT", "34": "HUB_PLLFILT", "35": "HUB_RBIAS", "32": "HUB_XO", "33": "HUB_XI",
          "26": "HUB_RESET", "27": "HUB_VBUSDET", "30": "UP_DM", "31": "UP_DP",
          "22": None, "24": None, "25": None, "28": None},
         LCSC="C220679", Note="straps CFG_SEL[1:0], NON_REM[1:0] low through the internal pull-downs = default "
         "configuration (datasheet: strap low needs no part; HS_IND, SUSP_IND are LED outputs and must not be tied together)")
-    R("10k", "HUB_OCS", "+3V3", Note="no over-current inputs: ports always powered (OCS_N also has internal pull-ups)")
+    R("10k", "HUB_OCS", "+3V3", Note="OCS_N1 (port 1 = the RP2350, no VBUS switch); OCS_N2-4 come from the port switches (rev 1.0)")
     C("100n", "HUB_CRFILT", Note="datasheet: up to 0.1 uF low ESR")
     C("100n", "HUB_PLLFILT", Note="datasheet: up to 0.1 uF low ESR")
     R("12k", "HUB_RBIAS", "GND", Note="1 %")
@@ -174,10 +176,22 @@ def parts():
         C("100n", "+3V3")
     C("4.7u", "+3V3", fp=C0805)
     for note, pins in (("USB up: from the ODROID-H5 24-pin header (1 GND, 2 5V_RUN, 3 USB2_P7_DP, 5 USB2_P7_DN; doc 35 sec. 2a)",{"1": "UP_VBUS", "2": "UP_DM", "3": "UP_DP", "4": "GND"}),
-                       ("USB down: panel P2 (R86)", {"1": "+5V", "2": "P2_DM", "3": "P2_DP", "4": "GND"}),
-                       ("USB down: A1 port A (R82)", {"1": "+5V", "2": "A1_DM", "3": "A1_DP", "4": "GND"}),
-                       ("USB down: spare", {"1": "+5V", "2": "SP_DM", "3": "SP_DP", "4": "GND"})):
+                       ("USB down: panel P2 (R86)", {"1": "P2_VBUS", "2": "P2_DM", "3": "P2_DP", "4": "GND"}),
+                       ("USB down: A1 port A (R82)", {"1": "A1_VBUS", "2": "A1_DM", "3": "A1_DP", "4": "GND"}),
+                       ("USB down: spare", {"1": "SP_VBUS", "2": "SP_DM", "3": "SP_DP", "4": "GND"})):
         add(ref("J"), "Connector_Generic:Conn_01x04", note.split(":")[0], PH.format(n=4), pins, Note=note)
+
+    # rev 1.0 (audit 18.11.2026): per-port current-limited VBUS (TPS2051B DBV: 1 OUT, 2 GND, 3 OC, 4 EN, 5 IN; 2.7-5.5 V, EN high = on); before: +5V straight from PW,
+    # a short in any cable pulled the +5V of the screen, R2 and A1 down. OC (open drain, low on over-current) -> the hub's OCS_N, EN <- PRTPWR (100k pull-down keeps the
+    # switch off while the hub is in reset: the PRTPWR/BC_EN pin is also a strap).
+    for tag, what in (("P2", "panel P2"), ("A1", "A1 port A (VBUS sense only)"), ("SP", "spare port")):
+        add(ref("U"), "ShtukaDruka:TPS2051B", "TPS2051B", "Package_TO_SOT_SMD:SOT-23-5",
+            {"1": f"{tag}_VBUS", "2": "GND", "3": f"{tag}_OC", "4": f"{tag}_PWR", "5": "+5V"}, LCSC="C24593",
+            Note=f"USB port switch for {what}: 0.75-1.25 A limit; OC to the hub OCS_N, EN from PRTPWR (rev 1.0); 49473 pcs at JLC 18.11.2026")
+        C("100n", "+5V")
+        for _ in range(2):
+            C("22u 10V", f"{tag}_VBUS", fp=C0805, Note="port VBUS 44 uF (USB: 120 uF per hub port at the plug side; the 0.5 A switch limits the inrush)")
+        R("100k", f"{tag}_PWR", "GND")
 
     G[0] = "din"
     # ---------------------------------------------------------------- MIDI DIN on nuts (R141): one cable per socket
@@ -247,7 +261,7 @@ def parts():
             "(undivided needs VDD >= 5.0 V); RSTSEL high = mid-scale = 0 V out; LDAC low = update on CS")
         C("100n", "+5V")
         C("100n", "+3V3")
-        C("100n", f"DAC_REF{d + 1}")
+        C("220n", f"DAC_REF{d + 1}", Note="REF 150 nF minimum (DAC80504 8.3.2)")
     G[0] = "opa"
     opa = []
     for _ in range(3):

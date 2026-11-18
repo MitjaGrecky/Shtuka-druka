@@ -1,4 +1,4 @@
-"""One-off: split docs/ru/14_decisions_log.md (deleted 18.11.2026, see git history) into docs/ru/decisions/*.md.
+"""One-off: split the old single decisions log (removed; see git history) (deleted 18.11.2026, see git history) into docs/ru/decisions/*.md.
 
 Rows are copied verbatim; every R and P id lands in exactly one block file.
 Run: python3 tools/split_decisions.py --verify  (re-running without the flag regenerates block files from the old log and would overwrite later edits)
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "docs/ru/14_decisions_log.md"
+SRC = ROOT / "the old single decisions log (removed; see git history)"
 OUT = ROOT / "docs/ru/decisions"
 
 R = lambda *a: [f"R{i}" for i in a]

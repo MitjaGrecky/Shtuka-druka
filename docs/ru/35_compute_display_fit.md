@@ -9,10 +9,7 @@
 | [01_1-chto-podtverzhdeno-chego-net](35_compute_display_fit/01_1-chto-podtverzhdeno-chego-net.md) | 1. Что подтверждено, чего нет | 1.2 |
 | [02_2-zhgut-pw-r2-h5](35_compute_display_fit/02_2-zhgut-pw-r2-h5.md) | 2. Жгут PW / R2 → H5 | 1.9 |
 | [03_2a-kolodka-h5-i-zhgut-po](35_compute_display_fit/03_2a-kolodka-h5-i-zhgut-po.md) | 2а. Колодка H5 и жгут по контактам (ПК, 16.11.2026) | 3.1 |
-| [04_3-posadka-h5-v-korpuse-model3d](35_compute_display_fit/04_3-posadka-h5-v-korpuse-model3d.md) | 3. Посадка H5 в корпусе (`model3d/fit/fit_model.py`) | 6.6 |
 | [05_4-ekran-10-1ep-caplcd-i](35_compute_display_fit/05_4-ekran-10-1ep-caplcd-i.md) | 4. Экран 10.1EP-CAPLCD и окно панели v7 | 2.0 |
-| [06_5-chto-dalshe](35_compute_display_fit/06_5-chto-dalshe.md) | 5. Что дальше | 0.6 |
-| [07_3b-h5-na-meste-otseka-akkumulyatora](35_compute_display_fit/07_3b-h5-na-meste-otseka-akkumulyatora.md) | 3б. H5 на месте отсека аккумулятора (16.11.2026, ПК; идея пользователя) | 2.1 |
 | [08_3v-ekran-ep-povernut-na-180](35_compute_display_fit/08_3v-ekran-ep-povernut-na-180.md) | 3в. Экран EP повёрнут на 180° (16.11.2026, решение пользователя) | 2.6 |
 
 Проверка полноты: `python tools/split_docs.py --verify docs/ru/35_compute_display_fit.md`.

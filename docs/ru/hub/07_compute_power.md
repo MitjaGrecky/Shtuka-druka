@@ -38,10 +38,7 @@ R1, A1, R2, F1, PW: что на какой плате, живые микросх
 - [1. Что подтверждено, чего нет](../35_compute_display_fit/01_1-chto-podtverzhdeno-chego-net.md) · 1.2 КБ
 - [2. Жгут PW / R2 → H5](../35_compute_display_fit/02_2-zhgut-pw-r2-h5.md) · 1.9 КБ
 - [2а. Колодка H5 и жгут по контактам (ПК, 16.11.2026)](../35_compute_display_fit/03_2a-kolodka-h5-i-zhgut-po.md) · 3.1 КБ
-- [3. Посадка H5 в корпусе (`model3d/fit/fit_model.py`)](../35_compute_display_fit/04_3-posadka-h5-v-korpuse-model3d.md) · 6.6 КБ
 - [4. Экран 10.1EP-CAPLCD и окно панели v7](../35_compute_display_fit/05_4-ekran-10-1ep-caplcd-i.md) · 2.0 КБ
-- [5. Что дальше](../35_compute_display_fit/06_5-chto-dalshe.md) · 0.6 КБ
-- [3б. H5 на месте отсека аккумулятора (16.11.2026, ПК; идея пользователя)](../35_compute_display_fit/07_3b-h5-na-meste-otseka-akkumulyatora.md) · 2.1 КБ
 - [3в. Экран EP повёрнут на 180° (16.11.2026, решение пользователя)](../35_compute_display_fit/08_3v-ekran-ep-povernut-na-180.md) · 2.6 КБ
 
 ## 36. Бюджет питания
@@ -50,4 +47,4 @@ R1, A1, R2, F1, PW: что на какой плате, живые микросх
 
 ## 43. Аккумуляторы, BMS и зарядка
 PW rev 0.8: два пакета 4S с BMS, два зарядника BQ25798 от EXT, NTC, вентилятор 12 В PWM; пакеты на заказ; сравнение с IP2368 (R183, выбор инженера P109)
-- [Аккумуляторы, BMS и зарядка](../43_battery_power.md) · 25.4 КБ
+- [Аккумуляторы, BMS и зарядка](../43_battery_power.md) · 58.2 КБ

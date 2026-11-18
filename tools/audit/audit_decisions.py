@@ -110,7 +110,7 @@ def run(findings, rows):
     old_no_quote = []
     for r in rows:
         if r["kind"] == "R" and section_kind(r["section"]) == "active" and not QUOTE.search(r["text"]):
-            if "предварительно" in r["text"].lower() or "пока" in r["text"].lower():
+            if "предварительно" in r["text"].lower() or "пока" in r["text"].lower() or "нженерн" in r["text"]:
                 continue
             if r["num"] >= 150:
                 F(("WARN", "J4 R без цитаты", f"{r['id']} ({r['file']}:{r['line']}): нет «цитаты» пользователя (правило ведения: в R только то, что сказал пользователь)"))

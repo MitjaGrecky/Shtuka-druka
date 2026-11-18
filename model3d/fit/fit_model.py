@@ -380,6 +380,13 @@ def parts(usb=None):
     a(Box("Wheel AS5600", "panel", (wx, wy, PCB_TOP - PCB - 0.875), (4.9, 6.0, 1.75), color="chip",
           note="SOIC-8 on the bottom of P4, under the magnet"))
     a(Box("Wheel", "top", (wx, wy, TOP_Z + 4.5), (38, 38, 8), color="knob", shape="cyl", check=False))
+    # click mechanism (P110, docs/ru/44_wheel_detents.md): a collar on the skin round the shaft carries two opposite leaf pawls
+    # (4 mm wide, 0.2 mm bronze); 24 internal teeth are moulded in the wheel skirt (cavity z TOP_Z+0.5 .. TOP_Z+6.5, tooth tips r 15.5)
+    a(Box("Wheel detent collar", "top", (wx, wy, TOP_Z + 2.75), (24, 24, 5.5), color="plastic", shape="cyl",
+          note="printed, on the skin, screwed through it to the bearing housing; the shaft passes through a 11 mm bore"))
+    for sgn in (1, -1):
+        a(Box(f"Wheel detent pawl {sgn:+d}", "top", (wx + sgn * 13.8, wy, TOP_Z + 3.25), (3.6, 9.0, 4.0), color="metal",
+              note="envelope of the leaf pawl: root on the collar r 12, tip at the teeth r 15.5"))
 
     # everything on top of the panel, from panel v7 (visual only)
     J = json.load(open(os.path.join(REPO, "mockup", "layout", "layout_v7.json")))
@@ -614,7 +621,7 @@ ALLOWED = {               # parts that are meant to touch (mounted on each other
     ("Screen LCD", "Screen driver"), ("pot", "Slope skin"), ("pot", "W1 Levels"), ("receptacle", "W3 System"), ("microSD", "W3 System"),
     ("Battery bay", "Floor"), ("Rear jacks", "Rear wall"), ("Rear jacks", "rear board"),
     ("Phones", "Front wall"), ("Phones", "Side left"), ("Phones", "F1 headphone"), ("Crossfader", "P4 Right"), ("Crossfader", "Top skin"),
-    ("Wheel bearing housing", "Top skin"), ("Wheel magnet", "P4 Right"), ("Wheel AS5600", "P4 Right"),
+    ("Wheel bearing housing", "Top skin"), ("Wheel detent collar", "Top skin"), ("Wheel detent pawl", "Wheel detent collar"), ("Wheel magnet", "P4 Right"), ("Wheel AS5600", "P4 Right"),
     ("receptacle", "Pocket board"), ("M5 Gain", "Slope skin"), ("M5 module", "M5 Gain"), ("W1 Levels", "W1 "), ("SD socket", "W3 System"), ("Screen ", "Screen "),
     ("Trill Bar", "P2 Grid"), ("Front wall", ""), ("Rear wall", ""), ("Floor", ""), ("Side", ""),
     ("Standoff A1", "A1 audio"), ("Standoff PW", "PW power"), ("Standoff P2", "P2 Grid"), ("Standoff P2", "Top skin"),

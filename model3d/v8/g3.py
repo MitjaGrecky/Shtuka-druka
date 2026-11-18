@@ -16,15 +16,15 @@ LIPO = 11.0
 
 
 def vents_and_feet(m):
-    """R182: floor slots under both battery compartments (12 slots of 4 x 40 mm per pack, ~19 cm2 each) and 4 rubber feet 5 mm (air gets under the floor)."""
+    """R184 (user: "Щели в стенках"): intake slots in the front wall (x 120-325) and the left wall (y 10-230) at the battery level z 5.5-17.5,
+    about 59 cm2 together (an 80 mm fan needs about 50 cm2 of intake); no feet, no floor slots. Exhaust: the fan on the right wall."""
     out = []
-    for k, x0 in enumerate((113.0, 225.0)):
-        for cx in (x0 + 26.0, x0 + 80.0):
-            for r in range(6):
-                y0 = 20.0 + r * 34.0
-                out.append(m.box(f"Floor vent slot {k + 1}.{int(cx)}.{r}", "vents", cx - 2, cx + 2, y0, y0 + 40, -0.4, 0.0, color="grey", est=True, check=False))
-    for fx, fy in ((30, 30), (485, 30), (30, 480), (485, 480)):
-        out.append(m.box(f"Rubber foot {fx},{fy}", "standoff", fx - 12, fx + 12, fy - 12, fy + 12, -5.0, 0.0, color="chip", est=True, check=False))
+    for i in range(14):                        # front wall: 14 slots 14 x 12 mm, pitch 15.5
+        x0 = 120.0 + i * 15.5
+        out.append(m.box(f"Front wall vent slot {i + 1}", "vents", x0, x0 + 14, -0.4, 0.2, 5.5, 17.5, color="grey", est=True, check=False))
+    for j in range(10):                        # left wall: 10 slots 30 x 12 mm, pitch 22
+        y0 = 10.0 + j * 22.0
+        out.append(m.box(f"Left wall vent slot {j + 1}", "vents", -0.4, 0.2, y0, y0 + 30, 5.5, 17.5, color="grey", est=True, check=False))
     return out
 
 

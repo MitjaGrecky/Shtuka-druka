@@ -5,18 +5,11 @@
 
 ## 12. Вычислительная мощность
 Платформы, бенчмарки, сменный модуль (5, 6)
-- [Штука Дрюка: вычислительная мощность под 16 → 32 → 64 дорожки](../12_compute_research/00_nachalo.md) · 0.3 КБ
-- [Решение](../12_compute_research/01_reshenie.md) · 0.1 КБ
-- [1. Сколько дорожек у других и почему](../12_compute_research/02_1-skolko-dorozhek-u-drugih-i.md) · 2.8 КБ
-- [2. Платформы и бенчмарки](../12_compute_research/03_2-platformy-i-benchmarki.md) · 3.3 КБ
-- [3. Что занимает процессор (вывод)](../12_compute_research/04_3-chto-zanimaet-processor-vyvod.md) · 1.8 КБ
-- [4. План замера (вывод)](../12_compute_research/05_4-plan-zamera-vyvod.md) · 3.1 КБ
-- [5. Архитектурный вывод: вычислительный модуль должен быть сменным](../12_compute_research/06_5-arhitekturnyy-vyvod-vychislitelnyy-modul-dolzhen.md) · 1.9 КБ
-- [Открытые вопросы](../12_compute_research/07_otkrytye-voprosy.md) · 0.4 КБ
+- [Вычислительная мощность](../12_compute_research.md) · 9.7 КБ
 
 ## 18. Замер мощности
 Как мерить дорожки на M93; результат на Dell (раздел 5); ждёт запуска
-- [Замер мощности](../18_benchmark_m93.md) · 10.5 КБ
+- [Замер мощности](../18_benchmark_m93.md) · 5.5 КБ
 
 ## 34. Платы задней стенки
 R1, A1, R2, F1, PW: что на какой плате, живые микросхемы вместо снятых THAT, фантом, MIDI 3,3 В, CV, питание 19 В для Mini-ITX, номера LCSC

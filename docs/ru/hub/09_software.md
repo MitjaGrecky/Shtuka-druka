@@ -5,8 +5,8 @@
 
 ## 03. Открытые проекты
 OTTO, Zynthian, SamplerBox, разбор кода Behringer Kick
-- [Открытые проекты](../03_doc_open_source_analysis.md) · 13.8 КБ
+- [Открытые проекты](../03_doc_open_source_analysis.md) · 7.9 КБ
 
 ## 16. Эффекты и открытый проект
 Назначаемые эффекты, лицензии, урок самодельных прошивок
-- [Эффекты и открытый проект](../16_effects_and_open_source.md) · 13.5 КБ
+- [Эффекты и открытый проект](../16_effects_and_open_source.md) · 8.5 КБ

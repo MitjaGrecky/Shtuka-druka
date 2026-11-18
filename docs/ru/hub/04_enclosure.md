@@ -5,19 +5,7 @@
 
 ## 13. Корпус и компоновка
 Габариты конкурентов (1), нормы (2),  задняя панель (3) — действует , Kickstarter (5). Макет v3 (раздел 4) устарел
-- [Штука Дрюка: корпус, компоновка и макет v3](../13_enclosure_layout_research/00_nachalo.md) · 0.6 КБ
-- [1. Габариты конкурентов](../13_enclosure_layout_research/01_1-gabarity-konkurentov.md) · 1.7 КБ
-- [2. Нормы эргономики, которые применимы](../13_enclosure_layout_research/02_2-normy-ergonomiki-kotorye-primenimy.md) · 2.3 КБ
-- [3. Разъёмы: где что](../13_enclosure_layout_research/03_3-razemy-gde-chto.md) · 2.1 КБ
-- [3.1 Что берём у AudioFuse (решено: задняя панель разграничена по типу и направлению, «идея](../13_enclosure_layout_research/04_3-1-chto-berem-u-audiofuse.md) · 2.1 КБ
-- [3.2 Правила против ошибочного подключения (вывод с опорой на источники)](../13_enclosure_layout_research/05_3-2-pravila-protiv-oshibochnogo-podklyucheniya.md) · 4.2 КБ
-- [3.3 Состав задней панели (вид сзади, слева направо)](../13_enclosure_layout_research/06_3-3-sostav-zadney-paneli-vid.md) · 1.0 КБ
-- [3.4 Помещается ли (оценка)](../13_enclosure_layout_research/07_3-4-pomeschaetsya-li-ocenka.md) · 0.6 КБ
-- [3.5 Задняя панель после решений R32–R37 (31.10.2026, оценка)](../13_enclosure_layout_research/08_3-5-zadnyaya-panel-posle-resheniy.md) · 1.8 КБ
-- [3.6 Проверка объёма: помещаются ли гнёзда и плата (31.10.2026)](../13_enclosure_layout_research/09_3-6-proverka-obema-pomeschayutsya-li.md) · 1.9 КБ
-- [4. Макет v3](../13_enclosure_layout_research/10_4-maket-v3.md) · 6.7 КБ
-- [5. Если когда-нибудь Kickstarter: что решать уже сейчас](../13_enclosure_layout_research/11_5-esli-kogda-nibud-kickstarter-chto.md) · 2.8 КБ
-- [Открытые вопросы](../13_enclosure_layout_research/12_otkrytye-voprosy.md) · 0.4 КБ
+- [Корпус и компоновка](../13_enclosure_layout_research.md) · 12.3 КБ
 
 ## 32. Реальные детали в корпусе
 Кроссфейдер, колесо, экран, USB-A по даташитам; P90–P96

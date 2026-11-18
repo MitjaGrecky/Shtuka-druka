@@ -5,32 +5,15 @@
 
 ## 08. Модель управления
 Частично:  правила логики, язык светодиодов, дисплей. Страницы-глаголы и «8 дорожек = 8 строк» устарели (R94, R11)
-- [Модель управления](../08_interaction_model.md) · 13.1 КБ
+- [Модель управления](../08_interaction_model.md) · 5.3 КБ
 
 ## 09. Органы управления
 Энкодеры (1), колесо (2), кнопки (3), кроссфейдер и полосы (4), сетка (5), 16+ дорожек (6). Раздел 6.2 и колесо по сетке из 6.3 устарели (R15, R94)
-- [Штука Дрюка: органы управления — энкодеры, навигация, кнопки, сетка, 16 дорожек](../09_controls_research/00_nachalo.md) · 0.6 КБ
-- [Решения пользователя, от которых здесь отталкиваемся](../09_controls_research/01_resheniya-polzovatelya-ot-kotoryh-zdes-ottalkivaemsya.md) · 1.3 КБ
-- [1. Энкодеры](../09_controls_research/02_1-enkodery.md) · 0.0 КБ
-- [1.1 Почему бесконечные — правильно (вывод, с опорой на источники)](../09_controls_research/03_1-1-pochemu-beskonechnye-pravilno-vyvod.md) · 1.0 КБ
-- [1.2 Типы энкодеров](../09_controls_research/04_1-2-tipy-enkoderov.md) · 5.2 КБ
-- [1.6 Цены и выбор после R28 (31.10.2026)](../09_controls_research/05_1-6-ceny-i-vybor-posle.md) · 1.2 КБ
-- [1.3 Щелчки (фиксация): по ролям](../09_controls_research/06_1-3-schelchki-fiksaciya-po-rolyam.md) · 1.9 КБ
-- [1.4 Разрешение и ускорение](../09_controls_research/07_1-4-razreshenie-i-uskorenie.md) · 1.6 КБ
-- [1.5 Касание (сенсорные энкодеры)](../09_controls_research/08_1-5-kasanie-sensornye-enkodery.md) · 1.5 КБ
-- [1.6 Размер колпачков и шаг между энкодерами](../09_controls_research/09_1-6-razmer-kolpachkov-i-shag.md) · 2.3 КБ
-- [1.7 Сколько получается энкодеров](../09_controls_research/10_1-7-skolko-poluchaetsya-enkoderov.md) · 1.0 КБ
-- [2. Ручка навигации](../09_controls_research/11_2-ruchka-navigacii.md) · 4.0 КБ
-- [3. Кнопки](../09_controls_research/12_3-knopki.md) · 4.3 КБ
-- [4. Кроссфейдер, сенсорные полосы, фейдеры](../09_controls_research/13_4-krossfeyder-sensornye-polosy-feydery.md) · 2.2 КБ
-- [5. Сетка пэдов](../09_controls_research/14_5-setka-pedov.md) · 2.9 КБ
-- [6. Как жить с 16+ дорожками](../09_controls_research/15_6-kak-zhit-s-16-dorozhkami.md) · 8.7 КБ
-- [7. Где ставить 8 энкодеров относительно экрана](../09_controls_research/16_7-gde-stavit-8-enkoderov-otnositelno.md) · 1.3 КБ
-- [Открытые вопросы этого документа](../09_controls_research/17_otkrytye-voprosy-etogo-dokumenta.md) · 0.5 КБ
+- [Органы управления](../09_controls_research.md) · 18.8 КБ
 
 ## 22. Кнопки и навигация у других
 Как устроены чужие панели, общий «язык кнопок»
-- [Кнопки и навигация у других](../22_buttons_navigation_research.md) · 17.6 КБ
+- [Кнопки и навигация у других](../22_buttons_navigation_research.md) · 6.5 КБ
 
 ## 23. Разбор v4 и наброски v5
 Принципы пользователя  (раздел 0, R89), частота (6, R90), фильтр высоты (7, R91), Push (8, R92), ориентация сетки (9, R93). Наброски v5 устарели

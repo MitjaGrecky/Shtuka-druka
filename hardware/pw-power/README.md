@@ -2,7 +2,7 @@
 
 All the power of the instrument: three inputs joined by ideal diodes, the rear On/Off switch, and every rail the boards need.
 Research: `docs/ru/34_rear_boards_research.md` (section 5). Decisions: R36 (Mini-ITX, 19 V), R40/R59/R109 (battery),
-R72 (DC 12-24 V with protection, USB-C PD), R110 (screen 5 V / 4 W), R118 (phantom), R145 (USB-C Power separate from the PC port).
+R72 (DC 12-20 V with protection, rev 1.1, USB-C PD), R110 (screen 5 V / 4 W), R118 (phantom), R145 (USB-C Power separate from the PC port).
 
 **DO NOT ORDER the PW board or the battery packs** until a real 3S pack is checked (dimensions, capacity, UN38.3), its BMS threshold is confirmed, and the hardware 45 °C cut-off is checked on a sample (doc 43). **Status: rev 1.0 — placed board (303 parts, 100 × 110 mm), not routed.** Packs: 3 × Jauch LP906090JH with a BQ7791500 BMS board each (doc 43, section 5в, P111). Chargers: BQ25798 ×2, PROG 10.5k = 3S. Pack TVS SMBJ13CA; LM5176 UVLO 10.1 / 9.3 V; bus 9–12.6 V from the packs. Earlier revisions (0.1–0.9, 4S packs) are in git history.
 on the board: the LM5176 and LM5156H loops (compensation taken from TI examples for other outputs).
@@ -11,7 +11,7 @@ on the board: the LM5176 and LM5156H loops (compensation taken from TI examples 
 
 | Block | Part | From -> to | Notes |
 |---|---|---|---|
-| DC input | fuse 7 A, SMBJ28CA, LM74700 + CSD18540Q5B | DC jack 12-24 V -> BUS_IN | reverse polarity and ORing |
+| DC input | fuse 7 A, SMBJ28CA, LM74700 + CSD18540Q5B | DC jack 12-20 V -> BUS_IN | reverse polarity and ORing |
 | USB-C Power | TPS25730D (C22438973), SMBJ22CA, LM74700 + FET | PD 15-20 V, 3 A operating / 5 A max -> BUS_IN | no I2C: ADCIN1 = 15 V min, ADCIN2 = 20 V max, ADCIN3 = 3 A, ADCIN4 = 5 A; VIN_3V3 to GND (VBUS-powered only); PPHV 47 uF polymer + ceramics |
 | EXT | LM74700 + FET (IEXT), SMBJ24CA | DC / PD (highest) -> BUS_IN, and the two chargers | batteries never feed EXT |
 | Battery 1 and 2 (rev 1.0) | each: Micro-Fit 2x3 (BAT+ x 2, GND x 2, NTC, GND), fuse 10 A, SMBJ13CA, LM74700 + FET | 3S 9-12.6 V pack with its own BMS (BQ7791500) -> BUS_IN | R183, P111, doc 43 5c |
@@ -69,3 +69,7 @@ Doc `docs/ru/43_battery_power.md`: path A (pack with BMS + charger on PW), two i
 
 ## Rev 1.0: 3S packs (18.11.2026, engineer, P111)
 Doc 43 section 5c. Changed in `gen/design.py` only values and notes (303 parts, 163 nets, same placement and board size, so the enclosure model is unchanged): charger PROG 17.4k -> 10.5k (3S), pack TVS SMBJ20CA -> SMBJ13CA (C132568; BAT pin limit 20 V), LM5176 UVLO divider 34.8k -> 32.4k, On/Off rocker >= 15 A. The BMS board (BQ7791500PWR, C2876946; 2 x CSD18540Q5B, 5 mOhm shunt; about 35 x 28 mm) is specified in doc 43 5c and is not yet in CAD. Not checked: the cell-PCM series connection (Jauch datasheet is silent), the 45 C cut-off on a heated sample, routing.
+
+## Rev 1.1: audit fixes (18.11.2026)
+Audit `notes/reviews/schematics_2026-11-18.md`: EXT clamp SMBJ24CA (38.9 V at 15 A) and USB-C VBUS clamp SMBJ22CA (35 V) -> **SMBJ20CA** (Littelfuse C151258, 9636 pcs at JLC): BQ25798 VBUS is 30 V absolute / 24 V recommended, TPS25730 VBUS 28 V absolute (TI recommends breakdown between 22 and 28 V; TVS2200 has 2 pcs at JLC). **The DC adapter is 12-20 V** (19 V standard), not 24 V.
+Firmware: the BQ25798 watchdog reset returns VREG to 12.6 V (3S POR) = the BMS OV threshold: re-write VREG 12.45 V after every reset or disable the watchdog. The LM5176 UVLO spread (datasheet 1.17-1.29 V, 2.15-4.25 uA) gives stop 8.4-10.4 V: the battery cut-off is also set in firmware (INA226). The telemetry harness PH 8 has all seven signals + one GND (twist GND with SCL, 100 R already in FAN_PWM); the P2 end must carry the same eight pins (P2 rev 0.x has only a 4-pin connector: SDA, SCL, ALERT, GND).

@@ -20,6 +20,8 @@ Rev 1.0 (18.11.2026, engineer, R186, P111, doc 43 5c): packs 3S (3 x Jauch LP906
 (POR VREG 12.6 V, ICHG 1 A, VSYSMIN 9 V), pack TVS SMBJ13CA (SMBJ20CA clamped above the 20 V BAT limit), bus 9-12.6 V from the packs, LM5176
 UVLO start 10.1 V / stop 9.3 V (was 9.45 / 8.7 V; boost mode from 9.3 V in); 15 V / 12 V fan / 5 V stages unchanged (fed from the 19 V rail or from a BUS >= 8.7 V).
 The pack BMS is a separate small board in each pack (BQ7791500, doc 43 5c); the PW 45 C hardware charge stop and the charge-only-with-switch-on gate stay.
+Rev 1.1 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md): EXT and PD TVS SMBJ24CA / SMBJ22CA -> SMBJ20CA (BQ25798 VBUS 30 V abs. max / 24 V
+recommended, TPS25730 VBUS 28 V abs. max); DC adapter is 12-20 V. Values and nets unchanged otherwise (same placement).
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -32,7 +34,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "1.0"
+REV = "1.1"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -144,7 +146,9 @@ def parts():
     add(ref("J"), "Connector_Generic:Conn_02x03_Odd_Even", "USB-C Power in", MF.format("43045-0612_2x03"),
         {"1": "PD_VBUS", "2": "PD_VBUS", "3": "GND", "4": "GND", "5": "PD_CC1", "6": "PD_CC2"},
         Note="cable from the USB-C Power receptacle on the rear wall (R145): VBUS x 2, GND x 2, CC1, CC2; 5 A rated USB-C")
-    add(ref("D"), "Device:D_TVS", "SMBJ22CA", SMB, {"1": "PD_VBUS", "2": "GND"}, LCSC="C224016", Note="VBUS surge, 22 V standoff")
+    add(ref("D"), "Device:D_TVS", "SMBJ20CA", SMB, {"1": "PD_VBUS", "2": "GND"}, LCSC="C151258",
+        Note="VBUS surge (audit 18.11.2026, rev 1.1): 20 V standoff, breakdown 22.2-24.5 V = between the TPS25730 recommended 22 V and absolute 28 V "
+        "(SLVSGP9 6.1 note 4), clamp about 32 V at 18 A (SMBJ22CA clamped 35 V). TI's TVS2200 (C523793) has 2 pcs at JLC: not used; Littelfuse C151258, 9636 pcs 18.11.2026")
     u = ref("U")
     add(u, "Interface_USB:TPS25730D", "TPS25730D", "Package_DFN_QFN:Texas_REF0038A_WQFN-38-2EP_6x4mm_P0.4",
         {"1": "PD_LDO3V3", "2": "PD_ADCIN1", "3": "PD_LDO3V3", "4": "PD_LDO1V5", "5": "PD_ADCIN34", "6": None,
@@ -176,8 +180,10 @@ def parts():
 
     # ---- EXT = DC or PD (whichever is higher); it feeds the two chargers and, through its own ideal diode, the bus. The batteries
     # never feed EXT (so a pack cannot charge the other pack through the chargers).
-    add(ref("D"), "Device:D_TVS", "SMBJ24CA", SMB, {"1": "EXT", "2": "GND"}, LCSC="C49211287",
-        Note="EXT clamp: the chargers' VBUS/VAC pins are 30 V absolute maximum (BQ25798); 24 V standoff; 157 in stock at JLC 18.11.2026")
+    add(ref("D"), "Device:D_TVS", "SMBJ20CA", SMB, {"1": "EXT", "2": "GND"}, LCSC="C151258",
+        Note="EXT clamp (audit 18.11.2026, rev 1.1): the chargers' VBUS/VAC pins are 30 V absolute maximum and 24 V recommended (BQ25798 6.1, 6.3); "
+        "SMBJ24CA clamped 38.9 V at 15 A. SMBJ20CA: 20 V standoff, breakdown 22.2-24.5 V, clamp about 32 V at 18 A and about 28 V at 3 A. "
+        "Rule: the DC adapter is 12-20 V (19 V standard, R36), not 24 V. Littelfuse C151258, 9636 pcs at JLC 18.11.2026")
     ideal_diode("IEXT", "EXT", "BUS_IN")
 
     # ---- two battery inputs, each: pack harness (power + NTC), fuse, TVS, ideal diode to the bus, BQ25798 charger from EXT

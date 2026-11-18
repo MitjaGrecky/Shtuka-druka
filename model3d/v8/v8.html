@@ -305,35 +305,42 @@ function screen7(p,e,info,S,s){const wg=new THREE.Group();wg.position.set(0,S.zs
  const dm=new THREE.MeshBasicMaterial({map:tex7(sc),toneMapped:false,polygonOffset:true,polygonOffsetFactor:-4,polygonOffsetUnits:-4});SOLID.dispose.push(dm);
  const disp=new THREE.Mesh(new THREE.PlaneGeometry(aw,ah),dm);disp.rotation.x=-Math.PI/2;disp.position.set(p.c[0],1.05,-s);wg.add(disp);reg7(disp,info)}
 function rearPanel(S){const H=S.rear,Wd=515;if(H<90)return;const rp=canvasMM(Wd,H,PANEL7),rg=rp.g;
- const YS=Math.min(1.2,(H-16)/92),R=r=>Wd-r,ry=y=>H-y*YS;
+ const YS=1,R=r=>Wd-r,ry=y=>H-y*YS;
  const rframe=(r0,r1,t)=>frame7(rg,r0,r1,6,H-4,PRINT7,t,PANEL7);
  const rtag=(text,r,y,out)=>{rg.font='600 '+(2.5*KPX)+'px '+TF;const tw=rg.measureText(text).width+2*KPX,th=3.8*KPX,cx=r*KPX,cy=ry(y)*KPX;rr7(rg,cx-tw/2,cy-th/2,tw,th,.8*KPX);
   if(out){rg.fillStyle=PRINT7;rg.fill();lab7(rg,text,cx,cy,2.5,PANEL7,600,'center',TF)}else{rg.strokeStyle=PRINT7;rg.lineWidth=.35*KPX;rg.stroke();lab7(rg,text,cx,cy,2.5,PRINT7,600,'center',TF)}};
  const J=(kind,r,y,tag,out,info)=>{jack7(kind,R(r),y*YS,S.D,false,info);rtag(tag,r,y-(kind==='xlr'?15.5:kind==='din'?12:kind==='trs'?9:7.5)/(YS/1.2),out)};
  const hole=HOLE7(),knob=KNOB7(),G1='Сзади · питание и USB';
- rframe(4.5,78.5,'Power / USB');
- rbox7(16,13,R(20),78*YS,S.D,hole,{name:'Ethernet',group:G1,desc:'LAN 2,5 GbE: проходное гнездо с кабелем до порта H5 (R158).'});rtag('LAN',20,67,false);
- rbox7(13,5.5,R(40),80*YS,S.D,hole,{name:'USB-A',group:G1,desc:'Внешний накопитель и обновления.'});rtag('USB-A',40,72,false);
- rbox7(9,3.5,R(62),80*YS,S.D,hole,{name:'USB-C (PC)',group:G1,desc:'Штука как звуковая карта и MIDI для внешнего компьютера (R78).'});rtag('USB-C (PC)',62,72,false);
- jack7('dc',R(22),40*YS,S.D,false,{name:'DC 12–24 В',group:G1,desc:'Разъём с фиксацией, защита от переполюсовки и перенапряжения.'});rtag('DC 12–24V',22,30,false);
- rbox7(12,8,R(52),40*YS,S.D,knob,{name:'Выключатель',group:G1,desc:'Механический выключатель питания.'});rtag('On/Off',52,30,false);
- rframe(88.5,262.5,'Control');
- const midi=(n,io)=>({name:'MIDI '+n,group:'Сзади · управление · MIDI',desc:io==='in'?'Вход MIDI DIN на оптроне (R32).':'Выход MIDI DIN, свой порт (R34).'});
- [['In 1',100,82,0],['Out 1',122,82,1],['Out 3',144,82,1],['In 2',100,52,0],['Out 2',122,52,1],['Out 4',144,52,1]].forEach(m=>J('din',m[1],m[2],m[0],m[3],midi(m[0],m[3]?'out':'in')));
- [['TRS In',100,22,0],['TRS O1',122,22,1],['TRS O2',144,22,1]].forEach(m=>J('mini',m[1],m[2],m[0],m[3],{name:'MIDI '+m[0],group:'Сзади · управление · MIDI 3,5 мм',desc:'Мини-джек MIDI, тип A/B в меню (R32, R34).'}));
- [['Clk O1',1],['Clk O2',1],['Rst O',1],['Clk In',0],['Rst In',0]].forEach((s,i)=>J('mini',172+i*17,90,s[0],s[1],{name:s[0],group:'Сзади · управление · синхро',desc:'Блок «Синхро» (R33).'}));
- for(let i=0;i<4;i++)J('mini',172+i*17,68,'CV In '+(i+1),0,{name:'CV-вход '+(i+1),group:'Сзади · управление · CV',desc:'Вход управляющего напряжения.'});
- for(let i=0;i<8;i++)J('mini',172+(i%4)*17,i<4?46:24,'CV '+(i+1),1,{name:'CV/Gate '+(i+1),group:'Сзади · управление · CV',desc:'Универсальный выход: CV ±10 В, 1 В/окт, Gate, триггер или клок (R35).'});
- rframe(272.5,342.5,'Audio Out');
- [['Main L',292,80],['Main R',322,80],['Aux L',292,52],['Aux R',322,52]].forEach(o=>J('trs',o[1],o[2],o[0],1,{name:o[0],group:'Сзади · аудиовыходы',desc:o[0].startsWith('Main')?'Импедансно-балансный TRS.':'Балансный TRS; режим «Педали».'}));
- [['RCA L',292,24],['RCA R',322,24]].forEach(o=>J('rca',o[1],o[2],o[0],1,{name:o[0],group:'Сзади · аудиовыходы',desc:'Копия Main для DJ-мониторов (R23).'}));
- rframe(352.5,510.5,'Audio In');
- [['Mic/Line 1',370,80],['Mic/Line 2',400,80]].forEach(o=>J('xlr',o[1],o[2],o[0],0,{name:o[0],group:'Сзади · аудиовходы',desc:'Комбо XLR/TRS, фантом только на XLR.'}));
- [['Hi-Z 1',370,32],['Hi-Z 2',400,32]].forEach(o=>J('trs',o[1],o[2],o[0],0,{name:o[0],group:'Сзади · аудиовходы',desc:'Hi-Z 1 МОм; возврат педальной петли.'}));
- [['Phono L',428,86],['Phono R',446,86]].forEach(o=>J('rca',o[1],o[2],o[0],0,{name:o[0],group:'Сзади · аудиовходы',desc:'Фоно с RIAA.'}));
- jack7('dc',R(468),86*YS,S.D,false,{name:'Земля фоно',group:'Сзади · аудиовходы',desc:'Клемма заземления проигрывателя.'});rtag('GND',468,78.5,false);
- rbox7(5,9,R(490),86*YS,S.D,knob,{name:'Фоно/линия',group:'Сзади · аудиовходы',desc:'Переключатель чувствительности фоно-входа.'});rtag('Phono/Line',490,78.5,false);
- for(let i=0;i<8;i++)J('trs',428+(i%4)*22,i<4?56:28,'Line '+(i+1),0,{name:'Линейный вход '+(i+1),group:'Сзади · аудиовходы',desc:'Балансный TRS 6,3 мм (R37).'});
+ // ---- rear wall v4 (designer, doc 41 section 24; R2 rev 0.7 and the H5 in the corner): r from the left seen from behind, z from the floor, YS = 1
+ const zf=(r0,r1,z0,z1,tt)=>frame7(rg,r0,r1,H-z1,H-z0,PRINT7,tt,PANEL7);
+ const G2='Сзади · управление · MIDI';
+ zf(6,137,84,113,'MIDI');
+ const midi=(n,io)=>({name:'MIDI '+n,group:G2,desc:io==='in'?'Вход MIDI DIN на оптроне (R32); гнездо на гайке, кабель к JST на левой кромке R2.':'Выход MIDI DIN, свой порт (R34); гнездо на гайке, кабель к JST на R2.'});
+ [['In 1',17,0],['In 2',39,0],['Out 1',61,1],['Out 2',83,1],['Out 3',105,1],['Out 4',127,1]].forEach(m=>J('din',m[1],101,m[0],m[2],midi(m[0],m[2]?'out':'in')));
+ zf(6,137,56,79,'Power / USB');
+ rbox7(16,13,R(18),71,S.D,hole,{name:'Ethernet',group:G1,desc:'LAN 2,5 GbE: проходное гнездо с кабелем до порта H5 (R158).'});rtag('LAN',18,62,false);
+ rbox7(13,5.5,R(39),71,S.D,hole,{name:'USB-A',group:G1,desc:'Внешний накопитель и обновления.'});rtag('USB-A',39,62,false);
+ rbox7(9,3.5,R(60),71,S.D,hole,{name:'USB-C (PC)',group:G1,desc:'Штука как звуковая карта и MIDI для внешнего компьютера (R78).'});rtag('USB-C PC',60,62,false);
+ jack7('dc',R(82),71,S.D,false,{name:'DC 12–24 В',group:G1,desc:'Разъём с фиксацией, защита от переполюсовки и перенапряжения.'});rtag('DC 12–24V',82,62,false);
+ rbox7(9,3.5,R(104),71,S.D,hole,{name:'USB-C (питание PD)',group:G1,desc:'Вход питания USB-C PD 15–20 В, отдельно от порта PC (R145).'});rtag('USB-C PD',104,62,false);
+ rbox7(12,8,R(125),71,S.D,knob,{name:'Выключатель',group:G1,desc:'Механический выключатель питания.'});rtag('On/Off',125,62,false);
+ // field opposite the H5 (r 19-139, z 11-55): no jacks, the fan and the ports are behind it
+ lab7(rg,'SHTUKA DRUKA',72*KPX,ry(36)*KPX,5,PRINT7,600,'center',TF);rr7(rg,52*KPX,ry(24)*KPX,40*KPX,9*KPX,1*KPX);rg.strokeStyle=PRINT7;rg.lineWidth=.3*KPX;rg.stroke();lab7(rg,'type plate',72*KPX,ry(19.5)*KPX,2.2,PRINT7,500,'center',TF);
+ zf(157,262,14,112,'Control');
+ [['Clk O1',1],['Clk O2',1],['Rst O',1],['Clk In',0],['Rst In',0]].forEach((s,i)=>J('mini',171+i*18,96,s[0],s[1],{name:s[0],group:'Сзади · управление · синхро',desc:'Блок «Синхро» (R33).'}));
+ for(let i=0;i<4;i++)J('mini',171+i*18,74,'CV In '+(i+1),0,{name:'CV-вход '+(i+1),group:'Сзади · управление · CV',desc:'Вход управляющего напряжения.'});
+ for(let i=0;i<8;i++)J('mini',171+(i%4)*18,i<4?52:30,'CV '+(i+1),1,{name:'CV/Gate '+(i+1),group:'Сзади · управление · CV',desc:'Универсальный выход: CV ±10 В, 1 В/окт, Gate, триггер или клок (R35).'});
+ [['TRS In',74,0],['TRS O1',52,1],['TRS O2',30,1]].forEach(m=>J('mini',243,m[1],m[0],m[2],{name:'MIDI '+m[0],group:'Сзади · управление · MIDI 3,5 мм',desc:'Мини-джек MIDI, тип A/B в меню (R32, R34).'}));
+ zf(273,342,14,112,'Audio Out');
+ [['Main L',292,88],['Main R',322,88],['Aux L',292,57],['Aux R',322,57]].forEach(o=>J('trs',o[1],o[2],o[0],1,{name:o[0],group:'Сзади · аудиовыходы',desc:o[0].startsWith('Main')?'Импедансно-балансный TRS.':'Балансный TRS; режим «Педали».'}));
+ [['RCA L',292,26],['RCA R',322,26]].forEach(o=>J('rca',o[1],o[2],o[0],1,{name:o[0],group:'Сзади · аудиовыходы',desc:'Копия Main для DJ-мониторов (R23).'}));
+ zf(352,510,14,112,'Audio In');
+ [['Mic/Line 1',370,88],['Mic/Line 2',400,88]].forEach(o=>J('xlr',o[1],o[2],o[0],0,{name:o[0],group:'Сзади · аудиовходы',desc:'Комбо XLR/TRS, фантом только на XLR.'}));
+ [['Hi-Z 1',370,35],['Hi-Z 2',400,35]].forEach(o=>J('trs',o[1],o[2],o[0],0,{name:o[0],group:'Сзади · аудиовходы',desc:'Hi-Z 1 МОм; возврат педальной петли.'}));
+ [['Phono L',428,95],['Phono R',446,95]].forEach(o=>J('rca',o[1],o[2],o[0],0,{name:o[0],group:'Сзади · аудиовходы',desc:'Фоно с RIAA.'}));
+ jack7('dc',R(468),95,S.D,false,{name:'Земля фоно',group:'Сзади · аудиовходы',desc:'Клемма заземления проигрывателя.'});rtag('GND',468,86,false);
+ rbox7(5,9,R(490),95,S.D,knob,{name:'Фоно/линия',group:'Сзади · аудиовходы',desc:'Переключатель чувствительности фоно-входа.'});rtag('Phono/Line',490,86,false);
+ for(let i=0;i<8;i++)J('trs',428+(i%4)*22,i<4?62:31,'Line '+(i+1),0,{name:'Линейный вход '+(i+1),group:'Сзади · аудиовходы',desc:'Балансный TRS 6,3 мм (R37).'});
  skinPlane(rp.c,Wd-8,H-8,SOLID.group,[Wd/2,H/2,-S.D-.08],[0,Math.PI,0])}
 function frontJacks(V,S){for(const p of V.parts){if(!/^Phones( \d jack| jack)/.test(p.n))continue;const k=/3\.5/.test(p.n)?'mini':'trs';const n=/x 80|Phones 2/.test(p.n)?2:1;
  jack7(k,p.c[0],p.c[2],S.y0,true,{name:'Наушники '+n,group:'Передний торец',desc:(k==='mini'?'3,5 мм':'6,35 мм')+'; громкость — ручка Phones '+n+' на скате.'})}}

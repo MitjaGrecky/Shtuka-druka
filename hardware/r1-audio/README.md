@@ -89,3 +89,5 @@ Rev 0.8 (18.11.2026, rear wall v6 (audio as in v5.2), doc 41 sections 24.2 / 24.
 ## Rev 0.9: phantom hot-plug (audit 18.11.2026)
 Unbalanced XLR (pin 3 to shield) plugged with phantom on moved the far side of the charged 47 uF cap to about -46 V; the 10 R + 1N4148W clamps took about 3.5 A / 0.5 ms and pulled the -12 V rail. Now each Mic/Line leg has an **SMBJ18CA** (Littelfuse C83327) from the cap's far side to GND (18 V standoff, above the +24 dBu TS peak 17.4 V) and the series resistor is **47 R 0805** (was 10 R): tail 0.2 A / 1.5 ms, 7.6 mJ. Test on the bench with a pin-3-to-shield cable and phantom on. Noise: +1 dB at 150 R.
 Same rev 0.9: the MUTE / R2_OK series FETs of the output relays 2N7002 -> **AO3400A** (C20917): three G6K-2F-Y coils (21 mA, must operate 4.0 V) through two 2N7002 at Vgs 3.3 V left 3.8-4.0 V at +5 V -5 %. The single-FET ATT and PHONO coil drivers stay 2N7002 (one coil, 0.1 V drop).
+
+EasyEDA (18.11.2026, PC, rev 0.9): project `R1_v7`: parts 456 / 456, nets 264 / 264 (PCB and schematic), LCSC written (120 sch / 106 pcb) and re-checked, positions 456 / 456, saved. DRC and parity left to CI.

@@ -117,3 +117,5 @@ CS5308P DS1314F2 table 3-3: analog inputs -0.3 ... VDD_A + 0.3 V, +-10 mA. A cli
 
 ## Rev 0.6: 24.576 MHz oscillator (18.11.2026)
 The two oscillators drive MCLK through 33 R each and only one is enabled. The YXC OT2EL4C4JI datasheet could not be downloaded, so what the output does at OE low was unknown (a low-driving output halves the other). Replaced by **SCTF SX3M24.576B10F20TNN** (C7431342, 922 pcs at JLC, tri-state like the 22.5792 one). The old part had a 0.7 ps jitter figure, the SCTF has none in its datasheet: measure the clock on the first board (B19). If the jitter is not enough: YXC with a read datasheet plus a 2:1 clock multiplexer instead of tied outputs.
+
+EasyEDA (18.11.2026, PC, rev 0.6): project `A1_v5` imported but NOT verified: the schematic / PCB tabs do not open through the API (big board, needs a manual double click in "All Projects"; the PC screen was in use). Run `tools/pc/eda_one.sh` steps eda_open2 / eda_board / eda_save for A1_v5.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Side section of the step case (docs/ru/38_low_case_rework.md, 3b-3d) -> step_case_section.png. Plain drawing from the numbers, not from the model."""
+"""Side section of the step case (git history (docs/ru/38_low_case_rework.md, deleted 18.11.2026), 3b-3d) -> step_case_section.png. Plain drawing from the numbers, not from the model."""
 from PIL import Image, ImageDraw, ImageFont
 import math, os
 DECK, FOLD, RS = 28.0, 41.0, 60.0          # deck, fold height, shelf lengthening

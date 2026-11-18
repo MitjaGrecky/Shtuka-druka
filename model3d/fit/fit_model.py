@@ -45,7 +45,7 @@ COMPUTER = os.environ.get("COMPUTER", "H5")      # "H5" (ODROID-H5, R149) or "IT
 H5_STANDOFF = float(os.environ.get("H5_STANDOFF", "3.0"))
 H5_Z0 = float(os.environ.get("H5_Z0", str(SKIN + H5_STANDOFF)))
 H5_H = float(os.environ.get("H5_H", "44.0"))     # overall height of the H5 above the board underside, mm
-# --- parameters of the "lower case" study (docs/ru/37_lower_case_study.md); every default keeps the old behaviour ---
+# --- parameters of the "lower case" study (git history (deleted 18.11.2026)); every default keeps the old behaviour ---
 PANEL_GAP = float(os.environ.get("PANEL_GAP", "6.5"))   # board top -> skin underside for P1, P3, P4, M1, W (encoder bodies, wheel, crossfader)
 P2_GAP = float(os.environ.get("P2_GAP", str(PANEL_GAP)))  # same for P2 Grid only (pads = FSR sheet, SMD buttons: needs less)
 P2_PARTS = float(os.environ.get("P2_PARTS", "4.0"))     # envelope of the parts under P2, mm (the design has 7.7 mm electrolytics and headers there)

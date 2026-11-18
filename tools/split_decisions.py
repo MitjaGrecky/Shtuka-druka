@@ -1,4 +1,4 @@
-"""One-off: split docs/ru/14_decisions_log.md into docs/ru/decisions/*.md.
+"""One-off: split docs/ru/14_decisions_log.md (deleted 18.11.2026, see git history) into docs/ru/decisions/*.md.
 
 Rows are copied verbatim; every R and P id lands in exactly one block file.
 Run: python3 tools/split_decisions.py --verify  (re-running without the flag regenerates block files from the old log and would overwrite later edits)

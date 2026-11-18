@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Plan view (from above) of the step case -> step_case_plan.png. Plain drawing from the numbers of docs/ru/38_low_case_rework.md 3b-3g."""
+"""Plan view (from above) of the step case -> step_case_plan.png. Plain drawing from the numbers of git history (docs/ru/38_low_case_rework.md, deleted 18.11.2026) 3b-3g."""
 from PIL import Image, ImageDraw, ImageFont
 import os
 S = 2

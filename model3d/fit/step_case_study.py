@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Step case (docs/ru/38_low_case_rework.md, section 3b): the deck is DECK mm high in front of the fold, the riser wall goes up to the old
+"""Step case (git history (docs/ru/38_low_case_rework.md, deleted 18.11.2026), section 3b): the deck is DECK mm high in front of the fold, the riser wall goes up to the old
 68 mm, behind it the slope as before. H5 on the right behind the riser, ports to the right wall, R1 / R2 / A1 / PW moved back by REAR_SHIFT
 (longer shelf), flat LiPo under P2 (R155), F1 on the left wall behind the riser.
 Run: python step_case_study.py   (KiCad 10 python, never kicad-cli). Uses lower_case_study.run()."""

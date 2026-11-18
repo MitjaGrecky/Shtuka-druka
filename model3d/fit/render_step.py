@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Render of the step case from fit_model.py (orthographic, flat shading, painter's algorithm) -> step_case_render.png:
-top = interior (no skin, no pads), bottom = outside. Config: docs/ru/38_low_case_rework.md 3b-3d (deck 28, lip 28, fold 41, shelf +60, H5 at the rear).
+top = interior (no skin, no pads), bottom = outside. Config: git history (docs/ru/38_low_case_rework.md, deleted 18.11.2026) 3b-3d (deck 28, lip 28, fold 41, shelf +60, H5 at the rear).
 Run: python render_step.py  (KiCad python). Environment variables of fit_model.py override the configuration."""
 import importlib.util, math, os, sys
 from PIL import Image, ImageDraw, ImageFont

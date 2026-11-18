@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lower-case study (docs/ru/37_lower_case_study.md): for each variant find the lowest front height FRONT_Z at which
+"""Lower-case study (git history (deleted 18.11.2026)): for each variant find the lowest front height FRONT_Z at which
 fit_model.py reports no collision (overlap > 0.05 mm), and what collides first below it.
 Variants are env settings of fit_model.py; nothing here changes the default model.
 Run: python lower_case_study.py [variant ...]   (no argument = all)   Python: KiCad 10 python, never kicad-cli."""

@@ -40,5 +40,5 @@ Deck bus to P3,J6,PinHeader_2x08_P1.27mm_Horizontal,C22438114
 Deck bus to P4,J7,PinHeader_2x08_P1.27mm_Horizontal,C22438114
 Trill Bar A,J8,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926
 Trill Bar B,J9,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926
-I2C power monitor (PW),J10,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926
+Power telemetry (PW),J10,JST_PH_S8B-PH-K_1x08_P2.00mm_Horizontal,
 100k,R100,R_0402_1005Metric,

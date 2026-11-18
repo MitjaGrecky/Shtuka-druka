@@ -40,5 +40,5 @@ J6,Deck bus to P3,PinHeader_2x08_P1.27mm_Horizontal,C22438114,проверить
 J7,Deck bus to P4,PinHeader_2x08_P1.27mm_Horizontal,C22438114,проверить в EasyEDA
 J8,Trill Bar A,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926,проверить в EasyEDA
 J9,Trill Bar B,JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926,проверить в EasyEDA
-J10,I2C power monitor (PW),JST_PH_S4B-PH-K_1x04_P2.00mm_Horizontal,C157926,проверить в EasyEDA
+J10,Power telemetry (PW),JST_PH_S8B-PH-K_1x08_P2.00mm_Horizontal,,номера нет: выбрать деталь
 R100,100k,R_0402_1005Metric,,номера нет: выбрать деталь

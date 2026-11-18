@@ -13,7 +13,7 @@ I2C: main bus SDA/SCL (pull-ups here, 4.7k) -> deck muxes P1 0x70, P3 0x71, P4 0
 0-3), 1 = M1 module bus, 2 = LP5864 E + Trill Bar A, 3 = Trill Bar B + the INA226 of PW (R146; separate from the LED drivers: address 0x40 may meet
 an LP5864 - check). Chain of registers (R123): ~SR_LOAD and SR_CLK shared, data back on SR_P1, SR_P3, SR_P4 (deck buses) and SR_P2 (local registers
 -> M1 through the module bus).
-Rev 0.1 (14.11.2026, PC) = schematic only. License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
+Rev 0.1 (14.11.2026, PC) = schematic only. Rev 0.6 (18.11.2026): PW harness widened to PH 8 (CHG_INT, FAN_PWM, FAN_TACH, CHG_EN on GP14, GP11, GP13, GP12). License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
 import sys
@@ -25,7 +25,7 @@ import kit as K  # noqa: E402
 NAME = "p2-grid"
 ID = "P2"
 TITLE = "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses"
-REV = "0.5"
+REV = "0.6"
 RA_ROT = 270        # right-angle 1.27 mm bus headers: rotation that opens them towards the rear edge (checked on the built board)
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8 x 74HC4051 + ADC128S102 (SPI0); 5 x LP5864 for 109 RGB; "
@@ -48,7 +48,7 @@ GPIO_PIN = {0: "2", 1: "3", 2: "4", 3: "5", 4: "7", 5: "8", 6: "9", 7: "10", 8: 
             12: "16", 13: "17", 14: "18", 15: "19", 16: "27", 17: "28", 18: "29", 19: "31", 20: "32", 21: "33",
             22: "34", 23: "35", 24: "36", 25: "37", 26: "40", 27: "41", 28: "42", 29: "43"}
 GPIO = {0: "SDA", 1: "SCL", 2: "~{SR_LOAD}", 3: "SR_CLK", 4: "SR_P1", 5: "SR_P3", 6: "SR_P4", 7: "SR_P2", 8: "~{INT}", 9: "PM_ALERT",
-        10: "STATUS_LED", 16: "ADC_DOUT", 17: "ADC_CS", 18: "ADC_SCK", 19: "ADC_DIN", 20: "MUX_S0", 21: "MUX_S1", 22: "MUX_S2"}
+        10: "STATUS_LED", 11: "FAN_PWM", 12: "CHG_EN", 13: "FAN_TACH", 14: "CHG_INT", 16: "ADC_DOUT", 17: "ADC_CS", 18: "ADC_SCK", 19: "ADC_DIN", 20: "MUX_S0", 21: "MUX_S1", 22: "MUX_S2"}
 
 
 def parts():
@@ -225,8 +225,11 @@ def parts():
     for tag, (sd, sc) in (("A", ("T_SDA", "T_SCL")), ("B", ("X_SDA", "X_SCL"))):
         add(ref("J"), "Connector_Generic:Conn_01x04", f"Trill Bar {tag}", PH.format(n=4), {"1": "GND", "2": "+3V3", "3": sd, "4": sc},
             Note=f"Bela Trill Bar {tag} (R113), I2C on mux channel {'2' if tag == 'A' else '3'}; Qwiic order GND, 3.3 V, SDA, SCL (SH 1.0 on the sensor: cable SH-PH); address 0x20, no pull-ups on the sensor")
-    add(ref("J"), "Connector_Generic:Conn_01x04", "I2C power monitor (PW)", PH.format(n=4),
-        {"1": "X_SDA", "2": "X_SCL", "3": "PM_ALERT", "4": "GND"}, Note="cable from PW (INA226, R146): SDA, SCL on mux channel 3, ALERT to a GPIO")
+    # rev 0.6 (18.11.2026, audit + docs/ru/45): the PW harness is PH 8, pin for pin as PW 'Power telemetry to P2'. GP11 FAN_PWM (25 kHz, PWM5B), GP12 CHG_EN,
+    # GP13 FAN_TACH (counted on channel B = 6B), GP14 CHG_INT. Pull-ups of CHG_INT / tach and the pull-down of CHG_EN are on PW; all 3.3 V.
+    add(ref("J"), "Connector_Generic:Conn_01x08", "Power telemetry (PW)", PH.format(n=8),
+        {"1": "X_SDA", "2": "X_SCL", "3": "PM_ALERT", "4": "CHG_INT", "5": "FAN_PWM", "6": "FAN_TACH", "7": "GND", "8": "CHG_EN"},
+        Note="cable from PW 'Power telemetry to P2' (INA226 R146, BQ25798 chargers via TCA9546A 0x70, fan, charge enable): SDA, SCL on mux channel 3, ALERT GP9, CHG_INT GP14, FAN_PWM GP11, FAN_TACH GP13, CHG_EN GP12")
     R("100k", "PM_ALERT", "+3V3", Note="ALERT is open drain")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P

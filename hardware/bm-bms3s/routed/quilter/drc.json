@@ -1,0 +1,1129 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-11-19T06:43:23",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.8",
+    "schematic_parity": [],
+    "source": "bm-bms3s.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 2 [/BAT_N] of C2 on Bottom Layer",
+                    "pos": {
+                        "x": 46.175,
+                        "y": 51.4
+                    },
+                    "uuid": "834e24b5-1ce6-421b-a125-4462073f651b"
+                },
+                {
+                    "description": "Track [/BAT_N] on Bottom Layer, length 0.7381 mm",
+                    "pos": {
+                        "x": 48.3375,
+                        "y": 51.075
+                    },
+                    "uuid": "7d973c6d-694d-410c-9c87-d75bf22c5e9c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [/BAT_P] of R1 on Bottom Layer",
+                    "pos": {
+                        "x": 45.39,
+                        "y": 49.8
+                    },
+                    "uuid": "6db72457-42cc-4893-89f0-bf366e770ab8"
+                },
+                {
+                    "description": "Track [/BAT_P] on Top Layer, length 6.0129 mm",
+                    "pos": {
+                        "x": 44.0,
+                        "y": 54.630864
+                    },
+                    "uuid": "8c47f107-6846-4d34-a480-a5872321f8aa"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [/SRNF] on Bottom Layer, length 0.3109 mm",
+                    "pos": {
+                        "x": 46.38,
+                        "y": 56.710889
+                    },
+                    "uuid": "b52c93eb-cb84-4dda-9cc1-0563b0f804e9"
+                },
+                {
+                    "description": "Pad 11 [/SRNF] of U1 on Bottom Layer",
+                    "pos": {
+                        "x": 48.3375,
+                        "y": 49.775
+                    },
+                    "uuid": "1801d34c-d02f-4815-97da-ecc9dac43f7b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [/DSG] of R13 on Bottom Layer",
+                    "pos": {
+                        "x": 42.89,
+                        "y": 49.6
+                    },
+                    "uuid": "5823cfe2-fa60-4db5-9e78-a407aab35c19"
+                },
+                {
+                    "description": "Pad 12 [/DSG] of U1 on Bottom Layer",
+                    "pos": {
+                        "x": 48.3375,
+                        "y": 49.125
+                    },
+                    "uuid": "39f16c4b-0a89-4c66-8da6-2750f911579b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Hole clearance violation (pad clearance 0.3500 mm; actual 0.1706 mm)",
+            "items": [
+                {
+                    "description": "Track [/BAT_P] on Top Layer, length 8.4552 mm",
+                    "pos": {
+                        "x": 45.346907,
+                        "y": 64.432991
+                    },
+                    "uuid": "3d0b0244-dd03-436b-a117-d141878dc8f3"
+                },
+                {
+                    "description": "NPTH pad of H1",
+                    "pos": {
+                        "x": 43.5,
+                        "y": 59.0
+                    },
+                    "uuid": "910b2361-6c2d-40df-afd9-9aea96e5933b"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (pad clearance 0.3500 mm; actual 0.1584 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of H1",
+                    "pos": {
+                        "x": 43.5,
+                        "y": 59.0
+                    },
+                    "uuid": "910b2361-6c2d-40df-afd9-9aea96e5933b"
+                },
+                {
+                    "description": "Zone 'GND.F.Cu' [GND] on Top Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "81e96b81-0343-4bd1-9a99-a9d29c43ebda"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (pad clearance 0.3500 mm; actual 0.1584 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of H2",
+                    "pos": {
+                        "x": 74.5,
+                        "y": 59.0
+                    },
+                    "uuid": "36b0c32c-22ac-43d9-b6b5-361898faee87"
+                },
+                {
+                    "description": "Zone 'GND.F.Cu' [GND] on Top Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "81e96b81-0343-4bd1-9a99-a9d29c43ebda"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (pad clearance 0.3500 mm; actual 0.1584 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of H2",
+                    "pos": {
+                        "x": 74.5,
+                        "y": 59.0
+                    },
+                    "uuid": "36b0c32c-22ac-43d9-b6b5-361898faee87"
+                },
+                {
+                    "description": "Zone 'GND.B.Cu' [GND] on Bottom Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "4de231d6-fbef-4efe-bba1-e39cd7986e72"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (pad clearance 0.3500 mm; actual 0.1584 mm)",
+            "items": [
+                {
+                    "description": "NPTH pad of H1",
+                    "pos": {
+                        "x": 43.5,
+                        "y": 59.0
+                    },
+                    "uuid": "910b2361-6c2d-40df-afd9-9aea96e5933b"
+                },
+                {
+                    "description": "Zone 'GND.B.Cu' [GND] on Bottom Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "4de231d6-fbef-4efe-bba1-e39cd7986e72"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Isolated copper fill",
+            "items": [
+                {
+                    "description": "Zone 'GND.F.Cu' [GND] on Top Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "81e96b81-0343-4bd1-9a99-a9d29c43ebda"
+                }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+        },
+        {
+            "description": "Isolated copper fill",
+            "items": [
+                {
+                    "description": "Zone 'GND.F.Cu' [GND] on Top Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "81e96b81-0343-4bd1-9a99-a9d29c43ebda"
+                }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+        },
+        {
+            "description": "Isolated copper fill",
+            "items": [
+                {
+                    "description": "Zone 'GND.B.Cu' [GND] on Bottom Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "4de231d6-fbef-4efe-bba1-e39cd7986e72"
+                }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+        },
+        {
+            "description": "Isolated copper fill",
+            "items": [
+                {
+                    "description": "Zone 'GND.B.Cu' [GND] on Bottom Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "4de231d6-fbef-4efe-bba1-e39cd7986e72"
+                }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+        },
+        {
+            "description": "Isolated copper fill",
+            "items": [
+                {
+                    "description": "Zone 'GND.B.Cu' [GND] on Bottom Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "4de231d6-fbef-4efe-bba1-e39cd7986e72"
+                }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+        },
+        {
+            "description": "Isolated copper fill",
+            "items": [
+                {
+                    "description": "Zone 'GND.B.Cu' [GND] on Bottom Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "4de231d6-fbef-4efe-bba1-e39cd7986e72"
+                }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+        },
+        {
+            "description": "Isolated copper fill",
+            "items": [
+                {
+                    "description": "Zone 'GND.B.Cu' [GND] on Bottom Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "4de231d6-fbef-4efe-bba1-e39cd7986e72"
+                }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+        },
+        {
+            "description": "Isolated copper fill",
+            "items": [
+                {
+                    "description": "Zone 'GND.B.Cu' [GND] on Bottom Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "4de231d6-fbef-4efe-bba1-e39cd7986e72"
+                }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+        },
+        {
+            "description": "Isolated copper fill",
+            "items": [
+                {
+                    "description": "Zone 'GND.B.Cu' [GND] on Bottom Layer, priority 0",
+                    "pos": {
+                        "x": 77.483869,
+                        "y": 77.483869
+                    },
+                    "uuid": "4de231d6-fbef-4efe-bba1-e39cd7986e72"
+                }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Rectangle on Edge.Cuts",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 40.0
+                    },
+                    "uuid": "feb297e7-0b0a-423c-b866-f98423356316"
+                },
+                {
+                    "description": "Reference field of J2",
+                    "pos": {
+                        "x": 49.0,
+                        "y": 78.16
+                    },
+                    "uuid": "46391587-48b1-40a8-99fa-9c1f863d205d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Rectangle on Edge.Cuts",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 40.0
+                    },
+                    "uuid": "feb297e7-0b0a-423c-b866-f98423356316"
+                },
+                {
+                    "description": "Reference field of J5",
+                    "pos": {
+                        "x": 69.7,
+                        "y": 78.16
+                    },
+                    "uuid": "43eb970b-3d19-4a1d-af0f-f11b9d2e2048"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "PCB text 'BM BMS 3S rev 0.2' on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 68.0
+                    },
+                    "uuid": "21f89eb0-80f2-4c0b-872f-b78ad1e152ac"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "PCB text 'Shtuka Druka CERN-OHL-S-2.0' on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 69.2
+                    },
+                    "uuid": "23a547cf-2f50-4d38-9ca0-53f91f610419"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R4",
+                    "pos": {
+                        "x": 51.5,
+                        "y": 46.17
+                    },
+                    "uuid": "3be85f8a-c26e-4b1f-86bd-43ae391b88e5"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R8",
+                    "pos": {
+                        "x": 45.9,
+                        "y": 56.27
+                    },
+                    "uuid": "ed97a2fa-2ac9-44db-870f-51fb0e154013"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R10",
+                    "pos": {
+                        "x": 59.1,
+                        "y": 46.53
+                    },
+                    "uuid": "4dbb5cf7-bfc7-41f4-b1b2-a9a28319949e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R9",
+                    "pos": {
+                        "x": 48.5,
+                        "y": 45.27
+                    },
+                    "uuid": "3d79bbb6-8887-4bcb-b3d2-3f176f475119"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of U1",
+                    "pos": {
+                        "x": 51.2,
+                        "y": 57.55
+                    },
+                    "uuid": "bf639da1-03d9-43fe-94c6-5f6bffb9db2a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R2",
+                    "pos": {
+                        "x": 49.1,
+                        "y": 46.67
+                    },
+                    "uuid": "092f6422-62fd-441e-a9f1-0f4ab2a7ec54"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R6",
+                    "pos": {
+                        "x": 56.8,
+                        "y": 51.47
+                    },
+                    "uuid": "b6fb1596-be4c-4493-b852-cc5a283a143f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R15",
+                    "pos": {
+                        "x": 50.7,
+                        "y": 44.57
+                    },
+                    "uuid": "fe7ba4f0-48f2-49a5-897d-fb90e9721cce"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R11",
+                    "pos": {
+                        "x": 53.8,
+                        "y": 46.07
+                    },
+                    "uuid": "7a61c26b-a707-4f7c-8b0f-7276403f1be7"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R13",
+                    "pos": {
+                        "x": 43.4,
+                        "y": 50.77
+                    },
+                    "uuid": "734cbe69-88de-4e7d-83c4-30db3d8b96f6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R12",
+                    "pos": {
+                        "x": 56.7,
+                        "y": 54.47
+                    },
+                    "uuid": "50f9d58e-bbee-4d7b-98ff-00098326671f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R1",
+                    "pos": {
+                        "x": 45.9,
+                        "y": 50.97
+                    },
+                    "uuid": "3a933e05-ac3d-4db3-ad27-b207b5e64579"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R5",
+                    "pos": {
+                        "x": 46.9,
+                        "y": 46.57
+                    },
+                    "uuid": "fc88abe6-9370-463d-b612-da54d9fe5f5d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R7",
+                    "pos": {
+                        "x": 56.7,
+                        "y": 52.97
+                    },
+                    "uuid": "0999db85-8657-41d7-9582-ff23be263eb1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R3",
+                    "pos": {
+                        "x": 45.8,
+                        "y": 54.57
+                    },
+                    "uuid": "a31618fb-103a-4d93-8f4c-3ccde84e911b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C2",
+                    "pos": {
+                        "x": 45.4,
+                        "y": 52.83
+                    },
+                    "uuid": "b4222068-11ee-4d3a-a39e-c863f98fc7f3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R1",
+                    "pos": {
+                        "x": 45.9,
+                        "y": 50.97
+                    },
+                    "uuid": "3a933e05-ac3d-4db3-ad27-b207b5e64579"
+                },
+                {
+                    "description": "Segment of C2 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 45.25942,
+                        "y": 50.89
+                    },
+                    "uuid": "3ef1acfb-cbad-4136-8b74-59232185999a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R6",
+                    "pos": {
+                        "x": 56.8,
+                        "y": 51.47
+                    },
+                    "uuid": "b6fb1596-be4c-4493-b852-cc5a283a143f"
+                },
+                {
+                    "description": "Segment of R7 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 56.546359,
+                        "y": 51.42
+                    },
+                    "uuid": "d2607afb-2215-49d0-9388-ec338abf1c9e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R12",
+                    "pos": {
+                        "x": 56.7,
+                        "y": 54.47
+                    },
+                    "uuid": "50f9d58e-bbee-4d7b-98ff-00098326671f"
+                },
+                {
+                    "description": "Segment of C3 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 56.392164,
+                        "y": 54.96
+                    },
+                    "uuid": "d80ad97c-58e6-46d3-9716-0bfaed026163"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R12",
+                    "pos": {
+                        "x": 56.7,
+                        "y": 54.47
+                    },
+                    "uuid": "50f9d58e-bbee-4d7b-98ff-00098326671f"
+                },
+                {
+                    "description": "Segment of C3 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 56.392164,
+                        "y": 54.24
+                    },
+                    "uuid": "97bf42e2-7073-44d6-a4d6-c05ac424954b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R7",
+                    "pos": {
+                        "x": 56.7,
+                        "y": 52.97
+                    },
+                    "uuid": "0999db85-8657-41d7-9582-ff23be263eb1"
+                },
+                {
+                    "description": "Segment of R12 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 56.546359,
+                        "y": 52.92
+                    },
+                    "uuid": "4cb8eb0b-0b85-41f8-af5b-d64fe8b5d27c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of R8 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 45.746359,
+                        "y": 54.72
+                    },
+                    "uuid": "83d97dc1-a4ed-40fb-bffd-1effc0a79dcf"
+                },
+                {
+                    "description": "Reference field of R3",
+                    "pos": {
+                        "x": 45.8,
+                        "y": 54.57
+                    },
+                    "uuid": "a31618fb-103a-4d93-8f4c-3ccde84e911b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C6 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 45.792164,
+                        "y": 56.04
+                    },
+                    "uuid": "e599bbe3-dfa3-4da2-9997-4fcdaa47bcb2"
+                },
+                {
+                    "description": "Reference field of R8",
+                    "pos": {
+                        "x": 45.9,
+                        "y": 56.27
+                    },
+                    "uuid": "ed97a2fa-2ac9-44db-870f-51fb0e154013"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of R14 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 60.246359,
+                        "y": 46.72
+                    },
+                    "uuid": "2b2671d3-a087-4c93-a373-8d0a9b32ebaa"
+                },
+                {
+                    "description": "Reference field of R10",
+                    "pos": {
+                        "x": 59.1,
+                        "y": 46.53
+                    },
+                    "uuid": "4dbb5cf7-bfc7-41f4-b1b2-a9a28319949e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of Q2 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 72.46,
+                        "y": 48.615
+                    },
+                    "uuid": "ea6a7324-6ede-436c-a2d0-9592f971e4db"
+                },
+                {
+                    "description": "Reference field of R16",
+                    "pos": {
+                        "x": 69.0,
+                        "y": 48.27
+                    },
+                    "uuid": "f7d372a1-98b6-4e58-9119-160968d08ffc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of Q1 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 64.86,
+                        "y": 48.615
+                    },
+                    "uuid": "2b96fbc8-9b4e-46af-9f18-17f35178a087"
+                },
+                {
+                    "description": "Reference field of R14",
+                    "pos": {
+                        "x": 60.4,
+                        "y": 48.27
+                    },
+                    "uuid": "34136c4a-9d83-4407-9c0a-40de2d37f06c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of R4 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 51.346359,
+                        "y": 44.62
+                    },
+                    "uuid": "98337305-6def-4b4a-98af-a44f91135227"
+                },
+                {
+                    "description": "Reference field of R15",
+                    "pos": {
+                        "x": 50.7,
+                        "y": 44.57
+                    },
+                    "uuid": "fe7ba4f0-48f2-49a5-897d-fb90e9721cce"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R9",
+                    "pos": {
+                        "x": 48.5,
+                        "y": 45.27
+                    },
+                    "uuid": "3d79bbb6-8887-4bcb-b3d2-3f176f475119"
+                },
+                {
+                    "description": "Segment of R2 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 48.946359,
+                        "y": 45.12
+                    },
+                    "uuid": "f3f470c0-cc74-461c-b510-e279a1056a54"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R4",
+                    "pos": {
+                        "x": 51.5,
+                        "y": 46.17
+                    },
+                    "uuid": "3be85f8a-c26e-4b1f-86bd-43ae391b88e5"
+                },
+                {
+                    "description": "Segment of C1 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 52.35942,
+                        "y": 46.49
+                    },
+                    "uuid": "e80c3cef-9212-4c34-8961-d4256d68cdfc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R11",
+                    "pos": {
+                        "x": 53.8,
+                        "y": 46.07
+                    },
+                    "uuid": "7a61c26b-a707-4f7c-8b0f-7276403f1be7"
+                },
+                {
+                    "description": "Segment of C1 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 52.35942,
+                        "y": 46.49
+                    },
+                    "uuid": "e80c3cef-9212-4c34-8961-d4256d68cdfc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of C1",
+                    "pos": {
+                        "x": 52.5,
+                        "y": 48.43
+                    },
+                    "uuid": "434ec2c1-6fb7-4aca-9d41-f1048bd2b566"
+                },
+                {
+                    "description": "Segment of U1 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 53.51,
+                        "y": 48.665
+                    },
+                    "uuid": "d2114075-f0f3-46e2-ae73-a560e3a48717"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C6 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 45.792164,
+                        "y": 56.76
+                    },
+                    "uuid": "cbfbc2ed-9c6a-47d2-b333-19751aac64e9"
+                },
+                {
+                    "description": "Reference field of R8",
+                    "pos": {
+                        "x": 45.9,
+                        "y": 56.27
+                    },
+                    "uuid": "ed97a2fa-2ac9-44db-870f-51fb0e154013"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C4 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 51.492164,
+                        "y": 58.06
+                    },
+                    "uuid": "376205e2-f8dd-4f13-a02e-f5c2654093bb"
+                },
+                {
+                    "description": "Reference field of U1",
+                    "pos": {
+                        "x": 51.2,
+                        "y": 57.55
+                    },
+                    "uuid": "bf639da1-03d9-43fe-94c6-5f6bffb9db2a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of U1",
+                    "pos": {
+                        "x": 51.2,
+                        "y": 57.55
+                    },
+                    "uuid": "bf639da1-03d9-43fe-94c6-5f6bffb9db2a"
+                },
+                {
+                    "description": "Segment of C4 on Board Layer Stack Bottom Overlay",
+                    "pos": {
+                        "x": 51.492164,
+                        "y": 57.34
+                    },
+                    "uuid": "cb9c16be-61b6-4ab7-9c17-1e8cde8c7787"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Copper sliver (Top Layer)",
+            "items": [],
+            "severity": "warning",
+            "type": "copper_sliver"
+        },
+        {
+            "description": "Copper sliver (Top Layer)",
+            "items": [],
+            "severity": "warning",
+            "type": "copper_sliver"
+        },
+        {
+            "description": "Copper sliver (Bottom Layer)",
+            "items": [],
+            "severity": "warning",
+            "type": "copper_sliver"
+        }
+    ]
+}

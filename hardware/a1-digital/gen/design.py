@@ -1,6 +1,6 @@
 """A1 - Digital audio board (under the slope, left; mates R1 at a right angle): 20 differential ADC channels (CS5308P x 2 + CS5304P),
 8 DAC channels (CS4308P) with current-to-voltage stages, two XMOS xcore.ai (XU316-1024-QF60B): A = bus master, internal USB audio port to
-the Mini-ITX (port A, through the R2 hub) and the converters' SPI; B = USB device to the external computer through an ADuM4166 isolator
+the Mini-ITX (port A, through the R2 hub) and the converters' SPI; B = USB device to the external computer through an ISOUSB211 isolator
 (port B). Two oscillators (24.576 and 22.5792 MHz, R114), quiet 3.3 V, 1.8 V, two 0.9 V cores.
 Single source of truth for the schematic. Plan, pinouts and sources: hardware/a1-digital/PLAN.md; decisions R82-R84, R87, R88, R114, R116,
 R117, R136; levels: R1 README ("ADC buffer FS 8 Vrms").
@@ -19,6 +19,7 @@ table 3-3: -0.3 ... VDD_A + 0.3 V and 10 mA.
 Rev 0.6 (18.11.2026, audit): 24.576 MHz oscillator YXC OT2EL4C4JI (OE-low state unknown) -> SCTF SX3M24.576B10F20TNN (tri-state, same family as the 22.5792 one).
 Rev 0.7 (19.11.2026, ADuM4166 datasheet read): isolator crystal 12 pF -> 10 pF (S322524M10PF10PPM, C7568725); rest of the isolator node checked, no other change.
 Rev 0.8 (19.11.2026): +5V bulk capacitor 47 uF 10 V -> 25 V (C190223), same 6.3 x 7.7 footprint.
+Rev 0.9 (20.11.2026): USB isolator ADuM4166 (unavailable) -> TI ISOUSB211DPR (SSOP-28 DP0028A, no crystal): the isolator crystal and its 15 pF capacitors are gone; supplies per the datasheet (side 2 from +3V3D and +1V8).
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -31,11 +32,11 @@ import kit as K  # noqa: E402
 NAME = "a1-digital"
 ID = "A1"
 TITLE = "A1 - Digital audio: 3 ADC, 1 DAC, 2 xcore.ai, USB isolator, clocks, quiet supplies"
-REV = "0.8"
+REV = "0.9"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 ADC pairs (8 Vrms FS), A1 -> R1: Main/Aux DAC pairs, A1 -> F1: Phones pairs; xcore A: TDM master, SPI to the "
-            "converters, USB port A (hub on R2), xcore B: USB port B through the ADuM4166 (isolated ground GNDPC)")
-PWR_FLAG_NETS = ("+12V", "-12V", "GNDPC", "PC_VBUS", "ISO_V1", "+0V9A", "+0V9B", "PLLA", "PLLB")   # ERC: R1 rails, computer side, buck outputs, filtered PLL supplies
+            "converters, USB port A (hub on R2), xcore B: USB port B through the ISOUSB211 (isolated ground GNDPC)")
+PWR_FLAG_NETS = ("+12V", "-12V", "GNDPC", "PC_VBUS", "ISO_V1", "ISO_V18", "+0V9A", "+0V9B", "PLLA", "PLLB")   # ERC: R1 rails, computer side, buck outputs, filtered PLL supplies
 NO_PWR_FLAG = ("+3V3",)          # no plain +3V3 rail here (+3V3A and +3V3D): no standard power symbol for it
 W, H = 220.0, 100.0          # rough: under the slope on the left, about 220 x 100 mm (doc 29)
 HOLES = [(4.0, 4.0), (216.0, 4.0), (4.0, 96.0), (216.0, 96.0), (110.0, 4.0), (110.0, 96.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
@@ -106,7 +107,7 @@ def parts():
         Note="cable from the R2 hub 'USB down: A1 port A' (R82): VBUS sense only, +5 V comes from PW")
     add(ref("J"), "Connector_Generic:Conn_01x06", "USB-C PC", PH.format(n=6),
         {"1": "PC_VBUS", "2": "PC_DM", "3": "PC_DP", "4": "PC_CC1", "5": "PC_CC2", "6": "GNDPC"},
-        Note="cable from the rear USB-C (PC) receptacle on the wall (R145): data only, isolated by the ADuM4166; Rd 5.1k on A1")
+        Note="cable from the rear USB-C (PC) receptacle on the wall (R145): data only, isolated by the ISOUSB211; Rd 5.1k on A1")
     add(ref("J"), "Connector_Generic:Conn_01x06", "spare ADC 19-20", PH.format(n=6),
         {"1": "ADC19_P", "2": "ADC19_N", "3": "GND", "4": "ADC20_P", "5": "ADC20_N", "6": "GND"},
         Note="R88: two spare channels, assignable (an internal source or an extra input board)")
@@ -119,7 +120,7 @@ def parts():
         C("1u", "+5V", fp=C0603)
         C("2.2u", net, fp=C0603)
 
-    ldo33("+3V3D", "digital 3.3 V: xcore I/O + USB_VDD33, flash, converter digital I/O, oscillators, ADuM4166 (600 mA max; about 150 mA typical = 0.26 W in the SOT-23-5, +65 K: watch the temperature)")
+    ldo33("+3V3D", "digital 3.3 V: xcore I/O + USB_VDD33, flash, converter digital I/O, oscillators, ISOUSB211 side 2 (600 mA max; about 150 mA typical = 0.26 W in the SOT-23-5, +65 K: watch the temperature)")
     add(ref("U"), "Regulator_Linear:AP2112K-1.8", "AP2112K-1.8", SOT235, {"1": "+5V", "2": "GND", "3": "+5V", "4": None, "5": "+1V8"},
         LCSC="C176944", Note="1.8 V: xcore bottom I/O domain (JTAG, crystal) and USB_VDD18")
     C("1u", "+5V", fp=C0603)
@@ -323,7 +324,7 @@ def parts():
     pb = {"7": "MCLK_XB", "9": "PDM_CLK", "10": "PDM_DATA", "28": "UDM", "29": "UDP"}
     uB, xb = xcore("B", xlB, pb)
     for u, xs, tag, what in ((uA, xa, "A", "bus master, USB port A (hub), TDM, SPI to the converters"),
-                             (uB, xb, "B", "USB port B (external computer) through the ADuM4166, PDM microphone")):
+                             (uB, xb, "B", "USB port B (external computer) through the ISOUSB211, PDM microphone")):
         add(u, "ShtukaDruka:XU316-1024-QF60B", "XU316-1024-QF60B", "ShtukaDruka:XU316-1024-QF60B_QFN-60_7x7_P0.4", _fill(xs, 65), LCSC="C7397517",
             Note=f"xcore {tag}: {what}; core 0.9 V, I/O 3.3 V (left/right/top), 1.8 V (bottom: JTAG, crystal) - port plan in PLAN.md")
         mclk_load(f"MCLK_X{tag}")
@@ -360,27 +361,32 @@ def parts():
     R("10k", "HUB_VBUS", "HUB_VBUS_S")
     R("20k", "HUB_VBUS_S", "GND", Note="5 V -> 3.33 V sense for xcore A (port A VBUS present)")
 
-    # ================================================================ USB port B: PC jack side (GNDPC), ADuM4166, xcore B
+    # ================================================================ USB port B: PC jack side (GNDPC), ISOUSB211, xcore B
     add(ref("U"), "Power_Protection:USBLC6-2SC6", "USBLC6-2SC6", SOT236,
         {"1": "PC_DP", "6": "PC_DP", "3": "PC_DM", "4": "PC_DM", "2": "GNDPC", "5": "PC_VBUS"}, LCSC="C7519", Note="ESD on the computer side")
     R("5.1k", "PC_CC1", "GNDPC", Note="device (Rd)")
     R("5.1k", "PC_CC2", "GNDPC", Note="device (Rd)")
-    add(ref("U"), "ShtukaDruka:ADuM4166", "ADuM4166", "Package_SO:SOIC-20W_7.5x15.4mm_P1.27mm",
-        {"1": "PC_VBUS", "3": "ISO_V1", "8": "PC_DP", "9": "PC_DM", "2": "GNDPC", "4": "GNDPC", "5": "GNDPC", "6": "GNDPC", "7": "GNDPC", "10": "GNDPC",
-         "20": "+3V3D", "18": "+3V3D", "12": "UDP", "13": "UDM", "14": None, "15": "ISO_XO", "16": "ISO_XI", "11": "GND", "17": "GND", "19": "GND"},
-        LCSC="C5367256", Note="USB 2.0 HS isolator: side 1 = computer (VBUS1 = PC VBUS 5 V, the internal LDO makes VDD1 3.3 V), side 2 = xcore B "
-        "(VBUS2 tied to VDD2 = +3V3D, LDO bypassed: an LDO next to the external 3.3 V would fight it); PGOOD open; "
-        "package ADI RI-20-1 (SOIC_IC, MS-013-AD): body 7.5 x 15.4 mm, not the 12.8 mm SOIC-20W - pads are the same, "
-        "the body and courtyard are 2.6 mm longer (checked against the ADI drawing ri_20_1.pdf, 16.11.2026)")
-    C("100n", "PC_VBUS", "GNDPC", fp=C0603, Note="VBUS1: 0.1 uF within 10 mm of the pin (datasheet)")
-    C("100n", "ISO_V1", "GNDPC", fp=C0603, Note="VDD1: exactly 0.1 uF (more disturbs the LDO start-up)")
-    C("100n", "+3V3D", fp=C0603, Note="VDD2 / VBUS2: 0.1 uF within 10 mm of the pins")
-    add(ref("Y"), "Device:Crystal_GND24", "24MHz", "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-        {"1": "ISO_XI", "3": "ISO_XO", "2": "GND", "4": "GND"}, LCSC="C7568725",
-        Note="ADuM4166 crystal (XI2/XO2): 24 MHz, tolerance <= 50 ppm and stability <= 100 ppm, typical crystal load 10 pF, start within 0.3 ms (ADI datasheet Rev. B, clock options). "
-        "Rev 0.7: S322524M10PF10PPM (C7568725, 10 pF, +-10 ppm, 2828 pcs at JLC 19.11.2026) with 15 pF caps (7.5 pF + about 3 pF stray = 10.5 pF) replaces C70590 (12 pF, +-20 ppm: about 1.5 pF off the load)")
-    C("15p", "ISO_XI")
-    C("15p", "ISO_XO")
+    # rev 0.9 (20.11.2026): ADuM4166 (no stock anywhere, 51 weeks at Digikey) -> TI ISOUSB211 (SLLSFC5D): USB 2.0 repeater LS/FS/HS 480 Mbit/s, reinforced 5.7 kVrms, no crystal.
+    # Side 1 (PC cable, GNDPC): VBUS1 and VCC1 from PC VBUS 5 V, internal LDOs make V3P3V1 (ISO_V1) and V1P8V1 (ISO_V18) - USB cable power, about 50-60 mA, 0.3-0.5 W in the chip (RthJA 44 K/W).
+    # Side 2 (A1 ground): VBUS2 = V3P3V2 = +3V3D (external 3.3 V, allowed), VCC2 = V1P8V2 = +1V8 (external 1.8 V from the AP2112K-1.8, internal LDO bypassed, less heat);
+    # no isolated DC-DC is needed: both sides have their own supply from their own side (the PC ground is isolated by the barrier, the PC only gives VBUS).
+    add(ref("U"), "ShtukaDruka:ISOUSB211", "ISOUSB211DPR", "ShtukaDruka:SSOP-28_DP0028A_7.5x10.3mm_P0.65mm",
+        {"1": "PC_VBUS", "2": "ISO_V1", "3": "GNDPC", "4": "ISO_V18", "5": "PC_VBUS", "6": None, "7": "PC_DM", "8": "PC_DP", "9": "GNDPC", "10": "GNDPC",
+         "11": "ISO_V18", "12": "GNDPC", "13": "ISO_V1", "14": None, "15": None, "16": "+3V3D", "17": "GND", "18": "+1V8", "19": "GND", "20": "GND",
+         "21": "UDP", "22": "UDM", "23": None, "24": "+1V8", "25": "+1V8", "26": "GND", "27": "+3V3D", "28": "+3V3D"},
+        LCSC="C5772877", Note="USB 2.0 HS isolator (SLLSFC5D): UD+/UD- (7, 8) to the PC jack, DD+/DD- (21, 22) = xcore B; EQ pins 00 (GND); CDPENZ high = no CDP advertising; "
+        "V1OK/V2OK open; NC 14, 15 open. Capacitors per 8.3: 1 uF at VBUSx, 0.1 uF at V3P3Vx, 2 uF + 0.1 uF + 10 nF at V1P8Vx. Footprint DP0028A (SSOP-28, body 7.5 x 10.3, creepage 8.15 mm: "
+        "no copper of any layer between the sides under the chip). JLC 15 pcs, LCSC about 1420, Digikey 3553 (20.11.2026)")
+    C("1u", "PC_VBUS", "GNDPC", fp=C0402, Note="VBUS1 / VCC1: 1 uF close to pins 1 and 5")
+    C("100n", "ISO_V1", "GNDPC", fp=C0402, Note="V3P3V1 (internal LDO output): 0.1 uF close to pin 2")
+    C("2.2u", "ISO_V18", "GNDPC", fp=C0402, Note="V1P8V1: 2 uF (the datasheet: 2 uF + 0.1 uF + 10 nF), close to pin 4")
+    C("100n", "ISO_V18", "GNDPC", fp=C0402)
+    C("10n", "ISO_V18", "GNDPC", fp=C0402)
+    C("1u", "+3V3D", fp=C0402, Note="VBUS2: 1 uF close to pin 28")
+    C("100n", "+3V3D", fp=C0402, Note="V3P3V2: 0.1 uF close to pin 27")
+    C("2.2u", "+1V8", fp=C0402, Note="V1P8V2 / VCC2: 2 uF close to pin 25")
+    C("100n", "+1V8", fp=C0402)
+    C("10n", "+1V8", fp=C0402)
 
     # ================================================================ shared TDM clocks: source series resistors
     R("22", "BCLK_X", "BCLK", Note="BCLK from xcore A to the four converters")

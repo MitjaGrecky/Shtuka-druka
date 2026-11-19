@@ -2,11 +2,11 @@
  "id": "A1",
  "name": "a1-digital",
  "title": "A1 - Digital audio: 3 ADC, 1 DAC, 2 xcore.ai, USB isolator, clocks, quiet supplies",
- "rev": "0.8",
+ "rev": "0.9",
  "w": 220.0,
  "h": 100.0,
  "layers": 4,
- "parts": 653,
+ "parts": 657,
  "holes": [
   [
    4.0,
@@ -71,5 +71,5 @@
    "JTAG B"
   ]
  ],
- "bom_lines": 63
+ "bom_lines": 62
 }

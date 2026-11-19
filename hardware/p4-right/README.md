@@ -28,3 +28,5 @@ Rev 0.2 (16.11.2026): R170 (16.11.2026): шинные разъёмы снизу 
 
 ## Rev 0.2 (19.11.2026)
 AS5600-ASOM (no stock) -> AS5600-ASOT (C55240803, SOIC-8, same pinout); PGO (pin 5) is open on the board: check against the ams datasheet (not downloaded).
+
+EasyEDA (19.11.2026): P4 0.2 = P4_v5: детали 123/123, цепи 84/84, LCSC (схема 106, PCB 106), позиции 123/123, сохранено.

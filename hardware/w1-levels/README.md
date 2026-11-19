@@ -33,3 +33,5 @@ License: CERN-OHL-S-2.0 (hardware), AGPL-3.0-or-later (scripts).
 
 ## Rev 0.3 (19.11.2026)
 Pot RK09K1130A6S -> A5R (C209779, shaft: check against the knob). make_pcb.py fixed for the KiCad 10 net class API; the board file keeps its geometry (the zone call of make_pcb still fails on KiCad 10: the LCSC field was patched in the board file by hand).
+
+EasyEDA (19.11.2026): W1 0.3 = W1_v5: детали 38/38, цепи 35/35, LCSC (схема 32, PCB 32), позиции 38/38, сохранено.

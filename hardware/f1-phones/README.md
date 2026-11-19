@@ -60,3 +60,5 @@ Main line R174 (deck 30 mm) has **no front overhang** (R176), so the 135 x 27 mm
 Audit `notes/reviews/schematics_2026-11-18.md`: G6K-2F-Y 5 V coil 237 R / 21 mA, must operate 4.0 V (distributor tables; confirm in the Omron datasheet). Two series 2N7002 at Vgs 3.3 V left the coils close to that at +5 V -5 %. Both are now **AO3400A** (C20917, basic, Rds 0.06 R at 2.5 V).
 
 EasyEDA (18.11.2026, PC, rev 0.5): project `F1_v6`: parts 57 / 57, nets 40 / 40, LCSC (16 sch / 12 pcb) kept after reopening, positions 57 / 57, saved. Tabs opened only after a manual double click, then closed and reopened through the API. DRC and parity left to CI.
+
+EasyEDA (19.11.2026): F1 0.6 = F1_v7: детали 57/57, цепи 40/40, LCSC (схема 16, PCB 12), позиции 57/57, сохранено.

@@ -4,3 +4,5 @@ Panel USB-C receptacle **GCT USB4105-GF-A** (C3020560, 5 A, 13495 pcs at JLC) on
 
 Generators: `gen/design.py`, `gen/make_sch.py`, `gen/make_pcb.py` (`KICAD_SYMBOL_DIR=<repo>/hardware/common/sym7`).
 License: CERN-OHL-S-2.0 (hardware), AGPL-3.0-or-later (scripts).
+
+EasyEDA (19.11.2026): U1 0.1 = U1_v1: детали 6/6, цепи 5/5, LCSC (схема 3, PCB 3), позиции 6/6, сохранено.

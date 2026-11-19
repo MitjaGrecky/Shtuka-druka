@@ -26,3 +26,5 @@ EasyEDA (19.11.2026, PC, rev 0.2): project `BM_v1`: parts 32 / 32, nets 25 / 25 
 License: CERN-OHL-S-2.0 (hardware), AGPL-3.0-or-later (scripts).
 
 Rev 0.3 (19.11.2026): CI ERC fixes: the schematic no longer carries the default +5V / GND power-flag symbols (this board has no such rails: dangling pins) and has a PWR_FLAG on VDD (the chip supply behind RVDD). ERC was not run locally: kicad-cli is forbidden on this PC by CLAUDE.md.
+
+EasyEDA (19.11.2026): BM 0.3 = BM_v2: детали 32/32, цепи 25/25, LCSC (схема 30, PCB 30), позиции 32/32, сохранено.

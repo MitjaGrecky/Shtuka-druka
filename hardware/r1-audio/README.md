@@ -96,3 +96,5 @@ Rev 1.0 (19.11.2026, rear wall v6.1, `docs/ru/img/41_rear_v6_1_jacks.csv`, doc 4
 
 ## Rev 1.2 (19.11.2026): rear wall harness headers
 PH-2 "GND terminal" (Johnson 111-0702-001, harness H9) and PH-3 "Phono/Line switch" (NKK M2012S2A1W01, harness H10). The switch is OR-ed with the R2 phono control (two 1N4148W + 1k each): switch in the Phono position forces the phono relays on (4.7 V at the gate), in the Line position the R2 control (R118) decides. RIAA R2 7.42k (no stock) -> 7.5k (C25918): response change 0.07 dB at 20 Hz (1 % tolerance adds up to 0.07 dB; for the < 0.05 dB spec use 7.32k + 100 R, both 0.1 %).
+
+EasyEDA (19.11.2026): R1 1.2 = R1_v9: детали 461/461, цепи 267/267, LCSC (схема 125, PCB 111), позиции 461/461, сохранено.

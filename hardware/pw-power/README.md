@@ -81,3 +81,5 @@ EasyEDA (18.11.2026, PC, rev 1.1): project `PW_v11`: PCB and schematic parts 303
 - FETs CSD18540Q5B -> **CSD18532Q5B** (C882766), pack TVS C132568 -> C224008, green LEDs NCD0603G1 (C84267); L4, L5 stay Bourns SRP1038CC-8R2M (bought at Digikey).
 - DC fuse 7 A -> **5 A** (the wall jack Switchcraft 721A is 5 A). **On/Off switch connector: Micro-Fit 2x2** (43045-0412, housing 43025-0400): the 10.2 A peak is split over two contacts per side (Carling 2GK51-73, both poles in parallel); the 1x2 carried 10 A on one contact.
 - Harness check (notes/harness_bom.md): J1 DC (43645-0200, 20 AWG, 5 A), J2 USB-C PD from U1 (43025-0600), J5 switch (43025-0400, 4 wires), battery J3/J4 6 A over two contacts: nothing is above the contact ratings after the changes.
+
+EasyEDA (20.11.2026): PW 1.2 = PW_v12: детали 313/313, цепи 169/169, LCSC (схема 84, PCB 84), позиции 313/313, сохранено.

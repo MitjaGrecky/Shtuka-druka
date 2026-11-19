@@ -7,7 +7,7 @@ import importlib.util, os
 HERE = os.path.dirname(os.path.abspath(__file__))
 sp = importlib.util.spec_from_file_location("v", os.path.join(HERE, "41_rear_v6_1.py")); v = importlib.util.module_from_spec(sp); sp.loader.exec_module(v)
 S, OX, H, W, P = v.S, v.OX, v.H, v.W, v.P
-DEPTH = {"switch": 25, "dc": 25, "usbc": 15, "lan": 35, "usba": 20, "din": 20, "mini": 15, "trs": 24, "rca": 13, "xlr": 24, "post": 15}
+DEPTH = {"switch": 25, "dc": 25, "usbc": 15, "lan": 35, "usba": 20, "din": 19.2, "mini": 15, "trs": 24, "rca": 13, "xlr": 24, "post": 15}
 ZD = [(3, 28, 0, 86, 26), (3, 28, 86, 110, 60), (33, 153, 57, 110, 60), (160, 511, 1.5, 110, 42)]
 
 
@@ -35,6 +35,9 @@ def build(mode):
         pos = {"In 1": (85.5, 83.5), "Out 1": (112.5, 83.5), "Out 3": (139.5, 83.5), "In 2": (355, 33), "Out 2": (382, 33), "Out 4": (409, 33)}
         for j in J:
             if j[0] == "din": j[1], j[2] = pos[j[3]]
+    if mode == "A3":
+        for j in J:
+            if j[0] == "din": j[1] = {88: 88, 110: 112, 132: 136}[j[1]]
     if mode == "B":
         for j in J:
             if j[0] == "din": j[1] += 6
@@ -46,7 +49,7 @@ def build(mode):
 
 def draw(mode):
     J = build(mode)
-    ttl = {"A2": "A2 (A + 6 DIN одним блоком как v6.1, вырез Ø16 — предположение)", "A1": "A1 (утверждённый A + 6 DIN в D-фланце 26×31, два места)", "A": "A: v6.1 как есть, TRS = NJ3FD-V (не D), combo на плате", "B": "B: A + LAN и USB-A в D (26×31), TRS остаются NJ3FD-V"}[mode]
+    ttl = {"A3": "A3 (A + 6 DIN Lumberg 0107 05, шаг 24 по r)", "A2": "A2 (A + 6 DIN одним блоком как v6.1, вырез Ø16 — предположение)", "A1": "A1 (утверждённый A + 6 DIN в D-фланце 26×31, два места)", "A": "A: v6.1 как есть, TRS = NJ3FD-V (не D), combo на плате", "B": "B: A + LAN и USB-A в D (26×31), TRS остаются NJ3FD-V"}[mode]
     el = ['<rect width="100%" height="100%" fill="#fff"/>',
           f'<text x="30" y="20" font-size="16" font-weight="700" fill="#1f2933">Задняя стенка, вариант {ttl}</text>',
           '<text x="30" y="36" font-size="11" fill="#52606d">Размеры по даташитам Neutrik (док. 48, разд. 6); остальные гнёзда — размеры v6.1 (не сверены). Вид сзади, r — мм от ЛЕВОГО края, x модели = 515 − r; z от пола; стенка до z 110, ширина 515.</text>',
@@ -80,6 +83,11 @@ def draw(mode):
             el.append(f'<rect x="{cx - 13.5 * S}" y="{cy - 15 * S}" width="{27 * S}" height="{30 * S}" fill="#3a4047" stroke="#9aa5af" stroke-width="0.8"/>'
                       f'<circle cx="{cx}" cy="{cy}" r="{11.9 * S}" fill="#b9bec2"/><circle cx="{cx}" cy="{cy}" r="{8 * S}" fill="#050506"/>')
             dy, box = (15 + 2.6) * S, False
+        elif k == "din" and mode == "A3":                         # Lumberg 0107 05: hole 17, flange 21.8 wide, 2 x 3 mm ears horizontal (offset +-9 assumed)
+            el.append(f'<rect x="{cx - 10.9 * S}" y="{cy - 9 * S}" width="{21.8 * S}" height="{18 * S}" rx="3" fill="#3a4047" stroke="#9aa5af" stroke-width="0.6"/>'
+                      f'<circle cx="{cx}" cy="{cy}" r="{8.5 * S}" fill="#b9bec2"/><circle cx="{cx}" cy="{cy}" r="{5.5 * S}" fill="#050506"/>')
+            for sg in (-1, 1):
+                el.append(f'<circle cx="{cx + sg * 9.4 * S}" cy="{cy}" r="{1.5 * S}" fill="#050506"/>')
         elif k == "din" and mode == "A2":                         # round DIN, hole 16 (assumed), 2 x M3 holes 3.2 on the diagonal, 21.5 apart
             el.append(f'<circle cx="{cx}" cy="{cy}" r="{8 * S}" fill="#b9bec2"/><circle cx="{cx}" cy="{cy}" r="{5.5 * S}" fill="#050506"/>')
             for sg in (-1, 1):
@@ -112,4 +120,4 @@ def draw(mode):
     print(mode, [r for r in rows if r.endswith("NO")])
 
 
-draw("A"); draw("B"); draw("A1"); draw("A2")
+draw("A"); draw("B"); draw("A1"); draw("A2"); draw("A3")

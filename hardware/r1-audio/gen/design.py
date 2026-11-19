@@ -25,6 +25,8 @@ Level plan (rev 0.2, checked by the cloud, task #24: CS53A04P DS1397 (CS5304P/8P
 Rev 0.1 (14.11.2026, PC) = schematic only; rev 0.2 (14.11.2026, cloud #24) = levels and values checked; rev 0.3 = -12 dB attenuator relay per combo (ATT1/ATT2 from R2); jacks vertical-mount (Neutrik NCJ6FI-V, NJ3FD-V), RCA part to choose.
 Rev 0.9 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md, B2): phantom hot-plug: SMBJ18CA per Mic/Line leg at the far side of the 47 uF blocking
 cap and the series 10 R -> 47 R (0805); MUTE / R2_OK series FETs 2N7002 -> AO3400A (coil voltage margin); everything else unchanged.
+Rev 1.1 (19.11.2026): RIAA R2 7.42k (no stock) -> 7.5k C25918 (response change 0.07 dB at 20 Hz, 1 % tolerance).
+Rev 1.2 (19.11.2026, rear wall parts): PH-2 for the GND terminal (H9) and PH-3 for the Phono/Line switch (H10); the switch is OR-ed with the R2 phono control (two diodes).
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -37,7 +39,7 @@ import kit as K  # noqa: E402
 NAME = "r1-audio"
 ID = "R1"
 TITLE = "R1 - Audio jacks and analog front end: mic/Hi-Z two paths, line 1-8, phono, Main/Aux/RCA out on relays"
-REV = "1.0"
+REV = "1.2"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 differential ADC pairs (FS 8 Vrms diff into the AN0635 buffers), A1 -> R1: 4 DAC pairs; phantom per channel and phono/line "
             "from R2 (R118); output relays need MUTE and R2_OK (R137)")
@@ -250,7 +252,10 @@ def parts():
         CP("470u 16V", f"{p}_RG", "GND", fp=CP8, Note="DC gain 1, corner 2.6 Hz")
         R("68.1k", f"{p}_ROUT", f"{p}_RN1", Note="RIAA 3180 us: 68.1k x 47n, 0.1 %")
         C("47n C0G", f"{p}_ROUT", f"{p}_RN1", fp=C1206, Note="1 %")
-        R("7.42k", f"{p}_RN1", f"{p}_RFB", Note="RIAA 318 us: 9 x (Rg + R2), 0.1 %")
+        # rev 1.1 (19.11.2026, purchase_plan.md): 7.42k (E192) has no stock at JLC -> 7.5k (C25918, 0402 1 %, 873k pcs). Computed with the real stage (68.1k || 47n + R2 over 130 R +
+        # 470 uF, then the 75 us pole), ideal parts: 7.5k moves the response by 0.07 dB at 20 Hz and 0.02 dB at 20 kHz, gain at 1 kHz +0.08 dB (7.68k: 0.21 dB; 7.32k: 0.08 dB).
+        # With the 1 % tolerance of the part the error is up to about +-0.15 dB: fine for a prototype; for the spec (< 0.05 dB) use 7.32k + 100 R in series (both 0.1 %, in stock).
+        R("7.5k", f"{p}_RN1", f"{p}_RFB", LCSC="C25918", Note="RIAA 318 us: 9 x (Rg + R2), R2 7.5k 1 % (was 7.42k 0.1 %, no stock)")
         R("787", f"{p}_ROUT", f"{p}_R75", fp=R0603, Note="passive 75 us: (787 || 16.7k FDA input) x 100n")
         C("100n C0G", f"{p}_R75", fp=C1206, Note="75 us, 1 %")
         R("100k", f"{p}_LIN", "GND", Note="line input bias")
@@ -259,7 +264,13 @@ def parts():
     add(u_riaa, "Amplifier_Operational:OPA1612AxD", "OPA1612", SOIC8, riaa_pins, LCSC="C94590", Note="RIAA L/R")
     supply(u_riaa)
     add(ref("Q"), "Transistor_FET:2N7002", "2N7002", SOT23, {"1": "PHONO_G", "2": "GND", "3": "PHONO_K"}, Note="phono relays")
-    R("1k", "PHONO", "PHONO_G")
+    # rev 1.2 (19.11.2026, rear wall parts): the panel Phono/Line switch (NKK M2012S2A1W01, harness H10) is OR-ed with the R2 control: either the R2 line (74HC595 QC, R118)
+    # or the closed switch (phono throw to +5V) energises the phono relays; the switch in the Line position leaves the control to R2. Two diodes make the wired OR
+    # (R2 high 3.3 V - 0.3 = 3.0 V, switch 5 V - 0.3 = 4.7 V at the gate; 2N7002 conducts); neither source can push current into the other.
+    R("1k", "PHONO", "PHONO_D")
+    add(ref("D"), "Diode:1N4148W", "1N4148W", SOD123, {"1": "PHONO_G", "2": "PHONO_D"}, Note="OR: R2 control (R118)")
+    R("1k", "SW_PHONO", "SW_PHD", Note="switch lead limit")
+    add(ref("D"), "Diode:1N4148W", "1N4148W", SOD123, {"1": "PHONO_G", "2": "SW_PHD"}, Note="OR: panel Phono/Line switch")
     R("100k", "PHONO_G", "GND")
     add(ref("D"), "Diode:1N4148W", "1N4148W", SOD123, {"1": "+5V", "2": "PHONO_K"}, Note="flyback")
 
@@ -315,6 +326,12 @@ def parts():
     R("1k", "R2_OK", "R2OK_G")
     R("100k", "R2OK_G", "GND")
     add(ref("D"), "Diode:1N4148W", "1N4148W", SOD123, {"1": "+5V", "2": "OUT_K"}, Note="flyback (3 coils)")
+    # ---------------------------------------------------------------- harness connectors for two panel parts (notes/harness_bom.md H9, H10)
+    add(ref("J"), "Connector_Generic:Conn_01x02", "GND terminal", "Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical", {"1": "GND", "2": "GND"},
+        Note="harness H9: Johnson 111-0702-001 binding post (ring or fork lug, 6-32), 20 AWG, 12 cm; both pins GND (two wires to one lug); the post is a bonding point, the panel contact decides chassis vs signal ground (doc 49)")
+    add(ref("J"), "Connector_Generic:Conn_01x03", "Phono/Line switch", "Connector_JST:JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical",
+        {"1": "+5V", "2": "SW_PHONO", "3": "GND"},
+        Note="harness H10: NKK M2012S2A1W01 SPDT ON-ON, 26-28 AWG x 3: pin 1 = common (+5V), pin 2 = Phono throw (forces the phono relays, OR with R2), pin 3 = Line throw (GND: no force; R2 controls)")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 
@@ -339,6 +356,10 @@ def placement():
         # over the battery (R162), the socket rows are about 30.4 / 32.9 mm above the floor, the old row was at 11.5 / 14.0
         y = {"J1": 85.5, "J3": 90.5}.get(ref, 92.5) + (H - 96.0) - (A1_RISE if ref in ("J4", "J5") else 0.0)   # rev 0.8: bottom edge kept at z 8, so + (H - 96)
         fixed[ref] = (x, y, 90, "bottom")          # cable headers (2 x 25 and 2 x 20 to A1, small ones) along the bottom edge
+    # rev 1.2: the two harness headers of the rear panel (GND terminal, Phono/Line switch) at the bottom edge right of J3
+    for p_ in parts():
+        if p_["value"] in ("GND terminal", "Phono/Line switch"):
+            fixed[p_["ref"]] = (216.0 if p_["value"] == "GND terminal" else 227.0, 92.5 + (H - 96.0), 90, "bottom")
     fixed.update(K.hole_fixed(parts(), HOLES))
     return autoplace.place(sys.modules[__name__], fixed=fixed, conn_side="bottom")
 

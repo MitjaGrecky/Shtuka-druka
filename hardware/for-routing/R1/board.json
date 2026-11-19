@@ -2,11 +2,11 @@
  "id": "R1",
  "name": "r1-audio",
  "title": "R1 - Audio jacks and analog front end: mic/Hi-Z two paths, line 1-8, phono, Main/Aux/RCA out on relays",
- "rev": "1.0",
+ "rev": "1.2",
  "w": 238.0,
  "h": 105.0,
  "layers": 4,
- "parts": 456,
+ "parts": 461,
  "holes": [
   [
    4.0,
@@ -137,7 +137,15 @@
   [
    "J25",
    "RCA R"
+  ],
+  [
+   "J26",
+   "GND terminal"
+  ],
+  [
+   "J27",
+   "Phono/Line switch"
   ]
  ],
- "bom_lines": 77
+ "bom_lines": 79
 }

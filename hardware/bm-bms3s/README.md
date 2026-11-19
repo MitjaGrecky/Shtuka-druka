@@ -1,6 +1,6 @@
 # BM - 3S pack protection (BQ7791500)
 
-One board per pack, **2 per set** (doc `docs/ru/43_battery_power.md` 5c, P111). Low-side protection of a pack of 3 Jauch LP906090JH cells: TI **BQ7791500PWR** (variant 00 = 3S, OV 4.200 V), two CSD18532Q5B back to back, 5 mOhm sense, internal balancing, NTC. Status: **rev 0.2, placed board 38 x 38 mm, 2 layers, not routed** (`UNROUTED`). Package: `hardware/for-routing/BM/`.
+One board per pack, **2 per set** (doc `docs/ru/43_battery_power.md` 5c, P111). Low-side protection of a pack of 3 Jauch LP906090JH cells: TI **BQ7791500PWR** (variant 00 = 3S, OV 4.200 V), two CSD18532Q5B back to back, 5 mOhm sense, internal balancing, NTC. Status: **rev 0.3, placed board 38 x 38 mm, 2 layers, not routed** (`UNROUTED`). Package: `hardware/for-routing/BM/`.
 
 | Part | Value / part | Note |
 |---|---|---|
@@ -21,4 +21,8 @@ Decisions and open points:
 
 Generators: `gen/design.py`, `gen/make_sch.py`, `gen/make_pcb.py` (`KICAD_SYMBOL_DIR=<repo>/hardware/common/sym7`, `KICAD_FOOTPRINT_DIR=<KiCad>/share/kicad/footprints`).
 
+EasyEDA (19.11.2026, PC, rev 0.2): project `BM_v1`: parts 32 / 32, nets 25 / 25 (PCB and schematic), LCSC written (sch 30, pcb 30), positions 32 / 32, saved. DRC and parity left to CI.
+
 License: CERN-OHL-S-2.0 (hardware), AGPL-3.0-or-later (scripts).
+
+Rev 0.3 (19.11.2026): CI ERC fixes: the schematic no longer carries the default +5V / GND power-flag symbols (this board has no such rails: dangling pins) and has a PWR_FLAG on VDD (the chip supply behind RVDD). ERC was not run locally: kicad-cli is forbidden on this PC by CLAUDE.md.

@@ -15,7 +15,7 @@ U3,W25Q128JVSIQ,SOIC-8_5.3x5.3mm_P1.27mm,C97521,проверить в EasyEDA
 SW1,BOOTSEL,SW_Push_1P1T_XKB_TS-1187A,C318884,проверено 06.11.2026 (док. 31)
 "R7,R8",27,R_0402_1005Metric,,номера нет: выбрать деталь
 J2,SWD,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339,проверено 15.11.2026: 92 966 шт. (JLC)
-D1,green,LED_0603_1608Metric,,номера нет: выбрать деталь
+D1,green,LED_0603_1608Metric,C84267,проверить в EasyEDA
 U4,USB2514B,QFN-36-1EP_6x6mm_P0.5mm_EP3.7x3.7mm,C220679,проверить в EasyEDA
 R11,12k,R_0402_1005Metric,,номера нет: выбрать деталь
 Y2,24MHz,Crystal_SMD_3225-4Pin_3.2x2.5mm,C70590,проверить в EasyEDA
@@ -38,7 +38,7 @@ U8,74HC595,SOIC-16_3.9x9.9mm_P1.27mm,C5947,проверить в EasyEDA
 "R34,R35,R40,R41",220,R_0402_1005Metric,,номера нет: выбрать деталь
 "D2,D3,D8,D9",1N4148W,D_SOD-123,,номера нет: выбрать деталь
 "U9,U10,U11,U12",TLP2361,SO-5-6_4.55x3.7mm_P1.27mm,C107626,проверить в EasyEDA
-"J14,J15,J16",PJ-3920-3A,Jack_3.5mm_Hroparts_PJ-3920-3A_Vertical,C707259,проверить в EasyEDA
+"J14,J15,J16",PJ-3920-3A,Jack_3.5mm_Hroparts_PJ-3920-3A_Vertical,C707258,проверить в EasyEDA
 "R36,R37,R38,R39",22,R_0402_1005Metric,,номера нет: выбрать деталь
 "U13,U14",DAC80504,Texas_RTE0016D_WQFN-16-1EP_3x3mm_P0.5mm_EP0.8x0.8mm_ThermalVias,C2862796,проверить в EasyEDA
 "C53,C56",220n,C_0402_1005Metric,,номера нет: выбрать деталь

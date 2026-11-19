@@ -20,6 +20,7 @@ board R2b (hardware/r2b-jacks) with their ESD and cables; R2 keeps the MIDI part
 Rev 1.2 (19.11.2026): placement only (DRC): cable headers moved off the jack pads and the board edge; nothing electrical changed.
 Rev 1.0 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md): USB hub ports P2, A1 and spare each get a TPS2051B current-limited switch (0.75-1.25 A, OC to the
 hub's OCS_N2-4, enable = PRTPWR2-4, USB2514B DS00001692: OCS_N1-4 = pins 13, 17, 19, 21; PRTPWR1-4 = 12, 16, 18, 20); DAC80504 REF capacitors 100 nF -> 220 nF (datasheet: 150 nF minimum).
+Rev 1.3 (19.11.2026, rear wall harness): the wall USB-A (H5) goes to J6 = the spare hub port, NOT J4 (J4 is the panel P2 port); purchase_plan.md: PJ-3920-3A C707259 -> C707258, green LED NCD0603G1 C84267 (BOM only).
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -32,7 +33,7 @@ import kit as K  # noqa: E402
 NAME = "r2-control"
 ID = "R2"
 TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables"
-REV = "1.2"
+REV = "1.3"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = ODROID-H5, down = RP2350, panel P2, A1 port A, spare")
@@ -87,7 +88,7 @@ def parts():
                 LCSC="C9900009788", Note=note)
         else:
             add(ref("J"), "Connector_Audio:AudioJack3", "PJ-3920-3A", JACK35ST, {"T": tip, "R": ring, "S": "GND"},
-                LCSC="C707259", Note=note + "; stereo 3.5 mm Hroparts PJ-3920-3A (R143); pin 1 = sleeve per the Flux "
+                LCSC="C707258", Note=note + "; stereo 3.5 mm Hroparts PJ-3920-3A (R143); pin 1 = sleeve per the Flux "
                 "library - check on a sample (tip and ring are swapped in firmware anyway)")
 
     # ---------------------------------------------------------------- power in, 3.3 V
@@ -146,7 +147,7 @@ def parts():
     R("27", "MCU_DP_R", "MCU_DP", Note="USB series")
     add(ref("J"), "Connector_Generic:Conn_01x03", "SWD", PH.format(n=3), {"1": "SWCLK", "2": "SWDIO", "3": "GND"})
     R("1k", "R2_OK", "LED_K", Note="status LED; R2_OK is also the 'alive' line to the audio boards")
-    add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": "LED_K", "1": "GND"})
+    add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": "LED_K", "1": "GND"}, LCSC="C84267")
 
     # ---------------------------------------------------------------- USB hub USB2514B
     G[0] = "hub"
@@ -179,7 +180,7 @@ def parts():
     for note, pins in (("USB up: from the ODROID-H5 24-pin header (1 GND, 2 5V_RUN, 3 USB2_P7_DP, 5 USB2_P7_DN; doc 35 sec. 2a)",{"1": "UP_VBUS", "2": "UP_DM", "3": "UP_DP", "4": "GND"}),
                        ("USB down: panel P2 (R86)", {"1": "P2_VBUS", "2": "P2_DM", "3": "P2_DP", "4": "GND"}),
                        ("USB down: A1 port A (R82)", {"1": "A1_VBUS", "2": "A1_DM", "3": "A1_DP", "4": "GND"}),
-                       ("USB down: spare", {"1": "SP_VBUS", "2": "SP_DM", "3": "SP_DP", "4": "GND"})):
+                       ("USB down: spare = the wall USB-A (Neutrik NAUSB-W, USB A-B cable cut at the A end, harness H5): 1 VBUS red, 2 D- white, 3 D+ green, 4 GND black; shield drain to the chassis stand-off", {"1": "SP_VBUS", "2": "SP_DM", "3": "SP_DP", "4": "GND"})):
         add(ref("J"), "Connector_Generic:Conn_01x04", note.split(":")[0], PH.format(n=4), pins, Note=note)
 
     # rev 1.0 (audit 18.11.2026): per-port current-limited VBUS (TPS2051B DBV: 1 OUT, 2 GND, 3 OC, 4 EN, 5 IN; 2.7-5.5 V, EN high = on); before: +5V straight from PW,

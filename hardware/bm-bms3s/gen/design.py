@@ -10,6 +10,7 @@ TS: 103AT NTC to VSS + 10k 1 % from VTB (OTC 45 C stops charging; OTD 65 C, UTC 
 SRP/SRN 100 R + 0.1 uF; DSG 4.53k (table: 4.5k), CHG 1k; gate-source 1M (DSG) and 3.3M (CHG, load removal for UV recovery); LD 470k (table 10-1; doc 43 had 453k).
 Thresholds (BQ7791500): OV 4.200 V, UV 2.9 V, OCD 60 mV / 5 mOhm = 12 A nominal (9.6-14.4 A), SCD 120 mV, OTC 45 C.
 Rev 0.1 (19.11.2026, PC): schematic and placed board.
+Rev 0.3 (19.11.2026): ERC fixes (CI): no default +5V / GND flag symbols (NO_PWR_FLAG), PWR_FLAG on VDD, the nonexistent TS_NTC flag removed.
 Rev 0.2 (19.11.2026, engineer): CSD18540Q5B (almost no stock, doc 46) -> CSD18532Q5B (C882766, 60 V, 2.5 mOhm at 10 V / 3.3 mOhm at 4.5 V typ, 3.2 mOhm max at 10 V, Vth 1.8 V, TI SLVSBZ1 style table):
 the BQ77915 drives CHG/DSG to 11-14 V at VDD >= 12 V and VDD - 1.5 V below (pack 9-12.6 V: 7.5-11 V), so the full Rds applies. The over-current / short-circuit thresholds
 are measured across the 5 mOhm shunt only (SRP/SRN), the FET resistance does not move them: OCD 60 mV / 5 mOhm = 12 A (9.6-14.4 A), SCD 24 A. Loss at 6 A: 2 x 3.2 mOhm = 0.23 W
@@ -26,12 +27,12 @@ import kit as K  # noqa: E402
 NAME = "bm-bms3s"
 ID = "BM"
 TITLE = "BM - Battery protection 3S: BQ7791500, 2 x CSD18532Q5B, 5 mOhm, balancing, NTC"
-REV = "0.2"
+REV = "0.3"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Pack: cell taps J1 (B-, B1, B2, B+), power in J2 (cell 1 negative, cell 3 positive), NTC of the chip J3 and NTC for PW J4; "
             "output J5 = PW 'Battery' harness (BAT+ x 2, GND x 2, NTC, GND)")
-PWR_FLAG_NETS = ("BAT_P", "BAT_N", "B1", "B2", "PACK_N", "NTC_PW", "TS_NTC")   # ERC: nets that only connectors drive
-NO_PWR_FLAG = ("+3V3",)
+PWR_FLAG_NETS = ("BAT_P", "BAT_N", "VDD")   # ERC: nets that only connectors drive; VDD behind RVDD (the chip's supply pin is a power input)
+NO_PWR_FLAG = ("+5V", "+3V3", "GND")       # no such rails here: the default flag symbols would be dangling pins (ERC pin_not_connected)
 W, H = 38.0, 38.0           # the pack end has 38.5 mm along the pack (doc 43 5a) and about 12 mm spare across; 2 x M3 mid-edge
 HOLES = [(3.5, H / 2), (W - 3.5, H / 2)]
 LAYERS = 2

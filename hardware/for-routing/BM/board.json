@@ -2,7 +2,7 @@
  "id": "BM",
  "name": "bm-bms3s",
  "title": "BM - Battery protection 3S: BQ7791500, 2 x CSD18532Q5B, 5 mOhm, balancing, NTC",
- "rev": "0.2",
+ "rev": "0.3",
  "w": 38.0,
  "h": 38.0,
  "layers": 2,

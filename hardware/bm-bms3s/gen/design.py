@@ -9,7 +9,12 @@ CCFG and CBI to VSS (3 cells, balancing on); PRES to the top of the pack through
 TS: 103AT NTC to VSS + 10k 1 % from VTB (OTC 45 C stops charging; OTD 65 C, UTC 0 C, UTD -10 C); CTRC, CTRD, LPWR, CBO open (single device, fig. 9-11);
 SRP/SRN 100 R + 0.1 uF; DSG 4.53k (table: 4.5k), CHG 1k; gate-source 1M (DSG) and 3.3M (CHG, load removal for UV recovery); LD 470k (table 10-1; doc 43 had 453k).
 Thresholds (BQ7791500): OV 4.200 V, UV 2.9 V, OCD 60 mV / 5 mOhm = 12 A nominal (9.6-14.4 A), SCD 120 mV, OTC 45 C.
-Rev 0.1 (19.11.2026, PC): schematic and placed board. License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
+Rev 0.1 (19.11.2026, PC): schematic and placed board.
+Rev 0.2 (19.11.2026, engineer): CSD18540Q5B (almost no stock, doc 46) -> CSD18532Q5B (C882766, 60 V, 2.5 mOhm at 10 V / 3.3 mOhm at 4.5 V typ, 3.2 mOhm max at 10 V, Vth 1.8 V, TI SLVSBZ1 style table):
+the BQ77915 drives CHG/DSG to 11-14 V at VDD >= 12 V and VDD - 1.5 V below (pack 9-12.6 V: 7.5-11 V), so the full Rds applies. The over-current / short-circuit thresholds
+are measured across the 5 mOhm shunt only (SRP/SRN), the FET resistance does not move them: OCD 60 mV / 5 mOhm = 12 A (9.6-14.4 A), SCD 24 A. Loss at 6 A: 2 x 3.2 mOhm = 0.23 W
+(was 0.13 W), shunt 0.18 W. All connectors lie flat (right-angle Micro-Fit 43045-0600 / 43650-0200, JST PH side entry) for the 11 mm pack bay.
+Output J5 is a right-angle Micro-Fit 2x3 with the same pin numbers as the PW harness plug. License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
 import sys
@@ -20,8 +25,8 @@ import kit as K  # noqa: E402
 
 NAME = "bm-bms3s"
 ID = "BM"
-TITLE = "BM - Battery protection 3S: BQ7791500, 2 x CSD18540Q5B, 5 mOhm, balancing, NTC"
-REV = "0.1"
+TITLE = "BM - Battery protection 3S: BQ7791500, 2 x CSD18532Q5B, 5 mOhm, balancing, NTC"
+REV = "0.2"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Pack: cell taps J1 (B-, B1, B2, B+), power in J2 (cell 1 negative, cell 3 positive), NTC of the chip J3 and NTC for PW J4; "
             "output J5 = PW 'Battery' harness (BAT+ x 2, GND x 2, NTC, GND)")
@@ -34,9 +39,9 @@ LAYERS = 2
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
 R2512 = "Resistor_SMD:R_2512_6332Metric"
 TSSOP24 = "Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm"
-FET = ("Transistor_FET:CSD18540Q5B", "Package_TO_SOT_SMD:TDSON-8-1")   # 60 V 1.8 mOhm, pins 1-3 S, 4 G, 5 D
-MF = "Connector_Molex:Molex_Micro-Fit_3.0_{}_P3.00mm_Vertical"
-PH = "Connector_JST:JST_PH_B{n}B-PH-K_1x0{n}_P2.00mm_Vertical"
+FET = ("Transistor_FET:CSD18540Q5B", "Package_TO_SOT_SMD:TDSON-8-1")   # symbol/footprint of the PW part; CSD18532Q5B has the same SON 5x6 pinout: 1-3 S, 4 G, 5 D
+MF = "Connector_Molex:Molex_Micro-Fit_3.0_{}_P3.00mm_Horizontal"      # right-angle (rev 0.2)
+PH = "Connector_JST:JST_PH_S{n}B-PH-K_1x0{n}_P2.00mm_Horizontal"       # side entry, 4.8 mm high (as R168)
 # LCSC numbers, all in stock at JLC on 19.11.2026 (jlcpcb.com parts search): 0402 resistors by value
 LCSC_R = {"75": "C114757", "100": "C25076", "1k": "C11702", "4.53k": "C79537", "10k": "C25744", "100k": "C25741", "470k": "C25790",
           "1M": "C26083", "3.3M": "C270613"}
@@ -63,15 +68,15 @@ def parts():
     # ---------------------------------------------------------------- connectors
     add(ref("J"), "Connector_Generic:Conn_01x04", "Cell taps", PH.format(n=4), {"1": "BAT_N", "2": "B1", "3": "B2", "4": "BAT_P"},
         Note="thin sense wires to the cell junctions: B- (cell 1 negative), B1 (cell 1 / 2), B2 (cell 2 / 3), B+ (cell 3 positive); no load current here")
-    add(ref("J"), "Connector_Generic:Conn_01x02", "Cell power", MF.format("43650-0215_1x02"), {"1": "BAT_N", "2": "BAT_P"},
+    add(ref("J"), "Connector_Generic:Conn_01x02", "Cell power", MF.format("43650-0200_1x02"), {"1": "BAT_N", "2": "BAT_P"}, LCSC="C192562",
         Note="cell 1 negative and cell 3 positive (AWG18 pack wires, joined wire to wire, doc 43); the pack current flows through this connector, 6 A")
     add(ref("J"), "Connector_Generic:Conn_01x02", "NTC chip", PH.format(n=2), {"1": "TS", "2": "BAT_N"},
         Note="103AT 10k (B 3435) NTC on the middle cell: the BQ7791500 TS input (45 C stops charging in the chip)")
     add(ref("J"), "Connector_Generic:Conn_01x02", "NTC PW", PH.format(n=2), {"1": "NTC_PW", "2": "PACK_N"},
         Note="second 103AT NTC on the middle cell for the BQ25798 TS of PW (not in parallel with the chip's): wired to the PW harness pins 5 and 6")
-    add(ref("J"), "Connector_Generic:Conn_02x03_Odd_Even", "to PW (Battery)", MF.format("43045-0612_2x03"),
+    add(ref("J"), "Connector_Generic:Conn_02x03_Odd_Even", "to PW (Battery)", MF.format("43045-0600_2x03"),
         {"1": "BAT_P", "2": "BAT_P", "3": "PACK_N", "4": "PACK_N", "5": "NTC_PW", "6": "PACK_N"},
-        Note="same pinout as PW 'Battery 1/2': BAT+ x 2, GND x 2, NTC, GND (harness 150-250 mm). Vertical plug height about 9 mm: check the 11 mm of the pack bay")
+        LCSC="C127367", Note="right-angle Micro-Fit 43045-0600 (38976 pcs at JLC), same pin numbers as PW 'Battery 1/2': BAT+ x 2, GND x 2, NTC, GND (harness 150-250 mm); lies flat for the 11 mm pack bay")
 
     # ---------------------------------------------------------------- BQ7791500
     u = ref("U")
@@ -96,13 +101,13 @@ def parts():
 
     # ---------------------------------------------------------------- current path and FETs
     add(ref("R"), "Device:R", "5m", R2512, {"1": "BAT_N", "2": "SRN_NODE"}, LCSC="C2903482",
-        Note="RSNS 5 mOhm 1 % 3 W (2512): OCD 60 mV = 12 A, SCD 120 mV = 24 A; 0.18 W at 6 A")
+        Note="RSNS 5 mOhm 1 % 3 W (2512): OCD 60 mV = 12 A, SCD 120 mV = 24 A; 0.18 W at 6 A; the FETs add 2 x 3.2 mOhm max = 0.23 W")
     R("100", "BAT_N", "SRPF", Note="RS (SRP)")
     R("100", "SRN_NODE", "SRNF", Note="RS (SRN)")
     C("100n", "SRPF", "SRNF", Note="CS across SRP-SRN")
-    add(ref("Q"), FET[0], "CSD18540Q5B", FET[1], {"1": "SRN_NODE", "2": "SRN_NODE", "3": "SRN_NODE", "4": "DSG_G", "5": "MID"}, LCSC="C86513",
+    add(ref("Q"), FET[0], "CSD18532Q5B", FET[1], {"1": "SRN_NODE", "2": "SRN_NODE", "3": "SRN_NODE", "4": "DSG_G", "5": "MID"}, LCSC="C882766",
         Note="discharge FET: source on the sense resistor, drain to the charge FET (back to back)")
-    add(ref("Q"), FET[0], "CSD18540Q5B", FET[1], {"1": "PACK_N", "2": "PACK_N", "3": "PACK_N", "4": "CHG_G", "5": "MID"}, LCSC="C86513",
+    add(ref("Q"), FET[0], "CSD18532Q5B", FET[1], {"1": "PACK_N", "2": "PACK_N", "3": "PACK_N", "4": "CHG_G", "5": "MID"}, LCSC="C882766",
         Note="charge FET: source on PACK-")
     R("4.53k", "DSG", "DSG_G", Note="RDSG (table 10-1: 4.5k)")
     R("1M", "DSG_G", "SRN_NODE", Note="RGS_DSG")
@@ -116,10 +121,11 @@ def placement():
     """Connectors along the bottom edge, the IC and the FETs by autoplace (rough, a starting point for routing)."""
     import autoplace
     fixed = K.hole_fixed(parts(), HOLES)
-    # connector bodies (packer._bbox): J1 cell taps 11 x 5.6, J3/J4 NTC 7 x 5.6 in a row along the top edge; J2 cell power 10.8 x 6.9 and the
-    # Micro-Fit 2x3 output J5 14.2 x 9.9 along the bottom edge; the chip, the FETs and the sense resistor sit between.
-    fixed.update({"J1": (8.0, 3.0, 0, "top"), "J3": (18.5, 3.0, 0, "top"), "J4": (27.0, 3.0, 0, "top"),
-                  "J2": (11.0, H - 5.0, 0, "top"), "J5": (W - 8.3, H - 5.5, 0, "top")})
+    # flat connectors (rev 0.2), openings towards the board edges (JST side entry opens to +y at 0 deg, Micro-Fit right-angle to -y, as in P2): J1 cell taps 11 x 8.7,
+    # J3 / J4 NTC 7 x 8.7 along the top edge (turned 180 deg); J2 cell power 10.8 x 11 and the Micro-Fit 2x3 output J5 14.2 x 13.8 along the bottom edge
+    # (turned 180 deg); the chip, the FETs and the sense resistor sit between (y 9-23).
+    fixed.update({"J1": (7.0, 7.3, 180, "top"), "J3": (17.5, 7.3, 180, "top"), "J4": (26.0, 7.3, 180, "top"),
+                  "J2": (9.0, H - 7.8, 180, "top"), "J5": (W - 8.3, H - 9.3, 180, "top")})
     return autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 6.0)
 
 

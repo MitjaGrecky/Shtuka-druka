@@ -4,10 +4,10 @@
 
 | # | Плата, поз. | Нужно | Источник | SKU | Цена | Остаток | Ссылка | Примечание |
 |---|---|---|---|---|---|---|---|---|
-| 1 | A1 U6, U7 | 4 | Digikey | CS5308P-DNR (лента CT) | 22,76 $ | 3065 | [Digikey](https://www.digikey.com/en/products/detail/cirrus-logic-inc/CS5308P-DNR/26753133) | consigned; -DN (трей) без запаса, срок 16 нед. |
-| 2 | A1 U8 | 2 | JLC C49192888 + Digikey | CS5304P-DN | 14,53 $ (JLC 27,2 $) | JLC 3; Digikey 409 | [Digikey](https://www.digikey.com/en/products/detail/cirrus-logic-inc/CS5304P-DN/26753132) | 2 шт. с JLC хватит; Digikey запас |
-| 3 | A1 U29 | 2 | Digikey | CS4308P-DN | 16,59 $ | 298 | [Digikey](https://www.digikey.com/en/products/detail/cirrus-logic-inc/CS4308P-DN/26828149) | consigned; номер в BOM не нужен |
-| 4 | A1 U44 | 2 | Digikey / Mouser | ADUM4166BRIZ | 19,74 $ | Digikey ≈569; Mouser ≈767 в пути | [Digikey](https://www.digikey.com/en/products/detail/analog-devices-inc/ADUM4166BRIZ/16285972) | consigned (SOIC-20W); ADuM4160 не годится (12 Мбит/с) |
+| 1 | A1 U6, U7 | 4 | Digikey | CS5308P-DNR (лента CT) | 22,76 $ (10 шт.: 18,19 $) | 3065 (живая карточка 20.11) | [Digikey](https://www.digikey.com/en/products/detail/cirrus-logic-inc/CS5308P-DNR/26753133) | consigned; срок 16 нед. при отсутствии |
+| 2 | A1 U8 | 2 | Digikey (трей) | CS5304P-DN | 14,53 $ (10 шт.: 11,47 $) | 406 (живая) | [Digikey](https://www.digikey.com/en/products/detail/cirrus-logic-inc/CS5304P-DN/26753132) | consigned; JLC C49192888 3 шт. по 27 $ дороже |
+| 3 | A1 U29 | 2 | Digikey (трей) | CS4308P-DN | 16,59 $ (10 шт.: 13,15 $) | 298 (живая) | [Digikey](https://www.digikey.com/en/products/detail/cirrus-logic-inc/CS4308P-DN/26828149) | consigned |
+| 4 | A1 U44 | 2 | **JLC C5772877** (замена) | **TI ISOUSB211DPR** вместо ADuM4166BRIZ | 10,88 $ (JLC); LCSC 10,30 $; Digikey 15,15 $ (CT) | JLC 15; LCSC ≈1420; Digikey 3553 | [Digikey](https://www.digikey.com/en/products/detail/texas-instruments/ISOUSB211DPR/16982078), [LCSC](https://www.lcsc.com/product-detail/C5772877.html) | **ADuM4166BRIZ нигде нет:** Digikey 0 (31 шт. в июле 2027, срок 51 нед.), JLC и LCSC 0, Mouser закрыт для автоматического доступа. ISOUSB211: USB 2.0 LS/FS/HS 480 Мбит/с, 5,7 кВ rms, VBUS1 4,25–5,5 В, SSOP-28; на JLC своим запасом, consigned не нужен |
 | 5 | A1 C60… ×40 | 80 | Digikey / Mouser | 865250349007 (Digikey 732-8307-6-ND; Mouser 710-865250349007) | ≈0,61–0,67 $ | ≈586 (Digikey), 239 по README | [EasyBOM](https://www.easybom.com/p/865250349007-wurth-elektronik-2960845) | вручную; на JLC 0 |
 | 6 | R2 U4 | 2 | Mouser EU / Digikey | USB2514B-I/M2 | 2,73 € (Mouser), 3,17 $ (Digikey) | ≈6280 / ≈11 645 | [Mouser](https://eu.mouser.com/ProductDetail/Microchip-Technology/USB2514B-I-M2?qs=uus7iwvxYD%2BYUekNs2mWlw%3D%3D) | consigned (QFN-36); на JLC 0 |
 | 7 | PW J2, J3, J4, J8 | 8 | Newark / Sager / Arrow | Molex 43045-0612 (0430450612) | ≈0,47–0,72 $ | ≈15 900–20 900 | [Newark 97C5002](https://www.newark.com/molex/43045-0612/connector-header-6pos-2row-3mm/dp/97C5002), [Sager](https://www.sager.com/product/0430450612-molex/80491) | вручную; LCSC C234188 = 0 |
@@ -27,9 +27,25 @@
 | 21 | LP5864 (10 плат) | 50 + запас | JLC C5220564 + Digikey | LP5864RSMR | 1,62 $ (JLC), ≈2,58 $ (Digikey) | JLC 50; Digikey ≈5681 (таблица замен) | [Digikey](https://www.digikey.com/en/products/search?keywords=LP5864RSMR) | без запаса на JLC: взять ≈10 шт. consigned |
 | 22 | P2 D1, PW D5, D7, D11, R2 D1 (зелёные 0603) | 10 | JLC C84267 | NCD0603G1 | ≈0,02 $ | JLC 806 624 | LCSC C84267 | точный «green» с остатком 0: замена на NCD0603G1 (520 нм) |
 
+## Итого на комплект A1 (деньги, решение пользователя)
+Цены Digikey 20.11.2026 (1 шт.), consigned по условиям JLC (док. 46 разд. 2).
+
+| Статья | Без запаса | С запасом +1 шт. каждой |
+|---|---|---|
+| CS5308P-DNR ×2 (22,76 $) | 45,52 $ | 68,28 $ (×3) |
+| CS5304P-DN ×1 (14,53 $) | 14,53 $ | 29,06 $ (×2) |
+| CS4308P-DN ×1 (16,59 $) | 16,59 $ | 33,18 $ (×2) |
+| ISOUSB211DPR ×1 (JLC, 10,88 $) | 10,88 $ | 21,76 $ (×2) |
+| Сбор consigned (1–50 позиций, партия) | 85,00 $ | 85,00 $ |
+| Обработка россыпи/ножек (0,078–0,142 $ за деталь) | ≈1 $ | ≈2 $ |
+| **Итого детали + сбор** | **≈173,5 $** | **≈239 $** |
+| Доставка Digikey → адрес consigned JLC | не снята, оценка 30–50 $ | оценка 30–50 $ |
+
+Эти 85 $ — один сбор на партию до 50 позиций: туда же можно положить USB2514B, LP5864 запас и др., поэтому в других платах он не удваивается. Остальные детали A1 вручную: WCAP ×40 ≈ 0,61–0,67 $ (≈26 $ на комплект, ≈31 $ с запасом).
+
 ## Что меняется в схемах (для схемотехника)
 - **R1:** R101, R114 7,42 кОм → 7,5 кОм (+1,1 %), проверить петлю; посадки NJ3FD-V и NCJ6FI-V не меняются.
-- **A1:** C289 47 мкФ 10 В → 25 В (C190223); остальное без изменений (кодеки, ADuM4166, WCAP — те же MPN).
+- **A1:** C289 47 мкФ 10 В → 25 В (C190223); **U44 ADuM4166 → TI ISOUSB211DPR (SSOP-28, другая распиновка, питание 4,25–5,5 В со стороны VBUS1, 3,3 В со стороны V3P3V2): новый символ, посадка, схема**; кодеки и WCAP те же MPN.
 - **PW:** FET C86513 → C882766 (CSD18532Q5B, R_DS 2,5 мОм вместо 1,8): проверить тепло LM5176 и ORing; TVS D4, D6 → C224008; если L4, L5 брать FXL1040-8R2-M, поменять посадку (11,5×10), плата ещё не разведена.
 - **P4:** U8 AS5600-ASOM → ASOT (только BOM). **W1:** RK09K A6S → A5R (BOM, вал).
 - **R2:** J14–J16 номер C707259 → C707258 (BOM); зелёные светодиоды NCD0603G1 (BOM).

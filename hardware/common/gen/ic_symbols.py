@@ -155,5 +155,15 @@ def tps2051b():
               "TI current-limited USB power switch, 0.5 A, 2.7-5.5 V, EN active high, OC open drain (DBV pins: 1 OUT, 2 GND, 3 OC, 4 EN, 5 IN)", left, right, [], [("2", "GND", P)])
 
 
+def bq77915():
+    left = [("1", "VDD", P), ("2", "AVDD", PA), ("3", "VC5", I), ("4", "VC4", I), ("5", "VC3", I), ("6", "VC2", I), ("7", "VC1", I), ("8", "VC0", I),
+            ("9", "VSS", P), ("10", "SRP", I), ("11", "SRN", I), ("12", "DSG", O)]
+    right = [("13", "CHG", O), ("14", "LD", I), ("15", "LPWR", O), ("16", "CBI", I), ("17", "OCDP", I), ("18", "TS", I), ("19", "VTB", O),
+             ("20", "CCFG", I), ("21", "CBO", O), ("22", "PRES", I), ("23", "CTRC", I), ("24", "CTRD", I)]
+    return ic("BQ77915", "BQ7791500PWR", "U", "Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm",
+              "https://www.ti.com/lit/ds/symlink/bq77915.pdf", "C2876946",
+              "TI BQ77915 3- to 5-series low-power primary protector (variant 00: 3S, OV 4.2 V), TSSOP-24 (SLUSCU0L table 7-1)", left, right, [], [])
+
+
 def all_symbols():
-    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166() + adc128s102() + tps2051b()
+    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166() + adc128s102() + tps2051b() + bq77915()

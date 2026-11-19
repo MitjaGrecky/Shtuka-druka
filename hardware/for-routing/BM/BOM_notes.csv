@@ -1,0 +1,20 @@
+Designator,Value,Footprint,LCSC,Status of the LCSC number
+J1,Cell taps,JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,C131334,проверено 15.11.2026: 195 585 шт. (JLC)
+J2,Cell power,Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical,C293740,проверено 15.11.2026: 2 649 шт. (JLC)
+J3,NTC chip,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,C131337,проверено 15.11.2026: 289 254 шт. (JLC)
+J4,NTC PW,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,C131337,проверено 15.11.2026: 289 254 шт. (JLC)
+J5,to PW (Battery),Molex_Micro-Fit_3.0_43045-0612_2x03_P3.00mm_Vertical,C234188,"15.11.2026: 0 шт. на JLC — заказать у Digikey, паять вручную (В22)"
+U1,BQ7791500PWR,TSSOP-24_4.4x7.8mm_P0.65mm,C2876946,проверить в EasyEDA
+"R1,R15",1k,R_0402_1005Metric,C11702,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1001TCE 1 кОм 1% 0402, Basic; наличие и цена не смотрелись"
+"C1,C2",1u,C_0603_1608Metric,C52923,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05A105KA5NQNC 1 мкФ 25 В X5R 0402, Basic; наличие и цена не смотрелись"
+"R2,R3,R4,R5",75,R_0402_1005Metric,C114757,проверить в EasyEDA
+"C3,C4,C5,C6",100n,C_0402_1005Metric,C1525,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05B104KO5NNNC 100 нФ 16 В X7R 0402, Basic; наличие и цена не смотрелись"
+R6,100k,R_0402_1005Metric,C25741,проверить в EasyEDA
+"R7,R8",10k,R_0402_1005Metric,C25744,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1002TCE 10 кОм 1% 0402, Basic; наличие и цена не смотрелись"
+R9,470k,R_0402_1005Metric,C25790,проверить в EasyEDA
+R10,5m,R_2512_6332Metric,C2903482,проверить в EasyEDA
+"R11,R12",100,R_0402_1005Metric,C25076,проверить в EasyEDA
+"Q1,Q2",CSD18540Q5B,TDSON-8-1,C86513,проверить в EasyEDA
+R13,4.53k,R_0402_1005Metric,C79537,проверить в EasyEDA
+R14,1M,R_0402_1005Metric,C26083,проверить в EasyEDA
+R16,3.3M,R_0402_1005Metric,C270613,проверить в EasyEDA

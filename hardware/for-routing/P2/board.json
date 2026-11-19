@@ -2,7 +2,7 @@
  "id": "P2",
  "name": "p2-grid",
  "title": "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses",
- "rev": "0.7",
+ "rev": "0.8",
  "w": 224.0,
  "h": 258.0,
  "layers": 4,

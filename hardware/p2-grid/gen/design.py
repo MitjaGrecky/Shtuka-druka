@@ -13,7 +13,8 @@ I2C: main bus SDA/SCL (pull-ups here, 4.7k) -> deck muxes P1 0x70, P3 0x71, P4 0
 0-3), 1 = M1 module bus, 2 = LP5864 E + Trill Bar A, 3 = Trill Bar B + the INA226 of PW (R146; separate from the LED drivers: address 0x40 may meet
 an LP5864 - check). Chain of registers (R123): ~SR_LOAD and SR_CLK shared, data back on SR_P1, SR_P3, SR_P4 (deck buses) and SR_P2 (local registers
 -> M1 through the module bus).
-Rev 0.1 (14.11.2026, PC) = schematic only. Rev 0.7 (19.11.2026): placement only (DRC): the cable header row moved 3 mm away from the strip LEDs.
+Rev 0.1 (14.11.2026, PC) = schematic only. Rev 0.8 (19.11.2026): green LED NCD0603G1 C84267 (BOM only).
+Rev 0.7 (19.11.2026): placement only (DRC): the cable header row moved 3 mm away from the strip LEDs.
 Rev 0.6 (18.11.2026): PW harness widened to PH 8 (CHG_INT, FAN_PWM, FAN_TACH, CHG_EN on GP14, GP11, GP13, GP12). License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -26,7 +27,7 @@ import kit as K  # noqa: E402
 NAME = "p2-grid"
 ID = "P2"
 TITLE = "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses"
-REV = "0.7"
+REV = "0.8"
 RA_ROT = 270        # right-angle 1.27 mm bus headers: rotation that opens them towards the rear edge (checked on the built board)
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8 x 74HC4051 + ADC128S102 (SPI0); 5 x LP5864 for 109 RGB; "
@@ -137,7 +138,7 @@ def parts():
     add(ref("U"), "Power_Protection:USBLC6-2SC6", "USBLC6-2SC6", SOT236,
         {"1": "MCU_DP", "6": "MCU_DP", "3": "MCU_DM", "4": "MCU_DM", "2": "GND", "5": "+5V_PANEL_S"}, LCSC="C7519")
     R("1k", "STATUS_LED", "STATUS_K")
-    add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": "STATUS_K", "1": "GND"})
+    add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": "STATUS_K", "1": "GND"}, LCSC="C84267")
 
     # ================================================================ pads: 8 x 74HC4051 + ADC128S102
     add(ref("U"), "ShtukaDruka:ADC128S102", "ADC128S102", TSSOP16,

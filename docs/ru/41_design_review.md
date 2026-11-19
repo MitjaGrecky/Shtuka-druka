@@ -18,5 +18,6 @@
 | [30_24-3-ventilyaciya-tolko-scheli-v](41_design_review/30_24-3-ventilyaciya-tolko-scheli-v.md) | 24.3 Вентиляция: только щели в люке под аккумуляторами (R185) | 0.9 |
 | [31_25-istochniki](41_design_review/31_25-istochniki.md) | 25. Источники | 0.8 |
 | [32_26-chto-ne-sdelano](41_design_review/32_26-chto-ne-sdelano.md) | 26. Что не сделано | 0.9 |
+| [33_24-6-zadnyaya-stenka-v-d-format](41_design_review/33_24-6-zadnyaya-stenka-v-d-format.md) | 24.6 Задняя стенка в D-формате (v7-D) | 0.4 |
 
 Полная версия до сжатия: история git.

@@ -1,0 +1,55 @@
+tag,kind,r_mm,model_x_mm,z_mm,format
+Main L,trs,286,229,94,D 26x31
+Main R,trs,312,203,94,D 26x31
+Aux L,trs,286,229,63,D 26x31
+Aux R,trs,312,203,63,D 26x31
+RCA L,rca,286,229,32,D 26x31
+RCA R,rca,312,203,32,D 26x31
+Mic/Line 1,xlr,338,177,94,D 26x31
+Mic/Line 2,xlr,364,151,94,D 26x31
+Hi-Z 1,trs,338,177,63,D 26x31
+Hi-Z 2,trs,364,151,63,D 26x31
+Phono L,rca,390,125,94,D 26x31
+Phono R,rca,416,99,94,D 26x31
+GND,post,442,73,94,native
+Ph/Line,switch,468,47,94,native
+Line 1,trs,390,125,63,D 26x31
+Line 2,trs,416,99,63,D 26x31
+Line 3,trs,442,73,63,D 26x31
+Line 4,trs,468,47,63,D 26x31
+Line 5,trs,390,125,32,D 26x31
+Line 6,trs,416,99,32,D 26x31
+Line 7,trs,442,73,32,D 26x31
+Line 8,trs,468,47,32,D 26x31
+LAN,lan,46,469,83.5,D 26x31
+Power,switch,16,499,95,native
+DC In,dc,16,499,69,native
+USB-C,usbc,16,499,43,native
+In 1,din,88,427,95,native
+In 2,din,88,427,69,native
+Out 1,din,110,405,95,native
+Out 2,din,110,405,69,native
+Out 3,din,132,383,95,native
+Out 4,din,132,383,69,native
+In,mini,167,348,95,native
+Out 1,mini,167,348,69,native
+Out 2,mini,167,348,43,native
+Clk 1,mini,190,325,95,native
+Clk 2,mini,207,308,95,native
+Reset,mini,224,291,95,native
+Clk In,mini,241,274,95,native
+Rst In,mini,258,257,95,native
+In 1,mini,190,325,69,native
+Out 1,mini,190,325,43,native
+Out 5,mini,190,325,17,native
+In 2,mini,207,308,69,native
+Out 2,mini,207,308,43,native
+Out 6,mini,207,308,17,native
+In 3,mini,224,291,69,native
+Out 3,mini,224,291,43,native
+Out 7,mini,224,291,17,native
+In 4,mini,241,274,69,native
+Out 4,mini,241,274,43,native
+Out 8,mini,241,274,17,native
+USB-A,usba,67,448,95,native
+USB-C,usbc,67,448,69,native

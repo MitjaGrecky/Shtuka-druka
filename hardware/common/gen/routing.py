@@ -41,7 +41,9 @@ def _kids(node, key):
     return [c for c in node if isinstance(c, list) and c and c[0] == key]
 
 
-def run_freerouting(b, jar, passes, work):
+def run_freerouting(b, jar, passes, work, two_layers=False):
+    if two_layers:                               # inner layers stay planes: route on F.Cu/B.Cu only
+        b.SetCopperLayerCount(2)
     dsn, ses = os.path.join(work, "board.dsn"), os.path.join(work, "board.ses")
     assert pcbnew.ExportSpecctraDSN(b, dsn), "DSN export failed"
     java = shutil.which("java") or "java"
@@ -167,11 +169,12 @@ def main():
     ap.add_argument("--out", help="routed board (default: overwrite BOARD)")
     ap.add_argument("--ses", help="use this session file instead of running Freerouting")
     ap.add_argument("--no-pour", action="store_true")
+    ap.add_argument("--two-layers", action="store_true", help="4-layer board: route signals on F.Cu/B.Cu only")
     ap.add_argument("--via-drill", type=float, default=0.3)
     a = ap.parse_args()
     b = pcbnew.LoadBoard(a.board)
     work = tempfile.mkdtemp(prefix="route_")
-    ses = a.ses or run_freerouting(b, os.path.abspath(a.jar), a.passes, work)
+    ses = a.ses or run_freerouting(b, os.path.abspath(a.jar), a.passes, work, a.two_layers)
     if not a.ses:
         keep = os.path.splitext(a.out or a.board)[0] + ".ses"
         shutil.copy(ses, keep)

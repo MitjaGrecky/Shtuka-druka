@@ -105,3 +105,5 @@ EasyEDA (18.11.2026, PC, rev 1.0): project `R2_v7` imported; LCSC numbers writte
 EasyEDA (19.11.2026): R2 1.0 = R2_v7: детали 248/248, цепи 170/170, LCSC, позиции 248/248, сохранено.
 
 Rev 1.1 (19.11.2026, rear wall v6.1, `docs/ru/img/41_rear_v6_1_jacks.csv`, doc 41 section 24): rows -4 to z 95 / 69 / 43 / 17 (x unchanged). Outline 110 x 99 (rear x 156-266, z 10-109): the top edge goes down by 4 with the rows (`Z0` = 109, `H` = 99), the bottom stays z 10; the two lower holes moved to y 95. Fit model (`R2_TOP` = 109): 0 collisions. EasyEDA not verified for rev 1.1.
+
+EasyEDA (19.11.2026): R2 1.2 = R2_v8: детали 248/248, цепи 170/170, LCSC (схема 158, PCB 146), сохранено через API. Позиции не сверяли. eda_verify: 172 расхождения только в поле Value (в EasyEDA 1u вместо 100n у конденсаторов C1525), LCSC совпадают.

@@ -46,3 +46,5 @@ Geometry: pcb_geomcheck 5 problems (HEAD 3): the 8-pin telemetry connector J10 l
 EasyEDA (18.11.2026, PC, rev 0.6): project `P2_v6` imported; PCB LCSC 317 written and re-checked, positions 397 / 397, saved. Schematic LCSC: 249 written, 67 missing (EasyEDA error "cmdKey", re-run `eda_set_lcsc.py P2 --project P2_v6`). Parts / nets line not captured: repeat `eda_check.py P2 --project P2_v6`.
 
 EasyEDA (19.11.2026): P2 0.6 = P2_v6: детали 397/397, цепи 266/266, LCSC (схема 68 дописано), позиции 397/397, сохранено.
+
+EasyEDA (19.11.2026): P2 0.7 = P2_v7: детали 397/397, цепи 266/266, LCSC (схема 317 за 3 прогона из-за cmdKey, PCB 317), сохранено через API. Позиции не сверяли (eda_verify не знает P2).

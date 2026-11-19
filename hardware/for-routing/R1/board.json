@@ -2,9 +2,9 @@
  "id": "R1",
  "name": "r1-audio",
  "title": "R1 - Audio jacks and analog front end: mic/Hi-Z two paths, line 1-8, phono, Main/Aux/RCA out on relays",
- "rev": "0.9",
+ "rev": "1.0",
  "w": 238.0,
- "h": 109.0,
+ "h": 105.0,
  "layers": 4,
  "parts": 456,
  "holes": [
@@ -14,7 +14,7 @@
   ],
   [
    4.0,
-   105.0
+   101.0
   ],
   [
    30.0,
@@ -34,7 +34,7 @@
   ],
   [
    234.0,
-   105.0
+   101.0
   ]
  ],
  "connectors": [

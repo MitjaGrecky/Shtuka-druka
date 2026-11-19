@@ -4,7 +4,7 @@ The RP2350 of the control board (R85) with everything that is not audio at the r
 USB hub and the control lines to the audio boards. DIN, USB, LAN and DC are panel parts on nuts with cables (R141).
 Research and decisions: `docs/ru/34_rear_boards_research.md`, R118, R135-R143. Map of boards: `docs/ru/29_board_map.md`.
 
-**Status: rev 0.9 (18.11.2026) - schematic and placed board, not routed; rectangle 110 x 103 without the low arm, see the end of this file. Earlier:** (234 parts, 4 layers; 14.11.2026; rev 0.5 = ATT1/ATT2 and the 74HC595, task #25; rev 0.6 = 7 x M3 mounting holes). Rear wall = the 3D model
+**Status: rev 1.1 (19.11.2026) - schematic and placed board, not routed; rectangle 110 x 99 without the low arm, see the end of this file. Earlier:** (234 parts, 4 layers; 14.11.2026; rev 0.5 = ATT1/ATT2 and the 74HC595, task #25; rev 0.6 = 7 x M3 mounting holes). Rear wall = the 3D model
 of panel v7 (R142). MIDI DIN, USB, LAN and DC are panel parts on nuts with short cables (R141, the shelf R2b of rev 0.3 is
 dropped): R2 carries the twenty 3.5 mm jacks and six JST PH headers for the DIN cables. Outline: the Control block, rear
 x 156-266, z 10-113, a rectangle 110 x 103 mm (rev 0.9).
@@ -103,3 +103,5 @@ Audit `notes/reviews/schematics_2026-11-18.md`. (1) The three downstream USB por
 EasyEDA (18.11.2026, PC, rev 1.0): project `R2_v7` imported; LCSC numbers written (sch 158, pcb 146), positions 248 / 248 against KiCad, saved. The parts / nets summary line was not captured and the project could not be reopened afterwards (bridge timeout): repeat `eda_check.py R2 --project R2_v7`.
 
 EasyEDA (19.11.2026): R2 1.0 = R2_v7: детали 248/248, цепи 170/170, LCSC, позиции 248/248, сохранено.
+
+Rev 1.1 (19.11.2026, rear wall v6.1, `docs/ru/img/41_rear_v6_1_jacks.csv`, doc 41 section 24): rows -4 to z 95 / 69 / 43 / 17 (x unchanged). Outline 110 x 99 (rear x 156-266, z 10-109): the top edge goes down by 4 with the rows (`Z0` = 109, `H` = 99), the bottom stays z 10; the two lower holes moved to y 95. Fit model (`R2_TOP` = 109): 0 collisions. EasyEDA not verified for rev 1.1.

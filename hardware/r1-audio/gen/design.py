@@ -37,14 +37,14 @@ import kit as K  # noqa: E402
 NAME = "r1-audio"
 ID = "R1"
 TITLE = "R1 - Audio jacks and analog front end: mic/Hi-Z two paths, line 1-8, phono, Main/Aux/RCA out on relays"
-REV = "0.9"
+REV = "1.0"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 differential ADC pairs (FS 8 Vrms diff into the AN0635 buffers), A1 -> R1: 4 DAC pairs; phantom per channel and phono/line "
             "from R2 (R118); output relays need MUTE and R2_OK (R137)")
 PWR_FLAG_NETS = ("+12V", "-12V")   # ERC: rails from the PW connector feed power inputs (op-amps)
 NO_PWR_FLAG = ("+3V3",)
-W, H = 238.0, 109.0         # rear x 273-511, z 8-117 (rev 0.8: top raised from 104 to 117 for the XLR row z 99 of the rear wall v5.2, doc 41 sect. 24.2)
-HOLES = [(4.0, 4.0), (234.0, 4.0), (4.0, 105.0), (234.0, 105.0),   # M3, board coordinates (KiCad, y down); 15.11.2026; rev 0.8: bottom +13 (H 109)
+W, H = 238.0, 105.0         # rear x 273-511, z 8-113 (rev 1.0: rear wall v6.1, rows z 95/69/43/17, top lowered 117 -> 113 so it clears the shelf at z 114, doc 41 sect. 24)
+HOLES = [(4.0, 4.0), (234.0, 4.0), (4.0, 101.0), (234.0, 101.0),   # M3, board coordinates (KiCad, y down); 15.11.2026; rev 0.8: bottom +13 (H 109)
          (30.0, 70.0), (172.0, 6.0), (172.0, 31.0)]   # 16.11: beside the RCA pairs (RCJ-025 has no panel nut): the plug force goes into standoffs
 A1_RISE = 5.1        # mm, see placement(). R179 (17.11.2026): A1 on the floor on ~10.7 mm standoffs (board plane z 13.7, sockets rows ~16.6 / 19.1) instead of the tray (R171: 19.0). Estimate +-1 mm: check against the socket drawing
 LAYERS = 4
@@ -319,10 +319,10 @@ def parts():
     return P
 
 
-JACKS = {"MAIN L": (292, 99), "MAIN R": (314, 99), "AUX L": (292, 73), "AUX R": (314, 73), "RCA L": (292, 47), "RCA R": (314, 47),
-         "MIC/LINE 1": (362, 99), "MIC/LINE 2": (394, 99), "HI-Z 1": (362, 73), "HI-Z 2": (394, 73),   # rev 0.8: rear wall v5.2, rows z 99 / 73 / 47 (doc 41 sect. 24.2)
-         "PHONO L": (434, 99), "PHONO R": (456, 99), **{f"LINE {i + 1}": (434 + 22 * (i % 4), 73 if i < 4 else 47) for i in range(8)}}
-X0, Z0 = 273.0, 117.0       # board origin in the rear-wall coordinates of tools/rear_panel.py (x from the left, z up)
+JACKS = {"MAIN L": (292, 95), "MAIN R": (314, 95), "AUX L": (292, 69), "AUX R": (314, 69), "RCA L": (292, 43), "RCA R": (314, 43),
+         "MIC/LINE 1": (362, 95), "MIC/LINE 2": (394, 95), "HI-Z 1": (362, 69), "HI-Z 2": (394, 69),   # rev 1.0: rear wall v6.1, rows z 95 / 69 / 43 (docs/ru/img/41_rear_v6_1_jacks.csv)
+         "PHONO L": (434, 95), "PHONO R": (456, 95), **{f"LINE {i + 1}": (434 + 22 * (i % 4), 69 if i < 4 else 43) for i in range(8)}}
+X0, Z0 = 273.0, 113.0       # board origin in the rear-wall coordinates of tools/rear_panel.py (x from the left, z up)
 
 
 def placement():

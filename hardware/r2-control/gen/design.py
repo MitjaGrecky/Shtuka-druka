@@ -31,13 +31,13 @@ import kit as K  # noqa: E402
 NAME = "r2-control"
 ID = "R2"
 TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables"
-REV = "1.0"
+REV = "1.1"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = ODROID-H5, down = RP2350, panel P2, A1 port A, spare")
 PWR_FLAG_NETS = ("+12V", "-12V", "DVDD", "VREG_AVDD", "ADC_AVDD")   # ERC: rails from a connector, inductor or RC filter
 NO_PWR_FLAG = ("+3V3",)                                               # +3V3 is driven by the AP2112K (power output pin)
-W, H = 110.0, 103.0         # Rev 0.7 (R178, 17.11.2026): rectangle, rear x 156-263, z 10-113 (the low arm under the DIN window is gone: H5 sits in the rear corner)
+W, H = 110.0, 99.0         # Rev 0.7 (R178, 17.11.2026): rectangle, rear x 156-263, z 10-113 (the low arm under the DIN window is gone: H5 sits in the rear corner)
 LAYERS = 4
 
 R0402, C0402, C0805 = K.R0402, K.C0402, K.C0805
@@ -332,21 +332,21 @@ def parts():
 # Mounting (rev 0.6, review 14.11.2026): 7 x M3 on standoffs to the rear wall, board coordinates (x, y), proposal to settle with the
 # enclosure: four corners of the L, one in the bottom strip between the TRS jacks, two inside between the jack columns/rows
 # (7.5 mm gaps). The jacks' own nuts carry the plug force into the wall; the standoffs only hold the board against flexing.
-HOLES = [(22.5, 27.0), (93.5, 27.0), (103.0, 99.0), (4.0, 99.0), (48.0, 53.0), (22.5, 53.0)]   # rev 0.7: shifted by -68, the two holes of the arm dropped
+HOLES = [(22.5, 27.0), (93.5, 27.0), (103.0, 95.0), (4.0, 95.0), (48.0, 53.0), (22.5, 53.0)]   # rev 0.7: shifted by -68, the two holes of the arm dropped
 MOUNT_FP = "MountingHole:MountingHole_3.2mm_M3_ISO7380"
 
 # Board: vertical, F side (jacks) faces the rear wall; seen from behind (rear view): board x = x_rear - 88, y = 113 - z.
 # Outline = the Control block of the 3D model (rear x 88-263, z 10-113) without the window behind the six panel DIN sockets
 # (rear x 88-156, z 38-113): an L shape. Everything but the jacks sits on the B side (inside), cable headers too.
-X0, Z0 = 156.0, 113.0      # board x = x_rear - 156 (rev 0.7; was 88)
-OUTLINE = [(0, 0), (110, 0), (110, 103), (0, 103)]
-AREAS = [(0, 0, 110, 103)]
+X0, Z0 = 156.0, 109.0      # board x = x_rear - 156 (rev 0.7; was 88)
+OUTLINE = [(0, 0), (110, 0), (110, 99), (0, 99)]   # rev 1.1: rear wall v6.1, top lowered 113 -> 109 (rows -4), bottom stays z 10
+AREAS = [(0, 0, 110, 99)]
 AXIS = {"PJ398SM": 0.78, "PJ-3920-3A": 1.29}   # jack axis below the pad-field centre (rotation 0), from the footprints
 # the 3D model of panel v7 (model3d/index.html, R142): (x_rear, z) of the jack axes
-JACKS = {"MIDI TRS IN": (167, 99), "MIDI TRS OUT 1": (167, 73), "MIDI TRS OUT 2": (167, 47),   # rev 0.9 (rear wall v6, doc 41 sect. 24.4): rows z 99 / 73 / 47 / 21, TRS column r 167
-         "CLOCK OUT 1": (190, 99), "CLOCK OUT 2": (207, 99), "RESET/RUN OUT": (224, 99), "CLOCK IN": (241, 99),
-         "RESET/RUN IN": (258, 99), **{f"CV IN {c + 1}": (190 + 17 * c, 73) for c in range(4)},
-         **{f"CV/GATE OUT {c + 1}": (190 + 17 * (c % 4), 47 if c < 4 else 21) for c in range(8)}}
+JACKS = {"MIDI TRS IN": (167, 95), "MIDI TRS OUT 1": (167, 69), "MIDI TRS OUT 2": (167, 43),   # rev 0.9 (rear wall v6, doc 41 sect. 24.4): rows z 95 / 69 / 43 / 17 (v6.1, docs/ru/img/41_rear_v6_1_jacks.csv), TRS column r 167
+         "CLOCK OUT 1": (190, 95), "CLOCK OUT 2": (207, 95), "RESET/RUN OUT": (224, 95), "CLOCK IN": (241, 95),
+         "RESET/RUN IN": (258, 95), **{f"CV IN {c + 1}": (190 + 17 * c, 69) for c in range(4)},
+         **{f"CV/GATE OUT {c + 1}": (190 + 17 * (c % 4), 43 if c < 4 else 17) for c in range(8)}}
 
 
 def jack_xy(note):

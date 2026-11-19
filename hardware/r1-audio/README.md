@@ -91,3 +91,5 @@ Unbalanced XLR (pin 3 to shield) plugged with phantom on moved the far side of t
 Same rev 0.9: the MUTE / R2_OK series FETs of the output relays 2N7002 -> **AO3400A** (C20917): three G6K-2F-Y coils (21 mA, must operate 4.0 V) through two 2N7002 at Vgs 3.3 V left 3.8-4.0 V at +5 V -5 %. The single-FET ATT and PHONO coil drivers stay 2N7002 (one coil, 0.1 V drop).
 
 EasyEDA (18.11.2026, PC, rev 0.9): project `R1_v7`: parts 456 / 456, nets 264 / 264 (PCB and schematic), LCSC written (120 sch / 106 pcb) and re-checked, positions 456 / 456, saved. DRC and parity left to CI.
+
+Rev 1.0 (19.11.2026, rear wall v6.1, `docs/ru/img/41_rear_v6_1_jacks.csv`, doc 41 section 24): the rows shift by -4 to z 95 / 69 / 43 (x unchanged: Main/Aux/RCA r 292 / 314, Mic/Line and Hi-Z r 362 / 394, Phono / Line r 434-500). The top edge goes down from 117 to 113 so R1 clears the shelf / cover that starts at z 114 (`Z0` = 113, `H` = 105, bottom edge stays z 8); the bottom mounting holes moved up by 4 mm in board coordinates. Fit model (`R1_TOP` = 113): 0 collisions, 0 tight spots. EasyEDA not verified for rev 1.0.

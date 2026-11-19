@@ -19,4 +19,4 @@ J4,Wheel push,JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal,C173752,проверить
 RV1,"10k lin, 45 mm travel",Potentiometer_Bourns_PTA4543_Single_Slide,C17444183,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Bourns PTA4543-2015DPB103 (заглушка кроссфейдера, P90), Extended; наличие и цена не смотрелись"
 R10,1k,R_0402_1005Metric,C11702,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1001TCE 1 кОм 1% 0402, Basic; наличие и цена не смотрелись"
 U7,ADS1115IDGSR,TSSOP-10_3x3mm_P0.5mm,C37593,проверено 06.11.2026 (док. 31)
-U8,AS5600-ASOM,SOIC-8_3.9x4.9mm_P1.27mm,C79815,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): ams AS5600-ASOM, SOIC-8, Extended; наличие и цена не смотрелись"
+U8,AS5600-ASOT,SOIC-8_3.9x4.9mm_P1.27mm,C55240803,проверить в EasyEDA

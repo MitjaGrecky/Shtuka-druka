@@ -13,6 +13,7 @@ The wheel push ("OK" in the panel description) is not in the spec: its input is 
 JST PH for a switch in the wheel mechanism) - question V10. Chain: host reads P4 (U3 first: Scene A ...), then W3 (J3):
 U5.DS <- SR_W3 (J3 pin 13); J3 pin 14 (W3's SR_IN) <- SR_END pulled up here.
 Board coordinates (KiCad, y down): origin at the rear-left corner, x = panel_x - X0, y = Y1 - panel_y.
+Rev 0.2 (19.11.2026, purchase_plan.md): U8 AS5600-ASOM -> AS5600-ASOT (BOM only).
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -25,7 +26,7 @@ import kit as K  # noqa: E402
 NAME = "p4-right"
 ID = "P4"
 TITLE = "P4 - Right deck: 20 buttons with 2 RGB, crossfader, wheel, I2C mux, bus to P2 and W3"
-REV = "0.1"
+REV = "0.2"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("J1 deck bus 2x8 to P2 (P100); TCA9546A 0x72 (P99): ch0 own LEDs + ADS1115 0x48 + AS5600 0x36, ch1 J3 -> W3; "
             "chain P4 -> W3")
@@ -92,9 +93,9 @@ def parts():
         LCSC="C37593", Note="I2C 0x48 (ADDR = GND), crossfader on AIN0 (P104)")
     K.rc(add, "C16", "100n", "+3V3", "GND")
     # wheel: AS5600 under the magnet, 3.3 V mode
-    add("U8", "Common:AS5600", "AS5600-ASOM", "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+    add("U8", "Common:AS5600", "AS5600-ASOT", "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
         {"1": "+3V3", "2": "+3V3", "3": None, "4": "GND", "5": None, "6": "SD0", "7": "SC0", "8": "GND"},
-        LCSC="C79815", Note="I2C 0x36; centred under the wheel magnet; DIR = GND (angle grows clockwise from the top)")
+        LCSC="C55240803", Note="rev 0.2: AS5600-ASOM (0 stock) -> AS5600-ASOT, same SOIC-8 (C55240803, 1240 pcs; AMS C499458 has 10); I2C 0x36; centred under the wheel magnet; DIR = GND (angle grows clockwise from the top)")
     K.rc(add, "C17", "100n", "+3V3", "GND", Note="AS5600 VDD")
     K.rc(add, "C18", "1u", "+3V3", "GND", Note="AS5600 VDD3V3")
     for h in range(len(HOLES)):

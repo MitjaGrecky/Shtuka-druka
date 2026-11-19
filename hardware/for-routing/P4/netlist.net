@@ -104,7 +104,7 @@
     (comp (ref "C15") (value "100n") (footprint "Capacitor_SMD:C_0402_1005Metric"))
     (comp (ref "U7") (value "ADS1115IDGSR") (footprint "Package_SO:TSSOP-10_3x3mm_P0.5mm"))
     (comp (ref "C16") (value "100n") (footprint "Capacitor_SMD:C_0402_1005Metric"))
-    (comp (ref "U8") (value "AS5600-ASOM") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"))
+    (comp (ref "U8") (value "AS5600-ASOT") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"))
     (comp (ref "C17") (value "100n") (footprint "Capacitor_SMD:C_0402_1005Metric"))
     (comp (ref "C18") (value "1u") (footprint "Capacitor_SMD:C_0402_1005Metric"))
     (comp (ref "H1") (value "M2") (footprint "MountingHole:MountingHole_2.2mm_M2"))

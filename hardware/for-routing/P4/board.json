@@ -2,7 +2,7 @@
  "id": "P4",
  "name": "p4-right",
  "title": "P4 - Right deck: 20 buttons with 2 RGB, crossfader, wheel, I2C mux, bus to P2 and W3",
- "rev": "0.1",
+ "rev": "0.2",
  "w": 92.0,
  "h": 293.0,
  "layers": 2,

@@ -17,6 +17,7 @@ oscillator parts. The CS5308P / CS5304P datasheets were not reachable: their pin
 Rev 0.5 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md, B1): BAT54S overload clamp (3V3A / GND) on every ADC input pin (40 pins), CS5308P DS1314F2
 table 3-3: -0.3 ... VDD_A + 0.3 V and 10 mA.
 Rev 0.6 (18.11.2026, audit): 24.576 MHz oscillator YXC OT2EL4C4JI (OE-low state unknown) -> SCTF SX3M24.576B10F20TNN (tri-state, same family as the 22.5792 one).
+Rev 0.7 (19.11.2026, ADuM4166 datasheet read): isolator crystal 12 pF -> 10 pF (S322524M10PF10PPM, C7568725); rest of the isolator node checked, no other change.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -29,7 +30,7 @@ import kit as K  # noqa: E402
 NAME = "a1-digital"
 ID = "A1"
 TITLE = "A1 - Digital audio: 3 ADC, 1 DAC, 2 xcore.ai, USB isolator, clocks, quiet supplies"
-REV = "0.6"
+REV = "0.7"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 ADC pairs (8 Vrms FS), A1 -> R1: Main/Aux DAC pairs, A1 -> F1: Phones pairs; xcore A: TDM master, SPI to the "
             "converters, USB port A (hub on R2), xcore B: USB port B through the ADuM4166 (isolated ground GNDPC)")
@@ -374,7 +375,9 @@ def parts():
     C("100n", "ISO_V1", "GNDPC", fp=C0603, Note="VDD1: exactly 0.1 uF (more disturbs the LDO start-up)")
     C("100n", "+3V3D", fp=C0603, Note="VDD2 / VBUS2: 0.1 uF within 10 mm of the pins")
     add(ref("Y"), "Device:Crystal_GND24", "24MHz", "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-        {"1": "ISO_XI", "3": "ISO_XO", "2": "GND", "4": "GND"}, LCSC="C70590", Note="ADuM4166 crystal (XI2/XO2): 24 MHz, <= 50 ppm, typical load 10 pF, start within 0.3 ms; C70590 (12 pF, +-20 ppm) with 15 pF caps - a 10 pF part is better")
+        {"1": "ISO_XI", "3": "ISO_XO", "2": "GND", "4": "GND"}, LCSC="C7568725",
+        Note="ADuM4166 crystal (XI2/XO2): 24 MHz, tolerance <= 50 ppm and stability <= 100 ppm, typical crystal load 10 pF, start within 0.3 ms (ADI datasheet Rev. B, clock options). "
+        "Rev 0.7: S322524M10PF10PPM (C7568725, 10 pF, +-10 ppm, 2828 pcs at JLC 19.11.2026) with 15 pF caps (7.5 pF + about 3 pF stray = 10.5 pF) replaces C70590 (12 pF, +-20 ppm: about 1.5 pF off the load)")
     C("15p", "ISO_XI")
     C("15p", "ISO_XO")
 

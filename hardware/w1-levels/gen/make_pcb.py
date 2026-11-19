@@ -78,7 +78,8 @@ def build():
     ds = b.GetDesignSettings()
     ds.m_TrackMinWidth, ds.m_MinClearance, ds.m_ViasMinSize, ds.m_MinThroughDrill = mm(0.127), mm(0.127), mm(0.5), mm(0.3)
     ds.m_CopperEdgeClearance = mm(0.3)
-    nc = ds.m_NetSettings.m_DefaultNetClass
+    ns = ds.m_NetSettings
+    nc = ns.m_DefaultNetClass if hasattr(ns, "m_DefaultNetClass") else ns.GetDefaultNetclass()   # KiCad 7 / 10
     nc.SetTrackWidth(mm(TRACK))
     nc.SetClearance(mm(CLEAR))
     nc.SetViaDiameter(mm(VIA[0]))

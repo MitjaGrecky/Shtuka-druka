@@ -11,6 +11,7 @@ Coordinates. Panel: x from the left side; on the slope the panel y is the top-vi
 (fold y 300, shelf y 430, slope 30 degrees). Slope coordinate s = (y - 300) / cos 30, measured
 along the slope from the fold. Board (KiCad, y down, looking at the top side): origin at the
 board's rear-left corner (high s), x = panel_x - X0, y = S1 - s.
+Rev 0.3 (19.11.2026, purchase_plan.md): pot RK09K1130A6S -> A5R (C209779), BOM / shaft only.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import math
@@ -18,7 +19,7 @@ import os
 
 NAME = "w1-levels"
 TITLE = "W1 - Levels (slope, left): 4 volume pots, 2 P48 buttons, window for M5 Gain"
-REV = "0.2"                          # 0.2: M5 window to x 89.5 (V1, M5 rev 0.2)
+REV = "0.3"                          # 0.2: M5 window to x 89.5 (V1, M5 rev 0.2)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 M1_LIB = os.path.join(HERE, "..", "..", "m1-screen-knobs", "lib")   # shared project library (LED 1615)
@@ -87,8 +88,8 @@ def parts():
     for n, (nm, _, _) in enumerate(POTS):
         add(f"RV{n + 1}", "Device:R_Potentiometer", "10k lin, end stops",
             "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical",
-            {"1": "GND", "2": f"POT{n + 1}", "3": "+3V3"}, LCSC="C209770", Note=nm,
-            Part="Alps RK09K1130A6S or another RK09K 10k with linear (B) taper")
+            {"1": "GND", "2": f"POT{n + 1}", "3": "+3V3"}, LCSC="C209779", Note=nm,
+            Part="Alps RK09K1130A5R (shaft; was A6S, rev 0.3, C209779 3273 pcs) or another RK09K 10k with linear (B) taper")
         rc(f"R{1 + n}", "1k", f"POT{n + 1}", f"AIN{n}")
         rc(f"C{3 + n}", "100n", f"AIN{n}", "GND")
     add("U1", "Analog_ADC:ADS1115IDGS", "ADS1115IDGSR", "Package_SO:TSSOP-10_3x3mm_P0.5mm",

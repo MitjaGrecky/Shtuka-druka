@@ -3,7 +3,7 @@ J1,Bus to P1 2x7 1.27,PinHeader_2x07_P1.27mm_Vertical,C5372811,"найден в 
 J2,Bus to M5 2x7 1.27,PinHeader_2x07_P1.27mm_Vertical,C5372811,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): HCTL PZ127-2-07-Z, штыри 2x7 1,27 выводные, Extended; наличие и цена не смотрелись"
 C1,10u,C_0805_2012Metric,C15850,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL21A106KAYNNNE 10 мкФ 25 В X5R 0805, Basic; наличие и цена не смотрелись"
 "C2,C9",1u,C_0402_1005Metric,C52923,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05A105KA5NQNC 1 мкФ 25 В X5R 0402, Basic; наличие и цена не смотрелись"
-"RV1,RV2,RV3,RV4","10k lin, end stops",Potentiometer_Alps_RK09K_Single_Vertical,C209770,проверено 06.11.2026 (док. 31)
+"RV1,RV2,RV3,RV4","10k lin, end stops",Potentiometer_Alps_RK09K_Single_Vertical,C209779,проверить в EasyEDA
 "R1,R2,R3,R4",1k,R_0402_1005Metric,C11702,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1001TCE 1 кОм 1% 0402, Basic; наличие и цена не смотрелись"
 "C3,C4,C5,C6,C7,C8,C10",100n,C_0402_1005Metric,C1525,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): Samsung CL05B104KO5NNNC 100 нФ 16 В X7R 0402, Basic; наличие и цена не смотрелись"
 U1,ADS1115IDGSR,TSSOP-10_3x3mm_P0.5mm,C37593,проверено 06.11.2026 (док. 31)

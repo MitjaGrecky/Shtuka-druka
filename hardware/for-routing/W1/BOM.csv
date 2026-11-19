@@ -3,7 +3,7 @@ Bus to P1 2x7 1.27,J1,PinHeader_2x07_P1.27mm_Vertical,C5372811
 Bus to M5 2x7 1.27,J2,PinHeader_2x07_P1.27mm_Vertical,C5372811
 10u,C1,C_0805_2012Metric,C15850
 1u,"C2,C9",C_0402_1005Metric,C52923
-"10k lin, end stops","RV1,RV2,RV3,RV4",Potentiometer_Alps_RK09K_Single_Vertical,C209770
+"10k lin, end stops","RV1,RV2,RV3,RV4",Potentiometer_Alps_RK09K_Single_Vertical,C209779
 1k,"R1,R2,R3,R4",R_0402_1005Metric,C11702
 100n,"C3,C4,C5,C6,C7,C8,C10",C_0402_1005Metric,C1525
 ADS1115IDGSR,U1,TSSOP-10_3x3mm_P0.5mm,C37593

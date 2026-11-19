@@ -18,6 +18,7 @@ Rev 0.5 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md, B1)
 table 3-3: -0.3 ... VDD_A + 0.3 V and 10 mA.
 Rev 0.6 (18.11.2026, audit): 24.576 MHz oscillator YXC OT2EL4C4JI (OE-low state unknown) -> SCTF SX3M24.576B10F20TNN (tri-state, same family as the 22.5792 one).
 Rev 0.7 (19.11.2026, ADuM4166 datasheet read): isolator crystal 12 pF -> 10 pF (S322524M10PF10PPM, C7568725); rest of the isolator node checked, no other change.
+Rev 0.8 (19.11.2026): +5V bulk capacitor 47 uF 10 V -> 25 V (C190223), same 6.3 x 7.7 footprint.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -30,7 +31,7 @@ import kit as K  # noqa: E402
 NAME = "a1-digital"
 ID = "A1"
 TITLE = "A1 - Digital audio: 3 ADC, 1 DAC, 2 xcore.ai, USB isolator, clocks, quiet supplies"
-REV = "0.7"
+REV = "0.8"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 ADC pairs (8 Vrms FS), A1 -> R1: Main/Aux DAC pairs, A1 -> F1: Phones pairs; xcore A: TDM master, SPI to the "
             "converters, USB port A (hub on R2), xcore B: USB port B through the ADuM4166 (isolated ground GNDPC)")
@@ -392,7 +393,8 @@ def parts():
     for _ in range(2):
         C("47u 25V", "+12V", fp="Capacitor_SMD:CP_Elec_6.3x7.7")
         C("47u 25V", "GND", "-12V", fp="Capacitor_SMD:CP_Elec_6.3x7.7")
-    C("47u 10V", "+5V", fp="Capacitor_SMD:CP_Elec_6.3x7.7")
+    C("47u 25V", "+5V", fp="Capacitor_SMD:CP_Elec_6.3x7.7", LCSC="C190223",
+      Note="rev 0.8 (parts_missing.md): 47 uF 10 V 6.3x7.7 not in stock -> KL1E470M-CRE77 47 uF 25 V, D6.3 x L7.7 (C190223, 980 pcs), the same case as the +-12 V bulk capacitors; on 5 V it is derated, ESR is no concern for bulk")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 

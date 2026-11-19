@@ -21,3 +21,7 @@ hardware/*/quilter/results/
 # local hand-work copies (the user plays with them in KiCad; never pushed)
 hardware/*/almost/
 model3d/fit/fit_parts.json
+
+# routed copies of boards must not look like KiCad projects to CI
+hardware/**/routed/**/*.kicad_pro
+hardware/**/routed/**/*.kicad_prl

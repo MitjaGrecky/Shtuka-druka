@@ -64,3 +64,16 @@
 | все | Quilter | задания идут | - | - | - |
 
 Фоновые скрипты на ПК (`Documents\ShtukaDruka`): `fr_pw.sh` (Freerouting, затем kicad-cli DRC и route_stats, лог `stats_pw-power.log`), `fr_r1_finish.sh` (DRC и статистика R1 после окончания). Перед коммитом удалить `.kicad_pro`/`.kicad_prl` из `routed/freerouting`.
+
+## Freerouting 1.9.0 на всех платах (19-20.11.2026)
+
+Конвейер BM: `routing.py --no-pour --two-layers --passes 60`, сигналы на F.Cu/B.Cu. DRC без silk и lib_footprint_issues. Недотрассированные цепи записаны для «доводчика».
+
+| Плата | Время | Неразведённых | Треков (сегм.) | Via | Длина, мм | DRC error/warning |
+|---|---|---|---|---|---|---|
+| F1 0.6 | 62 с | 2: /R2OK_G (R4.1), /-12V | 596 | 56 | 1838 | 0/0 |
+| U1 | 21 с | 0 | 39 | 0 | 103 | 0/0 |
+| W3 (System; папка w3-system, «W1 system» в задании) | 3 мин | 2: /A_SW2, /A_SW3 | 353 | 32 | 1149 | 0/0 |
+| P4 | 40 мин: таймаут, 0 трасс; GND без дорожек: 9 мин | 101: GND (93, под заливку) и 8 сигнальных (/A_SW2, /B_SW2, /B_SW3, /BTN2, /A_CS15-17, /A_SW3) | 1713 | 268 | 9995 | 0/0 |
+
+Причина зависания на больших платах (P4, P2, PW): Freerouting 1.9.0 не выходит из первого прохода, когда GND (и питание) идут дорожками на 2 слоях, лог после `Starting auto-routing...` пуст, CPU занят на 100%. P4 без цепи GND (`-mp 20`) разведена за 9 мин. GND на таких платах нужен заливкой/планом (внутренние слои 4-слойных плат). Freerouting 2.5.0: native падает (`SerializationConstructorAccessor not found` в BoardSnapshotManager), jvm-версия требует Java 25 (на ПК Java 17). Заливка в `routing.py` (`gnd_pours`) сломана под KiCad 10 (`GetBoardPolygonOutlines` требует аргумент), заливку GND добавить отдельно.

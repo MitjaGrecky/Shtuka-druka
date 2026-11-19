@@ -24,9 +24,9 @@ def rework_right(m, P0, h5c, y1):
     jt = m.REAR_JACK_TOP
     h0 = h5c - 60
     # R2 rev 0.7 (R178): no low arm, the tall part ends at R2_TALL_X1 (359)
-    keep.append(m.box("Rear jacks (left)", "rear", 5, 359, y0 + 1.6, y1, 8, jt, color="metal", est=True))
+    # rear wall v6 (designer, 19.11.2026): blocks by r (from the left seen from behind), z rows 99/73/47/21
     # rear wall v5 (designer, user-approved layout): panel-mount groups on nuts, 20 mm deep; r from the left seen from behind, model x = 515 - r
-    for nm, r0, r1, z0, z1 in (("Power (switch, DC, USB-C PD)", 4, 24, 38, 108), ("USB / LAN", 28, 66, 64, 108), ("MIDI DIN + TRS", 70, 173, 38, 108)):
+    for nm, r0, r1, z0, z1 in (("Power (switch, DC, USB-C PD)", 3.5, 29, 38, 108), ("USB / LAN", 33, 72, 64, 108), ("MIDI DIN", 76, 145, 64, 108), ("MIDI TRS", 155, 178, 38, 108), ("Sync / CV", 182, 268, 9, 108), ("Audio Out", 272, 336, 38, 108), ("Audio In", 340, 511, 38, 108)):
         keep.append(m.box(f"Rear jacks: {nm}", "rear", 515 - r1, 515 - r0, y1 - 20, y1, z0, z1, color="metal", est=True))
     keep.append(m.box("H5 harness room", "rear", h5x0, h5x1, h0 - 45, h0 - 25, 3.5, 26, color="plastic", est=True))
     keep.append(m.box(f"Fan {fs:g} x {fs:g} x {ft:g} (right wall)", "rear", 512 - ft, 512, h5c + FAN_SPEC["dy"] - fs / 2, h5c + FAN_SPEC["dy"] + fs / 2, FAN_SPEC["z0"], FAN_SPEC["z0"] + fs, color="plastic"))

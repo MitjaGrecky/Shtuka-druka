@@ -29,3 +29,7 @@
 Добавлено 19.11.2026 (док. 48, повторный обход Thomann): TAD 114BPC, Adam Hall 7217 PCB02 TP, Neutrik NRJ6HF и NMJ3HF-S (посадка на плату, отверстие, выводы); Neutrik NCJ6FA-V (посадка, вырез A против D); Hicon HI-J35SEFD (D-фланец, размеры); Seetronic SCCMCDF-01 (26,5×23 мм: ориентация), SAUSB-W; Neutrik NJ3FD-V (размер фланца при шаге 22).
 
 Добавлено 19.11.2026 (док. 49, D-формат задней стенки): Rane Note 151 «Grounding and Shielding Audio Devices» и Note 110 «Sound System Interconnection» (ranecommercial.com/legacy/pdf/ranenotes/, прочитаны только в выдержках поиска); AES48-2005 (платный стандарт, не скачан); Neutrik: размеры D-вырезов и экранирование NC3FD/NJ3FD, Hicon HI-J35SEFD (габарит D, наличие не проверено); JST PH/XH (номинальный ток и напряжение из даташита, цифры в док. 49 по памяти).
+
+## Закрыто 19.11.2026 (Neutrik, см. notes/datasheets_text/neutrik_*.md и док. 48 разд. 6)
+Получены и разобраны: NE8FDP, NE8FDV, NAUSB-W, NCJ6FI-S/-V/-H, NCJ6FA-V, NJ3FD-V, NJ3FP6C, NF2D-0, NMJ3HF-S. Вычеркнуто из списка выше: Neutrik NE8FDP, NAUSB-W, NCJ6FI-S/-V/-H, NCJ6FA-V, NJ3FD-V, NF2D, NJ3FP6C.
+Ещё нужны (не Neutrik или нет чертежа): NRJ6HF и NMJ2HC-S (только DXF), NC3FD (чертёж не прочитан), TAD 114BPC, Adam Hall 7217 PCB02, Hicon HI-J35SEFD, Seetronic SCCMCDF-01, Thomann MIDI Socket, Cliff CL1115, Molex 43045-0612, Würth 865250349007.

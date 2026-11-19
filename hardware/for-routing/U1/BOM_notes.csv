@@ -1,0 +1,5 @@
+Designator,Value,Footprint,LCSC,Status of the LCSC number
+J1,USB4105-GF-A,USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal,C3020560,проверить в EasyEDA
+J2,to PW J2,PinHeader_1x06_P2.54mm_Vertical,,номера нет: выбрать деталь
+R1,1M,R_0402_1005Metric,C26083,проверить в EasyEDA
+C1,1n,C_0402_1005Metric,C1523,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): FH 0402B102K500NT 1 нФ 50 В X7R 0402, Basic; наличие и цена не смотрелись"

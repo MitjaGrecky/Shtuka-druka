@@ -1,0 +1,5 @@
+Comment,Designator,Footprint,LCSC Part #
+USB4105-GF-A,J1,USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal,C3020560
+to PW J2,J2,PinHeader_1x06_P2.54mm_Vertical,
+1M,R1,R_0402_1005Metric,C26083
+1n,C1,C_0402_1005Metric,C1523

@@ -148,5 +148,5 @@ def main(D, silk, here):
     out = os.path.join(proj, D.NAME + ".kicad_pcb")
     board = build(D, silk)
     board.Save(out)
-    B.write_project(proj, D.NAME, getattr(D, "LAYERS", 2))
+    B.write_project(proj, D.NAME, getattr(D, "LAYERS", 2), getattr(D, "HOLE_CLEARANCE", 0.254))
     print("ok", out, len(board.GetFootprints()), "footprints")

@@ -1,0 +1,55 @@
+tag,kind,r_mm,model_x_mm,z_mm,depth_mm,zone_depth_mm,ok
+Power,switch,16,499,95,25,60,ok
+DC In,dc,16,499,69,25,26,ok
+USB-C,usbc,16,499,43,15,26,ok
+LAN,lan,46,469,83.5,36,60,ok
+USB-A,usba,72,443,83.5,40.6,60,ok
+USB-C PC,usbc,16,499,17,15,26,ok
+In 1,din,94,421,95,25,60,ok
+In 2,din,94,421,69,25,60,ok
+Out 1,din,116,399,95,25,60,ok
+Out 2,din,116,399,69,25,60,ok
+Out 3,din,138,377,95,25,60,ok
+Out 4,din,138,377,69,25,60,ok
+In,mini,167,348,95,15,42,ok
+Out 1,mini,167,348,69,15,42,ok
+Out 2,mini,167,348,43,15,42,ok
+Clk 1,mini,190,325,95,15,42,ok
+Clk 2,mini,207,308,95,15,42,ok
+Reset,mini,224,291,95,15,42,ok
+Clk In,mini,241,274,95,15,42,ok
+Rst In,mini,258,257,95,15,42,ok
+In 1,mini,190,325,69,15,42,ok
+Out 1,mini,190,325,43,15,42,ok
+Out 5,mini,190,325,17,15,42,ok
+In 2,mini,207,308,69,15,42,ok
+Out 2,mini,207,308,43,15,42,ok
+Out 6,mini,207,308,17,15,42,ok
+In 3,mini,224,291,69,15,42,ok
+Out 3,mini,224,291,43,15,42,ok
+Out 7,mini,224,291,17,15,42,ok
+In 4,mini,241,274,69,15,42,ok
+Out 4,mini,241,274,43,15,42,ok
+Out 8,mini,241,274,17,15,42,ok
+Main L,trs,292,223,95,24,42,ok
+Main R,trs,314,201,95,24,42,ok
+Aux L,trs,292,223,69,24,42,ok
+Aux R,trs,314,201,69,24,42,ok
+RCA L,rca,292,223,43,13,42,ok
+RCA R,rca,314,201,43,13,42,ok
+Mic/Line 1,xlr,362,153,95,24,42,ok
+Mic/Line 2,xlr,394,121,95,24,42,ok
+Hi-Z 1,trs,362,153,69,24,42,ok
+Hi-Z 2,trs,394,121,69,24,42,ok
+Phono L,rca,434,81,95,13,42,ok
+Phono R,rca,456,59,95,13,42,ok
+GND,post,478,37,95,15,42,ok
+Ph/Line,switch,500,15,95,25,42,ok
+Line 1,trs,434,81,69,24,42,ok
+Line 2,trs,456,59,69,24,42,ok
+Line 3,trs,478,37,69,24,42,ok
+Line 4,trs,500,15,69,24,42,ok
+Line 5,trs,434,81,43,24,42,ok
+Line 6,trs,456,59,43,24,42,ok
+Line 7,trs,478,37,43,24,42,ok
+Line 8,trs,500,15,43,24,42,ok

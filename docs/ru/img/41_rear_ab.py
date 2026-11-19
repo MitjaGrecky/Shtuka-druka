@@ -46,7 +46,7 @@ def build(mode):
 
 def draw(mode):
     J = build(mode)
-    ttl = {"A1": "A1 (утверждённый A + 6 DIN в D-фланце 26×31, два места)", "A": "A: v6.1 как есть, TRS = NJ3FD-V (не D), combo на плате", "B": "B: A + LAN и USB-A в D (26×31), TRS остаются NJ3FD-V"}[mode]
+    ttl = {"A2": "A2 (A + 6 DIN одним блоком как v6.1, вырез Ø16 — предположение)", "A1": "A1 (утверждённый A + 6 DIN в D-фланце 26×31, два места)", "A": "A: v6.1 как есть, TRS = NJ3FD-V (не D), combo на плате", "B": "B: A + LAN и USB-A в D (26×31), TRS остаются NJ3FD-V"}[mode]
     el = ['<rect width="100%" height="100%" fill="#fff"/>',
           f'<text x="30" y="20" font-size="16" font-weight="700" fill="#1f2933">Задняя стенка, вариант {ttl}</text>',
           '<text x="30" y="36" font-size="11" fill="#52606d">Размеры по даташитам Neutrik (док. 48, разд. 6); остальные гнёзда — размеры v6.1 (не сверены). Вид сзади, r — мм от ЛЕВОГО края, x модели = 515 − r; z от пола; стенка до z 110, ширина 515.</text>',
@@ -80,6 +80,10 @@ def draw(mode):
             el.append(f'<rect x="{cx - 13.5 * S}" y="{cy - 15 * S}" width="{27 * S}" height="{30 * S}" fill="#3a4047" stroke="#9aa5af" stroke-width="0.8"/>'
                       f'<circle cx="{cx}" cy="{cy}" r="{11.9 * S}" fill="#b9bec2"/><circle cx="{cx}" cy="{cy}" r="{8 * S}" fill="#050506"/>')
             dy, box = (15 + 2.6) * S, False
+        elif k == "din" and mode == "A2":                         # round DIN, hole 16 (assumed), 2 x M3 holes 3.2 on the diagonal, 21.5 apart
+            el.append(f'<circle cx="{cx}" cy="{cy}" r="{8 * S}" fill="#b9bec2"/><circle cx="{cx}" cy="{cy}" r="{5.5 * S}" fill="#050506"/>')
+            for sg in (-1, 1):
+                el.append(f'<circle cx="{cx + sg * 7.6 * S}" cy="{cy - sg * 7.6 * S}" r="{1.6 * S}" fill="#050506" stroke="#9aa5af" stroke-width="0.5"/>')
         elif k == "din" and mode == "A1":                         # MIDI socket, D flange 26x31, hole 24
             el.append(f'<rect x="{cx - 13 * S}" y="{cy - 15.5 * S}" width="{26 * S}" height="{31 * S}" fill="#3a4047" stroke="#9aa5af" stroke-width="0.8"/>'
                       f'<circle cx="{cx}" cy="{cy}" r="{12 * S}" fill="#b9bec2"/><circle cx="{cx}" cy="{cy}" r="{7.5 * S}" fill="#050506"/>')
@@ -108,4 +112,4 @@ def draw(mode):
     print(mode, [r for r in rows if r.endswith("NO")])
 
 
-draw("A"); draw("B"); draw("A1")
+draw("A"); draw("B"); draw("A1"); draw("A2")

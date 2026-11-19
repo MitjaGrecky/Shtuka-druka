@@ -13,7 +13,8 @@ I2C: main bus SDA/SCL (pull-ups here, 4.7k) -> deck muxes P1 0x70, P3 0x71, P4 0
 0-3), 1 = M1 module bus, 2 = LP5864 E + Trill Bar A, 3 = Trill Bar B + the INA226 of PW (R146; separate from the LED drivers: address 0x40 may meet
 an LP5864 - check). Chain of registers (R123): ~SR_LOAD and SR_CLK shared, data back on SR_P1, SR_P3, SR_P4 (deck buses) and SR_P2 (local registers
 -> M1 through the module bus).
-Rev 0.1 (14.11.2026, PC) = schematic only. Rev 0.6 (18.11.2026): PW harness widened to PH 8 (CHG_INT, FAN_PWM, FAN_TACH, CHG_EN on GP14, GP11, GP13, GP12). License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
+Rev 0.1 (14.11.2026, PC) = schematic only. Rev 0.7 (19.11.2026): placement only (DRC): the cable header row moved 3 mm away from the strip LEDs.
+Rev 0.6 (18.11.2026): PW harness widened to PH 8 (CHG_INT, FAN_PWM, FAN_TACH, CHG_EN on GP14, GP11, GP13, GP12). License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
 import sys
@@ -25,7 +26,7 @@ import kit as K  # noqa: E402
 NAME = "p2-grid"
 ID = "P2"
 TITLE = "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses"
-REV = "0.6"
+REV = "0.7"
 RA_ROT = 270        # right-angle 1.27 mm bus headers: rotation that opens them towards the rear edge (checked on the built board)
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8 x 74HC4051 + ADC128S102 (SPI0); 5 x LP5864 for 109 RGB; "
@@ -271,7 +272,7 @@ def placement():
     # scene buttons, 16.11.2026)
     import packer
     byref = {p["ref"]: p for p in parts()}
-    x, y, rowh, margin = 12.0, 14.0, 0.0, 6.0
+    x, y, rowh, margin = 12.0, 11.0, 0.0, 6.0      # rev 0.7 (DRC): row 3 mm further from the strip LEDs (D79, D80, D83 sat in the pads of J2, J4, J10)
     for r in [p["ref"] for p in parts() if p["ref"].startswith("J")]:
         # R168: lying connectors must open towards the rear edge (cables run on under M1 to PW and R2). The JST side-entry
         # footprints do at 0 deg; the right-angle Micro-Fit opens the other way, so it is turned by 180 deg.

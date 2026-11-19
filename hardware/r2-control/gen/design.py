@@ -17,6 +17,7 @@ Rev 0.4 (14.11.2026, PC, R141-R143): rear wall as the 3D model of panel v7; DIN,
 = the Control block without the window behind the DIN sockets.
 Rev 0.3 (14.11.2026, PC, R139, superseded): the right-angle jacks (MIDI DIN x 6, USB-C PC, USB-A, USB-C PD, DC) moved to the shelf
 board R2b (hardware/r2b-jacks) with their ESD and cables; R2 keeps the MIDI parts and gets a 2x7 comb to R2b.
+Rev 1.2 (19.11.2026): placement only (DRC): cable headers moved off the jack pads and the board edge; nothing electrical changed.
 Rev 1.0 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md): USB hub ports P2, A1 and spare each get a TPS2051B current-limited switch (0.75-1.25 A, OC to the
 hub's OCS_N2-4, enable = PRTPWR2-4, USB2514B DS00001692: OCS_N1-4 = pins 13, 17, 19, 21; PRTPWR1-4 = 12, 16, 18, 20); DAC80504 REF capacitors 100 nF -> 220 nF (datasheet: 150 nF minimum).
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
@@ -31,7 +32,7 @@ import kit as K  # noqa: E402
 NAME = "r2-control"
 ID = "R2"
 TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables"
-REV = "1.1"
+REV = "1.2"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = ODROID-H5, down = RP2350, panel P2, A1 port A, spare")
@@ -368,14 +369,24 @@ def placement():
             x, y = jack_xy(p["fields"]["Note"])
             fixed[p["ref"]] = (x, y - AXIS[p["value"]], 0, t)
     by = {p["value"]: p["ref"] for p in P}
-    for k, name in enumerate(("DIN IN 1", "DIN OUT 1", "DIN OUT 3", "DIN IN 2", "DIN OUT 2", "DIN OUT 4")):
-        fixed[by[name]] = (5.0, 6.0 + 11.5 * k, 90, b)                      # DIN cables: along the window edge
-    hdr = [p["ref"] for p in P if p["lib"].endswith("Conn_01x04")]          # USB up, P2, A1, spare
-    fixed[by["Power from PW"]] = (101.0, 9.0, 90, b)
-    for k, r in enumerate(hdr):
-        fixed[r] = (101.0, 25.0 + 13.0 * k, 90, b)
-    fixed[by["to A1/R1"]] = (100.0, 85.0, 0, b)
-    fixed[by["SWD"]] = (92.0, 99.0, 0, b)
+    # rev 1.2 (19.11.2026, DRC): the cable headers (B side) must not cover the through-hole pads of the jacks (F side); the old column of DIN headers at x 5
+    # sat under the stereo jacks' pads, the power header under the rightmost jack, the SWD header on the edge. Now: DIN headers and SWD in one row in the free band
+    # between the jack rows (y 76.5-88.1), USB and power headers in a column at x 101 below the rightmost jack (y 25.5-86.5), 'to A1/R1' in the free
+    # bottom-left corner. Boxes from packer._bbox (relative to the footprint origin).
+    def at(ref, left, top, rot):
+        box, _ = packer._bbox(sys.modules[__name__], next(q for q in P if q["ref"] == ref), rot, b)
+        fixed[ref] = (round(left - box[0], 2), round(top - box[1], 2), rot, b)
+        return box[2] - box[0], box[3] - box[1]
+    x = 30.0
+    for name in ("DIN IN 1", "DIN IN 2", "DIN OUT 1", "DIN OUT 2", "DIN OUT 3", "DIN OUT 4", "SWD"):
+        w, h = at(by[name], x, 77.5, 0)
+        x += w + 1.0
+    hdr = [p["ref"] for p in P if p["ref"].endswith("") and p["lib"].endswith("Conn_01x04")]          # USB up, P2, A1, spare
+    y = 25.5
+    for r in [by["Power from PW"]] + hdr:
+        w, h = at(r, 97.4, y, 90)
+        y += h + 1.0
+    at(by["to A1/R1"], 3.5, 83.5, 90)
     for hx, (x, y) in zip([p["ref"] for p in P if p["ref"].startswith("H")], HOLES):
         fixed[hx] = (x, y, 0, t)
     groups = {}

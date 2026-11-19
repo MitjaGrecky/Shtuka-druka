@@ -18,6 +18,7 @@ Rev 0.3 (16.11.2026, PC, R165, doc 39): low case. The board lies on 1 mm standof
 side (no room underneath): jacks Cliff S1/BBB CL1115 (Digikey 4654-CL1115-ND, hand-soldered, not at JLCPCB; 12.7 mm high instead of 15.67), the
 cable headers lie flat (2x6 right angle, JST PH side entry), board 135 x 27 mm.
 Rev 0.5 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md): mute-chain FETs 2N7002 -> AO3400A (C20917), nothing else changed.
+Rev 0.6 (20.11.2026): placement only: the small parts are packed with a 1.4 mm courtyard gap (was 0.25) so that the router can fan out the 0.5 mm pitch pins of the OPA1622.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -30,7 +31,7 @@ import kit as K  # noqa: E402
 NAME = "f1-phones"
 ID = "F1"
 TITLE = "F1 - Headphones: 2 x Cliff S1 6.35 mm, 2 x OPA1622 difference amplifiers x2, mute relays"
-REV = "0.5"
+REV = "0.6"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("From A1: Phones 1 and 2 as differential pairs (2 Vrms FS) -> OPA1622 difference amp x2 -> 10 R -> relay -> NMJ6HCD2; "
             "volume is the DAC's digital attenuator (R87); mute relays need MUTE and R2_OK (R66, R137)")
@@ -154,7 +155,9 @@ def placement():
             side = 1 if "HP1" in str(p["pins"]) else 2
         grp[side].append(p["ref"])
     G = [(24.0, 29.0, t, grp[1], 0), (52.0, 10.0, t, grp[2], 0), (90.0, 14.0, t, grp[0], 0)]
-    return packer.pack(sys.modules[__name__], P, fixed, G, [(0, 0, W, H)])
+    # rev 0.6 (20.11.2026, router finding f1-four-gaps.md): the pins +12V / GND / -12V of the OPA1622 are on a 0.5 mm pitch and the GND pad could not leave the chip:
+    # courtyard gap 0.25 -> 1.4 mm so that the neighbouring resistors, capacitors and the relay leave a free corridor for the fan-out of pins 2-4 (and the EN, HP1R_IM, HP1L_O nets)
+    return packer.pack(sys.modules[__name__], P, fixed, G, [(0, 0, W, H)], gap=1.4)
 
 
 if __name__ == "__main__":

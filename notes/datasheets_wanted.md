@@ -35,3 +35,6 @@
 Ещё нужны (не Neutrik или нет чертежа): NRJ6HF и NMJ2HC-S (только DXF), NC3FD (чертёж не прочитан), TAD 114BPC, Adam Hall 7217 PCB02, Hicon HI-J35SEFD, Seetronic SCCMCDF-01, Thomann MIDI Socket, Cliff CL1115, Molex 43045-0612, Würth 865250349007.
 
 Добавлено 19.11.2026 (жгуты): Molex 43030-0001 (диапазон проводов, обжим 18 AWG), Carling 2GK51-73 (DC-рейтинг, глубина), Switchcraft 721A (вырез), Johnson 111-0702-001 (вырез), NKK M2012 (глубина), Thomann MIDI Socket (чертёж), Amphenol FCI 71600 (MPN IDC-розеток).
+
+## Добавлено 19.11.2026 (ПО и испытания, док. 45)
+Можно скачать и прислать (чтение через markitdown): GCT USB4105-GF-A (распиновка, CC для U1; уже есть выписка в док. 46); TI TPS25730D (нет в notes/datasheets_text; ADCIN-пороги, без I2C), TI BQ7791500 и BQ25798 (тоже нет в notes/datasheets_text); Jauch LP906090JH (ток заряда, NTC, защита ячейки, для шагов 8–11); Carling 2GK51-73 (ток, вырез, выводы).

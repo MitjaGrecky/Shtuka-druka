@@ -27,19 +27,27 @@ import boardkit as B  # noqa: E402
 def load_design(proj):
     spec = importlib.util.spec_from_file_location("design_q", os.path.join(proj, "gen", "design.py"))
     d = importlib.util.module_from_spec(spec)
+    sys.modules["design_q"] = d
     spec.loader.exec_module(d)
     return d
 
 
 def nf(value):
-    v = value.lower().replace("f", "")
+    v = value.lower().split()[0].replace("f", "")
     for suf, k in (("p", 1e-3), ("n", 1.0), ("u", 1e3), ("m", 1e6)):
         if v.endswith(suf):
             return float(v[:-1]) * k
     return float(v) * 1e9
 
 
+def gnd_name(D):
+    """Ground net: GND, or BAT_N on the battery boards (BM)."""
+    nets = {n for p in D.parts() for n in p["pins"].values() if n}
+    return "GND" if "GND" in nets else ("BAT_N" if "BAT_N" in nets else "GND")
+
+
 def bypass(D):
+    g = gnd_name(D)
     parts = {p["ref"]: p for p in D.parts()}
     pl = D.placement()
     rows = []
@@ -47,9 +55,9 @@ def bypass(D):
         if not ref.startswith("C") or p["fields"].get("DNP") == "yes":
             continue
         nets = [n for n in p["pins"].values() if n]
-        if "GND" not in nets or len(set(nets)) != 2:
+        if g not in nets or len(set(nets)) != 2:
             continue
-        sup = [n for n in nets if n != "GND"][0]
+        sup = [n for n in nets if n != g][0]
         best = None
         for r2, q in parts.items():
             if not r2.startswith(("U", "J")):
@@ -77,6 +85,7 @@ def bypass(D):
 def power(D):
     nets = {n for p in D.parts() for n in p["pins"].values() if n}
     out = [(n, ma) for n, ma in (("+5V", 800), ("GND", 800), ("+3V3", 100)) if n in nets]
+    out += [(n, 2000) for n in ("BAT_P", "BAT_N", "PACK_N") if n in nets and "GND" not in nets]   # BM: pack current
     out += [("/" + n, 300) for n in sorted(nets) if "_SW" in n and n[0] in "ABCDLR" and n.split("_SW")[1].isdigit()]
     return out
 
@@ -93,7 +102,7 @@ def main(proj, out):
         "bypass_capacitors.csv": ["capacitor,bypassed_component,bypassed_pin,capacitance"] +
                                  [f"{c},{u},{p},{v:g}" for c, u, p, v in bypass(D)],
         "high_current_nets.csv": ["net_name,max_current,use_power_pour"] + [f"{n},{ma},false" for n, ma in power(D)],
-        "ground_nets.csv": ["net_name,is_primary,use_region_pour", "GND,true,false"],
+        "ground_nets.csv": ["net_name,is_primary,use_region_pour", f"{gnd_name(D)},true,false"],
     }
     for name, lines in rows.items():
         with open(os.path.join(out, name), "w", newline="\n") as f:

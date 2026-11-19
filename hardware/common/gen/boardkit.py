@@ -79,7 +79,7 @@ def write_project(proj_dir, name, layers=2):
                wire_width=6, bus_width=12, line_style=0)
     pro = {
         "board": {"design_settings": {"meta": {"version": 2}, "rules": {
-            "min_clearance": 0.127, "min_track_width": 0.127, "min_via_diameter": via_min, "min_via_annular_width": 0.1,
+            "min_clearance": 0.127 if layers < 4 else 0.1, "min_track_width": 0.127, "min_via_diameter": via_min, "min_via_annular_width": 0.1,
             "min_through_hole_diameter": hole, "min_hole_clearance": 0.254, "min_hole_to_hole": 0.25,
             "min_copper_edge_clearance": 0.3, "min_silk_clearance": 0.0, "min_text_height": 0.8,
             "min_text_thickness": 0.08}}},

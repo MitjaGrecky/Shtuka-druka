@@ -27,3 +27,5 @@
 | 15 | Würth 865250349007 | чертёж площадки (текст PDF перемешан) | A1 |
 
 Добавлено 19.11.2026 (док. 48, повторный обход Thomann): TAD 114BPC, Adam Hall 7217 PCB02 TP, Neutrik NRJ6HF и NMJ3HF-S (посадка на плату, отверстие, выводы); Neutrik NCJ6FA-V (посадка, вырез A против D); Hicon HI-J35SEFD (D-фланец, размеры); Seetronic SCCMCDF-01 (26,5×23 мм: ориентация), SAUSB-W; Neutrik NJ3FD-V (размер фланца при шаге 22).
+
+Добавлено 19.11.2026 (док. 49, D-формат задней стенки): Rane Note 151 «Grounding and Shielding Audio Devices» и Note 110 «Sound System Interconnection» (ranecommercial.com/legacy/pdf/ranenotes/, прочитаны только в выдержках поиска); AES48-2005 (платный стандарт, не скачан); Neutrik: размеры D-вырезов и экранирование NC3FD/NJ3FD, Hicon HI-J35SEFD (габарит D, наличие не проверено); JST PH/XH (номинальный ток и напряжение из даташита, цифры в док. 49 по памяти).

@@ -165,5 +165,34 @@ def bq77915():
               "TI BQ77915 3- to 5-series low-power primary protector (variant 00: 3S, OV 4.2 V), TSSOP-24 (SLUSCU0L table 7-1)", left, right, [], [])
 
 
+def tps26631():
+    left = [("1", "IN", P), ("2", "IN", P), ("5", "IN_SYS", P), ("6", "UVLO", I), ("7", "OVP", I), ("3", "B_GATE", O), ("4", "DRV", O)]
+    right = [("17", "OUT", P), ("18", "OUT", P), ("14", "FLT", O), ("16", "PGOOD", O), ("15", "PGTH", I), ("13", "IMON", O),
+             ("12", "SHDN", I), ("11", "MODE", I), ("10", "ILIM", PA), ("9", "dVdT", PA)]
+    bottom = [("8", "GND", P), ("25", "EP", P)]
+    top = [(str(n), "NC", NC) for n in (19, 20, 21, 22, 23, 24)]
+    return ic("TPS26631", "TPS26631RGER", "U", "Package_DFN_QFN:QFN-24-1EP_4x4mm_P0.5mm_EP2.65x2.65mm",
+              "https://www.ti.com/lit/ds/symlink/tps2663.pdf", "C1850273",
+              "TI TPS26631 4.5-60 V 6 A eFuse, adjustable UVLO/OVP/current limit/slew (SLVSE94G, RGE VQFN-24: IN 1-2, OUT 17-18)", left, right, top, bottom)
+
+
+def bzt52c3v3():
+    left = [("1", "A", PA)]
+    right = [("2", "K", PA)]
+    return ic("BZT52C3V3", "BZT52C3V3", "D", "Diode_SMD:D_SOD-123", "https://www.diodes.com/assets/Datasheets/ds18010.pdf", "C173413",
+              "Zener diode 3.3 V 0.5 W, SOD-123 (pin 1 anode, pin 2 cathode)", left, right, [], [])
+
+
+def isousb211():
+    left = [("1", "VBUS1", P), ("2", "V3P3V1", PA), ("5", "VCC1", P), ("4", "V1P8V1", PA), ("11", "V1P8V1", PA), ("7", "UD-", B), ("8", "UD+", B),
+            ("9", "EQ10", I), ("10", "EQ11", I), ("13", "CDPENZ1", I), ("6", "V2OK", O), ("14", "NC", NC)]
+    right = [("28", "VBUS2", P), ("27", "V3P3V2", P), ("24", "VCC2", P), ("25", "V1P8V2", P), ("18", "V1P8V2", P), ("22", "DD-", B), ("21", "DD+", B),
+             ("19", "EQ21", I), ("20", "EQ20", I), ("16", "CDPENZ2", I), ("23", "V1OK", O), ("15", "NC", NC)]
+    bottom = [("3", "GND1", P), ("12", "GND1", P), ("17", "GND2", P), ("26", "GND2", P)]
+    return ic("ISOUSB211", "ISOUSB211DPR", "U", "ShtukaDruka:SSOP-28_DP0028A_7.5x10.3mm_P0.65mm",
+              "https://www.ti.com/lit/ds/symlink/isousb211.pdf", "C5772877",
+              "TI ISOUSB211 isolated USB 2.0 repeater, low/full/high speed, no crystal, 5.7 kVrms, SSOP-28 DP0028A (SLLSFC5D)", left, right, [], bottom)
+
+
 def all_symbols():
-    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166() + adc128s102() + tps2051b() + bq77915()
+    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166() + adc128s102() + tps2051b() + bq77915() + tps26631() + bzt52c3v3() + isousb211()

@@ -107,3 +107,6 @@ EasyEDA (19.11.2026): R2 1.0 = R2_v7: детали 248/248, цепи 170/170, LC
 Rev 1.1 (19.11.2026, rear wall v6.1, `docs/ru/img/41_rear_v6_1_jacks.csv`, doc 41 section 24): rows -4 to z 95 / 69 / 43 / 17 (x unchanged). Outline 110 x 99 (rear x 156-266, z 10-109): the top edge goes down by 4 with the rows (`Z0` = 109, `H` = 99), the bottom stays z 10; the two lower holes moved to y 95. Fit model (`R2_TOP` = 109): 0 collisions. EasyEDA not verified for rev 1.1.
 
 EasyEDA (19.11.2026): R2 1.2 = R2_v8: детали 248/248, цепи 170/170, LCSC (схема 158, PCB 146), сохранено через API. Позиции не сверяли. eda_verify: 172 расхождения только в поле Value (в EasyEDA 1u вместо 100n у конденсаторов C1525), LCSC совпадают.
+
+## Rev 1.3 (19.11.2026): rear wall harness
+The wall USB-A (Neutrik NAUSB-W, cable cut at the A end, harness H5) goes to **J6** (the spare hub port), not J4 (J4 is the panel P2 port). Pin order PH-4: 1 VBUS (red), 2 D- (white), 3 D+ (green), 4 GND (black). DIN OUT J7-J10 PH-3 (1 -> DIN pin 4, 2 -> pin 5, 3 -> pin 2 shield), DIN IN J11, J12 PH-2 (pin 4, pin 5): as the Thomann MIDI Socket. PJ-3920-3A C707258, green LED C84267.

@@ -22,6 +22,7 @@ UVLO start 10.1 V / stop 9.3 V (was 9.45 / 8.7 V; boost mode from 9.3 V in); 15 
 The pack BMS is a separate small board in each pack (BQ7791500, doc 43 5c); the PW 45 C hardware charge stop and the charge-only-with-switch-on gate stay.
 Rev 1.1 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md): EXT and PD TVS SMBJ24CA / SMBJ22CA -> SMBJ20CA (BQ25798 VBUS 30 V abs. max / 24 V
 recommended, TPS25730 VBUS 28 V abs. max); DC adapter is 12-20 V. Values and nets unchanged otherwise (same placement).
+Rev 1.2 (19.11.2026, purchase_plan.md): all 60 V FETs CSD18540Q5B (C86513) -> CSD18532Q5B (C882766): R_DS 2.5 mOhm at 10 V instead of 1.8; LM5176 at 9.3 V in / 95 W: about +0.25 W in the four FETs (about 1.3 W total, DFN pads), ORing LM74700: drop 27 mV at 11 A (the chip regulates 20 mV, then the FET is fully on). Pack TVS SMBJ13CA C132568 -> C224008 (stock). L4, L5 stay Bourns SRP1038CC-8R2M. Rev 1.2 also (rear wall harness check): DC fuse 7 A -> 5 A (jack 721A 5 A); On/Off switch connector 1x2 -> Micro-Fit 2x2 (10.2 A peak split over two contacts per side). Rev 1.2 also (audit A-025): DC input eFuse TPS26631 (OVP 22.9 V) between DC_F and the ideal diode IDC; EXT stays below the 24 V recommended / 30 V absolute maximum of the chargers.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -34,12 +35,12 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "1.1"
+REV = "1.2"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
             "+-12 V (TPS7A47 / TPS7A33), +48 V (LM5156H + TPS7A4101)")
-PWR_FLAG_NETS = ("B19_VCC", "B19_VIN", "BAT1_F", "BAT2_F", "BUS", "DC_F", "EXT", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "V12F", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
+PWR_FLAG_NETS = ("DC_P", "B19_VCC", "B19_VIN", "BAT1_F", "BAT2_F", "BUS", "DC_F", "EXT", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "V12F", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
 NO_PWR_FLAG = ("+3V3",)     # no 3.3 V rail on this board
 W, H = 100.0, 110.0         # rough: under the slope on the right next to the battery bay (R109); with the board
 HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, 106.0), (96.0, 106.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
@@ -55,7 +56,7 @@ SMA, SMB, SMC, SOD123F, SOD123 = ("Diode_SMD:D_SMA", "Diode_SMD:D_SMB", "Diode_S
                                   "Diode_SMD:D_SOD-123")
 MF = "Connector_Molex:Molex_Micro-Fit_3.0_{}_P3.00mm_Vertical"
 PH = "Connector_JST:JST_PH_B{n}B-PH-K_1x0{n}_P2.00mm_Vertical"
-FET = ("Transistor_FET:CSD18540Q5B", "Package_TO_SOT_SMD:TDSON-8-1")   # 60 V 1.8 mOhm, pins 1-3 S, 4 G, 5 D
+FET = ("Transistor_FET:CSD18540Q5B", "Package_TO_SOT_SMD:TDSON-8-1")   # CSD18532Q5B since rev 1.2 (2.5 mOhm at 10 V), pins 1-3 S, 4 G, 5 D
 
 
 def parts():
@@ -79,7 +80,7 @@ def parts():
         add(ref("C"), "Device:C_Polarized", value, fp, {"1": plus, "2": minus}, **f)
 
     def fet(g, s, d, **f):
-        add(ref("Q"), FET[0], "CSD18540Q5B", FET[1], {"1": s, "2": s, "3": s, "4": g, "5": d}, LCSC="C86513", **f)
+        add(ref("Q"), FET[0], "CSD18532Q5B", FET[1], {"1": s, "2": s, "3": s, "4": g, "5": d}, LCSC="C882766", **f)
 
     def ideal_diode(name, anode, cathode):
         u = ref("U")
@@ -132,16 +133,17 @@ def parts():
         add(ref("Q"), "Transistor_FET:2N7002", "2N7002", "Package_TO_SOT_SMD:SOT-23", {"1": "+3V3", "2": "GND", "3": f"{c}_CEM"}, LCSC="C8545",
             Note="CE pull-down 2/2: opens only while +3V3 exists = the On/Off switch is on (the +3V3 comes from +5V from BUS behind the switch)")
         R("2.2k", f"{c}_REGN", f"{c}_LEDA", Note="STAT LED: on = charging, blink = fault")
-        add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": f"{c}_LEDA", "1": f"{c}_STAT"})
+        add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": f"{c}_LEDA", "1": f"{c}_STAT"}, LCSC="C84267")
         R("10k", f"{c}_SCL", "+3V3", Note="I2C pull-up (downstream of the mux channel)")
         R("10k", f"{c}_SDA", "+3V3")
 
     # ---------------------------------------------------------------- inputs
     add(ref("J"), "Connector_Generic:Conn_01x02", "DC in", MF.format("43650-0215_1x02"), {"1": "DC_RAW", "2": "GND"},
         Note="cable from the locking DC jack on the rear wall (R141; Kycon KLDHCX-0202-BC-1, 5 A 24 V)")
-    add(ref("F"), "Device:Fuse", "7A", "Fuse:Fuse_2920_7451Metric", {"1": "DC_RAW", "2": "DC_F"}, Note="resettable fuse, 7 A hold - check")
+    add(ref("F"), "Device:Fuse", "5A", "Fuse:Fuse_2920_7451Metric", {"1": "DC_RAW", "2": "DC_F"},
+        Note="resettable fuse, 5 A hold (rev 1.2: was 7 A): the wall jack Switchcraft 721A is rated 5 A, a Micro-Fit contact on 20 AWG carries about 5-6 A; 5 A = 60 W at 12 V, 100 W at 20 V")
     add(ref("D"), "Device:D_TVS", "SMBJ28CA", SMB, {"1": "DC_F", "2": "GND"}, LCSC="C151259", Note="DC input surge, 28 V standoff (R72)")
-    ideal_diode("IDC", "DC_F", "EXT")
+    ideal_diode("IDC", "DC_P", "EXT")                       # rev 1.2: behind the eFuse TPS26631 (OVP 22.9 V, parts at the end of parts())
 
     add(ref("J"), "Connector_Generic:Conn_02x03_Odd_Even", "USB-C Power in", MF.format("43045-0612_2x03"),
         {"1": "PD_VBUS", "2": "PD_VBUS", "3": "GND", "4": "GND", "5": "PD_CC1", "6": "PD_CC2"},
@@ -193,14 +195,15 @@ def parts():
             {"1": b, "2": b, "3": "GND", "4": "GND", "5": f"{cs}_TS", "6": "GND"},
             Note=f"3S pack {k} (3 x Jauch LP906090JH, doc 43 5c) with its own BMS board (BQ7791500, R183): BAT+ x 2, GND x 2, NTC 10k (103AT, B 3435) between pin 5 and pin 6; harness 150-250 mm")
         add(ref("F"), "Device:Fuse", "10A", "Fuse:Fuse_2920_7451Metric", {"1": b, "2": bf}, Note="resettable, 10 A hold: the pack is 6 A (1C of the cell, Jauch datasheet), the BMS trips at 9.6-14.4 A")
-        add(ref("D"), "Device:D_TVS", "SMBJ13CA", SMB, {"1": bf, "2": "GND"}, LCSC="C132568",
+        add(ref("D"), "Device:D_TVS", "SMBJ13CA", SMB, {"1": bf, "2": "GND"}, LCSC="C224008",
             Note="hot-plug TVS at BAT (BQ25798 fig. 8-1, note 2): 13 V standoff above the 12.6 V pack, clamp 21.5 V at 28 A and about 16-17 V at a few A; BAT/BATP absolute maximum is 20 V (SMBJ20CA clamped at 32 V)")
         ideal_diode(f"IBAT{k}", bf, "BUS_IN")
         charger(k, bf)
 
     # ---------------------------------------------------------------- On/Off switch and BUS
-    add(ref("J"), "Connector_Generic:Conn_01x02", "On/Off switch", MF.format("43650-0215_1x02"), {"1": "BUS_IN", "2": "BUS_SW"},
-        Note="mechanical On/Off on the rear wall (model): rocker rated 15 A DC or more in series with the bus (rev 1.0: 95 W from a 9.3 V pack = 10.2 A)")
+    add(ref("J"), "Connector_Generic:Conn_02x02_Odd_Even", "On/Off switch", MF.format("43045-0412_2x02"), {"1": "BUS_IN", "2": "BUS_IN", "3": "BUS_SW", "4": "BUS_SW"},
+        Note="mechanical On/Off on the rear wall: Carling 2GK51-73, both poles in parallel (>= 10 A DC); rev 1.2: Micro-Fit 2x2 (43045-0412, housing 43025-0400): two contacts per side, 5 A per contact at the "
+        "10.2 A peak (95 W from a 9.3 V pack); was a 1x2 with 10 A on one contact, over the contact rating (harness H3: 4 wires, one pole = 2 wires)")
     # input power monitor (R146): everything the instrument draws passes the shunt; P2 reads it and caps the LEDs
     R("5m", "BUS_SW", "BUS", fp=R2512, Note="shunt 5 mOhm 1 % 3 W: 8 A -> 40 mV (INA226 range 81.9 mV)")
     u = ref("U")
@@ -302,7 +305,8 @@ def parts():
         C("100n 25V", f"{p}_BOOT", f"{p}_SW", fp=C0603)
         add(ref("D"), "Device:D_Schottky", "B560C", SMC, {"1": f"{p}_SW", "2": "GND"}, LCSC="C85100", Note="catch diode 60 V 5 A (example)")
         add(ref("L"), "Device:L", "8.2uH", "Inductor_SMD:L_Bourns_SRP1038C_10.0x10.0mm", {"1": f"{p}_SW", "2": net},
-            Note="8.2 uH, Isat >= 8 A (example: 7.2 uH WE 7447798720, Isat 7.9 A)")
+            Note="8.2 uH, Isat >= 8 A (example: 7.2 uH WE 7447798720, Isat 7.9 A); Bourns SRP1038CC-8R2M (Isat 13.5 A, Irms 9 A), bought at Digikey (1 pc at JLC), same footprint; "
+            "FXL1040-8R2-M (C167232, Isat 9 A, DCR 27 mOhm) was checked as an alternative and needs the L_Changjiang_FXL1040 footprint")
         for _ in range(4):
             C("2.2u 50V", "BUS", fp=C1206, Note="input")
         for _ in range(3):
@@ -411,7 +415,7 @@ def parts():
     add(ref("J"), "Connector_Generic:Conn_01x02", "+5V screen", PH.format(n=2), {"1": "+5V", "2": "GND"},
         Note="Waveshare 10.1DP-CAPLCD, 5 V / 4 W (R110)")
     R("2.2k", "+5V", "LED_K", Note="power LED")
-    add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": "LED_K", "1": "GND"})
+    add(ref("D"), "Device:LED", "green", "LED_SMD:LED_0603_1608Metric", {"2": "LED_K", "1": "GND"}, LCSC="C84267")
 
     # ---------------------------------------------------------------- 15 V for the ODROID-H5 (R149, P106): LMR33640 buck from V19
     u = ref("U")
@@ -450,6 +454,29 @@ def parts():
     R("10k", "FAN_TACH", "+3V3", Note="tach is open collector: pull-up to 3.3 V")
     R("100", "FAN_TACH", "FAN_TACH_OUT")
 
+    # ---------------------------------------------------------------- rev 1.2 (audit A-025): DC input eFuse TPS26631 with overvoltage cut-off at about 23 V
+    # The TVS SMBJ20CA on EXT clamps about 28 V at 3 A and 32 V at 18 A, while the chargers' VBUS/VAC pins are 30 V absolute maximum (24 V recommended). A DC adapter above 20 V
+    # (24 V adapter, a wrong plug) now meets TPS26631 (SLVSE94G, 4.5-60 V rated, IN 67 V absolute): OVP cuts the output (FLT, auto-retry), EXT never exceeds the cut-off.
+    # The PD path stays 15-20 V by negotiation and the TPS25730's own protection (VBUS 28 V absolute; SMBJ20CA).
+    # OVP / UVLO divider (eq. 9, 10, V(OVPR) = V(UVLOR) = 1.2 V): R1 453k, R2 35.7k, R3 27.0k -> OV = 1.2 x 515.7k / 27.0k = 22.9 V (21.8-24.0 V with the 4 % reference
+    # and 1 % resistors), UV = 1.2 x 515.7k / 62.7k = 9.9 V. ILIM: R = 18 kOhm x A / I -> 3.32k = 5.4 A (4.5-6 A table points 4.02k / 3k). dVdT: t = 20.8e3 x V x C -> 10 nF at 19 V = 4 ms:
+    # inrush into about 250 uF (bulk 100 uF + chargers + FETs) = 1.2 A. MODE to GND = auto-retry. SHDN needs 2 V ... 5.5 V: 220k from the input with a 3.3 V zener.
+    # Rds(on) 30 mOhm typ (34.5 max) x 5 A^2 = 0.75 W max in the QFN 4x4: copper plane under the pad. OUT = DC_P -> ideal diode IDC.
+    u = ref("U")
+    add(u, "ShtukaDruka:TPS26631", "TPS26631RGER", "Package_DFN_QFN:QFN-24-1EP_4x4mm_P0.5mm_EP2.65x2.65mm",
+        {"1": "DC_F", "2": "DC_F", "3": None, "4": None, "5": "DC_F", "6": "EF_UV", "7": "EF_OV", "8": "GND", "9": "EF_DVDT", "10": "EF_ILIM", "11": "GND",
+         "12": "EF_SHDN", "13": None, "14": None, "15": "GND", "16": None, "17": "DC_P", "18": "DC_P", "19": None, "20": None, "21": None, "22": None, "23": None,
+         "24": None, "25": "GND"}, LCSC="C1850273",
+        Note="DC input eFuse with OVP 22.9 V, UV 9.9 V, 5.4 A limit (rev 1.2, A-025); no blocking FET: IN_SYS to IN, B_GATE and DRV open; JLC 314 pcs 19.11.2026")
+    R("453k", "DC_F", "EF_UV", Note="R1 of the UVLO/OVP divider")
+    R("35.7k", "EF_UV", "EF_OV", Note="R2")
+    R("27k", "EF_OV", "GND", Note="R3")
+    R("3.32k", "EF_ILIM", "GND", Note="RILIM: 18 kOhm x A / 3.32k = 5.4 A")
+    C("10n 50V", "EF_DVDT", fp=C0603, Note="dVdT slew: about 4 ms at 19 V")
+    R("220k", "DC_F", "EF_SHDN", Note="SHDN pull-up (needs 2 V, abs max 5.5 V)")
+    add(ref("D"), "ShtukaDruka:BZT52C3V3", "BZT52C3V3", SOD123, {"1": "GND", "2": "EF_SHDN"}, LCSC="C173413", Note="clamps SHDN to 3.3 V")
+    C("1u 50V", "DC_F", fp=C0805, Note="eFuse input")
+    C("10u 35V", "DC_P", fp=C1206, Note="eFuse output")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 

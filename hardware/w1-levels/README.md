@@ -30,3 +30,6 @@ python3 gen/drc.py               # local DRC (KiCad 7 pcbnew); CI runs ERC and D
 ```
 
 License: CERN-OHL-S-2.0 (hardware), AGPL-3.0-or-later (scripts).
+
+## Rev 0.3 (19.11.2026)
+Pot RK09K1130A6S -> A5R (C209779, shaft: check against the knob). make_pcb.py fixed for the KiCad 10 net class API; the board file keeps its geometry (the zone call of make_pcb still fails on KiCad 10: the LCSC field was patched in the board file by hand).

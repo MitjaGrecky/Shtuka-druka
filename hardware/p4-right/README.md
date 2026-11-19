@@ -25,3 +25,6 @@ Generators: `gen/design.py`, `gen/make_sch.py`, `gen/check_netlist.py`, `gen/mak
 License: CERN-OHL-S-2.0 (hardware), AGPL-3.0-or-later (scripts).
 
 Rev 0.2 (16.11.2026): R170 (16.11.2026): шинные разъёмы снизу лежачие (угловые): HX PZ1.27-2x7P WZ / 2x8P WZ (C22438113 / C22438114), J1 открыт к P2 (у P1 вправо, у P3 и P4 влево), J2–J4 к заднему краю; на P4 штекер колеса — JST S2B-PH-K-S (C173752, 179 611 шт.). Вертикальная вилка с IDC (≈ 7,5 мм) при 8 мм до дна не оставляла места на изгиб кабеля.
+
+## Rev 0.2 (19.11.2026)
+AS5600-ASOM (no stock) -> AS5600-ASOT (C55240803, SOIC-8, same pinout); PGO (pin 5) is open on the board: check against the ams datasheet (not downloaded).

@@ -12,7 +12,7 @@ import packer
 ANCHOR = ("U", "Q", "K", "Y", "L", "F", "ENC")
 
 
-def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top", follow=()):
+def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top", follow=(), gap=0.25, ic_gap=None):
     """follow: fixed parts (e.g. ICs placed by hand) whose small parts gather around them, on their side (16.11.2026, PW LDOs)."""
     P = D.parts()
     fixed = dict(fixed or {})
@@ -81,7 +81,7 @@ def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top
     for a, refs in groups.items():
         ax, ay = (pos[a] if a in pos else fixed[a][:2])
         G.append((ax, ay, fixed[a][3] if a in follow else "bottom", refs, 0))
-    return packer.pack(sys.modules[D.__name__], P, fixed, G, [(0, 0, W, H)], rmax=max(W, H))
+    return packer.pack(sys.modules[D.__name__], P, fixed, G, [(0, 0, W, H)], rmax=max(W, H), gap=gap, ic_gap=ic_gap)
 
 
 def conns_top(fixed, H):

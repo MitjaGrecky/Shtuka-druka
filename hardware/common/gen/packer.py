@@ -62,16 +62,31 @@ def _shift(b, x, y):
     return (b[0] + x, b[1] + y, b[2] + x, b[3] + y)
 
 
-def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.0):
-    """fixed: {ref: (x, y, rot, side)}; groups: [(anchor_x, anchor_y, side, [refs], rot)]; areas: [(x0, y0, x1, y1)].
+FINE_FP = ("QFN", "DFN", "VSON", "SSOP", "TSSOP", "MSOP", "VSSOP", "LQFP", "TQFP", "SOT-363")   # footprints with a 0.4-0.65 mm pitch (fan-out needs a free ring)
+
+
+def _fine(p):
+    return p["ref"].startswith(("U", "Q")) and any(k in p["fp"] for k in FINE_FP)
+
+
+def _grow(b, d):
+    return (b[0] - d, b[1] - d, b[2] + d, b[3] + d)
+
+
+def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.0, ic_gap=None):
+    """ic_gap (rev 20.11.2026, routing analysis tools/placement_analysis.py): extra courtyard gap around the fine-pitch ICs (QFN, TSSOP, ...), so that
+    the 0.4-0.65 mm pins can fan out and a decoupling capacitor does not close the escape of the neighbouring pin; default = gap (old behaviour).
+
+    fixed: {ref: (x, y, rot, side)}; groups: [(anchor_x, anchor_y, side, [refs], rot)]; areas: [(x0, y0, x1, y1)].
     Returns the full placement; raises if a part finds no spot."""
     P = {p["ref"]: p for p in parts}
+    grow = max(0.0, (ic_gap - gap)) if ic_gap else 0.0
     pl = dict(fixed)
     occ = {"top": [], "bottom": []}
     tht = []
     for ref, (x, y, r, side) in fixed.items():
         box, pads = _bbox(D, P[ref], r, side)
-        occ[side].append(_shift(box, x, y))
+        occ[side].append(_shift(_grow(box, grow) if _fine(P[ref]) else box, x, y))
         tht += [_shift(b, x, y) for b in pads]
     inner = [(a[0] + edge, a[1] + edge, a[2] - edge, a[3] - edge) for a in areas]
 
@@ -108,6 +123,6 @@ def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.
                 raise RuntimeError(f"no room for {ref} near ({ax}, {ay}) on {side}")
             x, y = spot
             pl[ref] = (x, y, rot, side)
-            occ[side].append(_shift(box, x, y))
+            occ[side].append(_shift(_grow(box, grow) if _fine(P[ref]) else box, x, y))
             tht += [_shift(t, x, y) for t in pads]
     return pl

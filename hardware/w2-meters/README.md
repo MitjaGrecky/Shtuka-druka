@@ -1,7 +1,7 @@
 # W2 - Meters (slope, above the track column)
 
 Two level meters (master L and R), 14 RGB LEDs each, on two LP5864 drivers. No buttons, no knobs.
-Spec: `hardware/for-routing/SPEC_boards.md`, section W2. Status: rev 0.1b - schematic and placed board, not routed (`UNROUTED`).
+Spec: `hardware/for-routing/SPEC_boards.md`, section W2. Status: rev 0.1c (drivers between two LEDs, #15; same netlist) - schematic and placed board, not routed (`UNROUTED`).
 Package: `hardware/for-routing/W2/`.
 
 | | |

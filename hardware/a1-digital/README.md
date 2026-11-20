@@ -6,7 +6,7 @@
 Plan, pinouts and sources: `PLAN.md`. Decisions: R82-R84 (two USB ports, TDM, 96 kHz hardware), R87 (volume in the DAC), R88 (two spare
 channels), R114 (two oscillators), R116/R117 (converters, two paths per mic), R136 (CS4308P, current outputs).
 
-**Status: rev 0.6 - placed board, not routed** (613 parts, 18.11.2026). Schematic checked against the datasheets (cloud task #26, rev 0.2): CS4308P DS1317, CS53A04P DS1397
+**Status: rev 1.0 (20.11.2026) - placed board, not routed; USB isolator TI ISOUSB211 since rev 0.9 (see the Rev sections at the end; rev 0.6 text below kept as history: 613 parts, 18.11.2026).** Schematic checked against the datasheets (cloud task #26, rev 0.2): CS4308P DS1317, CS53A04P DS1397
 (same family as the CS5304P/8P - the CS5308P/CS5304P datasheets themselves were not reachable), XU316-1024-QF60B, ADuM4165/4166, SiTime/SCTF oscillators.
 
 ## Blocks
@@ -17,8 +17,8 @@ channels), R114 (two oscillators), R116/R117 (converters, two paths per mic), R1
 | ADC input buffers | 20 x OPA1656 dual, 47 uF X5R (2.8 Hz) + 1.2k in, 300 R + 680 pF feedback, 10 R out, 15 nF across the pair | Cirrus circuit, gain 1/4: R1 delivers 8 Vrms diff FS -> 2 Vrms at the pins (AN0635); inverting, so the source P leg goes to the N pin (polarity kept); non-inverting inputs at ADC_VMID |
 | DAC | CS4308P (8 ch) | Current outputs: 8 x OPA1656 dual I-V, Rf 1.2k + 620 pF per leg (AN0679), 47 R build-out, 1 nF across. Outputs 1-4 Main L/R, Aux L/R -> R1; 5-8 Phones 1 L/R, 2 L/R -> F1. Not in the EasyEDA library (R136) |
 | xcore A (U) | XU316-1024-QF60B (C7397517), W25Q32JVSSIQ boot flash (4 MB, B18; C82344) | TDM master (BCLK, FSYNC, DAC data, 3 ADC data), SPI to the 4 converters (tile 1), converter reset, oscillator enables, USB port A from the R2 hub, XLINK0 to B |
-| xcore B | XU316-1024-QF60B, W25Q16 | USB port B to the external computer through the ADuM4166, PDM microphone (header), XLINK0 to A |
-| USB isolator | ADuM4166 (C5367256), USBLC6 on the computer side, Rd 5.1k | Computer side on the isolated ground GNDPC; the rear USB-C (PC) receptacle on the wall comes in over a JST PH 6 cable (R145: data only) |
+| xcore B | XU316-1024-QF60B, W25Q16 | USB port B to the external computer through the ISOUSB211 (rev 0.9; was ADuM4166), PDM microphone (header), XLINK0 to A |
+| USB isolator | TI ISOUSB211DPR (C5772877, rev 0.9; was ADuM4166 C5367256), USBLC6 on the computer side, Rd 5.1k | Computer side on the isolated ground GNDPC; the rear USB-C (PC) receptacle on the wall comes in over a JST PH 6 cable (R145: data only) |
 | Clocks | 24.576 MHz and 22.5792 MHz oscillators with enable pins (parts to choose), 33 R each into MCLK, 22 R star to every load | Default 48 kHz family on; xcore A can switch (R114). 24 MHz crystals for both xcore cores |
 | Supplies | +3V3A TPS7A4701 (ANY-OUT 3.3 V), +3V3D and +1V8 AP2112K, +0V9 x 2 TLV62568 (0.6 V x 1.5) from +5V; +-12 V from R1 for the op-amps | +-12 V and +5 V arrive through the R1 board-to-board connector (PW -> R1 -> A1) |
 

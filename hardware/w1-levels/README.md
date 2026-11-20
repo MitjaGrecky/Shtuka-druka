@@ -3,7 +3,7 @@
 Four volume pots with end stops (Main, Cue Mix, Phones 1, Phones 2), two P48 phantom-power buttons
 with RGB lights, and a window for the encoder module M5 (Gain 1 + 2). No microcontroller: the board
 speaks the 2 x 7 module bus (R123) and passes it on to M5.
-Spec and reasoning: `docs/ru/31_w1_levels.md`. Status: rev 0.2 - schematic and routed board (rev 0.2, 13.11.2026: M5 window to x 89.5 for M5 rev 0.2, decision R132; rerouted with Freerouting 1.9, 100 passes).
+Spec and reasoning: `docs/ru/31_w1_levels.md`. Status: rev 0.3 (19.11.2026; see Rev 0.3 below; routing below is for rev 0.2) - schematic and routed board (rev 0.2, 13.11.2026: M5 window to x 89.5 for M5 rev 0.2, decision R132; rerouted with Freerouting 1.9, 100 passes).
 
 | | |
 |---|---|

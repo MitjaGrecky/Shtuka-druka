@@ -4,7 +4,7 @@ The RP2350 of the control board (R85) with everything that is not audio at the r
 USB hub and the control lines to the audio boards. DIN, USB, LAN and DC are panel parts on nuts with cables (R141).
 Research and decisions: `docs/ru/34_rear_boards_research.md`, R118, R135-R143. Map of boards: `docs/ru/29_board_map.md`.
 
-**Status: rev 1.1 (19.11.2026) - schematic and placed board, not routed; rectangle 110 x 99 without the low arm, see the end of this file. Earlier:** (234 parts, 4 layers; 14.11.2026; rev 0.5 = ATT1/ATT2 and the 74HC595, task #25; rev 0.6 = 7 x M3 mounting holes). Rear wall = the 3D model
+**Status: rev 1.4 (20.11.2026) - schematic and placed board, not routed (changes in the Rev sections at the end); rev 1.1 (19.11.2026): rectangle 110 x 99 without the low arm, see the end of this file. Earlier:** (234 parts, 4 layers; 14.11.2026; rev 0.5 = ATT1/ATT2 and the 74HC595, task #25; rev 0.6 = 7 x M3 mounting holes). Rear wall = the 3D model
 of panel v7 (R142). MIDI DIN, USB, LAN and DC are panel parts on nuts with short cables (R141, the shelf R2b of rev 0.3 is
 dropped): R2 carries the twenty 3.5 mm jacks and six JST PH headers for the DIN cables. Outline: the Control block, rear
 x 156-266, z 10-113, a rectangle 110 x 103 mm (rev 0.9).

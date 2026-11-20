@@ -2,7 +2,7 @@
 
 20 buttons with 2 RGB each (P101), the crossfader digitised on the board (ADS1115, P104), the wheel sensor (AS5600),
 an I2C multiplexer (P99), the deck bus to P2 (P100) and the module bus to W3. Spec: `hardware/for-routing/SPEC_boards.md`, section P4.
-Status: rev 0.1 - schematic and placed board, not routed (`UNROUTED`). Package: `hardware/for-routing/P4/`.
+Status: rev 0.2 (19.11.2026) - schematic and placed board, not routed (`UNROUTED`; changes in the Rev 0.2 sections below). Package: `hardware/for-routing/P4/`.
 
 | | |
 |---|---|

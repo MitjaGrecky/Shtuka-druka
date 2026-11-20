@@ -4,7 +4,7 @@ All the power of the instrument: three inputs joined by ideal diodes, the rear O
 Research: `docs/ru/34_rear_boards_research.md` (section 5). Decisions: R36 (Mini-ITX, 19 V), R40/R59/R109 (battery),
 R72 (DC 12-20 V with protection, rev 1.1, USB-C PD), R110 (screen 5 V / 4 W), R118 (phantom), R145 (USB-C Power separate from the PC port).
 
-**DO NOT ORDER the PW board or the battery packs** until a real 3S pack is checked (dimensions, capacity, UN38.3), its BMS threshold is confirmed, and the hardware 45 °C cut-off is checked on a sample (doc 43). **Status: rev 1.0 — placed board (303 parts, 100 × 110 mm), not routed.** Packs: 3 × Jauch LP906090JH with a BQ7791500 BMS board each (doc 43, section 5в, P111). Chargers: BQ25798 ×2, PROG 10.5k = 3S. Pack TVS SMBJ13CA; LM5176 UVLO 10.1 / 9.3 V; bus 9–12.6 V from the packs. Earlier revisions (0.1–0.9, 4S packs) are in git history.
+**DO NOT ORDER the PW board or the battery packs** until a real 3S pack is checked (dimensions, capacity, UN38.3), its BMS threshold is confirmed, and the hardware 45 °C cut-off is checked on a sample (doc 43). **Status: rev 1.3 (20.11.2026) — placed board, not routed; changes in the Rev sections below (rev 1.0: 303 parts, 100 × 110 mm).** Packs: 3 × Jauch LP906090JH with a BQ7791500 BMS board each (doc 43, section 5в, P111). Chargers: BQ25798 ×2, PROG 10.5k = 3S. Pack TVS SMBJ13CA; LM5176 UVLO 10.1 / 9.3 V; bus 9–12.6 V from the packs. Earlier revisions (0.1–0.9, 4S packs) are in git history.
 on the board: the LM5176 and LM5156H loops (compensation taken from TI examples for other outputs).
 
 ## Power tree

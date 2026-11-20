@@ -1,0 +1,14 @@
+Designator,Qty,Value,MPN,Footprint,Function,DNP
+C1,1,10u,,C_0805_2012Metric,конденсатор,
+"C2,C3,C5",3,1u,,C_0402_1005Metric,конденсатор,
+C4,1,4.7u,,C_0805_2012Metric,конденсатор: VLED (pin 15),
+C6,1,1n,,C_0402_1005Metric,конденсатор: VIO_EN (pin 32),
+C7,1,100n,,C_0402_1005Metric,конденсатор,
+"D1,D2,D3,D4,D5",5,XL-1615RGBC-RF,XL-1615RGBC-RF,LED_RGB_XL-1615RGBC_1.6x1.5mm,диод: Save left,
+J1,1,Module bus 2x7 1.27,HCTL PZ127-2-07-Z,PinHeader_2x07_P1.27mm_Vertical,разъём: Module bus 2x7 1.27,
+"R1,R2",2,4.7k,,R_0402_1005Metric,резистор,DNP
+R3,1,10k,,R_0402_1005Metric,резистор: end of the chain reads 1s when nothing follows,
+RN1,1,4x10k,,R_Array_Convex_4x0402,резисторная сборка,
+"SW1,SW2",2,TS-1187A-B-A-B,TS-1187A-B-A-B,SW_Push_1P1T_XKB_TS-1187A,кнопка / переключатель: Save,
+U1,1,LP5864RSMR,LP5864RSMR,VQFN-32-1EP_4x4mm_P0.4mm_EP2.8x2.8mm,микросхема: I2C chip address 1 0 0 0 0 (ADDR1 ADDR0 tied on the board),
+U2,1,74HC165PW,74HC165PW,TSSOP-16_4.4x5mm_P0.65mm,микросхема,

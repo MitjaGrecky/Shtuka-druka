@@ -1,0 +1,5 @@
+Designator,Qty,Value,MPN,Footprint,Function,DNP
+C1,1,1n,,C_0402_1005Metric,конденсатор: shield HF return,
+J1,1,USB4105-GF-A,USB4105-GF-A,USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal,"разъём: GCT USB4105-GF-A, 16P top-mounted horizontal, 5 A, 13495 pcs at JLC 19.11.2026",
+J2,1,to PW J2,,PinHeader_1x06_P2.54mm_Vertical,"разъём: solder pads for the harness H1: same order as PW 'USB-C Power in' (Micro-Fit 2x3): VBUS x 2, GND x 2, CC1, CC2",
+R1,1,1M,,R_0402_1005Metric,резистор: shield bleed,

@@ -60,6 +60,19 @@ def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top
             i = int(p["ref"][1:]) - 1
             fixed[p["ref"]] = [(3, 3), (W - 3, 3), (3, H - 3), (W - 3, H - 3)][i % 4] + (0, "top")
     anchors = [p["ref"] for p in P if p["ref"] not in fixed and p["ref"].startswith(ANCHOR) and p["ref"] not in skip_anchor]
+    # rule A-037 (20.11.2026): an inductor or transistor that shares a signal net with an IC (switch node, gate drive, sense) is that IC's
+    # satellite, packed in its group (packer pin rule), not a separate anchor on the grid; env PLACE_PINRULE=0 keeps the old way
+    import os
+    sat = {}
+    if os.environ.get("PLACE_PINRULE", "1") != "0":
+        ics = [r for r in anchors if r.startswith("U")] + [r for r in follow if r.startswith("U")]
+        signets = lambda r: {nn for nn in byref[r]["pins"].values() if nn in sig}
+        for r in anchors:
+            if r.startswith(("L", "Q")):
+                best = max(ics, key=lambda u: (len(signets(r) & signets(u)), u), default=None)
+                if best and signets(r) & signets(best):
+                    sat[r] = best
+        anchors = [r for r in anchors if r not in sat]
     area = max(1.0, (W - 2 * margin) * (H - 2 * margin - (H - conns_top(fixed, H))))
     n = max(1, len(anchors))
     cols = max(1, round(math.sqrt(n * (W - 2 * margin) / max(1.0, (conns_top(fixed, H) - 2 * margin)))))
@@ -89,6 +102,9 @@ def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top
             continue
         if r in pos:
             groups[r].append(r)
+            continue
+        if r in sat:
+            groups[sat[r]].append(r)
             continue
         mine = {nn for nn in p["pins"].values() if nn in sig}
         best, bs = None, 0

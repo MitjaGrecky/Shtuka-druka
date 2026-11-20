@@ -1,5 +1,9 @@
 # Аудит №4 (20.11.2026): пропуски и забытое, шаблон расстановки, сравнение трассировки
 
+Статус: готова · Владелец: auditor · Дата: 2026-11-20 · Версия объекта: dee16cc (PW 1.3, A1 1.0, R2 1.4, R1 1.3, F1 0.7, P2 0.9) · Связано: А-037…А-044, R83, R187, P116; claude/auditor/tasks/01
+
+> **Отчёт проверки.** Объект и входы: handoff, STATUS, архив 18, решения 04/06, док. 39/42/47, placement_analysis, autoplace/packer, Codex research 09.11 и review 18.11. Требование: даташиты (развязка у выводов), док. 42 (поток 6,2–10,4 CFM), журнал R. Метод и инструмент: `decap_dist.py` (pcbnew, KiCad 10 python), сверка REV gen/README, regex по надписям; без kicad-cli и роутеров. Критерий: развязка ≤ 2 мм у ≥ 90 %; поток ≥ 6,2 CFM; R записаны. Доказательства: `ShtukaDruka/claude/auditor/runs/decap_dist.py`, этот отчёт, `violations.md`. Не проверено: см. раздел «Не проверено» ниже. Исполнитель: аудитор (Claude).
+
 Аудитор (сессия Claude, поручение главного инженера `ShtukaDruka/claude/auditor/task.md`). Чужие файлы не правились, коммит только `audit/`. Снимок: ветка `m1-two-cells`, HEAD `dee16cc`.
 
 **Прочитано:** `CLAUDE.md`, `notes/roles/auditor.md`, навык аудитора, `notes/handoff.md`, `notes/STATUS.md`, `notes/handoff_archive/18.md` (незакрытые `[ ]`), `docs/ru/decisions/README.md`, блоки 04 и 06 (нужные строки), `docs/ru/39`, `42` (разд. 2–5), `47` (таблицы), `notes/placement_analysis_2026-11-20.md`, `hardware/common/gen/{autoplace,packer}.py`, README плат (строки статуса), Codex: `research/project-electrical-audit-2026-11-09.md` (разд. «Узлы», 3), `reviews/2026-11-18-rollout/REPORT.md`, `notes/handoff.md` (начало), `pcb-router/README.md`, `f1-four-gaps.md`.

@@ -3,7 +3,7 @@
 Two 6.35 mm stereo jacks (rev 0.3: Cliff S1/BBB CL1115, Digikey 4654-CL1115-ND, 12.7 mm high; was Neutrik NMJ6HCD2, 15.67 mm; P94: the board lies horizontally, the jacks face the front) and one TI
 OPA1622 (C2876559) per jack. Research: `docs/ru/21_audio_board.md`, `docs/ru/34_rear_boards_research.md` (3). Decisions: R8, R66, R67, R87, R137, P94.
 
-**Status: rev 0.7 (20.11.2026) - placed board, not routed, 100 x 38 mm on the floor, no lip** (rev 0.4: 57 parts, 18.11.2026; changes in the Rev sections below).
+**Status: rev 0.7 (20.11.2026) - placed on the pin rule (A-037, 38d30ec; decoupling at its pins), Freerouting 1.9 + GND pour: 3 unrouted (0 non-GND), DRC 0; not routed to completion, 100 x 38 mm on the floor, no lip** (rev 0.4: 57 parts, 18.11.2026; changes in the Rev sections below).
 
 ## Signal path
 

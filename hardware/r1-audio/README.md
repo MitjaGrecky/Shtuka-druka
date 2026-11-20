@@ -5,7 +5,7 @@ the Cirrus buffers around ADC_VMID / DAC_VMID (AN0635 for the CS5304P/8P inputs,
 converters on A1. Research: `docs/ru/34_rear_boards_research.md` (sections 2, 3), doc 28. Decisions: R64-R66, R72, R88,
 R116-R118, R135-R137, R142 (jack positions = 3D model).
 
-**Status: rev 1.3 (20.11.2026) - schematic and placed board, not routed; changes in the Rev sections below.** Rev 0.8 (18.11.2026): 452 parts, 264 nets; Mic/Line attenuator relays since rev 0.3, user decision on В16). Levels and values checked against the datasheets (cloud task #24).
+**Status: rev 1.3 (20.11.2026) - schematic and placed board, not routed; decision P114 (20.11.2026): 6 layers (F sig / In1 GND / In2 sig / In3 sig / In4 GND / B sig), generator change pending, pin rule not yet applied; changes in the Rev sections below.** Rev 0.8 (18.11.2026): 452 parts, 264 nets; Mic/Line attenuator relays since rev 0.3, user decision on В16). Levels and values checked against the datasheets (cloud task #24).
 
 ## Channels
 

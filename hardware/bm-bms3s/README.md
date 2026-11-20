@@ -1,6 +1,6 @@
 # BM - 3S pack protection (BQ7791500)
 
-One board per pack, **2 per set** (doc `docs/ru/43_battery_power.md` 5c, P111). Low-side protection of a pack of 3 Jauch LP906090JH cells: TI **BQ7791500PWR** (variant 00 = 3S, OV 4.200 V), two CSD18532Q5B back to back, 5 mOhm sense, internal balancing, NTC. Status: **rev 0.3, placed board 38 x 38 mm, 2 layers, not routed** (`UNROUTED`). Package: `hardware/for-routing/BM/`.
+**Status (20.11.2026 evening): rev 0.3, placed on the pin rule (A-037), Freerouting 1.9 + GND pour: 1 unrouted (VC2F stub at C4), DRC 0.** One board per pack, **2 per set** (doc `docs/ru/43_battery_power.md` 5c, P111). Low-side protection of a pack of 3 Jauch LP906090JH cells: TI **BQ7791500PWR** (variant 00 = 3S, OV 4.200 V), two CSD18532Q5B back to back, 5 mOhm sense, internal balancing, NTC. Status: **rev 0.3, placed board 38 x 38 mm, 2 layers, not routed** (`UNROUTED`). Package: `hardware/for-routing/BM/`.
 
 | Part | Value / part | Note |
 |---|---|---|

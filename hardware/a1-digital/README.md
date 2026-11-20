@@ -6,7 +6,7 @@
 Plan, pinouts and sources: `PLAN.md`. Decisions: R82-R84 (two USB ports, TDM, 96 kHz hardware), R87 (volume in the DAC), R88 (two spare
 channels), R114 (two oscillators), R116/R117 (converters, two paths per mic), R136 (CS4308P, current outputs).
 
-**Status: rev 1.0 (20.11.2026) - placed board, not routed; USB isolator TI ISOUSB211 since rev 0.9 (see the Rev sections at the end; rev 0.6 text below kept as history: 613 parts, 18.11.2026).** Schematic checked against the datasheets (cloud task #26, rev 0.2): CS4308P DS1317, CS53A04P DS1397
+**Status: rev 1.0 (20.11.2026) - placed board, not routed, pin rule (A-037) not yet applied; USB isolator TI ISOUSB211 since rev 0.9 (see the Rev sections at the end; rev 0.6 text below kept as history: 613 parts, 18.11.2026).** Schematic checked against the datasheets (cloud task #26, rev 0.2): CS4308P DS1317, CS53A04P DS1397
 (same family as the CS5304P/8P - the CS5308P/CS5304P datasheets themselves were not reachable), XU316-1024-QF60B, ADuM4165/4166, SiTime/SCTF oscillators.
 
 ## Blocks

@@ -4,21 +4,23 @@
 
 Each row: LEFT wall seen from the LEFT (front of the case on the LEFT of the picture) and RIGHT wall seen from the RIGHT
 (front on the RIGHT). Mirror images of one graphic, as a person walking around the case sees them. y = depth from the front
-edge, z = height from the outer floor, mm. Geometry model3d/v8 g3 (depth 510, deck z 30 to y 300, slope 28.85 deg to
-y 463.4 / z 120, flat to the rear); fan 80 x 80 x 25 on the right wall, y 400.5-480.5, z 3.5-83.5 (centre 440.5, 43.5).
+edge, z = height from the outer floor, mm. Geometry model3d/v8 g3 (41_geom_v8.py = g3.build(30, 0, 117, 20, 0): depth 500,
+slope 33.1 deg y 300-433.4, crest 117); fan 80 x 80 x 25 on the right wall, y 390.5-470.5, z 3.5-83.5 (centre 430.5, 43.5).
 Grooves: blind, 2 mm wide, 1.0-1.2 mm deep in the 3 mm wall (dark grey in the picture); through-cuts black (with dark dust mesh).
 Status: concept (designer's proposal). Areas: through-cuts only, raster 0.1 mm; "over blades" = annulus r 17-39 (estimate).
 Run: python 41_side_walls.py -> 41_side_walls.svg, 41_side_walls.csv"""
 import math, os
 HERE = os.path.dirname(os.path.abspath(__file__))
-A = math.radians(28.85); TAN, COS = math.tan(A), math.cos(A)
-FY0, FY1, FZ0, FZ1 = 400.5, 480.5, 3.5, 83.5
-CY, CZ = 440.5, 43.5
-PROF = [(0, 0), (0, 30), (300, 30), (463.4, 120), (510, 120), (510, 0)]
+import importlib.util as _iu
+_s = _iu.spec_from_file_location("g41", os.path.join(os.path.dirname(os.path.abspath(__file__)), "41_geom_v8.py")); G = _iu.module_from_spec(_s); _s.loader.exec_module(G)
+A = math.radians(G.ANG); TAN, COS = G.TAN, G.COS
+FY0, FY1, FZ0, FZ1 = G.FY0, G.FY1, G.FZ0, G.FZ1
+CY, CZ = G.CY, G.CZ
+PROF = G.PROF
 
 
 def top(y):
-    return 30.0 if y <= 300 else (30 + (y - 300) * TAN if y <= 463.4 else 120.0)
+    return G.top(y)
 
 
 def inset_front(z, d):
@@ -32,7 +34,7 @@ def s1():
     rows = [8.5 + 5 * i for i in range(15)]            # z 8.5 ... 78.5
     grooves, cuts = [], []
     for z in rows:
-        y0, y1 = inset_front(z, 10), 500.0
+        y0, y1 = inset_front(z, 10), G.D - 10
         if y1 - y0 < 5: continue
         grooves.append((y0, z, y1))
         a, b = max(y0, FY0 + 2), FY1 - 2               # through part over the fan, inside its frame
@@ -47,9 +49,9 @@ def s2():
     d = 8.0
     contour = [(d, d), (d, 30 - d), (inset_front(30 - d + 0.001, d), 30 - d)]
     # inset polygon of the profile (convex corners only, so line offsets are enough)
-    z_slope_end = 120 - d
+    z_slope_end = G.CREST - d
     contour = [(d, d), (d, 30 - d), (300 + (30 - d - 30 + d / COS) / TAN, 30 - d),
-               (300 + (z_slope_end - 30 + d / COS) / TAN, z_slope_end), (510 - d, z_slope_end), (510 - d, d)]
+               (300 + (z_slope_end - 30 + d / COS) / TAN, z_slope_end), (G.D - d, z_slope_end), (G.D - d, d)]
     rows = [CZ + 4 * k for k in range(-9, 10)]
     disc = []
     for w in rows:
@@ -74,8 +76,8 @@ def s3():
         z = 6 + j * rh
         for i in range(0, 160):
             y = 6 + i * p + (p / 2 if j % 2 else 0)
-            if y > 504 or z > top(y) - 7 or y < 170: continue
-            dia = 2.5 if y >= 395 else 0.6 + 1.9 * (y - 170) / 225
+            if y > G.D - 6 or z > top(y) - 7 or y < 170: continue
+            dia = 2.5 if y >= G.FY0 - 5 else 0.6 + 1.9 * (y - 170) / (G.FY0 - 5 - 170)
             if math.hypot(y - CY, z - CZ) <= 39 - 1.25 and dia >= 2.49:
                 dots_cut.append((y, z, dia / 2))
             else:
@@ -91,7 +93,7 @@ VARIANTS = [("S1", "Эхо силуэта: линии", s1), ("S2", "Кант + 
 def measure(inside, step=0.1):
     g = b = 0
     for iy in range(900):
-        y = 396 + (iy + .5) * step
+        y = G.FY0 - 4.5 + (iy + .5) * step
         for iz in range(900):
             z = -1 + (iz + .5) * step
             if inside(y, z):
@@ -101,12 +103,12 @@ def measure(inside, step=0.1):
 
 
 K = 1.45
-PW = 510 * K + 30
+PW = G.D * K + 30
 WH = 124 * K + 40          # one wall block height
 
 
 def T(ox, oy, y, z, right):
-    x = (510 - y) if right else y                       # right wall from the right: front on the right
+    x = (G.D - y) if right else y                       # right wall from the right: front on the right
     return ox + 15 + x * K, oy + 34 + (124 - z) * K
 
 
@@ -146,7 +148,7 @@ def main():
           '<text x="20" y="28" font-size="18" font-weight="700" fill="#1f2933">Боковые стенки: один рисунок с двух сторон</text>',
           '<text x="20" y="48" font-size="12" fill="#52606d">Выход вентилятора — сквозная часть рисунка, только на правой стенке. Концепт дизайнера, 20.11.2026.</text>',
           '<text x="20" y="66" font-size="12" fill="#52606d">Левая стенка — вид слева (перед слева); правая — вид справа (перед справа): как видит человек, обходя корпус.</text>',
-          '<text x="20" y="84" font-size="12" fill="#52606d">y — глубина, z — высота, мм; геометрия model3d/v8 g3. Пунктир — вентилятор 80 × 80 (только справа).</text>',
+          f'<text x="20" y="84" font-size="12" fill="#52606d">y — глубина, z — высота, мм; геометрия model3d/v8 {G.LABEL}. Пунктир — вентилятор 80 × 80 (только справа).</text>',
           '<text x="20" y="102" font-size="12" fill="#52606d">Тёмные — глухие канавки 2 мм, глубина 1–1,2; чёрные — сквозные (за ними сетка). Площади — только сквозные.</text>']
     rows = []
     for i, (key, title, fn) in enumerate(VARIANTS):

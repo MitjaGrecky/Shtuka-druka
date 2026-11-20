@@ -3,25 +3,24 @@
 
 View: the RIGHT wall seen from the RIGHT (from the neighbour's side), so the FRONT of the case is on the RIGHT of the picture
 (same as 41_walls_v7). Axes: y = depth from the front edge (mm, grows to the left in the picture), z = height from the outer
-floor (mm, up). Not mirrored. Geometry: model3d/v8 g3.build(30, 10, 120, 0, 20): depth 510, deck z 30 to y 300, slope 28.85 deg
-to y 463.4 / z 120, then flat to the rear; fan 80 x 80 x 25 real box y 400.5-480.5, z 3.5-83.5 (the R195 lines in g3 sit at
-y 390.5-470.5, i.e. 10 mm in front of the fan: to be fixed by the engineer). Status: concept (designer's proposal).
+floor (mm, up). Not mirrored. Geometry: 41_geom_v8.py = production assembly g3.build(30, 0, 117, 20, 0) (depth 500, slope
+33.1 deg y 300-433.4, crest 117; fan y 390.5-470.5, z 3.5-83.5, same place as the R195 lines). Status: concept.
 
 Areas are counted on a 0.1 mm raster: gross = all openings; "over the blades" = openings inside the annulus r 17-39 mm around
 the fan axis (hub ~34 mm and blade tip ~78 mm are estimates for an 80 mm fan, check against the datasheet).
 Run: python 41_fan_exhaust.py   -> 41_fan_exhaust.svg, 41_fan_exhaust.csv (and prints the table)."""
 import math, os
 HERE = os.path.dirname(os.path.abspath(__file__))
-FY0, FY1, FZ0, FZ1 = 400.5, 480.5, 3.5, 83.5
-CY, CZ = (FY0 + FY1) / 2, (FZ0 + FZ1) / 2          # 440.5, 43.5
-TAN = math.tan(math.radians(28.85))
+import importlib.util as _iu
+_s = _iu.spec_from_file_location("g41", os.path.join(os.path.dirname(os.path.abspath(__file__)), "41_geom_v8.py")); G = _iu.module_from_spec(_s); _s.loader.exec_module(G)
+FY0, FY1, FZ0, FZ1 = G.FY0, G.FY1, G.FZ0, G.FZ1
+CY, CZ = (FY0 + FY1) / 2, (FZ0 + FZ1) / 2          # 430.5, 43.5
+TAN = G.TAN
 R_HUB, R_TIP = 17.0, 39.0
 
 
 def slope_z(y):                                    # outer top edge of the right wall
-    if y <= 300: return 30.0
-    if y <= 463.4: return 30.0 + (y - 300) * TAN
-    return 120.0
+    return G.top(y)
 
 
 # ---- variants: each returns (inside(y, z) -> bool, svg shapes in model coords) ----
@@ -54,8 +53,8 @@ def v_b():
 
 
 def v_c():
-    """C. Slope hatching: 2 mm lines parallel to the slope (28.85 deg), perpendicular pitch 5, inside a 76 x 76 square."""
-    a = math.radians(28.85); nx, nz = -math.sin(a), math.cos(a)        # normal to the slope direction
+    """C. Slope hatching: 2 mm lines parallel to the slope (G.ANG), perpendicular pitch 5, inside a 76 x 76 square."""
+    a = math.radians(G.ANG); nx, nz = -math.sin(a), math.cos(a)        # normal to the slope direction
     ds = [5 * k for k in range(-11, 12)]
     def inside(y, z):
         if not (CY - 38 <= y <= CY + 38 and CZ - 38 <= z <= CZ + 38): return False
@@ -112,7 +111,7 @@ def measure(inside, step=0.1):
     top_gap = 1e9
     n = int(round(100 / step))
     for iy in range(n):
-        y = 392.0 + (iy + 0.5) * step
+        y = G.FY0 - 8.5 + (iy + 0.5) * step
         for iz in range(n):
             z = -6.0 + (iz + 0.5) * step
             if inside(y, z):
@@ -127,7 +126,7 @@ def measure(inside, step=0.1):
 # ---- drawing ----
 S = 4.0                       # px per mm in the detail panels
 PW, PH = 400, 470            # panel size
-DY0, DY1, DZ0, DZ1 = 384, 514, -4, 124
+DY0, DY1, DZ0, DZ1 = G.FY0 - 16, G.D + 4, -4, 124
 K = 2.7                      # px per mm actually used   # detail window in model coords
 
 
@@ -139,7 +138,7 @@ def panel(ox, oy, key, title, shapes, area):
     k = K
     el = [f'<rect x="{ox}" y="{oy}" width="{PW - 10}" height="{PH - 10}" rx="10" fill="#f4f5f2" stroke="#d5d8d2"/>',
           f'<text x="{ox + 16}" y="{oy + 26}" font-size="15" font-weight="700" fill="#1f2933">{key}. {title}</text>']
-    prof = [(DY0, 0), (DY0, slope_z(DY0))] + [(y, slope_z(y)) for y in (400, 463.4)] + [(510, 120), (510, 0)]
+    prof = [(DY0, 0), (DY0, slope_z(DY0))] + [(G.SHELF_Y, G.CREST), (G.D, G.CREST), (G.D, 0)]
     pts = " ".join("%.1f,%.1f" % P(ox, oy, y, z) for y, z in prof)
     el.append(f'<polygon points="{pts}" fill="#2a2e33" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/>')
     a, b = P(ox, oy, FY1, FZ1), P(ox, oy, FY0, FZ0)
@@ -160,13 +159,13 @@ def panel(ox, oy, key, title, shapes, area):
             el.append(f'<circle cx="{a[0]:.2f}" cy="{a[1]:.2f}" r="{r * k:.2f}" fill="#060607"/>')
     # dimensions: fan box and rear edge
     a, b = P(ox, oy, FY1, -2), P(ox, oy, FY0, -2)
-    el.append(f'<text x="{ox + 16}" y="{oy + PH - 64}" font-size="10.5" fill="#52606d" >вентилятор y 400,5–480,5, z 3,5–83,5 (пунктир)</text>')
+    el.append(f'<text x="{ox + 16}" y="{oy + PH - 64}" font-size="10.5" fill="#52606d" >вентилятор y 390,5–470,5, z 3,5–83,5 (пунктир)</text>')
     gross, blades, gap = area
     el.append(f'<text x="{ox + 16}" y="{oy + PH - 46}" font-size="12.5" fill="#1f2933">Площадь {str(gross).replace(".", ",")} см², над лопастями {str(blades).replace(".", ",")} см²</text>')
     el.append(f'<text x="{ox + 16}" y="{oy + PH - 28}" font-size="11" fill="#52606d">мин. перемычка до кромки ската {str(gap).replace(".", ",")} мм</text>')
-    t = P(ox, oy, 508, -6)
+    t = P(ox, oy, G.D - 2, -6)
     el.append(f'<text x="{t[0]:.0f}" y="{t[1]:.0f}" font-size="10" fill="#9aa5b1">зад ←</text>')
-    t = P(ox, oy, 386, -6)
+    t = P(ox, oy, G.FY0 - 4, -6)
     el.append(f'<text x="{t[0]:.0f}" y="{t[1]:.0f}" font-size="10" fill="#9aa5b1" text-anchor="end">→ перед</text>')
     return el
 
@@ -181,12 +180,12 @@ def main():
     el = ['<rect width="100%" height="100%" fill="#fff"/>',
           '<text x="24" y="30" font-size="18" font-weight="700" fill="#1f2933">Выход вентилятора на правой стенке: четыре варианта (концепт дизайнера, 20.11.2026)</text>',
           '<text x="24" y="52" font-size="12" fill="#52606d">Вид справа (со стороны соседа), перед корпуса справа, без зеркала. y — глубина от переднего края, z — высота от низа корпуса, мм.</text>',
-          '<text x="24" y="70" font-size="12" fill="#52606d">Геометрия: model3d/v8 g3 (дека 30, скат 28,85°, макушка 120, глубина 510). Условие инженера (док. 42 §6): выход ≥ 17–21 см².</text>',
+          f'<text x="24" y="70" font-size="12" fill="#52606d">Геометрия g3 боевая: глубина 500, скат 33,1°, макушка 117. Условие инженера (док. 42 §6): выход ≥ 17–21 см².</text>',
           '<text x="24" y="88" font-size="12" fill="#52606d">Все прорези в цвет корпуса, кромки скруглены R1 / фаска 0,5; за ними сетка от пыли, тёмная. Статус: предложение, не проверено продувкой.</text>']
     for i, (key, title, shapes, area) in enumerate(rows[:4]):
         el += panel(15 + (i % 2) * PW, 100 + (i // 2) * PH, key, title, shapes, area)
     g = rows[4][3]
-    el.append(f'<text x="24" y="{H - 14}" font-size="11" fill="#b42318">Для сравнения R195 в g3 сейчас: {str(g[0]).replace(".", ",")} см², над лопастями {str(g[1]).replace(".", ",")} см² — линии стоят на y 390,5–470,5, на 10 мм впереди вентилятора (исправить в g3).</text>')
+    el.append(f'<text x="24" y="{H - 14}" font-size="11" fill="#b42318">Для сравнения R195 в g3 сейчас: {str(g[0]).replace(".", ",")} см², над лопастями {str(g[1]).replace(".", ",")} см² — та же раскладка, что A, на 1 мм выше (z 13,5–75,5), без скруглений.</text>')
     open(os.path.join(HERE, "41_fan_exhaust.svg"), "w", encoding="utf-8").write(
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" font-family="Segoe UI, Arial, sans-serif">' + "".join(el) + "</svg>")
     with open(os.path.join(HERE, "41_fan_exhaust.csv"), "w", encoding="utf-8") as f:

@@ -3,7 +3,7 @@
 "play both sides beautifully; not necessarily as I drew, I only gave the meaning").
 
 Three concepts, each identical on both walls (mirror), blind grooves everywhere, through-cuts only on the right wall inside
-the fan frame (76 x 76 around the fan axis y 440.5, z 43.5):
+the fan frame (76 x 76 around the fan axis y 430.5, z 43.5):
   K1 "Sail"   - lines parallel to the slope, pitch 5, field = the wedge behind the deck fold (front edge vertical at y 310).
   K2 "Pipes"  - vertical bars, pitch 5, from z 10 up to the slope edge inset 10, y 310-500 (organ pipes rising with the slope).
   K3 "Release"- vertical bars, pitch 5, full height over the fan, then their tops decay exponentially towards the front
@@ -11,16 +11,18 @@ the fan frame (76 x 76 around the fan axis y 440.5, z 43.5):
 Outputs: 41_sides_v2_persp.svg (3/4 perspective: left wall from front-left, right wall from front-right) and
 41_sides_v2_elev.svg (elevations: left wall from the LEFT, front on the left; right wall from the RIGHT, front on the right;
 y depth from the front edge, z from the outer floor, mm; not mirrored beyond the natural view), 41_sides_v2.csv.
-Geometry model3d/v8 g3: W 515, D 510, deck z 30 to y 300, slope 28.85 deg to y 463.4 / z 120; fan y 400.5-480.5, z 3.5-83.5.
+Geometry 41_geom_v8.py = g3.build(30, 0, 117, 20, 0): W 515, D 500, slope 33.1 deg y 300-433.4, crest 117; fan y 390.5-470.5, z 3.5-83.5.
 Status: concept (designer's proposal); not checked by airflow test; strength of a 3 mm wall with 1-1.2 mm grooves not checked."""
 import math, os
 HERE = os.path.dirname(os.path.abspath(__file__))
-A = math.radians(28.85); TAN, COS = math.tan(A), math.cos(A)
-W, D = 515.0, 510.0
-FY0, FY1, FZ0, FZ1 = 400.5, 480.5, 3.5, 83.5
-CY, CZ = 440.5, 43.5
+import importlib.util as _iu
+_s = _iu.spec_from_file_location("g41", os.path.join(os.path.dirname(os.path.abspath(__file__)), "41_geom_v8.py")); G = _iu.module_from_spec(_s); _s.loader.exec_module(G)
+A = math.radians(G.ANG); TAN, COS = G.TAN, G.COS
+W, D = G.W, G.D
+FY0, FY1, FZ0, FZ1 = G.FY0, G.FY1, G.FZ0, G.FZ1
+CY, CZ = G.CY, G.CZ
 WIN = (CY - 38, CY + 38, CZ - 38, CZ + 38)
-PROF = [(0, 0), (0, 30), (300, 30), (463.4, 120), (510, 120), (510, 0)]
+PROF = G.PROF
 INS, PITCH = 10.0, 5.0
 
 
@@ -29,7 +31,7 @@ def slope_line(y, off=0.0):
 
 
 def top_inset(y):
-    return min(max(30 - INS, slope_line(y, INS / COS)), 120 - INS)
+    return min(max(30 - INS, slope_line(y, INS / COS)), G.CREST - INS)
 
 
 def clip_param(fn, y0, y1, ok, n=4000):
@@ -64,11 +66,11 @@ def k2():
 
 def k3():
     segs = []
-    e0 = top_inset(400)
+    e0 = top_inset(G.FY0)
     y = D - INS
     while y > 100:
-        if y >= 400: t = top_inset(y)
-        else: t = min(top_inset(y), INS + (e0 - INS) * math.exp(-(400 - y) / 55))
+        if y >= G.FY0: t = top_inset(y)
+        else: t = min(top_inset(y), INS + (e0 - INS) * math.exp(-(G.FY0 - y) / 55))
         if t - INS < 1.5: break
         segs.append(((y, INS), (y, t)))
         y -= PITCH
@@ -137,9 +139,9 @@ FACES = [  # (points, outward normal, shade)
     ([(0, y, z) for y, z in PROF], (-1, 0, 0), "#3a3f45"),
     ([(0, 0, 0), (W, 0, 0), (W, 0, 30), (0, 0, 30)], (0, -1, 0), "#454b52"),
     ([(0, 0, 30), (W, 0, 30), (W, 300, 30), (0, 300, 30)], (0, 0, 1), "#50575e"),
-    ([(0, 300, 30), (W, 300, 30), (W, 463.4, 120), (0, 463.4, 120)], (0, -math.sin(A), math.cos(A)), "#4a5158"),
-    ([(0, 463.4, 120), (W, 463.4, 120), (W, D, 120), (0, D, 120)], (0, 0, 1), "#50575e"),
-    ([(0, D, 0), (W, D, 0), (W, D, 120), (0, D, 120)], (0, 1, 0), "#30353a"),
+    ([(0, 300, 30), (W, 300, 30), (W, G.SHELF_Y, G.CREST), (0, G.SHELF_Y, G.CREST)], (0, -math.sin(A), math.cos(A)), "#4a5158"),
+    ([(0, G.SHELF_Y, G.CREST), (W, G.SHELF_Y, G.CREST), (W, D, G.CREST), (0, D, G.CREST)], (0, 0, 1), "#50575e"),
+    ([(0, D, 0), (W, D, 0), (W, D, G.CREST), (0, D, G.CREST)], (0, 1, 0), "#30353a"),
 ]
 
 
@@ -204,7 +206,7 @@ def main():
           '<text x="20" y="30" font-size="19" font-weight="700" fill="#1f2933">Боковины одним рисунком: три концепта, вид 3/4</text>',
           '<text x="20" y="52" font-size="12.5" fill="#52606d">Слева — корпус спереди-слева (видна левая стенка), справа — спереди-справа (правая). Рисунок на обеих стенках одинаковый, зеркальный.</text>',
           '<text x="20" y="70" font-size="12.5" fill="#52606d">Тёмное — глухие канавки 2 мм (глубина 1–1,2, дно тёмное); чёрное — сквозные, только справа над вентилятором. Внизу спереди — линия входа R195.</text>',
-          '<text x="20" y="88" font-size="12.5" fill="#52606d">Геометрия model3d/v8 g3, перспектива без деталей деки. Статус: концепт дизайнера, 20.11.2026.</text>']
+          '<text x="20" y="88" font-size="12.5" fill="#52606d">Геометрия g3 боевая (глубина 500, макушка 117), перспектива без деталей деки. Статус: концепт дизайнера, 20.11.2026.</text>']
     for i, (key, name, desc, segs, cuts, area) in enumerate(data):
         oy = 110 + i * CH
         el.append(f'<rect x="10" y="{oy}" width="{Wp - 20}" height="{CH - 12}" rx="12" fill="#eef0ec"/>')
@@ -220,7 +222,7 @@ def main():
     el = ['<rect width="100%" height="100%" fill="#fff"/>',
           '<text x="20" y="28" font-size="17" font-weight="700" fill="#1f2933">Боковины, виды сбоку (размеры к 24.12)</text>',
           '<text x="20" y="48" font-size="12" fill="#52606d">Левая — вид слева (перед слева); правая — вид справа (перед справа). y — глубина от переднего края, z — от низа, мм; масштаб 1 px = 1 мм.</text>',
-          '<text x="20" y="66" font-size="12" fill="#52606d">Пунктир — вентилятор 80 × 80 (y 400,5–480,5, z 3,5–83,5). Канавки 2 мм, шаг 5, отступ от кромок 10. Геометрия g3.</text>']
+          '<text x="20" y="66" font-size="12" fill="#52606d">Пунктир — вентилятор 80 × 80 (y 390,5–470,5, z 3,5–83,5). Канавки 2 мм, шаг 5, отступ от кромок 10. Геометрия g3 боевая (глубина 500, макушка 117).</text>']
     for i, (key, name, desc, segs, cuts, area) in enumerate(data):
         oy = 90 + i * int(124 * k + 60)
         el.append(f'<text x="20" y="{oy + 12}" font-size="13.5" font-weight="700" fill="#1f2933">{key}. {name}: сквозные {str(area[0]).replace(".", ",")} см² ({len(segs)} канавок, {len(cuts)} сквозных отрезков)</text>')

@@ -2,9 +2,9 @@
 """Doc 41 section 24.13: side walls by R196 (user, 20.11.2026): "Pipes, but with decay. That is, following the case lines,
 but continuing until full decay" = hybrid of K2 "Pipes" and K3 "Release" (24.12).
 
-Rule (rev. 2, user's sketch on rev. 1, 20.11.2026: the slope line continued straight down to the bottom): vertical grooves
-2 mm wide, pitch 5, bottoms on z 5; tops on ONE straight line = the slope edge shifted 5 mm inward, continued past the deck fold
-until it meets the bottom margin, so the pipes shorten linearly to zero ("full decay"); 5 mm margin from all edges.
+Rule (rev. 3, user 20.11.2026 on rev. 2: "I don't like it. Then pipes over the whole surface of the case"): vertical grooves
+2 mm wide, pitch 5, over the WHOLE side wall y 5-495, bottoms on z 5, tops on the case lines with a 5 mm margin (deck z 25,
+slope edge shifted 5 mm inward, crest z 112); no fade. Top, front and rear walls untouched (chief engineer's assumption).
 Both walls identical (mirror); blind grooves 1-1.2 mm deep with a dark bottom; through-cuts only on the RIGHT wall inside the fan
 frame 76 x 76. Geometry: 41_geom_v8.py (production g3.build(30, 0, 117, 20, 0)).
 Views: top - 3/4 perspective (left wall from front-left, right wall from front-right); bottom - elevations: LEFT wall seen from
@@ -30,10 +30,10 @@ def y_knee():
 
 
 def bars():
+    """rev. 3: pipes over the WHOLE side wall, tops on the case lines (deck, slope, crest) with margin M, no fade"""
     segs, y = [], G.D - M
-    while y > M:
-        t = min(line(y), G.CREST - M, G.top(y) - M)
-        if t - M < H_MIN: break
+    while y >= M - 1e-9:
+        t = min(max(G.DECK - M, line(y)), G.CREST - M)
         segs.append(((y, M), (y, t)))
         y -= PITCH
     return segs
@@ -43,7 +43,7 @@ def dims(ox, oy, k, segs, right):
     T = lambda y, z: (ox + ((G.D - y) if right else y) * k, oy + (124 - z) * k)
     el = []
     yk, yend = y_knee(), segs[-1][0][0]
-    for y, lab, dz in ((G.FOLD_Y, "перегиб 300", 0), (yend, f"конец {yend:.0f}".replace(".", ","), 14)):
+    for y, lab, dz in ((G.FOLD_Y, "перегиб 300", 0), (G.SHELF_Y, "макушка 433,4", 0), (yend, f"первая {yend:.0f}".replace(".", ","), 0)):
         a, b = T(y, -4), T(y, -14 - dz)
         el.append(f'<line x1="{a[0]:.1f}" y1="{a[1]:.1f}" x2="{b[0]:.1f}" y2="{b[1]:.1f}" stroke="#d64545"/>')
         el.append(f'<text x="{b[0]:.1f}" y="{b[1] + 12:.1f}" font-size="10" fill="#d64545" text-anchor="middle">{lab}</text>')
@@ -57,11 +57,11 @@ def main():
     print(f"bars {len(segs)} (wedge {n_wedge}, decay {len(segs) - n_wedge}), through {len(cuts)}, area {area}, knee y {yk:.1f}, last bar y {yend:.1f} h {segs[-1][1][1] - M:.2f}")
     Wd = 1150
     el = ['<rect width="100%" height="100%" fill="#fff"/>',
-          '<text x="20" y="30" font-size="19" font-weight="700" fill="#1f2933">Боковины по R196: «Трубы» с затуханием (ред. 2: прямое продолжение ската)</text>',
-          '<text x="20" y="52" font-size="12.5" fill="#52606d">Вертикальные канавки 2 мм, шаг 5, низ z 5. Верх — одна прямая: линия ската в 5 мм от кромки, продолженная за перегиб деки</text>',
-          f'<text x="20" y="70" font-size="12.5" fill="#52606d">до низа (набросок пользователя): трубы укорачиваются до нуля к y ≈ {yend:.0f}. Отступ от всех кромок 5. Обе стенки одинаковые, зеркально.</text>',
+          '<text x="20" y="30" font-size="19" font-weight="700" fill="#1f2933">Боковины по R196, ред. 3: «Трубы» по всей боковине</text>',
+          '<text x="20" y="52" font-size="12.5" fill="#52606d">Вертикальные канавки 2 мм, шаг 5, низ z 5, по всей боковине от y 5 до y 495. Верх — по линиям корпуса с отступом 5:</text>',
+          f'<text x="20" y="70" font-size="12.5" fill="#52606d">под декой z 25, на скате по скату, у макушки z 112. Без затухания. Обе стенки одинаковые, зеркально. Верх, перед и зад не тронуты (допущение).</text>',
           '<text x="20" y="88" font-size="12.5" fill="#52606d">Тёмные — глухие канавки (глубина 1–1,2, дно тёмное); сквозные — только справа в рамке вентилятора 76 × 76. Геометрия — боевая g3 (41_geom_v8.py).</text>',
-          f'<text x="20" y="112" font-size="15" font-weight="700" fill="#1f2933">Сквозные {str(area[0]).replace(".", ",")} см², над лопастями {str(area[1]).replace(".", ",")} см²; канавок {len(segs)} на стенку ({n_wedge} за перегибом y 300, {len(segs) - n_wedge} перед ним, до y {yend:.0f}). Статус: концепт.</text>']
+          f'<text x="20" y="112" font-size="15" font-weight="700" fill="#1f2933">Сквозные {str(area[0]).replace(".", ",")} см², над лопастями {str(area[1]).replace(".", ",")} см²; канавок {len(segs)} на стенку ({n_wedge} за перегибом y 300, {len(segs) - n_wedge} под декой). Статус: концепт.</text>']
     CW, CH = 565, 360
     el.append(f'<rect x="10" y="126" width="{Wd - 20}" height="{CH}" rx="12" fill="#eef0ec"/>')
     el.append('<text x="26" y="150" font-size="12" fill="#52606d">Вид 3/4: спереди-слева (левая стенка)</text>')

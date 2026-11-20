@@ -1,0 +1,207 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-11-20T02:02:45",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.8",
+    "schematic_parity": [],
+    "source": "f1-phones.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [/R2OK_G] of R4 on F.Cu",
+                    "pos": {
+                        "x": 134.99,
+                        "y": 66.3
+                    },
+                    "uuid": "74330aaa-a25f-45e2-98c8-46a209e501fc"
+                },
+                {
+                    "description": "Track [/R2OK_G] on F.Cu, length 8.6974 mm",
+                    "pos": {
+                        "x": 132.26,
+                        "y": 43.55
+                    },
+                    "uuid": "962c0cb0-9055-4216-9c12-070aa061cbb9"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [/-12V] on F.Cu, length 6.3978 mm",
+                    "pos": {
+                        "x": 125.8011,
+                        "y": 72.0239
+                    },
+                    "uuid": "359a85af-82b1-47ac-a787-cc586b84a10b"
+                },
+                {
+                    "description": "Track [/-12V] on F.Cu, length 2.9538 mm",
+                    "pos": {
+                        "x": 133.175,
+                        "y": 58.7
+                    },
+                    "uuid": "353edcb0-b3ee-481a-b7ff-3f5da32d3cac"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Rectangle on Edge.Cuts",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 40.0
+                    },
+                    "uuid": "ba83deb7-710d-43b7-af68-b685e32cf9a2"
+                },
+                {
+                    "description": "Rectangle of J4 on F.Silkscreen",
+                    "pos": {
+                        "x": 58.9,
+                        "y": 38.35
+                    },
+                    "uuid": "910313c4-a9e8-4221-8e01-ab50d31572b2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Rectangle on Edge.Cuts",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 40.0
+                    },
+                    "uuid": "ba83deb7-710d-43b7-af68-b685e32cf9a2"
+                },
+                {
+                    "description": "Rectangle of J5 on F.Silkscreen",
+                    "pos": {
+                        "x": 106.9,
+                        "y": 38.35
+                    },
+                    "uuid": "2183ad7d-246d-4cce-9dc0-6f7407383dea"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Rectangle on Edge.Cuts",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 40.0
+                    },
+                    "uuid": "ba83deb7-710d-43b7-af68-b685e32cf9a2"
+                },
+                {
+                    "description": "Reference field of H1",
+                    "pos": {
+                        "x": 44.0,
+                        "y": 40.2
+                    },
+                    "uuid": "d0cbda44-eeb2-454b-bf49-3f5db44450ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Rectangle on Edge.Cuts",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 40.0
+                    },
+                    "uuid": "ba83deb7-710d-43b7-af68-b685e32cf9a2"
+                },
+                {
+                    "description": "Reference field of H2",
+                    "pos": {
+                        "x": 136.0,
+                        "y": 40.2
+                    },
+                    "uuid": "d3362057-779d-4939-b908-4a1cd5733a0c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 67.0,
+                        "y": 42.75
+                    },
+                    "uuid": "333b467e-c571-42d8-a74f-976dae18d846"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint J5",
+                    "pos": {
+                        "x": 115.0,
+                        "y": 42.75
+                    },
+                    "uuid": "6a99670a-8e79-4772-97d1-d5748ffc783c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        }
+    ]
+}

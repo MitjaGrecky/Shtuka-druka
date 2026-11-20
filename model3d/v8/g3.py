@@ -25,11 +25,11 @@ def vents_and_feet(m):
                 y0 = 20.0 + r * 34.0
                 out.append(m.box(f"Hatch vent slot {k + 1}.{int(cx)}.{r}", "vents", cx - 2, cx + 2, y0, y0 + 40, -0.4, 0.0, color="grey", est=True, check=False))
     # R195 (user, 20.11.2026): fan exhaust = 13 thin lines 80 x 2 mm, pitch 5 mm, in the right wall over the fan face
-    # (fan y 390.5-470.5, z 3.5-83.5); intake = one thin line 2 mm in the front wall, x 110-505 (past the phones jacks)
+    # (fan y 390.5-470.5, z 3.5-83.5); intake = one thin line 2 mm in the front wall at the very bottom (z 3-5, user: the middle is ugly), x 110-505 (past the phones jacks)
     for i in range(13):
         z0 = 13.5 + 5.0 * i
         out.append(m.box(f"Fan exhaust line {i + 1} (right wall)", "vents", 512, 515, 390.5, 470.5, z0, z0 + 2.0, color="grey", est=True, check=False))
-    out.append(m.box("Front intake line 2 mm", "vents", 110, 505, 0.0, 3.0, 14.0, 16.0, color="grey", est=True, check=False))
+    out.append(m.box("Front intake line 2 mm", "vents", 110, 505, 0.0, 3.0, 3.0, 5.0, color="grey", est=True, check=False))
     # R187: 4 square feet 20 x 20 x 3
     for fx in (25.0, 470.0):
         for fy in (25.0, 455.0):

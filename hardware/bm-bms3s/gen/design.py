@@ -127,7 +127,8 @@ def placement():
     # (turned 180 deg); the chip, the FETs and the sense resistor sit between (y 9-23).
     fixed.update({"J1": (7.0, 7.3, 180, "top"), "J3": (17.5, 7.3, 180, "top"), "J4": (26.0, 7.3, 180, "top"),
                   "J2": (9.0, H - 7.8, 180, "top"), "J5": (W - 8.3, H - 9.3, 180, "top")})
-    return autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 6.0)
+    return autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 6.0, gap=float(os.environ.get("PLACE_GAP", "0.25")),
+                           ic_gap=(float(os.environ["PLACE_ICGAP"]) if os.environ.get("PLACE_ICGAP") else None))
 
 
 if __name__ == "__main__":

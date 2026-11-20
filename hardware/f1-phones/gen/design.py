@@ -157,7 +157,8 @@ def placement():
     G = [(24.0, 29.0, t, grp[1], 0), (52.0, 10.0, t, grp[2], 0), (90.0, 14.0, t, grp[0], 0)]
     # rev 0.6 (20.11.2026, router finding f1-four-gaps.md): the pins +12V / GND / -12V of the OPA1622 are on a 0.5 mm pitch and the GND pad could not leave the chip:
     # courtyard gap 0.25 -> 1.4 mm so that the neighbouring resistors, capacitors and the relay leave a free corridor for the fan-out of pins 2-4 (and the EN, HP1R_IM, HP1L_O nets)
-    return packer.pack(sys.modules[__name__], P, fixed, G, [(0, 0, W, H)], gap=1.4)
+    return packer.pack(sys.modules[__name__], P, fixed, G, [(0, 0, W, H)], gap=float(os.environ.get("PLACE_GAP", "1.4")),
+                       ic_gap=(float(os.environ["PLACE_ICGAP"]) if os.environ.get("PLACE_ICGAP") else None))
 
 
 if __name__ == "__main__":

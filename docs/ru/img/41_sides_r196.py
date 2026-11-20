@@ -4,7 +4,7 @@ but continuing until full decay" = hybrid of K2 "Pipes" and K3 "Release" (24.12)
 
 Rule (rev. 3, user 20.11.2026 on rev. 2: "I don't like it. Then pipes over the whole surface of the case"): vertical grooves
 2 mm wide, pitch 5, over the WHOLE side wall y 5-495, bottoms on z 5, tops on the case lines with a 5 mm margin (deck z 25,
-slope edge shifted 5 mm inward, crest z 112); no fade. Top, front and rear walls untouched (chief engineer's assumption).
+slope edge shifted 5 mm inward, crest z 112); no fade. Top, front and rear walls untouched (user, R196: "only the two sides").
 Both walls identical (mirror); blind grooves 1-1.2 mm deep with a dark bottom; through-cuts only on the RIGHT wall inside the fan
 frame 76 x 76. Geometry: 41_geom_v8.py (production g3.build(30, 0, 117, 20, 0)).
 Views: top - 3/4 perspective (left wall from front-left, right wall from front-right); bottom - elevations: LEFT wall seen from
@@ -59,7 +59,7 @@ def main():
     el = ['<rect width="100%" height="100%" fill="#fff"/>',
           '<text x="20" y="30" font-size="19" font-weight="700" fill="#1f2933">Боковины по R196, ред. 3: «Трубы» по всей боковине</text>',
           '<text x="20" y="52" font-size="12.5" fill="#52606d">Вертикальные канавки 2 мм, шаг 5, низ z 5, по всей боковине от y 5 до y 495. Верх — по линиям корпуса с отступом 5:</text>',
-          f'<text x="20" y="70" font-size="12.5" fill="#52606d">под декой z 25, на скате по скату, у макушки z 112. Без затухания. Обе стенки одинаковые, зеркально. Верх, перед и зад не тронуты (допущение).</text>',
+          f'<text x="20" y="70" font-size="12.5" fill="#52606d">под декой z 25, на скате по скату, у макушки z 112. Без затухания. Обе стенки одинаковые, зеркально. Только два бока (R196).</text>',
           '<text x="20" y="88" font-size="12.5" fill="#52606d">Тёмные — глухие канавки (глубина 1–1,2, дно тёмное); сквозные — только справа в рамке вентилятора 76 × 76. Геометрия — боевая g3 (41_geom_v8.py).</text>',
           f'<text x="20" y="112" font-size="15" font-weight="700" fill="#1f2933">Сквозные {str(area[0]).replace(".", ",")} см², над лопастями {str(area[1]).replace(".", ",")} см²; канавок {len(segs)} на стенку ({n_wedge} за перегибом y 300, {len(segs) - n_wedge} под декой). Статус: концепт.</text>']
     CW, CH = 565, 360

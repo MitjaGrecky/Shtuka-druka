@@ -24,5 +24,6 @@
 | [36_24-9-perednyaya-liniya-i-peredacha](41_design_review/36_24-9-perednyaya-liniya-i-peredacha.md) | 24.9 Передняя линия входа: вид музыканта, капельник, порожек; передача инженеру (R195) | 3.0 |
 | [37_24-10-bokovye-stenki-odin-risunok](41_design_review/37_24-10-bokovye-stenki-odin-risunok.md) | 24.10 Боковые стенки: один рисунок с двух сторон, выход вентилятора — его сквозная часть (S1–S3) | 3.9 |
 | [38_24-11-shtrihovka-po-skatu-s4](41_design_review/38_24-11-shtrihovka-po-skatu-s4.md) | 24.11 S4: штриховка по скату на обеих стенках, сквозная только над вентилятором (набросок пользователя) | 3.2 |
+| [39_24-12-bokoviny-tri-koncepta](41_design_review/39_24-12-bokoviny-tri-koncepta.md) | 24.12 Боковины одним рисунком: K1 «Парус», K2 «Трубы», K3 «Затухание», вид 3/4 | 3.7 |
 
 Полная версия до сжатия: история git.

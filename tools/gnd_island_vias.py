@@ -16,10 +16,9 @@ def fills(layer):
     return s
 def obstacles(L,O):
     s=pcbnew.SHAPE_POLY_SET()
-    for t in b.GetTracks():
+    for t in b.GetTracks():   # a through via meets every copper layer: other-net tracks on any layer (In2 signal on 4-layer boards)
         if t.GetNetCode()==nc: continue
-        if t.Type()==pcbnew.PCB_VIA_T or t.IsOnLayer(O):
-            t.TransformShapeToPolygon(s,O,M,ME,pcbnew.ERROR_OUTSIDE)
+        t.TransformShapeToPolygon(s,O if t.Type()==pcbnew.PCB_VIA_T else t.GetLayer(),M,ME,pcbnew.ERROR_OUTSIDE)
     for f in b.GetFootprints():
         for p in f.Pads():
             for lay in (L,O):

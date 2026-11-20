@@ -134,7 +134,7 @@ def _capval(v):
 
 def pin_targets(parts, movable, group_of):
     """Rule A-037 (20.11.2026): which passive belongs at which IC pin. {ref: (ic_ref, pad, net, kind)}.
-    kind 'decap': a C between a power net and GND whose power net reaches a U/Q pin; the IC is the one in the same group, else the
+    kind 'decap': a C between a power net and GND whose power net reaches a U/Q pin; the IC is the least loaded per pin, then the
     nearest in the parts list (the schematic generators define the capacitors next to their IC); among its pins on that net the least
     loaded one (ICs balanced by capacitors per pin), smallest capacitors first (100 nF closest, bulk next).
     kind 'pin': a C/R/L/D/FB on a net of at most 4 pads with exactly one U/Q pad (compensation, feedback, bootstrap, switch-node
@@ -159,8 +159,7 @@ def pin_targets(parts, movable, group_of):
             if ics:
                 decs.append((_capval(p["value"]), order[r], r, pw[0], ics))
     for _, _, r, net, ics in sorted(decs):
-        same = [x for x in ics if group_of.get(x[0]) is not None and group_of.get(x[0]) == group_of.get(r)]
-        cand = same or ics
+        cand = ics      # no same-group preference: autoplace puts power-only parts into an arbitrary group (A1: 9 caps on one pin)
         npins = Counter(x[0] for x in cand)
         icload = Counter()
         for (q, _), v in load.items():

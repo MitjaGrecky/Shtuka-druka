@@ -22,5 +22,6 @@
 | [34_24-7-zadnyaya-stenka-a-b-po-datasheetam](41_design_review/34_24-7-zadnyaya-stenka-a-b-po-datasheetam.md) | 24.7 Задняя стенка: варианты A и B по даташитам Neutrik | 0.5 |
 | [35_24-8-vyhod-ventilyatora-poizyaschnee](41_design_review/35_24-8-vyhod-ventilyatora-poizyaschnee.md) | 24.8 Выход вентилятора «поизящнее»: четыре варианта ≥ 20 см² (R195, 20.11.2026) | 4.5 |
 | [36_24-9-perednyaya-liniya-i-peredacha](41_design_review/36_24-9-perednyaya-liniya-i-peredacha.md) | 24.9 Передняя линия входа: вид музыканта, капельник, порожек; передача инженеру (R195) | 3.0 |
+| [37_24-10-bokovye-stenki-odin-risunok](41_design_review/37_24-10-bokovye-stenki-odin-risunok.md) | 24.10 Боковые стенки: один рисунок с двух сторон, выход вентилятора — его сквозная часть (S1–S3) | 3.9 |
 
 Полная версия до сжатия: история git.

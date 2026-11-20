@@ -108,6 +108,14 @@ def _is_gnd(n):
     return u.startswith("GND") or u in GND_NAMES or u.endswith("_GND")
 
 
+def _is_power(n):
+    """Supply net by name: +3V3, -12V, VDD/VCC/VBUS/VREG/VSYS/VIN/AVDD/DVDD..., not an RC filter on a signal input (CVIN3, RUN)."""
+    import re
+    u = (n or "").strip("/").upper()
+    return bool(re.match(r"^[+-]\d", u) or re.search(r"(^|_)(VDD|VCC|VBUS|VREG|VSYS|VIN|VOUT|VBAT|PVIN|AVDD|DVDD|IOVDD|LDO|BUS|SYS|PMID|REGN|V\d)", u)
+                or re.search(r"(VDD|VCC|VBUS)", u))
+
+
 def _is_ic(ref):
     return ref.startswith(("U", "Q"))
 
@@ -278,12 +286,20 @@ def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.
             elif ref not in targets:
                 rest.append((k, ref))
     if pin_rule:
-        def prio(t):                                      # HF decoupling (<= 1 uF), then own-pin parts (switch node L/D, FB, COMP), then bulk
+        first = {}                                        # P116: the first (smallest) bulk capacitor of each bank (net + pin) goes before the rest
+        for ref, (ic, pad, net, kind) in sorted(targets.items(), key=lambda t: (_capval(P[t[0]]["value"]), t[0])):
+            if kind == "decap" and _capval(P[ref]["value"]) > 1.1e-6:
+                first.setdefault((net, ic, pad), ref)
+        firsts = set(first.values())
+
+        def prio(t):                                      # HF decoupling (<= 1 uF), first of each bulk bank, own-pin parts (switch node L/D, FB, COMP), rest of the banks
             ref, (_, _, _, kind) = t
             if kind == "decap":
                 v = _capval(P[ref]["value"])
-                return (0 if v <= 1.1e-6 else 2, v, ref)
-            return (1, 0, ref)
+                if v <= 1.1e-6:
+                    return (0, 0 if _is_power(t[1][2]) else 1, v, ref)   # supply decoupling before RC filters on signal inputs
+                return (1 if ref in firsts else 3, 0, v, ref)
+            return (2, 0, 0, ref)
         tl = sorted(targets.items(), key=prio)
         for ref, (ic, pad, net, kind) in tl:              # phase 2: decoupling and own-pin passives at their pins
             if ic not in pl or not place_at_pin(ref, ic, pad, net, kind):

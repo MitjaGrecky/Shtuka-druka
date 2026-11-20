@@ -33,7 +33,7 @@ import kit as K  # noqa: E402
 NAME = "r2-control"
 ID = "R2"
 TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables"
-REV = "1.3"
+REV = "1.4"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = ODROID-H5, down = RP2350, panel P2, A1 port A, spare")
@@ -361,6 +361,7 @@ def placement():
     """R2 rev 0.4: jacks at the 3D model positions (F side, facing the wall); cable headers on the B side - DIN headers
     along the DIN window, the others along the right edge; ICs and small parts packed in groups on the B side next to
     their IC or jack (hardware/common/gen/packer.py). No routing."""
+    import autoplace
     import packer
     P = parts()
     t, b = "top", "bottom"
@@ -406,7 +407,7 @@ def placement():
         G.append((ax, ay, side, refs, 0))
     order = ["mcu", "hub", "power", "dac", "opa", "midi", "ctrl"]
     G.sort(key=lambda g: order.index(BLOCK[g[3][0]]) if BLOCK[g[3][0]] in order else len(order))
-    return packer.pack(sys.modules[__name__], P, fixed, G, AREAS)
+    return autoplace.fit(sys.modules[__name__], lambda g, ic: packer.pack(sys.modules[__name__], P, fixed, G, AREAS, gap=g, ic_gap=ic))
 
 
 if __name__ == "__main__":

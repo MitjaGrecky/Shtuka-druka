@@ -83,3 +83,6 @@ EasyEDA (18.11.2026, PC, rev 1.1): project `PW_v11`: PCB and schematic parts 303
 - Harness check (notes/harness_bom.md): J1 DC (43645-0200, 20 AWG, 5 A), J2 USB-C PD from U1 (43025-0600), J5 switch (43025-0400, 4 wires), battery J3/J4 6 A over two contacts: nothing is above the contact ratings after the changes.
 
 EasyEDA (20.11.2026): PW 1.2 = PW_v12: детали 313/313, цепи 169/169, LCSC (схема 84, PCB 84), позиции 313/313, сохранено.
+
+## Rev 1.3 (20.11.2026): placement rule template
+Courtyard gap 1.2 mm (ic_gap 1.8 mm around fine-pitch ICs) instead of 0.25 mm, the largest that fits the outline (autoplace.fit); basis: notes/placement_analysis_2026-11-20.md. Schematic unchanged.

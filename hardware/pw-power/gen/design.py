@@ -35,7 +35,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "1.2"
+REV = "1.3"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -496,7 +496,7 @@ def placement():
     for r, xy in NOISY_XY.items():
         fixed[r] = xy + (0, "bottom")
     follow = [r for r, v in fixed.items() if r in NOISY_XY or r.startswith("U") and v[3] == "top"]
-    return autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 8.5, follow=follow)   # header row clear of the bottom holes
+    return autoplace.fit(sys.modules[__name__], lambda g, ic: autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 8.5, follow=follow, gap=g, ic_gap=ic))   # header row clear of the bottom holes
 
 
 QUIET_XY = {"TPS7A4701": (12.0, 12.0), "TPS7A3301": (12.0, 30.0), "TPS7A4101": (28.0, 12.0)}

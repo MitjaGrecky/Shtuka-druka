@@ -39,7 +39,7 @@ import kit as K  # noqa: E402
 NAME = "r1-audio"
 ID = "R1"
 TITLE = "R1 - Audio jacks and analog front end: mic/Hi-Z two paths, line 1-8, phono, Main/Aux/RCA out on relays"
-REV = "1.2"
+REV = "1.3"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 differential ADC pairs (FS 8 Vrms diff into the AN0635 buffers), A1 -> R1: 4 DAC pairs; phantom per channel and phono/line "
             "from R2 (R118); output relays need MUTE and R2_OK (R137)")
@@ -361,7 +361,7 @@ def placement():
         if p_["value"] in ("GND terminal", "Phono/Line switch"):
             fixed[p_["ref"]] = (216.0 if p_["value"] == "GND terminal" else 227.0, 92.5 + (H - 96.0), 90, "bottom")
     fixed.update(K.hole_fixed(parts(), HOLES))
-    return autoplace.place(sys.modules[__name__], fixed=fixed, conn_side="bottom")
+    return autoplace.fit(sys.modules[__name__], lambda g, ic: autoplace.place(sys.modules[__name__], fixed=fixed, conn_side="bottom", gap=g, ic_gap=ic))
 
 
 if __name__ == "__main__":

@@ -112,3 +112,6 @@ EasyEDA (19.11.2026): R2 1.2 = R2_v8: детали 248/248, цепи 170/170, LC
 The wall USB-A (Neutrik NAUSB-W, cable cut at the A end, harness H5) goes to **J6** (the spare hub port), not J4 (J4 is the panel P2 port). Pin order PH-4: 1 VBUS (red), 2 D- (white), 3 D+ (green), 4 GND (black). DIN OUT J7-J10 PH-3 (1 -> DIN pin 4, 2 -> pin 5, 3 -> pin 2 shield), DIN IN J11, J12 PH-2 (pin 4, pin 5): as the Thomann MIDI Socket. PJ-3920-3A C707258, green LED C84267.
 
 EasyEDA (19.11.2026): R2 1.3 = R2_v9: детали 248/248, цепи 170/170, LCSC (схема 159, PCB 147), позиции 248/248, сохранено.
+
+## Rev 1.4 (20.11.2026): placement rule template
+Courtyard gap 1.4 mm (ic_gap 2.0 mm around fine-pitch ICs) instead of 0.25 mm, the largest that fits the outline (autoplace.fit); basis: notes/placement_analysis_2026-11-20.md. Schematic unchanged.

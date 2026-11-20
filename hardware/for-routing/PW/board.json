@@ -2,7 +2,7 @@
  "id": "PW",
  "name": "pw-power",
  "title": "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom",
- "rev": "1.2",
+ "rev": "1.3",
  "w": 100.0,
  "h": 110.0,
  "layers": 4,

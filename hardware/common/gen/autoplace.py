@@ -11,6 +11,28 @@ import packer
 
 ANCHOR = ("U", "Q", "K", "Y", "L", "F", "ENC")
 
+GAPS = (1.4, 1.2, 1.0, 0.8, 0.6, 0.4, 0.25)   # rule template 20.11.2026: the largest courtyard gap that fits the outline
+
+
+def fit(D, place, gaps=GAPS):
+    """place(gap, ic_gap) -> placement. Tries the gaps from the largest; the first that fits wins. ic_gap (fine-pitch ICs) = gap + 0.6,
+    at most 2.0. Env PLACE_GAP (and PLACE_ICGAP) force one value. Sets D.PLACED_GAP / D.PLACED_ICGAP (README records them)."""
+    import os
+    if os.environ.get("PLACE_GAP"):
+        gaps = (float(os.environ["PLACE_GAP"]),)
+    err = None
+    for g in gaps:
+        ic = float(os.environ["PLACE_ICGAP"]) if os.environ.get("PLACE_ICGAP") else min(2.0, round(g + 0.6, 2))
+        try:
+            r = place(g, ic)
+        except RuntimeError as e:
+            err = e
+            continue
+        D.PLACED_GAP, D.PLACED_ICGAP = g, ic
+        print(f"placement: gap {g} ic_gap {ic}", file=sys.stderr)
+        return r
+    raise err
+
 
 def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top", follow=(), gap=0.25, ic_gap=None):
     """follow: fixed parts (e.g. ICs placed by hand) whose small parts gather around them, on their side (16.11.2026, PW LDOs)."""

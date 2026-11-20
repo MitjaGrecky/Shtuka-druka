@@ -32,7 +32,7 @@ import kit as K  # noqa: E402
 NAME = "a1-digital"
 ID = "A1"
 TITLE = "A1 - Digital audio: 3 ADC, 1 DAC, 2 xcore.ai, USB isolator, clocks, quiet supplies"
-REV = "0.9"
+REV = "1.0"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 ADC pairs (8 Vrms FS), A1 -> R1: Main/Aux DAC pairs, A1 -> F1: Phones pairs; xcore A: TDM master, SPI to the "
             "converters, USB port A (hub on R2), xcore B: USB port B through the ISOUSB211 (isolated ground GNDPC)")
@@ -413,7 +413,7 @@ def placement():
     # 16-32 mm from the 24.576 / 22.5792 MHz audio master clocks (Y1, Y2) and 63 mm from the CS5304P; now 38-55 mm from the clocks (measured 15.11.2026 after adding the holes; was 16-32)
     fixed = {"U4": (210.0, 10.0, 0, "top"), "L1": (196.0, 10.0, 0, "top"), "U5": (210.0, 24.0, 0, "top"), "L2": (196.0, 24.0, 0, "top")}   # inside W = 220
     fixed.update(K.hole_fixed(parts(), HOLES))
-    return autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 8.5)   # header row clear of the bottom holes
+    return autoplace.fit(sys.modules[__name__], lambda g, ic: autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 8.5, gap=g, ic_gap=ic), gaps=(1.0, 0.8, 0.6, 0.4, 0.25))   # 1.0 fits (800 s per try: 1.2/1.4 not tried, each try ~13 min)   # header row clear of the bottom holes
 
 
 if __name__ == "__main__":

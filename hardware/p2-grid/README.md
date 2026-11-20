@@ -50,3 +50,6 @@ EasyEDA (19.11.2026): P2 0.6 = P2_v6: детали 397/397, цепи 266/266, LC
 EasyEDA (19.11.2026): P2 0.7 = P2_v7: детали 397/397, цепи 266/266, LCSC (схема 317 за 3 прогона из-за cmdKey, PCB 317), сохранено через API. Позиции не сверяли (eda_verify не знает P2).
 
 EasyEDA (20.11.2026): P2 0.8 = P2_v8: детали 397/397, цепи 266/266, LCSC (PCB 318, схема 294 из 317: 23 не записались, ошибка cmdKey, повторить), позиции 397/397, сохранено.
+
+## Rev 0.9 (20.11.2026): placement rule template
+Courtyard gap 1.4 mm (ic_gap 2.0 mm around fine-pitch ICs) instead of 0.25 mm, the largest that fits the outline (autoplace.fit); basis: notes/placement_analysis_2026-11-20.md. Schematic unchanged.

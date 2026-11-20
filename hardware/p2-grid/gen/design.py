@@ -27,7 +27,7 @@ import kit as K  # noqa: E402
 NAME = "p2-grid"
 ID = "P2"
 TITLE = "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses"
-REV = "0.8"
+REV = "0.9"
 RA_ROT = 270        # right-angle 1.27 mm bus headers: rotation that opens them towards the rear edge (checked on the built board)
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8 x 74HC4051 + ADC128S102 (SPI0); 5 x LP5864 for 109 RGB; "
@@ -286,7 +286,7 @@ def placement():
         x += w + 2
         rowh = max(rowh, h)
     fixed.update(K.hole_fixed(parts(), HOLES))
-    return autoplace.place(sys.modules[__name__], fixed=fixed)
+    return autoplace.fit(sys.modules[__name__], lambda g, ic: autoplace.place(sys.modules[__name__], fixed=fixed, gap=g, ic_gap=ic))
 
 
 if __name__ == "__main__":

@@ -62,3 +62,6 @@ Audit `notes/reviews/schematics_2026-11-18.md`: G6K-2F-Y 5 V coil 237 R / 21 mA,
 EasyEDA (18.11.2026, PC, rev 0.5): project `F1_v6`: parts 57 / 57, nets 40 / 40, LCSC (16 sch / 12 pcb) kept after reopening, positions 57 / 57, saved. Tabs opened only after a manual double click, then closed and reopened through the API. DRC and parity left to CI.
 
 EasyEDA (19.11.2026): F1 0.6 = F1_v7: детали 57/57, цепи 40/40, LCSC (схема 16, PCB 12), позиции 57/57, сохранено.
+
+## Rev 0.7 (20.11.2026)
+Mute-logic cluster moved to (88,10) (was 90,14): 2 unrouted after the GND pour instead of 4 (Freerouting 1.9.0, gap 1.4). Schematic unchanged.

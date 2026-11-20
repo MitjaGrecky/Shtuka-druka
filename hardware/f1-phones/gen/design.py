@@ -31,7 +31,7 @@ import kit as K  # noqa: E402
 NAME = "f1-phones"
 ID = "F1"
 TITLE = "F1 - Headphones: 2 x Cliff S1 6.35 mm, 2 x OPA1622 difference amplifiers x2, mute relays"
-REV = "0.6"
+REV = "0.7"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("From A1: Phones 1 and 2 as differential pairs (2 Vrms FS) -> OPA1622 difference amp x2 -> 10 R -> relay -> NMJ6HCD2; "
             "volume is the DAC's digital attenuator (R87); mute relays need MUTE and R2_OK (R66, R137)")
@@ -154,7 +154,8 @@ def placement():
         if p["value"].startswith("G6K"):
             side = 1 if "HP1" in str(p["pins"]) else 2
         grp[side].append(p["ref"])
-    G = [(24.0, 29.0, t, grp[1], 0), (52.0, 10.0, t, grp[2], 0), (90.0, 14.0, t, grp[0], 0)]
+    G = [(24.0, 29.0, t, grp[1], 0), (52.0, 10.0, t, grp[2], 0), (*[float(v) for v in os.environ.get("F1_G0", "88,10").split(",")], t, grp[0], 0)]
+    # rev 0.7: the mute-logic cluster (anchor 88,10; before 90,14): 2 unrouted after the GND pour instead of 4 (probes 88,10 -> 2, 95,24 -> 5, 62,18 -> 6, 40,12 -> 4; exp_gap, Freerouting 1.9.0)
     # rev 0.6 (20.11.2026, router finding f1-four-gaps.md): the pins +12V / GND / -12V of the OPA1622 are on a 0.5 mm pitch and the GND pad could not leave the chip:
     # courtyard gap 0.25 -> 1.4 mm so that the neighbouring resistors, capacitors and the relay leave a free corridor for the fan-out of pins 2-4 (and the EN, HP1R_IM, HP1L_O nets)
     return packer.pack(sys.modules[__name__], P, fixed, G, [(0, 0, W, H)], gap=float(os.environ.get("PLACE_GAP", "1.4")),

@@ -8,7 +8,7 @@
 | [01_project](01_project.md) | Проект: цели, лицензии, этапы, рынок | 3 | [decisions/01_project.md](../decisions/01_project.md) |
 | [02_controls](02_controls.md) | Управление: кнопки, режимы, навигация, запись | 5 | [decisions/02_controls.md](../decisions/02_controls.md) |
 | [03_panel](03_panel.md) | Панель и экран: раскладка v7, ручки, пэды, подсветка | 5 | [decisions/03_panel.md](../decisions/03_panel.md) |
-| [04_enclosure](04_enclosure.md) | Корпус, форма, размеры, посадка деталей, внешний вид | 8 | [decisions/04_enclosure.md](../decisions/04_enclosure.md) |
+| [04_enclosure](04_enclosure.md) | Корпус, форма, размеры, посадка деталей, внешний вид | 9 | [decisions/04_enclosure.md](../decisions/04_enclosure.md) |
 | [05_io](05_io.md) | Разъёмы и задняя стенка: аудио, MIDI, CV, USB | 6 | [decisions/05_io.md](../decisions/05_io.md) |
 | [06_audio](06_audio.md) | Звук: преобразователи, входы, выходы, аудиоплата | 6 | [decisions/06_audio.md](../decisions/06_audio.md) |
 | [07_compute_power](07_compute_power.md) | Вычислитель, питание, аккумуляторы, тепло | 7 | [decisions/07_compute_power.md](../decisions/07_compute_power.md) |

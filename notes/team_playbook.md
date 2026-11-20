@@ -8,12 +8,18 @@
 ## Жёсткие правила
 1. **`kicad-cli` разрешён** (с 19.11.2026, по одному запуску): перед каждым push `kicad-cli sch erc --severity-error` и `pcb drc` на тронутых платах, ошибок 0; CI проверяет второй раз. При синем экране остановиться и сообщить. Все скрипты запускать KiCad-овским Python: `C:\Program Files\KiCad\10.0\bin\python.exe` (системный Python без `pcbnew`). В каждом вызове bash заново ставить `KICAD_SYMBOL_DIR=C:/Users/karpa/Documents/Shtuka-druka/hardware/common/sym7` и `KICAD_FOOTPRINT_DIR="C:/Program Files/KiCad/10.0/share/kicad/footprints"` (состояние оболочки не сохраняется).
 2. **Только детали в наличии**. Номер LCSC брать из библиотеки EasyEDA (`tools/eda/eda_parts.py`), наличие проверять на странице `https://jlcpcb.com/partdetail/Cxxxx` во встроенном браузере (подождать ≈ 4 с, прочитать «In Stock»). Детали, которых нет на JLCPCB, можно купить на Digikey/Mouser и паять вручную (пользователь согласен), тогда пометить в BOM.
-3. **Даташиты читать по тексту** (`markitdown`: `C:\Users\karpa\.venvs\markitdown\Scripts\markitdown.exe FILE -o OUT.md`; PDF-картинки через `pymupdf`). Не спорить с EasyEDA: «проверь easyeda и сравни».
+3. **Даташиты читать по тексту: PDF и DOCX только через `markitdown`** (0.1.9, установлен 20.11.2026: `uv tool install "markitdown[all]" --python 3.12`, путь `C:\Users\karpa\.local\bin\markitdown`; вызов `markitdown FILE -o OUT.md`, в чат только суть; прежний `C:\Users\karpa\.venvs\markitdown\` устарел; PDF-картинки через `pymupdf`). Не спорить с EasyEDA: «проверь easyeda и сравни».
 4. **Делаем как рекомендует производитель** (типовые схемы из даташита и application note), «сжечь на старте не хочу ничего».
 5. **Журнал решений:** в R попадают слова пользователя (в т.ч. делегирование R186: «Все инженерные решения с инженером. ВСЕ»). Инженерный выбор главного инженера в делегированной области записывается предложением P с пометкой «принял главный инженер, R186», основанием и авторством; нельзя писать «пользователь выбрал X». Вкус, эргономика, деньги, приоритеты решает пользователь. Роли и уставы: `notes/roles/`.
 6. **GitHub держим тихим**: эксперименты локально, пуш пакетами, CI зелёный. Коммитить так: `git -c user.name=MitjaGrecky -c user.email=MitjaGrecky@users.noreply.github.com commit` (личную почту пользователя не вписывать), в конце сообщения `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`. CI смотреть публичным API: `curl -s "https://api.github.com/repos/MitjaGrecky/Shtuka-druka/actions/runs?head_sha=<sha>"`.
 7. Пароли и коды не вводить, CAPTCHA не обходить, платных стандартов не покупать, внешние сайты не залогинивать.
 8. Работать самостоятельно, не спрашивать «продолжать?»; в конце короткий отчёт: что сделано, что проверено, что нет, что нужно от пользователя (один чёткий вопрос).
+
+## Рабочая папка команды Claude (с 20.11.2026)
+`C:\Users\karpa\Documents\ShtukaDruka\claude\` (вне репозитория, как `..\codex\`): поручения, журналы и сырые прогоны ролей; источник правды остаётся репозиторий. Описание: `claude\README.md`.
+- Папки ролей: `chief/` (главный инженер), `schematic/`, `auditor/`, `technologist/`, `editor/`. В каждой `task.md` (поручение), `journal.md` (пишет только эта роль), `tools.md` (что пробовали, что сработало), `handoff.md` (карточка продолжения), `runs/` (сырые прогоны, не в git). Сводка сравнения: `chief/observations.md`.
+- Тяжёлые запуски (`kicad-cli`, Freerouting) по одному на ПК: перед запуском строка в `chief/locks.md` «роль — что — с какого времени», после окончания удалить.
+- В репозитории роль правит свою область и коммитит только свои пути (`git add <пути>`, не `-A`). **Push делает только главный инженер.** Отчёт главному инженеру ≤ 4 строки, детали в файл; перед остановкой `handoff.md`.
 
 ## Как делается плата (шаблон)
 1. `gen/design.py`: детали и цепи (`parts()`), размеры (`W, H`), `placement()`; `make_sch.py` и `make_pcb.py` пишут `.kicad_sch` / `.kicad_pcb` (разводки нет, она потом).

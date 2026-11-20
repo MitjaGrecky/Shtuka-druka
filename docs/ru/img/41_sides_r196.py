@@ -3,7 +3,7 @@
 but continuing until full decay" = hybrid of K2 "Pipes" and K3 "Release" (24.12).
 
 Rule (rev. 3, user 20.11.2026 on rev. 2: "I don't like it. Then pipes over the whole surface of the case"): vertical grooves
-2 mm wide, pitch 5, over the WHOLE side wall y 5-495, bottoms on z 5, tops on the case lines with a 5 mm margin (deck z 25,
+2 mm wide, pitch 5, over the WHOLE side wall y 5-495, open to the bottom edge z 0 (rev. 3.1, user: no bottom border), tops on the case lines with a 5 mm margin (deck z 25,
 slope edge shifted 5 mm inward, crest z 112); no fade. Top, front and rear walls untouched (user, R196: "only the two sides").
 Both walls identical (mirror); blind grooves 1-1.2 mm deep with a dark bottom; through-cuts only on the RIGHT wall inside the fan
 frame 76 x 76. Geometry: 41_geom_v8.py (production g3.build(30, 0, 117, 20, 0)).
@@ -16,7 +16,8 @@ import importlib.util as _iu
 _s = _iu.spec_from_file_location("g41", os.path.join(HERE, "41_geom_v8.py")); G = _iu.module_from_spec(_s); _s.loader.exec_module(G)
 V2 = G.load("41_sides_v2")
 
-M, PITCH, H_MIN = 5.0, 5.0, 1.0       # margin from every edge, groove pitch, shortest groove (a dot)
+M, PITCH, H_MIN = 5.0, 5.0, 1.0
+Z_BOT = 1.0      # rev. 3.1 (user): grooves run out through the bottom edge, no bottom margin; 1 = cap radius       # margin from every edge, groove pitch, shortest groove (a dot)
 
 
 def line(y):
@@ -34,7 +35,7 @@ def bars():
     segs, y = [], G.D - M
     while y >= M - 1e-9:
         t = min(max(G.DECK - M, line(y)), G.CREST - M)
-        segs.append(((y, M), (y, t)))
+        segs.append(((y, Z_BOT), (y, t)))      # drawn from z 1 with a round cap = open to the bottom edge z 0
         y -= PITCH
     return segs
 
@@ -57,8 +58,8 @@ def main():
     print(f"bars {len(segs)} (wedge {n_wedge}, decay {len(segs) - n_wedge}), through {len(cuts)}, area {area}, knee y {yk:.1f}, last bar y {yend:.1f} h {segs[-1][1][1] - M:.2f}")
     Wd = 1150
     el = ['<rect width="100%" height="100%" fill="#fff"/>',
-          '<text x="20" y="30" font-size="19" font-weight="700" fill="#1f2933">Боковины по R196, ред. 3: «Трубы» по всей боковине</text>',
-          '<text x="20" y="52" font-size="12.5" fill="#52606d">Вертикальные канавки 2 мм, шаг 5, низ z 5, по всей боковине от y 5 до y 495. Верх — по линиям корпуса с отступом 5:</text>',
+          '<text x="20" y="30" font-size="19" font-weight="700" fill="#1f2933">Боковины по R196, ред. 3.1: «Трубы» по всей боковине, до самого низа</text>',
+          '<text x="20" y="52" font-size="12.5" fill="#52606d">Вертикальные канавки 2 мм, шаг 5, снизу открыты на кромку (z 0, без нижней границы), по всей боковине от y 5 до y 495. Верх — по линиям корпуса с отступом 5:</text>',
           f'<text x="20" y="70" font-size="12.5" fill="#52606d">под декой z 25, на скате по скату, у макушки z 112. Без затухания. Обе стенки одинаковые, зеркально. Только два бока (R196).</text>',
           '<text x="20" y="88" font-size="12.5" fill="#52606d">Тёмные — глухие канавки (глубина 1–1,2, дно тёмное); сквозные — только справа в рамке вентилятора 76 × 76. Геометрия — боевая g3 (41_geom_v8.py).</text>',
           f'<text x="20" y="112" font-size="15" font-weight="700" fill="#1f2933">Сквозные {str(area[0]).replace(".", ",")} см², над лопастями {str(area[1]).replace(".", ",")} см²; канавок {len(segs)} на стенку ({n_wedge} за перегибом y 300, {len(segs) - n_wedge} под декой). Статус: концепт.</text>']
@@ -77,10 +78,11 @@ def main():
     open(os.path.join(HERE, "41_sides_r196.svg"), "w", encoding="utf-8").write(
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {Wd} {H}" width="{Wd}" height="{H}" font-family="Segoe UI, Arial, sans-serif">' + "".join(el) + "</svg>")
     with open(os.path.join(HERE, "41_sides_r196.csv"), "w", encoding="utf-8") as f:
-        f.write("y_mm,z_bottom,z_top,through\n")
-        cut_y = {round(a[0], 2) for a, b in cuts}
+        f.write("y_mm,z_bottom,z_top,through_z0,through_z1\n")   # z_bottom 0 = open to the bottom edge; empty through_* = blind only
+        cut = {round(a[0], 2): (a[1], b[1]) for a, b in cuts}
         for a, b in segs:
-            f.write(f"{a[0]:.1f},{a[1]:.1f},{b[1]:.2f},{int(round(a[0], 2) in cut_y)}\n")
+            c = cut.get(round(a[0], 2))
+            f.write(f"{a[0]:.1f},0.0,{b[1]:.2f}," + (f"{c[0]:.1f},{c[1]:.1f}" if c else ",") + "\n")
     print(Wd, H)
 
 

@@ -24,11 +24,16 @@ def vents_and_feet(m):
             for r in range(6):
                 y0 = 20.0 + r * 34.0
                 out.append(m.box(f"Hatch vent slot {k + 1}.{int(cx)}.{r}", "vents", cx - 2, cx + 2, y0, y0 + 40, -0.4, 0.0, color="grey", est=True, check=False))
-    # R195 (user, 20.11.2026): fan exhaust = 13 thin lines 80 x 2 mm, pitch 5 mm, in the right wall over the fan face
-    # (fan y 390.5-470.5, z 3.5-83.5); intake = one thin line 2 mm in the front wall at the very bottom (z 3-5, user: the middle is ugly), x 110-490 (past the phones jacks; user 20.11)
-    for i in range(13):
-        z0 = 13.5 + 5.0 * i
-        out.append(m.box(f"Fan exhaust line {i + 1} (right wall)", "vents", 512, 515, 390.5, 470.5, z0, z0 + 2.0, color="grey", est=True, check=False))
+    # R196 rev 3.1 (user): vertical grooves 2 mm, pitch 5, on BOTH side walls (x 0-3 and 512-515), blind depth 1.2 mm,
+    # down to the bottom edge z 0; 15 grooves on the right wall go through over the fan (R195/P115). Source: docs/ru/img/41_sides_r196.csv
+    import csv
+    with open(os.path.join(REPO, "docs", "ru", "img", "41_sides_r196.csv"), encoding="utf-8") as fh:
+        for i, r in enumerate(csv.DictReader(fh)):
+            y, zt = float(r["y_mm"]), float(r["z_top"]) + 1.0
+            for nm, x0, x1 in (("L", 0.0, 1.2), ("R", 513.8, 515.0)):
+                out.append(m.box(f"Side groove {nm}{i}", "vents", x0, x1, y - 1, y + 1, 0.0, zt, color="grey", est=True, check=False))
+            if r["through_z0"]:
+                out.append(m.box(f"Fan exhaust groove {i} (right wall, through)", "vents", 512, 515, y - 1, y + 1, float(r["through_z0"]) - 1.0, float(r["through_z1"]) + 1.0, color="grey", est=True, check=False))
     out.append(m.box("Front intake line 2 mm", "vents", 110, 490, 0.0, 3.0, 3.0, 5.0, color="grey", est=True, check=False))
     # R187: 4 square feet 20 x 20 x 3
     for fx in (25.0, 470.0):

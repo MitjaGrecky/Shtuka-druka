@@ -190,7 +190,8 @@ def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.
     the 0.4-0.65 mm pins can fan out; default = gap (old behaviour).
     pin_rule (rev 20.11.2026, audit A-037; default on, env PLACE_PINRULE=0 turns it off): the ICs of every group are placed first; then each
     decoupling capacitor goes to its power pin and each own-pin passive (pin_targets) to its pin, searched from the pin itself, courtyard gap
-    tight_gap (decap) / min(gap, pin_gap) (own-pin), ic_gap NOT applied to them; then the rest as before (gap, ic_gap). Order: HF decoupling (<= 1 uF), own-pin parts, bulk capacitors. A part that finds no
+    tight_gap (decap) / min(gap, pin_gap) (own-pin), ic_gap NOT applied to them; then the rest as before (gap, ic_gap). Order: HF decoupling (<= 1 uF), own-pin parts, bulk capacitors. P118: HF supply decoupling of a 0.4 mm pitch QFN goes under its pin on the
+    other side (via <= 0.3 mm within 1.5 mm of the pin is the router's job). A part that finds no
     spot within 15 mm of its pin falls back to its group.
 
     fixed: {ref: (x, y, rot, side)}; groups: [(anchor_x, anchor_y, side, [refs], rot)]; areas: [(x0, y0, x1, y1)].
@@ -199,6 +200,7 @@ def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.
     if pin_rule is None:
         pin_rule = os.environ.get("PLACE_PINRULE", "1") != "0"
     tight_gap = float(os.environ.get("PLACE_TIGHT", tight_gap))
+    under = os.environ.get("PLACE_UNDER", "1") != "0"   # P118 (20.11.2026); PLACE_UNDER=0: same side
     P = {p["ref"]: p for p in parts}
     grow = max(0.0, (ic_gap - gap)) if ic_gap else 0.0
     pl = dict(fixed)
@@ -247,6 +249,9 @@ def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.
     def place_at_pin(ref, ic, pad, net, kind):
         ix, iy, irot, side = pl[ic]
         pp = _padpos(D, P[ic], irot, side).get(pad)
+        if (kind == "decap" and under and "P0.4mm" in P[ic]["fp"] and _capval(P[ref]["value"]) <= 1.1e-6
+                and _is_power(net)):
+            side = "top" if side == "bottom" else "bottom"   # P118: HF decoupling of a 0.4 mm pitch QFN under its pin on the other side
         if pp is None:
             return False
         tx, ty = ix + pp[0], iy + pp[1]

@@ -11,19 +11,23 @@ import os
 os.environ["W3_X1"] = "505"
 os.environ["W3_S1"] = "60.2"       # the real W3 (hardware/w3-system) ends at s 60.2 before the pocket; the old model slab over the whole slope was an overestimate
 B.FAN_SPEC.update(s=80.0, T=25.0, dy=-6.0, z0=3.5, gap=5.0)   # R182: 80 x 80 x 25 fan on the right wall
-PACKS = "5,135,155,300,3;180,310,155,300,3;380,510,155,300,3"   # P141 (21.11): three blocks 130 x 145 x 9.5 (2 Ampul 40125140 cells each) under P1/P2/P3-P4, y 155-300; shelves only, cells below
+PACKS = "104,234,8,153,3;238,368,8,153,3;372,502,8,153,3"   # P144 (21.11): three blocks under the pads (front half of the pad zone); shelves/packs are replaced by the cells in build()
 LIPO = 7.5                                     # shelf 2 + 7.5 = top z 12.5; the pack boxes are replaced by the 6 cells (batt_bays/blocks3.csv) in build()
 
 
 def battery_parts(m):
-    """P141: 6 cells + 2 BM + 3 NTC from model3d/batt_bays/blocks3.csv (x0,x1,y0,y1,z0,z1)."""
+    """P144: battery set UNDER THE PADS from model3d/batt_bays/under_pads.csv: 3 blocks x 2 Ampul 40125140 cells (130 x 145 envelopes), NTC, 2 ribs, long board BB1 (398 x 28)."""
     import csv
     out = []
-    with open(os.path.join(HERE, "..", "batt_bays", "blocks3.csv"), newline="") as f:
+    with open(os.path.join(HERE, "..", "batt_bays", "under_pads.csv"), newline="") as f:
         for r in csv.DictReader(f):
-            n = r["name"]
-            col = "battery" if n.startswith("Cell") else ("pcb" if n.startswith("BM") else "parts")
-            out.append(m.box(n, "rear", float(r["x0"]), float(r["x1"]), float(r["y0"]), float(r["y1"]), float(r["z0"]), float(r["z1"]), color=col, est=True))
+            n = r["name"]; v = [float(r[k]) for k in ("x0", "x1", "y0", "y1", "z0", "z1")]
+            if n.endswith("envelope"):
+                for k, (za, zb) in enumerate(((3.5, 7.5), (8.0, 12.0))):
+                    out.append(m.box(f"Cell {n.split()[1]}{'AB'[k]} Ampul 40125140", "rear", v[0] + 2.5, v[1] - 2.5, v[2] + 2.5, v[3] - 2.5, za, zb, color="battery", est=True))
+            elif n.startswith("NTC"): out.append(m.box(n, "rear", *v, color="parts", est=True))
+            elif n.startswith("Rib"): out.append(m.box("Bay " + n.lower(), "shell", *v, color="metal", est=True))
+            elif n == "BB1 board": out.append(m.box("BB1 board 398 x 28", "rear", *v, color="pcb", est=True))
     return out
 
 
@@ -35,6 +39,7 @@ def vents_and_feet(m):
         for cx in (x0 + 26.0, x0 + 80.0):
             for r in range(6):
                 y0 = 20.0 + r * 34.0
+                if y0 < 156.0: continue                       # P144: rows under the battery hatches (y < 156) are replaced by the hatches
                 out.append(m.box(f"Hatch vent slot {k + 1}.{int(cx)}.{r}", "vents", cx - 2, cx + 2, y0, y0 + 40, -0.4, 0.0, color="grey", est=True, check=False))
     # R196 rev 3.1 (user): vertical grooves 2 mm, pitch 5, on BOTH side walls (x 0-3 and 512-515), blind depth 1.2 mm,
     # down to the bottom edge z 0; 15 grooves on the right wall go through over the fan (R195/P115). Source: docs/ru/img/41_sides_r196.csv
@@ -47,6 +52,9 @@ def vents_and_feet(m):
             if r["through_z0"]:
                 out.append(m.box(f"Fan exhaust groove {i} (right wall, through)", "vents", 512, 515, y - 1, y + 1, float(r["through_z0"]) - 1.0, float(r["through_z1"]) + 1.0, color="grey", est=True, check=False))
     out.append(m.box("Front intake line 2 mm", "vents", 110, 490, 0.0, 3.0, 3.0, 5.0, color="grey", est=True, check=False))
+    # P144: three battery hatches in the floor over the blocks (block + 1.5 mm each side, the 2 mm ribs between them take the M3 lid screws); plates drawn 0.4 mm below the floor
+    for k, (xa, xb) in enumerate(((102.5, 235.0), (237.0, 369.0), (371.0, 503.5))):
+        out.append(m.box(f"Battery hatch {k + 1} (floor)", "vents", xa, xb, 6.5, 154.5, -0.4, 0.0, color="grey", est=True, check=False))
     # R187: 4 square feet 20 x 20 x 3
     for fx in (25.0, 470.0):
         for fy in (25.0, 455.0):

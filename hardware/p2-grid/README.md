@@ -6,7 +6,7 @@
 ## What is on the board
 | Block | Parts | Notes |
 |---|---|---|
-| Panel controller | RP2350A, W25Q128, 12 MHz, AP2112K-3.3 | copy of the R2 block; USB to the R2 hub (PH4), SWD |
+| Panel controller | RP2350A, W25Q128, 12 MHz (ABM8-272-T3, C20625731 by the generator), AP2112K-3.3 | copy of the R2 block; USB to the R2 hub (PH4), SWD |
 | 64 FSR pads | 8 × 74HC4051 + ADC128S102 (V17) | row = ADC channel, S0–S2 shared; 10 k pull-down per pad, 1 k + 1 nF anti-alias per row; analog 3.3 V through a ferrite |
 | 109 RGB LEDs | 5 × LP5864 (A–D 24 each, E 13) | 20 button + 64 pad + 25 strip; on TCA9546A 0x73 channels 0 and 2 |
 | Buttons | 8 scenes + 2 arrows on 2 × 74HC165 | chained into the M1 module bus |

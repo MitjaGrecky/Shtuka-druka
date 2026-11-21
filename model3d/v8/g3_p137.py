@@ -8,7 +8,7 @@ import g3
 import os as _os
 DECK_UP = float(_os.environ.get("DECK_UP", "12"))
 BAYS = _os.environ.get("BAYS", "5,115,5,115,3;399,509,5,115,3")          # x0,x1,y0,y1, shelf underside z0 (shelf 2 mm; pack box = bay envelope)
-LIPO = 34.0 - 2.0 - 3.0 + 3.0                    # pack box height so the bay is z 3..37 (shelf 3..5 + 32)
+LIPO = float(_os.environ.get("LIPO", "32"))          # pack box height: bay z 3..37 = shelf 2 + 32 (env LIPO)
 def build(line=(120.0, 394.0)):
     m, P, col, tight = g3.build(30 + DECK_UP, 0, 117.0, 20, 0, packs=BAYS, lipo=LIPO)
     out = []

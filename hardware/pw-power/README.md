@@ -12,8 +12,8 @@ on the board: the LM5176 and LM5156H loops (compensation taken from TI examples 
 | Block | Part | From -> to | Notes |
 |---|---|---|---|
 | DC input | fuse 7 A, SMBJ28CA, LM74700 + CSD18540Q5B | DC jack 12-20 V -> BUS_IN | reverse polarity and ORing |
-| USB-C Power | TPS25730D (C22438973), SMBJ22CA, LM74700 + FET | PD 15-20 V, 3 A operating / 5 A max -> BUS_IN | no I2C: ADCIN1 = 15 V min, ADCIN2 = 20 V max, ADCIN3 = 3 A, ADCIN4 = 5 A; VIN_3V3 to GND (VBUS-powered only); PPHV 47 uF polymer + ceramics |
-| EXT | LM74700 + FET (IEXT), SMBJ24CA | DC / PD (highest) -> BUS_IN, and the two chargers | batteries never feed EXT |
+| USB-C Power | TPS25730D (C22438973), SMBJ20CA, eFuse TPS26631 (rev 1.4), LM74700 + FET | PD 15-20 V, 3 A operating / 5 A max -> BUS_IN | no I2C: ADCIN1 = 15 V min, ADCIN2 = 20 V max, ADCIN3 = 3 A, ADCIN4 = 5 A; VIN_3V3 to GND (VBUS-powered only); PPHV 47 uF polymer + ceramics |
+| EXT | LM74700 + FET (IEXT), SMBJ20CA | DC / PD (highest) -> BUS_IN, and the two chargers | batteries never feed EXT |
 | Battery 1 and 2 (rev 1.0) | each: Micro-Fit 2x3 (BAT+ x 2, GND x 2, NTC, GND), fuse 10 A, SMBJ13CA, LM74700 + FET | 3S 9-12.6 V pack with its own BMS (BQ7791500) -> BUS_IN | R183, P111, doc 43 5c |
 | Charger x 2 (rev 0.8) | BQ25798 (C2876593), 1 uH TDK SPM6530 (C87572), PROG 10.5k = 3S / 1.5 MHz (host: VREG 12.45 V) | EXT -> BAT of each pack (charger-only; SYS pin has only its capacitors) | I2C 0x6B behind TCA9546A (0x70); NTC on TS, RT1 9.31k only: charge stops at 45 C in hardware; CE enabled only by CHG_EN and +3V3 (switch on); ILIM ceiling 3.0 A |
 | 12 V fan (rev 0.8) | LMR33640 (same stage as 15 V) | V19 -> 12 V | 4-pin fan header 2.54 mm; PWM 3.3 V / tach through the telemetry harness |
@@ -86,3 +86,8 @@ EasyEDA (20.11.2026): PW 1.2 = PW_v12: детали 313/313, цепи 169/169, L
 
 ## Rev 1.3 (20.11.2026): placement rule template
 Courtyard gap 1.2 mm (ic_gap 1.8 mm around fine-pitch ICs) instead of 0.25 mm, the largest that fits the outline (autoplace.fit); basis: notes/placement_analysis_2026-11-20.md. Schematic unchanged.
+
+## Rev 1.4 (21.11.2026): concert survival (R201, P123, tasks/09 of the team folder)
+- PD_VBUS 4.7 uF 25 V -> 10 uF 50 V X7R (hot-plug of a 20 V cable: about 37 V unclamped, TPS25730 limit 28 V).
+- eFuse TPS26631 in the USB-C PD path (PD_OUT -> PD_P -> IPD): dVdT 4 ms, OVP 22.9 V, 5.4 A, same wiring as the DC one.
+- BUS +2 x 150 uF 35 V polymer (hold-up on loss of external power: about 105 us -> 350 us at 95 W). README table rows for PD and EXT corrected to SMBJ20CA (they still said SMBJ22CA / SMBJ24CA).

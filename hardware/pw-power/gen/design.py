@@ -35,7 +35,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "1.9"
+REV = "2.2"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -138,8 +138,8 @@ def parts():
         R("10k", f"{c}_SDA", "+3V3")
 
     # ---------------------------------------------------------------- inputs
-    add(ref("J"), "Connector_Generic:Conn_01x02", "DC in", MF.format("43650-0215_1x02"), {"1": "DC_RAW", "2": "GND"},
-        Note="cable from the locking DC jack on the rear wall (R141; Kycon KLDHCX-0202-BC-1, 5 A 24 V)")
+    add(ref("J"), "Connector_Generic:Conn_02x02_Odd_Even", "DC in (ST10U)", MF.format("43045-0412_2x02"), {"1": "DC_RAW", "2": "DC_RAW", "3": "GND", "4": "GND"},
+        Note="rev 2.2 (P135): cable from the sealed panel DC jack Switchcraft ST10U (10 A, 24 V, IP67, pin 2.0 mm) on the rear wall; Micro-Fit 2x2: two contacts on + and two on - (8 A input, 5 A per contact), AWG 16")
     add(ref("F"), "Device:Fuse", "5A", "Fuse:Fuse_2920_7451Metric", {"1": "DC_RAW", "2": "DC_F"},
         Note="resettable fuse, 5 A hold (rev 1.2: was 7 A): the wall jack Switchcraft 721A is rated 5 A, a Micro-Fit contact on 20 AWG carries about 5-6 A; 5 A = 60 W at 12 V, 100 W at 20 V")
     add(ref("D"), "Device:D_TVS", "SMBJ28CA", SMB, {"1": "DC_F", "2": "GND"}, LCSC="C151259", Note="DC input surge, 28 V standoff (R72)")
@@ -172,8 +172,10 @@ def parts():
     C("4.7u", "PD_LDO1V5", fp=C0603, Note="C_LDO_1V5 4.5-12 uF")
     C("10u 50V", "PD_VBUSF", fp=C1206, Note="C_VBUS 1-10 uF; rev 1.4 (P123, R201): was 4.7u 25V, which keeps about 1.9 uF at 20 V; 50 V X7R keeps most of 10 uF, so a hot-plugged 20 V cable rings up less (about 37 V unclamped before, limit 28 V)")
     C("10n 50V", "PD_VBUSF", fp=C0603)
-    CP("47u 35V", "PD_VBUS", fp="Capacitor_SMD:CP_Elec_6.3x5.8", LCSC="C87068",
-       Note="rev 1.9 (P127, P132): hot-plug damper at the connector, Nichicon UWT1V470MCL1GS (47 uF 35 V, 6.3 x 5.8, 105 C, C87068), no series resistor: its own ESR damps (tasks/11: total ESR 0.5-1 ohm gives 22.5-25.7 V against the TPS25730 28 V limit; confirm on the bench)")
+    for _ in range(2):
+        CP("47u 35V", "PD_VBUS", fp="Capacitor_SMD:CP_Elec_6.3x5.9", LCSC="C178565",
+           Note="rev 2.1 (P134): TWO Panasonic EEEFK1V470P in parallel (47 uF 35 V, series FK, ESR about 0.36 ohm at 100 kHz by the datasheet, 6.3 x 6.1 mm, 105 C, C178565, 9238 pcs): 94 uF, ESR about 0.18 ohm; "
+           "VBUS hot-plug peak about 21-24 V against the TPS25730 28 V limit (tasks/11, P134); no series resistor; land pattern CP_Elec_6.3x5.9 (the 6.3 mm F case)")
     C("330p", "PD_CC1", Note="C_CC 200-480 pF")
     C("330p", "PD_CC2")
     for _ in range(2):
@@ -517,6 +519,10 @@ def parts():
         R("10", rs[0], rs[1], fp=R1206, Note=f"{rail} storage charge resistor: LMR33640 datasheet 9.2.2: total output capacitance at most about 1000 uF (10 x design value), soft start 4 ms, low-side limit 3.9-5 A; 0.94 mF + 45 uF straight on the output would be 3.5 A; behind 10 ohm the peak is 1.4 A (tau 9.4 ms)")
         add(ref("D"), "Device:D_Schottky", "SS34", SMA, {"1": cathode, "2": anode}, LCSC="C8678",
             Note=f"{rail} storage discharge diode (the storage feeds the rail when it sags), 40 V 3 A; check the part number and the stock")
+    # rev 2.2 (P135): idle load of about 30 mA on each LMR33640 output, so that the converters stay out of PFM (burst hum in the audio): R = Uout / 0.03 A, two 1206 resistors in parallel per rail (<= 0.25 W each)
+    for net, ohm in (("P14", "1k"), ("N14", "1k"), ("V15", "1k"), ("V12F", "820")):
+        for _ in range(2):
+            R(ohm, net, "GND", fp=R1206, Note=f"PFM idle load P135: {net}, 2 x {ohm} = about 30 mA, <= 0.25 W each")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 

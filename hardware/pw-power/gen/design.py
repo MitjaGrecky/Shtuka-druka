@@ -35,12 +35,12 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "1.4"
+REV = "1.5"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
             "+-12 V (TPS7A47 / TPS7A33), +48 V (LM5156H + TPS7A4101)")
-PWR_FLAG_NETS = ("DC_P", "B19_VCC", "B19_VIN", "BAT1_F", "BAT2_F", "BUS", "DC_F", "EXT", "HV_RAW", "N14", "P14", "PD_OUT", "PD_P", "PD_VBUS", "V12F", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
+PWR_FLAG_NETS = ("DC_P", "B19_VCC", "B19_VIN", "BAT1_F", "BAT2_F", "BUS", "DC_F", "EXT", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "PD_VBUSF", "V12F", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
 NO_PWR_FLAG = ("+3V3",)     # no 3.3 V rail on this board
 W, H = 100.0, 110.0         # rough: under the slope on the right next to the battery bay (R109); with the board
 HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, 106.0), (96.0, 106.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
@@ -155,8 +155,8 @@ def parts():
     add(u, "Interface_USB:TPS25730D", "TPS25730D", "Package_DFN_QFN:Texas_REF0038A_WQFN-38-2EP_6x4mm_P0.4",
         {"1": "PD_LDO3V3", "2": "PD_ADCIN1", "3": "PD_LDO3V3", "4": "PD_LDO1V5", "5": "PD_ADCIN34", "6": None,
          "7": "PD_ADCIN34", "8": "GND", "9": "GND", "10": None, "11": "GND", "12": "GND", "13": None, "14": "GND",
-         "15": "PD_DRAIN", "16": "GND", "17": "GND", "18": "PD_FAULT", "19": None, "20": "PD_OUT", "23": "PD_VBUS",
-         "26": "PD_RSV26", "27": "PD_RSV27", "28": "PD_CC1", "29": "PD_CC2", "30": "PD_DRAIN", "31": "GND", "32": "PD_VBUS",
+         "15": "PD_DRAIN", "16": "GND", "17": "GND", "18": "PD_FAULT", "19": None, "20": "PD_OUT", "23": "PD_VBUSF",
+         "26": "PD_RSV26", "27": "PD_RSV27", "28": "PD_CC1", "29": "PD_CC2", "30": "PD_DRAIN", "31": "GND", "32": "PD_VBUSF",
          "34": "GND", "36": "PD_RSV36", "37": None, "38": "GND", "39": "GND", "40": "PD_DRAIN"},
         LCSC="C22438973", PadClearance="20,23:0.12",   # TI land pattern (REF0038A): PP_HV pads 20/23 are 0.125 mm apart, < 0.15 rule
         Note="USB PD sink without I2C (I2Ct_SDA/SCL grounded: allowed if unused): ADCIN1 = 3 (min 15 V), "
@@ -170,15 +170,16 @@ def parts():
         R("10k", rsv, "GND", Note="RESERVED: tie to GND or LDO_3V3")
     C("10u", "PD_LDO3V3", fp=C0805, Note="C_LDO_3V3 5-25 uF")
     C("4.7u", "PD_LDO1V5", fp=C0603, Note="C_LDO_1V5 4.5-12 uF")
-    C("10u 50V", "PD_VBUS", fp=C1206, Note="C_VBUS 1-10 uF; rev 1.4 (P123, R201): was 4.7u 25V, which keeps about 1.9 uF at 20 V; 50 V X7R keeps most of 10 uF, so a hot-plugged 20 V cable rings up less (about 37 V unclamped before, limit 28 V)")
-    C("10n 50V", "PD_VBUS", fp=C0603)
+    C("10u 50V", "PD_VBUSF", fp=C1206, Note="C_VBUS 1-10 uF; rev 1.4 (P123, R201): was 4.7u 25V, which keeps about 1.9 uF at 20 V; 50 V X7R keeps most of 10 uF, so a hot-plugged 20 V cable rings up less (about 37 V unclamped before, limit 28 V)")
+    C("10n 50V", "PD_VBUSF", fp=C0603)
+    CP("47u 35V", "PD_VBUS", fp=CP8, Note="rev 1.5 (P127): hot-plug damper at the connector, aluminium electrolytic with ESR 0.5-1 ohm (a low-ESR polymer does not damp: 27-30 V peak); 47 uF with ESR 0.5-1 gives 22.5-25.7 V against the TPS25730 28 V limit (tasks/11). PLACEHOLDER part: technologist (tasks/15)")
     C("330p", "PD_CC1", Note="C_CC 200-480 pF")
     C("330p", "PD_CC2")
     for _ in range(2):
         C("22u 25V", "PD_OUT", fp=C1210, Note="C_PPHV 47-100 uF in total")
     C("10u 25V", "PD_OUT", fp=C1210)
     CP("47u 35V", "PD_OUT", fp=CP8, Note="C_PPHV 47-100 uF: the 25 V ceramics lose most of their value at 20 V")
-    ideal_diode("IPD", "PD_P", "EXT")                        # rev 1.4: behind the PD eFuse TPS26631 (PD_OUT -> PD_P, parts at the end of parts())
+    ideal_diode("IPD", "PD_OUT", "EXT")
 
     # ---- EXT = DC or PD (whichever is higher); it feeds the two chargers and, through its own ideal diode, the bus. The batteries
     # never feed EXT (so a pack cannot charge the other pack through the chargers).
@@ -480,23 +481,25 @@ def parts():
     C("1u 50V", "DC_F", fp=C0805, Note="eFuse input")
     C("10u 35V", "DC_P", fp=C1206, Note="eFuse output")
 
-    # ---------------------------------------------------------------- rev 1.4 (P123, R201): eFuse TPS26631 in the USB-C PD path (same wiring as the DC one)
-    # TPS25730 PP_HV (PD_OUT, C_PPHV 101 uF stays here) -> eFuse -> PD_P -> ideal diode IPD -> EXT. dVdT 10 nF = 4 ms: the 477 uF behind it (EXT 40, BUS 256 with the hold-up
-    # capacitors, V19 281) charge at about 2.3 A instead of the whole 116 mJ at once; OVP 22.9 V cuts a 20 V cable ring-up; ILIM 5.4 A (PD maximum 5 A).
+    # ---------------------------------------------------------------- rev 1.5 (P127): eFuse TPS26631 at the INPUT of the TPS25730 (was after it, rev 1.4)
+    # connector -> TVS D2 (PD_VBUS) -> damper 47 uF electrolytic -> eFuse -> PD_VBUSF -> TPS25730 VBUS (pins 23/32) + 10 uF ceramic. The eFuse (IN 67 V absolute) takes the hot-plug
+    # spike; its OVP cuts at 22.55 V, so the TPS25730 (28 V absolute) never sees more. UV 4.16 V: the TPS25730 is powered from VBUS alone (no VIN_3V3), so the 5 V attach must pass.
+    # Divider (eq. 9, 10, 1.2 V): R1 357k, R2 118k, R3 26.7k -> OV = 1.2 x 501.7k / 26.7k = 22.55 V, UV = 1.2 x 501.7k / 144.7k = 4.16 V (+-4 % reference: UV 4.0-4.3 V, OV 21.6-23.5 V,
+    # a 20 V source +5 % = 21 V clears it by 0.6 V). dVdT 10 nF = 4 ms at 19 V; ILIM 5.4 A (PD maximum 5 A). PD_OUT -> IPD directly; the charge of PP_HV 101 uF and of EXT/BUS/V19
+    # behind it is no longer slewed by the eFuse (open: TPS25730 gate datasheet or bench).
     u = ref("U")
     add(u, "ShtukaDruka:TPS26631", "TPS26631RGER", "Package_DFN_QFN:QFN-24-1EP_4x4mm_P0.5mm_EP2.65x2.65mm",
-        {"1": "PD_OUT", "2": "PD_OUT", "3": None, "4": None, "5": "PD_OUT", "6": "PDF_UV", "7": "PDF_OV", "8": "GND", "9": "PDF_DVDT", "10": "PDF_ILIM", "11": "GND",
-         "12": "PDF_SHDN", "13": None, "14": None, "15": "GND", "16": None, "17": "PD_P", "18": "PD_P", "19": None, "20": None, "21": None, "22": None, "23": None,
+        {"1": "PD_VBUS", "2": "PD_VBUS", "3": None, "4": None, "5": "PD_VBUS", "6": "PDF_UV", "7": "PDF_OV", "8": "GND", "9": "PDF_DVDT", "10": "PDF_ILIM", "11": "GND",
+         "12": "PDF_SHDN", "13": None, "14": None, "15": "GND", "16": None, "17": "PD_VBUSF", "18": "PD_VBUSF", "19": None, "20": None, "21": None, "22": None, "23": None,
          "24": None, "25": "GND"}, LCSC="C1850273",
-        Note="USB-C PD input eFuse with OVP 22.9 V, UV 9.9 V, 5.4 A limit (rev 1.4, P123), same as the DC one; no blocking FET; JLC 314 pcs 19.11.2026")
-    R("453k", "PD_OUT", "PDF_UV", Note="R1 of the UVLO/OVP divider")
-    R("35.7k", "PDF_UV", "PDF_OV", Note="R2")
-    R("27k", "PDF_OV", "GND", Note="R3")
+        Note="USB-C PD input eFuse in front of the TPS25730 VBUS (rev 1.5, P127): OVP 22.55 V, UV 4.16 V, 5.4 A limit; no blocking FET; JLC 314 pcs 19.11.2026")
+    R("357k", "PD_VBUS", "PDF_UV", Note="R1 of the UVLO/OVP divider (OV 22.55 V, UV 4.16 V)")
+    R("118k", "PDF_UV", "PDF_OV", Note="R2")
+    R("26.7k", "PDF_OV", "GND", Note="R3")
     R("3.32k", "PDF_ILIM", "GND", Note="RILIM: 18 kOhm x A / 3.32k = 5.4 A")
     C("10n 50V", "PDF_DVDT", fp=C0603, Note="dVdT slew: about 4 ms at 19 V")
-    R("220k", "PD_OUT", "PDF_SHDN", Note="SHDN pull-up (needs 2 V, abs max 5.5 V)")
+    R("220k", "PD_VBUS", "PDF_SHDN", Note="SHDN pull-up (needs 2 V, abs max 5.5 V; 5 V attach is above 2 V)")
     add(ref("D"), "ShtukaDruka:BZT52C3V3", "BZT52C3V3", SOD123, {"1": "GND", "2": "PDF_SHDN"}, LCSC="C173413", Note="clamps SHDN to 3.3 V")
-    C("10u 35V", "PD_P", fp=C1206, Note="eFuse output")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 

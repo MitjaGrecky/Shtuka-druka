@@ -35,7 +35,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "1.5"
+REV = "1.6"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -289,30 +289,35 @@ def parts():
         {"1": "V15", "2": "V15", "3": "GND", "4": "GND"},
         Note="cable to the DC jack of the ODROID-H5 (5.5 x 2.1 mm plug, centre positive; H5 input 11-20 V, Hardkernel recommends 15 V / 4 A, R149)")
 
-    # ---------------------------------------------------------------- +5 V x 2: TPS54560B, 5 A each
+    # ---------------------------------------------------------------- +5 V x 2: LM70660, 6 A each (rev 1.5, P125: was TPS54560B with Eco-mode only)
+    # LM70660 (SNVSCD4): PFM/SYNCIN to AGND = forced PWM (no pulse skipping, no audible burst hum at dark LEDs); CONFIG 41.2k = standalone + DRSS (spread spectrum +-8 %);
+    # fixed 5 V: RFB = 24.9k from FB to VDDA, BIAS at VOUT (VCC 5 V); RT 54.9k = 400 kHz (design example 7.2.1.2.7); EXTCOMP 100k to VDDA = internal compensation;
+    # CBOOT 47 nF, VCC 4.7 uF, VDDA 0.1 uF; shunt current limit: Rs = 56 mV / (Ipk), Ipk = 5.6 A + dIL/2 -> 8.2 A with 6.8 mOhm; L 4.7 uH (dIL = 5 V x (1 - 5/24) / (4.7 uH x 400 kHz)
+    # = 2.1 A at 24 V in, 30 % of 6 A), Isat >= 9 A; Cin 4 x 2.2 uF 50 V + 10 nF, Cout 4 x 47 uF 10 V (about 100 uF at 5 V; the datasheet example has 82 uF effective for 8 A).
     def buck5(net, note):
         u5 = ref("U")
         p = net.replace("+", "P").replace("_", "")
-        add(u5, "Regulator_Switching:TPS54560BDDA", "TPS54560B", "Package_SO:Texas_R-PDSO-G8_EP2.95x4.9mm_Mask2.4x3.1mm_ThermalVias",
-            {"1": f"{p}_BOOT", "2": "BUS", "3": f"{p}_EN", "4": f"{p}_RT", "5": f"{p}_FB", "6": f"{p}_COMP", "7": "GND",
-             "8": f"{p}_SW", "9": "GND"},
-            LCSC="C1850354", Note=f"{note}; BUS -> 5 V 5 A, 400 kHz; values = datasheet example 8.2 (RT, EN, compensation, B560C)")
-        R("442k", "BUS", f"{p}_EN", Note="UVLO start 6.5 V (datasheet example)")
+        add(u5, "ShtukaDruka:LM70660", "LM70660", "ShtukaDruka:VQFN-29_RRX0029B_6x6_P0.5mm_PRELIMINARY",
+            {"1": "BUS", "2": "BUS", "3": "BUS", "4": f"{p}_BOOT", "5": f"{p}_SW", "6": net, "7": None, "8": "GND", "9": f"{p}_EN", "10": None,
+             "11": f"{p}_LS", "12": net, "13": f"{p}_CFG", "14": f"{p}_RT", "15": f"{p}_XC", "16": f"{p}_FB", "17": "GND", "18": f"{p}_VDDA", "19": f"{p}_VCC",
+             "20": f"{p}_SW", "21": f"{p}_SW", "22": f"{p}_SW", "23": "GND", "24": "GND", "25": "GND", "26": "GND", "27": "BUS", "28": "BUS", "29": "BUS", "30": "GND"},
+            LCSC="C42328952", Note=f"{note}; BUS -> 5 V 6 A, 400 kHz forced PWM + DRSS (P125); FOOTPRINT PRELIMINARY: replace by the TI RRX0029B land pattern before routing")
+        R("442k", "BUS", f"{p}_EN", Note="UVLO start about 6.5-7 V (as the TPS54560B example): check the EN threshold of the LM70660 (datasheet 6.3)")
         R("90.9k", f"{p}_EN", "GND")
-        R("243k", f"{p}_RT", "GND", Note="RT = 101756 x 400^-1.008 = 242k: 400 kHz")
-        R("53.6k", net, f"{p}_FB", Note="0.8 V x (1 + 53.6k / 10.2k) = 5.0 V")
-        R("10.2k", f"{p}_FB", "GND")
-        R("16.9k", f"{p}_COMP", f"{p}_CRC")
-        C("4.7n", f"{p}_CRC")
-        C("47p", f"{p}_COMP")
-        C("100n 25V", f"{p}_BOOT", f"{p}_SW", fp=C0603)
-        add(ref("D"), "Device:D_Schottky", "B560C", SMC, {"1": f"{p}_SW", "2": "GND"}, LCSC="C85100", Note="catch diode 60 V 5 A (example)")
-        add(ref("L"), "Device:L", "8.2uH", "Inductor_SMD:L_Bourns_SRP1038C_10.0x10.0mm", {"1": f"{p}_SW", "2": net},
-            Note="8.2 uH, Isat >= 8 A (example: 7.2 uH WE 7447798720, Isat 7.9 A); Bourns SRP1038CC-8R2M (Isat 13.5 A, Irms 9 A), bought at Digikey (1 pc at JLC), same footprint; "
-            "FXL1040-8R2-M (C167232, Isat 9 A, DCR 27 mOhm) was checked as an alternative and needs the L_Changjiang_FXL1040 footprint")
+        R("54.9k", f"{p}_RT", "GND", Note="RT: 400 kHz (datasheet 7.2.1.2.7, E96)")
+        R("41.2k", f"{p}_CFG", "GND", Note="CONFIG: standalone, DRSS enabled (table 6-2)")
+        R("24.9k", f"{p}_FB", f"{p}_VDDA", Note="fixed 5 V output (RFB = 24.9k to VDDA)")
+        R("100k", f"{p}_XC", f"{p}_VDDA", Note="EXTCOMP to VDDA: internal compensation")
+        C("100n", f"{p}_VDDA", Note="VDDA decoupling to AGND")
+        C("4.7u", f"{p}_VCC", fp=C0805, Note="VCC to PGND")
+        C("47n", f"{p}_BOOT", f"{p}_SW", fp=C0603, Note="CBOOT")
+        add(ref("L"), "Device:L", "4.7uH", "Inductor_SMD:L_Bourns_SRP1038C_10.0x10.0mm", {"1": f"{p}_SW", "2": f"{p}_LS"},
+            Note="4.7 uH, Isat >= 9 A, same footprint as the 8.2 uH SRP1038C (Bourns SRP1038CC-4R7M or equivalent): part to select (technologist)")
+        R("6.8m", f"{p}_LS", net, fp=R2512, Note="current-sense shunt 1 %, Kelvin to ISNS+ / VOUT: Rs = 56 mV / 8.2 A")
         for _ in range(4):
             C("2.2u 50V", "BUS", fp=C1206, Note="input")
-        for _ in range(3):
+        C("10n 50V", "BUS", fp=C0603, Note="input, high di/dt, next to VIN and PGND")
+        for _ in range(4):
             C("47u 10V", net, fp=C1210, Note="output")
 
     buck5("+5V_PANEL", "panel boards: logic and LEDs (LED budget doc 10: up to ~5.6 A white on full - firmware limits brightness)")

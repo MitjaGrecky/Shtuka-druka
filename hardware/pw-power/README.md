@@ -91,3 +91,6 @@ Courtyard gap 1.2 mm (ic_gap 1.8 mm around fine-pitch ICs) instead of 0.25 mm, t
 - PD_VBUS 4.7 uF 25 V -> 10 uF 50 V X7R (hot-plug of a 20 V cable: about 37 V unclamped, TPS25730 limit 28 V).
 - eFuse TPS26631 in the USB-C PD path (PD_OUT -> PD_P -> IPD): dVdT 4 ms, OVP 22.9 V, 5.4 A, same wiring as the DC one.
 - BUS +2 x 150 uF 35 V polymer (hold-up on loss of external power: about 105 us -> 350 us at 95 W). README table rows for PD and EXT corrected to SMBJ20CA (they still said SMBJ22CA / SMBJ24CA).
+
+## Rev 1.6 (21.11.2026): LM70660 instead of TPS54560B (P125)
+- +5V and +5V_PANEL: LM70660 (VQFN-29 6x6, C42328952): forced PWM (PFM/SYNCIN to AGND), CONFIG 41.2k = DRSS, fixed 5 V (RFB 24.9k to VDDA), RT 54.9k = 400 kHz, internal compensation, shunt 6.8 mOhm (limit 8.2 A), L 4.7 uH, Cout 4 x 47 uF. Footprint VQFN-29_RRX0029B_6x6_P0.5mm_PRELIMINARY: small pads from the datasheet, large pads 22-29 and EP guessed: **replace by the TI RRX0029B land pattern before routing**. Rev 1.5 (P127): USB-C eFuse moved to the TPS25730 input with a 47 uF electrolytic damper.

@@ -281,6 +281,29 @@ def vqfn32():
     return n, s
 
 
+def vqfn29_prelim():
+    # PRELIMINARY (21.11.2026, P125): LM70660 RRX0029B VQFN-29, body 6.0 x 6.0 mm. Exact: body, 0.5 mm pitch, small pads 0.25 x 0.6 (21 pcs: pins 1-8 left,
+    # 9-16 bottom, 17-21 right). GUESSED (the TI land-pattern drawing is not readable in the text copy): the 8 large pads 22-29 (SW3, PGND1-4, VIN1-3) along the
+    # right/top edge and the 2.25 x 2.8 pad 30. Good for placement (courtyard 7.2 x 7.2 mm); REPLACE with the TI RRX0029B land pattern before routing.
+    n = "VQFN-29_RRX0029B_6x6_P0.5mm_PRELIMINARY"
+    s = fp_head(n, "PRELIMINARY LM70660 RRX0029B VQFN-29 6x6 mm: small pads from the datasheet, large pads 22-29 and EP 30 guessed - replace by the TI land pattern before routing", "VQFN 29 LM70660 PRELIMINARY")
+    s += fp_text("reference", "REF**", 0, -4.1, "F.SilkS", 0.8) + fp_text("value", n, 0, 4.1, "F.Fab", 0.5)
+    c = 2.9
+    for k in range(8):
+        s += smd_pad(str(1 + k), -c, -1.75 + 0.5 * k, 0.6, 0.25)            # left, top to bottom
+        s += smd_pad(str(9 + k), -1.75 + 0.5 * k, c, 0.25, 0.6)             # bottom, left to right
+    for k in range(5):
+        s += smd_pad(str(17 + k), c, 1.75 - 0.5 * k, 0.6, 0.25)             # right, bottom to top
+    for k in range(8):                                                     # large pads 22-29 (guess): top edge, right to left
+        s += smd_pad(str(22 + k), 2.45 - 0.7 * k, -c, 0.55, 0.9, shape="rect")
+    s += smd_pad("30", 0, 0, 2.25, 2.8, shape="rect", layers='"F.Cu" "F.Mask"')
+    s += smd_pad("", 0, 0, 1.8, 2.3, shape="roundrect", layers='"F.Paste"')
+    s += fp_rect(-3.0, -3.0, 3.0, 3.0, "F.Fab", 0.1)
+    s += fp_line(-3.4, -3.4, -2.8, -3.4, "F.SilkS", 0.12) + fp_line(-3.4, -3.4, -3.4, -2.8, "F.SilkS", 0.12)
+    s += fp_rect(-3.6, -3.6, 3.6, 3.6, "F.CrtYd", 0.05)
+    return n, s
+
+
 def encoder_ring():
     """Stock Alps EC11E footprint with a courtyard that follows the body and the pins: the stock
     rectangle also covers the empty corners where the ring LEDs stand (false DRC overlaps)."""
@@ -304,7 +327,7 @@ def encoder_ring():
 def write_footprints():
     d = os.path.join(LIB, "ShtukaDruka.pretty")
     os.makedirs(d, exist_ok=True)
-    for n, s in (led1615(), qfn60(), vqfn32(), encoder_ring()):
+    for n, s in (led1615(), qfn60(), vqfn32(), vqfn29_prelim(), encoder_ring()):
         open(os.path.join(d, n + ".kicad_mod"), "w").write(s + ")\n")
 
 

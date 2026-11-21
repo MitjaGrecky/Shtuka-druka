@@ -194,5 +194,18 @@ def isousb211():
               "TI ISOUSB211 isolated USB 2.0 repeater, low/full/high speed, no crystal, 5.7 kVrms, SSOP-28 DP0028A (SLLSFC5D)", left, right, [], bottom)
 
 
+def lm70660():
+    left = [("27", "VIN", P), ("28", "VIN", P), ("29", "VIN", P), ("1", "VIN", P), ("2", "VIN", P), ("3", "VIN", P), ("9", "EN/UVLO", I),
+            ("8", "PFM/SYNCIN", I), ("6", "BIAS", PA), ("14", "RT", PA), ("13", "CONFIG", PA)]
+    right = [("20", "SW", PA), ("21", "SW", PA), ("22", "SW", PA), ("5", "SW4", PA), ("4", "CBOOT", PA), ("11", "ISNS+", I), ("12", "VOUT", I),
+             ("16", "FB", I), ("15", "EXTCOMP", O), ("7", "PG/SYNCOUT", O)]
+    bottom = [("17", "AGND", P), ("18", "VDDA", PA), ("19", "VCC", PA), ("23", "PGND", P), ("24", "PGND", P), ("25", "PGND", P), ("26", "PGND", P), ("30", "EP", P)]
+    top = [("10", "NC", NC)]
+    return ic("LM70660", "LM70660RRXR", "U", "ShtukaDruka:VQFN-29_RRX0029B_6x6_P0.5mm_PRELIMINARY",
+              "https://www.ti.com/lit/ds/symlink/lm70660.pdf", "C42328952",
+              "TI LM70660 65 V 6 A synchronous buck, PFM/FPWM pin, DRSS, shunt current limit (SNVSCD4, RRX VQFN-29 6x6: pins 1-3 VIN4-6, 4 CBOOT, 5 SW4, 20-22 SW, 23-26 PGND, 27-29 VIN, 30 PGND pad)",
+              left, right, top, bottom)
+
+
 def all_symbols():
-    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166() + adc128s102() + tps2051b() + bq77915() + tps26631() + bzt52c3v3() + isousb211()
+    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166() + adc128s102() + tps2051b() + bq77915() + tps26631() + bzt52c3v3() + isousb211() + lm70660()

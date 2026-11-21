@@ -495,10 +495,16 @@ def placement():
     # the switchers keep to the right two thirds, so nothing switching sits under the quiet corner (their inductors follow them)
     for r, xy in NOISY_XY.items():
         fixed[r] = xy + (0, "bottom")
+    # 21.11.2026 (task.md additions p. 2, P116): the chargers U6/U8 (BQ25798, QFN, with L1/L2 and their PMID/SYS banks) on the TOP
+    # side in the lower part, away from the quiet corner: on the bottom there was no room at their pins (87 % of a 15 mm circle
+    # around U8 taken). Heights: SPM6530 3 mm, BQ25798 1 mm, 0805 caps; PW_TOP 24 (model3d/fit/fit_model.py) leaves ~7 mm above.
+    for r, xy in CHARGER_XY.items():
+        fixed[r] = xy + (0, "top")
     follow = [r for r, v in fixed.items() if r in NOISY_XY or r.startswith("U") and v[3] == "top"]
     return autoplace.fit(sys.modules[__name__], lambda g, ic: autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 8.5, follow=follow, gap=g, ic_gap=ic))   # header row clear of the bottom holes
 
 
+CHARGER_XY = {"U6": (50.0, 60.0), "U8": (64.0, 66.0)}   # above the connector rows (they reach y 82), clear of the U22 thermal-via pads
 QUIET_XY = {"TPS7A4701": (12.0, 12.0), "TPS7A3301": (12.0, 30.0), "TPS7A4101": (28.0, 12.0)}
 # (IC, its inductor) by the refs of parts() (rev 0.8): U12 LM5176 + L3, U13/U14 TPS54560B + L4/L5, U15 LMR33640 +14 V + L6, U16 -14 V + L7,
 # U19 LM5156H phantom + L8, U21 LMR33640 15 V + L9, U22 LMR33640 12 V fan + L10; all on the bottom, right of x 40 (the quiet corner is

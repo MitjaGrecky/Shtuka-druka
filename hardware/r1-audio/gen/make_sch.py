@@ -19,4 +19,4 @@ if __name__ == "__main__":
                           notes=(D.BUS_NOTE,
                                  "Level plan in design.py: every input -> differential pair, FS 2 Vrms diff, to the Cirrus buffers on A1",
                                  "Rev 0.1: schematic only; jacks vertical-mount Neutrik NCJ6FI-V, NJ3FD-V; RCA part to choose"))
-    B.write_project(os.path.join(HERE, ".."), D.NAME)
+    B.write_project(os.path.join(HERE, ".."), D.NAME, getattr(D, "LAYERS", 2))   # 21.11.2026: 4-layer rules were overwritten with 2-layer ones

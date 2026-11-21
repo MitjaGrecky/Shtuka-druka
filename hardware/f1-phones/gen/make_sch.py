@@ -19,4 +19,4 @@ if __name__ == "__main__":
                           notes=(D.BUS_NOTE,
                                  "Gain 2: 2 Vrms diff from A1 -> 4 Vrms (R67); volume = DAC attenuator (R87); EN follows MUTE",
                                  "Rev 0.1: schematic only; right-angle Neutrik NMJ6HCD2 on a horizontal board (P94)"))
-    B.write_project(os.path.join(HERE, ".."), D.NAME)
+    B.write_project(os.path.join(HERE, ".."), D.NAME, getattr(D, "LAYERS", 2))   # 21.11.2026: 4-layer rules were overwritten with 2-layer ones

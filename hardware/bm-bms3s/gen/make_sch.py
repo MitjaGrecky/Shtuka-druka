@@ -19,4 +19,4 @@ if __name__ == "__main__":
                           notes=(D.BUS_NOTE,
                                  "TI SLUSCU0L fig. 9-11 / table 10-1; 3S 4.2 V; OCD 60 mV / 5 mOhm = 12 A",
                                  "Rev 0.1: schematic and placed board"))
-    B.write_project(os.path.join(HERE, ".."), D.NAME)
+    B.write_project(os.path.join(HERE, ".."), D.NAME, getattr(D, "LAYERS", 2))   # 21.11.2026: 4-layer rules were overwritten with 2-layer ones

@@ -19,4 +19,4 @@ if __name__ == "__main__":
                           notes=(D.BUS_NOTE,
                                  "ADC buffers x 1/4 (8 Vrms FS from R1, Cirrus circuit), DAC I-V stages (AN0679), TDM master xcore A, isolated USB port B on xcore B",
                                  "Rev 0.1: schematic only; plan and pinouts in hardware/a1-digital/PLAN.md; check notes in design.py"))
-    B.write_project(os.path.join(HERE, ".."), D.NAME)
+    B.write_project(os.path.join(HERE, ".."), D.NAME, getattr(D, "LAYERS", 2))   # 21.11.2026: 4-layer rules were overwritten with 2-layer ones

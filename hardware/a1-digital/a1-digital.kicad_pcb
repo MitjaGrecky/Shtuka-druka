@@ -54297,6 +54297,28 @@
 				(justify mirror)
 			)
 		)
+		(property "LCSC" "C190223"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "d4079a63-c122-4cdd-b2ed-33dd9f6fd7f9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Note" "21.11.2026: the same part as C294 (KL1E470M-CRE77, C190223); stock: see C294, technologist re-checks"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "e66fcbbd-7842-410b-b6b4-0d363b0016b7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(property "Datasheet" ""
 			(at 0 0 0)
 			(layer "B.Fab")
@@ -73792,6 +73814,28 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "LCSC" "C190223"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "4542d832-7feb-4fb1-a2cf-8558cd50a215")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Note" "21.11.2026: the same part as C294 (KL1E470M-CRE77, C190223); stock: see C294, technologist re-checks"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "f81c567f-3e6c-43cd-a407-b44afd3b8a93")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(property "Datasheet" ""
@@ -100577,6 +100621,28 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "LCSC" "C190223"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "e3756b2d-c461-46fc-81ff-1cae3a3738e9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Note" "21.11.2026: the same part as C294 (KL1E470M-CRE77, C190223); stock: see C294, technologist re-checks"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "3b436e25-c13e-44ff-851b-90986171f62f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(property "Datasheet" ""
@@ -130663,6 +130729,28 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "LCSC" "C190223"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "c4d8e25b-db42-4c35-9730-4de2367a74c1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Note" "21.11.2026: the same part as C294 (KL1E470M-CRE77, C190223); stock: see C294, technologist re-checks"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "8d5fd36a-84af-4026-b067-e12afed1873d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(property "Datasheet" ""

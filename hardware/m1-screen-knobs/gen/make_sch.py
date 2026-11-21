@@ -149,7 +149,7 @@ def main():
     def put(ref, x, y, r=0):
         p = P[ref]
         f = {k: v for k, v in p["fields"].items() if k not in ("DNP", "Side")}
-        S.symbol(ref, p["lib"], p["value"], x, y, r, p["fp"], f, p["pins"], dnp=False,   # not fitted = out of BOM (parity)
+        S.symbol(ref, p["lib"], p["value"], x, y, r, p["fp"], f, p["pins"], dnp=p["fields"].get("DNP") == "yes",   # not fitted: out of BOM + DNP flag (21.11.2026, technologist; KiCad 7 schematics have it)
                  in_bom=p["fields"].get("DNP") != "yes" and not ref.startswith("H"))
 
     g = 2.54

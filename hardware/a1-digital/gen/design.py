@@ -397,8 +397,8 @@ def parts():
         R("100k", net, "+3V3D" if net.startswith("CS_") else "GND", Note="idle state while xcore A boots")
     # decoupling on the board-to-board rails
     for _ in range(2):
-        C("47u 25V", "+12V", fp="Capacitor_SMD:CP_Elec_6.3x7.7")
-        C("47u 25V", "GND", "-12V", fp="Capacitor_SMD:CP_Elec_6.3x7.7")
+        C("47u 25V", "+12V", fp="Capacitor_SMD:CP_Elec_6.3x7.7", LCSC="C190223", Note="21.11.2026: the same part as C294 (KL1E470M-CRE77, C190223); stock: see C294, technologist re-checks")
+        C("47u 25V", "GND", "-12V", fp="Capacitor_SMD:CP_Elec_6.3x7.7", LCSC="C190223", Note="21.11.2026: the same part as C294 (KL1E470M-CRE77, C190223); stock: see C294, technologist re-checks")
     C("47u 25V", "+5V", fp="Capacitor_SMD:CP_Elec_6.3x7.7", LCSC="C190223",
       Note="rev 0.8 (parts_missing.md): 47 uF 10 V 6.3x7.7 not in stock -> KL1E470M-CRE77 47 uF 25 V, D6.3 x L7.7 (C190223, 980 pcs), the same case as the +-12 V bulk capacitors; on 5 V it is derated, ESR is no concern for bulk")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")

@@ -145,6 +145,8 @@ def build():
                 pad.SetLocalClearance(mm(0.35))
         if p["fields"].get("DNP") == "yes":
             fp.SetAttributes(fp.GetAttributes() | pcbnew.FP_EXCLUDE_FROM_BOM | pcbnew.FP_EXCLUDE_FROM_POS_FILES)
+            if hasattr(fp, "SetDNP"):           # 21.11.2026: the board is KiCad 10 now; DNP as in the schematic (parity)
+                fp.SetDNP(True)
         _copy_fields(fp, {k: v for k, v in p["fields"].items() if k not in ("DNP", "Side")})   # schematic parity
         for pad in fp.Pads():
             num = pad.GetNumber()

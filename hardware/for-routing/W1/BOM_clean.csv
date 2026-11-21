@@ -9,7 +9,7 @@ J2,1,Bus to M5 2x7 1.27,HCTL PZ127-2-07-Z,PinHeader_2x07_P1.27mm_Vertical,раз
 R5,1,4.7k,,R_0402_1005Metric,резистор,
 R6,1,10k,,R_0402_1005Metric,резистор,
 RN1,1,4x10k,,R_Array_Convex_4x0402,резисторная сборка: SR_M5 pull-up: the chain still reads 1s without M5,
-"RV1,RV2,RV3,RV4",4,"10k lin, end stops",,Potentiometer_Alps_RK09K_Single_Vertical,потенциометр: Main,
+"RV1,RV2,RV3,RV4",4,"10k lin, end stops",RK09K1130A5R,Potentiometer_Alps_RK09K_Single_Vertical,потенциометр: Main,
 "SW1,SW2",2,TS-1187A-B-A-B,TS-1187A-B-A-B,SW_Push_1P1T_XKB_TS-1187A,кнопка / переключатель: P48 1,
 U1,1,ADS1115IDGSR,ADS1115IDGSR,TSSOP-10_3x3mm_P0.5mm,микросхема: I2C 0x48 (ADDR=GND),
 U2,1,74HC165PW,74HC165PW,TSSOP-16_4.4x5mm_P0.65mm,микросхема,

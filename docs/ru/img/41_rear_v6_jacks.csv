@@ -1,6 +1,5 @@
 tag,kind,r_mm,model_x_mm,z_mm,direction
 Power,switch,16,499,99,in
-DC In,dc,16,499,73,in
 USB-C,usbc,16,499,47,in
 LAN,lan,53,462,99,in
 USB-A,usba,44,471,73,in

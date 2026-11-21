@@ -11,8 +11,20 @@ import os
 os.environ["W3_X1"] = "505"
 os.environ["W3_S1"] = "60.2"       # the real W3 (hardware/w3-system) ends at s 60.2 before the pocket; the old model slab over the whole slope was an overestimate
 B.FAN_SPEC.update(s=80.0, T=25.0, dy=-6.0, z0=3.5, gap=5.0)   # R182: 80 x 80 x 25 fan on the right wall
-PACKS = "187,332,6,136,3;187,332,138,268,3"   # P139 (21.11): two Ampul 40125140 blocks 145 x 130 x 14 under P2 (x0,x1,y0,y1,shelf z0), real check 0 collisions
-LIPO = 12.0                                    # shelf 2 + 12 = top z 17 (P2 parts bottom 17.4)
+PACKS = "5,135,155,300,3;180,310,155,300,3;380,510,155,300,3"   # P141 (21.11): three blocks 130 x 145 x 9.5 (2 Ampul 40125140 cells each) under P1/P2/P3-P4, y 155-300; shelves only, cells below
+LIPO = 7.5                                     # shelf 2 + 7.5 = top z 12.5; the pack boxes are replaced by the 6 cells (batt_bays/blocks3.csv) in build()
+
+
+def battery_parts(m):
+    """P141: 6 cells + 2 BM + 3 NTC from model3d/batt_bays/blocks3.csv (x0,x1,y0,y1,z0,z1)."""
+    import csv
+    out = []
+    with open(os.path.join(HERE, "..", "batt_bays", "blocks3.csv"), newline="") as f:
+        for r in csv.DictReader(f):
+            n = r["name"]
+            col = "battery" if n.startswith("Cell") else ("pcb" if n.startswith("BM") else "parts")
+            out.append(m.box(n, "rear", float(r["x0"]), float(r["x1"]), float(r["y0"]), float(r["y1"]), float(r["z0"]), float(r["z1"]), color=col, est=True))
+    return out
 
 
 def vents_and_feet(m):
@@ -53,6 +65,8 @@ def build(deck, E, crest, s_off, shift, packs=PACKS, lipo=LIPO, pwx=245, jacks="
     B._H["h"] = (391, 511, h5y - 60 - 45, h5y - 60 - 25, 3.5, 26)
     P = B.rw_factory(jacks, "right")(m, m.parts())
     P = cs.angled(P, m)
+    P = [p for p in P if not p.name.startswith(("Battery pack", "Battery shelf"))]   # P141: block envelopes and shelves replaced by the cells (foam on the floor)
+    P += battery_parts(m)
     P += vents_and_feet(m)
     res = m.check(P)
     col = sorted([(round(abs(g), 1), a, b) for g, a, b, _ in res if g < -0.05], reverse=True)

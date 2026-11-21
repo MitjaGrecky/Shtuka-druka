@@ -1,0 +1,12 @@
+name,x0,y0,x1,y1,z0,z1
+outline,15,302,500,330.0,3.0,14.0
+"cell connector 1 (block 1, pack A)",53.5,305,61.5,313,3.0,12.0
+"cell connector 2 (block 1, pack B)",78.5,305,86.5,313,3.0,12.0
+"cell connector 3 (block 2, pack A)",228.5,305,236.5,313,3.0,12.0
+"cell connector 4 (block 2, pack B)",253.5,305,261.5,313,3.0,12.0
+"cell connector 5 (block 3, pack A)",428.5,305,436.5,313,3.0,12.0
+"cell connector 6 (block 3, pack B)",453.5,305,461.5,313,3.0,12.0
+BM1 link,312,316,350,326,3.0,12.0
+BM2 link,136,316,174,326,3.0,12.0
+PW Micro-Fit 2x3 #1,262,316,282,328,3.0,13.5
+PW Micro-Fit 2x3 #2,292,316,312,328,3.0,13.5

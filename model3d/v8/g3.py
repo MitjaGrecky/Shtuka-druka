@@ -11,8 +11,8 @@ import os
 os.environ["W3_X1"] = "505"
 os.environ["W3_S1"] = "60.2"       # the real W3 (hardware/w3-system) ends at s 60.2 before the pocket; the old model slab over the whole slope was an overestimate
 B.FAN_SPEC.update(s=80.0, T=25.0, dy=-6.0, z0=3.5, gap=5.0)   # R182: 80 x 80 x 25 fan on the right wall
-PACKS = "345,495,148,288,3"   # P138-b (21.11): block B 150 x 140 x 12.5 under P3/P4 at the back (block A under P2 is added in vents_and_feet) (x0,x1,y0,y1,shelf z0); the old 106 x 220 x 11 bays under P2 removed
-LIPO = 10.5                                    # shelf 2 + 10.5 = top z 15.5 (P3/P4 parts bottom 15.9)
+PACKS = "187,332,6,136,3;187,332,138,268,3"   # P139 (21.11): two Ampul 40125140 blocks 145 x 130 x 14 under P2 (x0,x1,y0,y1,shelf z0), real check 0 collisions
+LIPO = 12.0                                    # shelf 2 + 12 = top z 17 (P2 parts bottom 17.4)
 
 
 def vents_and_feet(m):
@@ -35,7 +35,6 @@ def vents_and_feet(m):
             if r["through_z0"]:
                 out.append(m.box(f"Fan exhaust groove {i} (right wall, through)", "vents", 512, 515, y - 1, y + 1, float(r["through_z0"]) - 1.0, float(r["through_z1"]) + 1.0, color="grey", est=True, check=False))
     out.append(m.box("Front intake line 2 mm", "vents", 110, 490, 0.0, 3.0, 3.0, 5.0, color="grey", est=True, check=False))
-    out.append(m.box("Battery block A (under P2, 140 x 150 x 14)", "rear", 112.0, 252.0, 6.0, 156.0, 3.0, 17.0, color="battery", est=True))   # P138-b
     # R187: 4 square feet 20 x 20 x 3
     for fx in (25.0, 470.0):
         for fy in (25.0, 455.0):

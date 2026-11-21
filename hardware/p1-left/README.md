@@ -1,7 +1,7 @@
 # P1 - Left deck (time column)
 
 19 buttons with 2 RGB each (P101), an I2C multiplexer (P99), the deck bus to P2 (P100) and the module buses to M3 and W1.
-Spec: `hardware/for-routing/SPEC_boards.md`, section P1. Status: rev 0.1 - schematic and placed board, not routed (`UNROUTED`).
+Spec: `hardware/for-routing/SPEC_boards.md`, section P1. Status: rev 0.2 by the Rev 0.2 section below (R170, 16.11.2026; commit `decdae9`) - schematic and placed board, not routed (`UNROUTED`). Generator `REV` and the silk text still say 0.1 (not bumped in `decdae9`): the schematic owner should set `REV = "0.2"` and regenerate.
 Package: `hardware/for-routing/P1/`. P99, P100, P101 are proposals: change them through the constants in `gen/design.py`.
 
 | | |

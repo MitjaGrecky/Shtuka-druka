@@ -93,4 +93,8 @@ Courtyard gap 1.2 mm (ic_gap 1.8 mm around fine-pitch ICs) instead of 0.25 mm, t
 - BUS +2 x 150 uF 35 V polymer (hold-up on loss of external power: about 105 us -> 350 us at 95 W). README table rows for PD and EXT corrected to SMBJ20CA (they still said SMBJ22CA / SMBJ24CA).
 
 ## Rev 1.6 (21.11.2026): LM70660 instead of TPS54560B (P125)
-- +5V and +5V_PANEL: LM70660 (VQFN-29 6x6, C42328952): forced PWM (PFM/SYNCIN to AGND), CONFIG 41.2k = DRSS, fixed 5 V (RFB 24.9k to VDDA), RT 54.9k = 400 kHz, internal compensation, shunt 6.8 mOhm (limit 8.2 A), L 4.7 uH, Cout 4 x 47 uF. Footprint VQFN-29_RRX0029B_6x6_P0.5mm_PRELIMINARY: small pads from the datasheet, large pads 22-29 and EP guessed: **replace by the TI RRX0029B land pattern before routing**. Rev 1.5 (P127): USB-C eFuse moved to the TPS25730 input with a 47 uF electrolytic damper.
+- +5V and +5V_PANEL: LM70660 (VQFN-29 6x6, C42328952): forced PWM (PFM/SYNCIN to AGND), CONFIG 41.2k = DRSS, fixed 5 V (RFB 24.9k to VDDA), RT 54.9k = 400 kHz, internal compensation, shunt 6.8 mOhm (limit 8.2 A), L 4.7 uH, Cout 4 x 47 uF. Footprint VQFN-29_RRX0029B_6x6_P0.5mm: read from the TI RRX0029B example board layout (rendered page 54 of the datasheet), verify before release. Rev 1.5 (P127): USB-C eFuse moved to the TPS25730 input with a 47 uF electrolytic damper.
+
+## Rev 1.7 (21.11.2026): P128 blockers
+- LM70660 footprint from the TI example board layout; EN threshold 1.0 V: start 5.9 V, stop 5.3 V.
+- USB-C VBUS damper: Nichicon UWT1V470MCL1GS (C87068, 6.3 x 5.8) + 0.47 ohm 1206 in series (total ESR 0.5-1.2 ohm, tasks/11).

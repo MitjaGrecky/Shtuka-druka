@@ -201,7 +201,7 @@ def lm70660():
              ("16", "FB", I), ("15", "EXTCOMP", O), ("7", "PG/SYNCOUT", O)]
     bottom = [("17", "AGND", P), ("18", "VDDA", PA), ("19", "VCC", PA), ("23", "PGND", P), ("24", "PGND", P), ("25", "PGND", P), ("26", "PGND", P), ("30", "EP", P)]
     top = [("10", "NC", NC)]
-    return ic("LM70660", "LM70660RRXR", "U", "ShtukaDruka:VQFN-29_RRX0029B_6x6_P0.5mm_PRELIMINARY",
+    return ic("LM70660", "LM70660RRXR", "U", "ShtukaDruka:VQFN-29_RRX0029B_6x6_P0.5mm",
               "https://www.ti.com/lit/ds/symlink/lm70660.pdf", "C42328952",
               "TI LM70660 65 V 6 A synchronous buck, PFM/FPWM pin, DRSS, shunt current limit (SNVSCD4, RRX VQFN-29 6x6: pins 1-3 VIN4-6, 4 CBOOT, 5 SW4, 20-22 SW, 23-26 PGND, 27-29 VIN, 30 PGND pad)",
               left, right, top, bottom)

@@ -35,7 +35,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "1.6"
+REV = "1.7"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -172,7 +172,9 @@ def parts():
     C("4.7u", "PD_LDO1V5", fp=C0603, Note="C_LDO_1V5 4.5-12 uF")
     C("10u 50V", "PD_VBUSF", fp=C1206, Note="C_VBUS 1-10 uF; rev 1.4 (P123, R201): was 4.7u 25V, which keeps about 1.9 uF at 20 V; 50 V X7R keeps most of 10 uF, so a hot-plugged 20 V cable rings up less (about 37 V unclamped before, limit 28 V)")
     C("10n 50V", "PD_VBUSF", fp=C0603)
-    CP("47u 35V", "PD_VBUS", fp=CP8, Note="rev 1.5 (P127): hot-plug damper at the connector, aluminium electrolytic with ESR 0.5-1 ohm (a low-ESR polymer does not damp: 27-30 V peak); 47 uF with ESR 0.5-1 gives 22.5-25.7 V against the TPS25730 28 V limit (tasks/11). PLACEHOLDER part: technologist (tasks/15)")
+    CP("47u 35V", "PD_VBUS", "PD_DMP", fp="Capacitor_SMD:CP_Elec_6.3x5.8", LCSC="C87068",
+       Note="rev 1.5/1.7 (P127): hot-plug damper, Nichicon UWT1V470MCL1GS (6.3 x 5.8, 105 C, C87068); its ESR is not in the datasheet text read so far: the total series resistance (ESR + R below) is set to 0.5-1.2 ohm by the resistor (tasks/11: 47 uF with 0.5 ohm gives 22.5-25.2 V, 1.0 ohm 25.7-24.7 V, 1.6 ohm 27.2-25.6 V against the TPS25730 28 V limit)")
+    R("0.47", "PD_DMP", "GND", fp=R1206, Note="damper series resistor 0.47 ohm 1 % (pulse only): total ESR 0.5-1.2 ohm; check the UWT ESR at 100 kHz")
     C("330p", "PD_CC1", Note="C_CC 200-480 pF")
     C("330p", "PD_CC2")
     for _ in range(2):
@@ -297,12 +299,12 @@ def parts():
     def buck5(net, note):
         u5 = ref("U")
         p = net.replace("+", "P").replace("_", "")
-        add(u5, "ShtukaDruka:LM70660", "LM70660", "ShtukaDruka:VQFN-29_RRX0029B_6x6_P0.5mm_PRELIMINARY",
+        add(u5, "ShtukaDruka:LM70660", "LM70660", "ShtukaDruka:VQFN-29_RRX0029B_6x6_P0.5mm",
             {"1": "BUS", "2": "BUS", "3": "BUS", "4": f"{p}_BOOT", "5": f"{p}_SW", "6": net, "7": None, "8": "GND", "9": f"{p}_EN", "10": None,
              "11": f"{p}_LS", "12": net, "13": f"{p}_CFG", "14": f"{p}_RT", "15": f"{p}_XC", "16": f"{p}_FB", "17": "GND", "18": f"{p}_VDDA", "19": f"{p}_VCC",
              "20": f"{p}_SW", "21": f"{p}_SW", "22": f"{p}_SW", "23": "GND", "24": "GND", "25": "GND", "26": "GND", "27": "BUS", "28": "BUS", "29": "BUS", "30": "GND"},
-            LCSC="C42328952", Note=f"{note}; BUS -> 5 V 6 A, 400 kHz forced PWM + DRSS (P125); FOOTPRINT PRELIMINARY: replace by the TI RRX0029B land pattern before routing")
-        R("442k", "BUS", f"{p}_EN", Note="UVLO start about 6.5-7 V (as the TPS54560B example): check the EN threshold of the LM70660 (datasheet 6.3)")
+            LCSC="C42328952", Note=f"{note}; BUS -> 5 V 6 A, 400 kHz forced PWM + DRSS (P125); footprint read from the TI RRX0029B example board layout: verify before release")
+        R("442k", "BUS", f"{p}_EN", Note="UVLO: EN rising 1.0 V (0.95-1.05) x (1 + 442k / 90.9k) = start 5.9 V (5.5-6.2 V), stop 90 % = 5.3 V (datasheet 6.3.2, eq. 2); the packs are 9-12.6 V")
         R("90.9k", f"{p}_EN", "GND")
         R("54.9k", f"{p}_RT", "GND", Note="RT: 400 kHz (datasheet 7.2.1.2.7, E96)")
         R("41.2k", f"{p}_CFG", "GND", Note="CONFIG: standalone, DRSS enabled (table 6-2)")

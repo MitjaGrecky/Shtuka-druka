@@ -2566,7 +2566,7 @@
     (property "Value" "LM70660RRXR" (at -15.24 -19.05 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "ShtukaDruka:VQFN-29_RRX0029B_6x6_P0.5mm_PRELIMINARY" (at 0 0 0)
+    (property "Footprint" "ShtukaDruka:VQFN-29_RRX0029B_6x6_P0.5mm" (at 0 0 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "https://www.ti.com/lit/ds/symlink/lm70660.pdf" (at 0 0 0)

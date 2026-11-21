@@ -307,6 +307,21 @@ def vqfn29():
     return n, s
 
 
+def wirepads2():
+    # BB1 (P146): two solder pads for the wires of a cell (>= 1.0 mm2, 5 A), 4.2 mm square, wire hole 1.6 mm, 8 mm apart, plus two 3 mm holes for a cable tie behind the pads.
+    n = "WirePads_2x_THT_P8.0mm_TieHoles"
+    s = fp_head(n, "Two through-hole solder pads for the wires of one cell (1.0 mm2 and more), 8 mm pitch, two 3 mm cable-tie holes (BB1, P146)", "wire pad cell", smd=False)
+    s += fp_text("reference", "REF**", 0, -3.6, "F.SilkS", 0.8) + fp_text("value", n, 0, 7.4, "F.Fab", 0.5)
+    for num, x in (("1", -4.0), ("2", 4.0)):
+        s += f'  (pad "{num}" thru_hole rect (at {x:g} 0) (size 4.2 4.2) (drill 1.6) (layers "*.Cu" "*.Mask"))' + chr(10)
+    for x in (-4.0, 4.0):
+        s += f'  (pad "" np_thru_hole circle (at {x:g} 4.6) (size 3 3) (drill 3) (layers "*.Cu" "*.Mask"))' + chr(10)
+    s += fp_line(-6.4, -2.4, 6.4, -2.4, "F.SilkS", 0.12) + fp_line(-6.4, -2.4, -6.4, 6.4, "F.SilkS", 0.12) + fp_line(6.4, -2.4, 6.4, 6.4, "F.SilkS", 0.12)
+    s += fp_text("user", "+", -4.0, -3.2, "F.SilkS", 0.8) + fp_text("user", "-", 4.0, -3.2, "F.SilkS", 0.8)
+    s += fp_rect(-6.8, -3.0, 6.8, 6.8, "F.CrtYd", 0.05)
+    return n, s
+
+
 def encoder_ring():
     """Stock Alps EC11E footprint with a courtyard that follows the body and the pins: the stock
     rectangle also covers the empty corners where the ring LEDs stand (false DRC overlaps)."""

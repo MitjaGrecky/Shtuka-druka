@@ -1,9 +1,9 @@
-"""BB1 - battery board (P143, R208): one long board (398 x 28 mm, P144) along the ends of the three cell blocks under the pads. It joins all 6 Ampul cells (8 Ah, XT60PW-M, P142),
+"""BB1 - battery board (P143, R208): one long board (398 x 28 mm, P144) along the ends of the three cell blocks under the pads. It joins all 6 Ampul cells (8 Ah, solder pads for the wires, P146),
 makes two 3S packs (pack A = cell 1 of blocks 1, 2, 3 in series, pack B the same) with one BQ7791500 protection each (the circuit of hardware/bm-bms3s, reused, nets suffixed _A / _B),
-and gives two Micro-Fit 2x3 outputs to PW (BAT+ x 2, GND x 2, NTC, GND, the harness of PW Battery 1 / 2) and four NTC sockets (103AT 10k: one per BQ chip, one per charger of PW).
+and gives two Micro-Fit 2x3 outputs to PW (BAT+ x 2, GND x 2, NTC, GND, the harness of PW Battery 1 / 2) and four NTC sockets (JST GH-class 1.25 mm latching, 103AT 10k: one per BQ chip, one per charger of PW).
 BM boards 38 x 38 mm are cancelled (P143). 2 layers, 2 oz copper (8 A: tracks >= 3 mm on 2 oz by IPC-2152, set at routing), 3 mm standoffs.
 Board coordinates: x = model x - 104 (0-398), y = model y - 156 (0-28); the cells are on the y < 0 side (model y <= 153), the wires of the cells come to the connectors at y 3-11.
-Source of the positions: model3d/batt_bays/under_pads.csv (P144; blocks x 104-234, 238-368, 372-502). Rev 0.1 (21.11.2026): schematic and placed board. License: CERN-OHL-S-2.0, AGPL-3.0-or-later.
+Source of the positions: model3d/batt_bays/under_pads.csv (P144; blocks x 104-234, 238-368, 372-502). Rev 0.3 (21.11.2026, P146): wire pads instead of XT60PW, GH-class NTC sockets. License: CERN-OHL-S-2.0, AGPL-3.0-or-later.
 """
 import importlib.util
 import os
@@ -15,10 +15,10 @@ import kit as K  # noqa: E402
 
 NAME = "bb1-battery"
 ID = "BB1"
-TITLE = "BB1 - battery board: 6 cell connectors XT60PW-M, 2 x BQ7791500 protection, 2 outputs to PW"
-REV = "0.1"
+TITLE = "BB1 - battery board: 6 cell wire pads, 2 x BQ7791500 protection, 2 outputs to PW"
+REV = "0.3"
 M1_LIB = K.M1_LIB
-BUS_NOTE = ("6 cells (XT60PW-M): pack A = cells 1, 3, 5, pack B = cells 2, 4, 6, 3S each; two BQ7791500 protections (bm-bms3s circuit); outputs J7 (A) and J8 (B) = PW Battery 1 / 2 "
+BUS_NOTE = ("6 cells (solder pads): pack A = cells 1, 3, 5, pack B = cells 2, 4, 6, 3S each; two BQ7791500 protections (bm-bms3s circuit); outputs J7 (A) and J8 (B) = PW Battery 1 / 2 "
             "(BAT+ x 2, GND x 2, NTC, GND); NTC sockets J9-J12 (chip A, chip B, PW A, PW B)")
 PWR_FLAG_NETS = ("BAT_P_A", "BAT_N_A", "BAT_P_B", "BAT_N_B", "VDD_A", "VDD_B")
 NO_PWR_FLAG = ("+5V", "+3V3", "GND")
@@ -28,9 +28,9 @@ LAYERS = 2
 
 # cell connectors (model x centres of bb1_outline.csv minus 15): block 1 (x 42.5, 67.5), block 2 (217.5, 242.5), block 3 (417.5, 442.5); A = first, B = second of every block
 CELL_X = ((52.5, "A"), (77.5, "B"), (186.5, "A"), (211.5, "B"), (320.5, "A"), (345.5, "B"))   # block centres 65, 199, 333 (model 169, 303, 437 minus 104) +- 12.5
-XT60 = "Connector_AMASS:AMASS_XT60PW-M_1x02_P7.20mm_Horizontal"
+WIRE = "ShtukaDruka:WirePads_2x_THT_P8.0mm_TieHoles"   # P146: solder pads for the cell wires, no power connectors
 MF = "Connector_Molex:Molex_Micro-Fit_3.0_{}_P3.00mm_Horizontal"
-PH = "Connector_JST:JST_PH_S{n}B-PH-K_1x0{n}_P2.00mm_Horizontal"
+GH = "Connector_JST:JST_GH_BM0{n}B-GHS-TBT_1x0{n}-1MP_P1.25mm_Vertical"   # P146: small latching 1.25 mm connector (JST GH class), series by the technologist
 PW_X = {"A": 150.0, "B": 250.0}          # Micro-Fit 2x3 centres, between the blocks
 BM_X = {"A": 112.0, "B": 266.0}          # the protection circuits between the cell connectors (gaps 85-175 and 219-309)
 
@@ -60,8 +60,8 @@ def parts():
     for i, (x, s) in enumerate(CELL_X):
         lo, hi = chain[s][seen[s]]
         seen[s] += 1
-        add(ref("J"), "Connector_Generic:Conn_01x02", f"Cell {i + 1} (pack {s})", XT60, {"1": hi, "2": lo}, LCSC="C98732",
-            Note=f"Amass XT60PW-M, 30 A, mate XT60PW-F soldered on the Ampul wires (C428722); cell {seen[s]} of pack {s}: + to {hi}, - to {lo}")
+        add(ref("J"), "Connector_Generic:Conn_01x02", f"Cell {i + 1} (pack {s})", WIRE, {"1": hi, "2": lo},
+            Note=f"solder pads for the two wires of the Ampul cell (>= 1.0 mm2, 5 A per track), wires fixed with a cable tie through the two 3 mm holes; cell {seen[s]} of pack {s}: + (pad 1) to {hi}, - (pad 2) to {lo}")
     # ---- two protection circuits from bm-bms3s (without its connectors and holes), nets and references suffixed
     for s in ("A", "B"):
         off = 0 if s == "A" else 100
@@ -77,10 +77,10 @@ def parts():
             {"1": f"BAT_P_{s}", "2": f"BAT_P_{s}", "3": f"PACK_N_{s}", "4": f"PACK_N_{s}", "5": f"NTC_PW_{s}", "6": f"PACK_N_{s}"},
             LCSC="C127367", Note=f"right-angle Micro-Fit 43045-0600 (C127367), PW Battery {1 if s == 'A' else 2} harness: BAT+ x 2, GND x 2, NTC, GND; 8 A: 2 contacts per pole")
     for s in ("A", "B"):
-        add(ref("J"), "Connector_Generic:Conn_01x02", f"NTC chip {s}", PH.format(n=2), {"1": f"TS_{s}", "2": f"BAT_N_{s}"},
+        add(ref("J"), "Connector_Generic:Conn_01x02", f"NTC chip {s}", GH.format(n=2), {"1": f"TS_{s}", "2": f"BAT_N_{s}"},
             Note=f"103AT 10k (B 3435) NTC of the BQ7791500 of pack {s} (on the cell of block 2): TS input, 45 C stops charging in the chip")
     for s in ("A", "B"):
-        add(ref("J"), "Connector_Generic:Conn_01x02", f"NTC PW {s}", PH.format(n=2), {"1": f"NTC_PW_{s}", "2": f"PACK_N_{s}"},
+        add(ref("J"), "Connector_Generic:Conn_01x02", f"NTC PW {s}", GH.format(n=2), {"1": f"NTC_PW_{s}", "2": f"PACK_N_{s}"},
             Note=f"103AT 10k NTC of pack {s} for the BQ25798 TS of PW (a separate thermistor: the charger biases it itself)")
     K.mount_holes(add, ref, HOLES, "M3 on the 3 mm standoffs; positions assumed (the outline csv has none), check with the designer")
     return P

@@ -1,4 +1,4 @@
-"""PW - Power board under the slope (right, next to the battery bay, R109): inputs DC 12-24 V (locking jack on the rear
+"""PW - Power board under the slope (right, next to the battery bay, R109): input (DC removed, R205) was DC 12-24 V (locking jack on the rear
 wall), USB-C Power (PD 20 V / 5 A, R145) and the 3S batteries (R40, R59; rev 1.0), joined by ideal diodes; the rear On/Off switch;
 rails: 15 V for the ODROID-H5 (R149, P106; H5 window 11-20 V) from the internal 19 V rail, +5V_PANEL (panel boards and their LEDs), +5V (screen,
 R2, USB, logic), +-14 V pre-regulators and quiet +-12 V for the audio boards (TIDA-01458 scheme), +48 V phantom (R118).
@@ -35,12 +35,12 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "2.2"
+REV = "2.3"
 M1_LIB = K.M1_LIB
-BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
+BUS_NOTE = ("Input USB-C PD 15-20 V (TPS25730D, also a MacBook charger; the DC input is removed, R205) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
             "+-12 V (TPS7A47 / TPS7A33), +48 V (LM5156H + TPS7A4101)")
-PWR_FLAG_NETS = ("DC_P", "B19_VCC", "B19_VIN", "BAT1_F", "BAT2_F", "BUS", "DC_F", "EXT", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "PD_VBUSF", "V12F", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
+PWR_FLAG_NETS = ("B19_VCC", "B19_VIN", "BAT1_F", "BAT2_F", "BUS", "EXT", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "PD_VBUSF", "V12F", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
 NO_PWR_FLAG = ("+3V3",)     # no 3.3 V rail on this board
 W, H = 100.0, float(os.environ.get("PW_H", "100.0"))         # rough: under the slope on the right next to the battery bay (R109); with the board
 HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, H - 4.0), (96.0, H - 4.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
@@ -138,12 +138,7 @@ def parts():
         R("10k", f"{c}_SDA", "+3V3")
 
     # ---------------------------------------------------------------- inputs
-    add(ref("J"), "Connector_Generic:Conn_02x02_Odd_Even", "DC in (ST10U)", MF.format("43045-0412_2x02"), {"1": "DC_RAW", "2": "DC_RAW", "3": "GND", "4": "GND"},
-        Note="rev 2.2 (P135): cable from the sealed panel DC jack Switchcraft ST10U (10 A, 24 V, IP67, pin 2.0 mm) on the rear wall; Micro-Fit 2x2: two contacts on + and two on - (8 A input, 5 A per contact), AWG 16")
-    add(ref("F"), "Device:Fuse", "5A", "Fuse:Fuse_2920_7451Metric", {"1": "DC_RAW", "2": "DC_F"},
-        Note="resettable fuse, 5 A hold (rev 1.2: was 7 A): the wall jack Switchcraft 721A is rated 5 A, a Micro-Fit contact on 20 AWG carries about 5-6 A; 5 A = 60 W at 12 V, 100 W at 20 V")
-    add(ref("D"), "Device:D_TVS", "SMBJ28CA", SMB, {"1": "DC_F", "2": "GND"}, LCSC="C151259", Note="DC input surge, 28 V standoff (R72)")
-    ideal_diode("IDC", "DC_P", "EXT")                       # rev 1.2: behind the eFuse TPS26631 (OVP 22.9 V, parts at the end of parts())
+    # rev 2.3 (R205): the DC input (jack, fuse, TVS, eFuse, ideal diode IDC) is removed; the only external input is USB-C PD, then the two packs
 
     add(ref("J"), "Connector_Generic:Conn_02x03_Odd_Even", "USB-C Power in", MF.format("43045-0612_2x03"),
         {"1": "PD_VBUS", "2": "PD_VBUS", "3": "GND", "4": "GND", "5": "PD_CC1", "6": "PD_CC2"},
@@ -466,30 +461,6 @@ def parts():
     R("100", "FAN_PWM_IN", "FAN_PWM", Note="PWM from P2 (3.3 V, 25 kHz); no signal = the fan runs full speed (Intel spec)")
     R("10k", "FAN_TACH", "+3V3", Note="tach is open collector: pull-up to 3.3 V")
     R("100", "FAN_TACH", "FAN_TACH_OUT")
-
-    # ---------------------------------------------------------------- rev 1.2 (audit A-025): DC input eFuse TPS26631 with overvoltage cut-off at about 23 V
-    # The TVS SMBJ20CA on EXT clamps about 28 V at 3 A and 32 V at 18 A, while the chargers' VBUS/VAC pins are 30 V absolute maximum (24 V recommended). A DC adapter above 20 V
-    # (24 V adapter, a wrong plug) now meets TPS26631 (SLVSE94G, 4.5-60 V rated, IN 67 V absolute): OVP cuts the output (FLT, auto-retry), EXT never exceeds the cut-off.
-    # The PD path stays 15-20 V by negotiation and the TPS25730's own protection (VBUS 28 V absolute; SMBJ20CA).
-    # OVP / UVLO divider (eq. 9, 10, V(OVPR) = V(UVLOR) = 1.2 V): R1 453k, R2 35.7k, R3 27.0k -> OV = 1.2 x 515.7k / 27.0k = 22.9 V (21.8-24.0 V with the 4 % reference
-    # and 1 % resistors), UV = 1.2 x 515.7k / 62.7k = 9.9 V. ILIM: R = 18 kOhm x A / I -> 3.32k = 5.4 A (4.5-6 A table points 4.02k / 3k). dVdT: t = 20.8e3 x V x C -> 10 nF at 19 V = 4 ms:
-    # inrush into about 250 uF (bulk 100 uF + chargers + FETs) = 1.2 A. MODE to GND = auto-retry. SHDN needs 2 V ... 5.5 V: 220k from the input with a 3.3 V zener.
-    # Rds(on) 30 mOhm typ (34.5 max) x 5 A^2 = 0.75 W max in the QFN 4x4: copper plane under the pad. OUT = DC_P -> ideal diode IDC.
-    u = ref("U")
-    add(u, "ShtukaDruka:TPS26631", "TPS26631RGER", "Package_DFN_QFN:QFN-24-1EP_4x4mm_P0.5mm_EP2.65x2.65mm",
-        {"1": "DC_F", "2": "DC_F", "3": None, "4": None, "5": "DC_F", "6": "EF_UV", "7": "EF_OV", "8": "GND", "9": "EF_DVDT", "10": "EF_ILIM", "11": "GND",
-         "12": "EF_SHDN", "13": None, "14": None, "15": "GND", "16": None, "17": "DC_P", "18": "DC_P", "19": None, "20": None, "21": None, "22": None, "23": None,
-         "24": None, "25": "GND"}, LCSC="C1850273",
-        Note="DC input eFuse with OVP 22.9 V, UV 9.9 V, 5.4 A limit (rev 1.2, A-025); no blocking FET: IN_SYS to IN, B_GATE and DRV open; JLC 314 pcs 19.11.2026")
-    R("453k", "DC_F", "EF_UV", Note="R1 of the UVLO/OVP divider")
-    R("35.7k", "EF_UV", "EF_OV", Note="R2")
-    R("27k", "EF_OV", "GND", Note="R3")
-    R("3.32k", "EF_ILIM", "GND", Note="RILIM: 18 kOhm x A / 3.32k = 5.4 A")
-    C("10n 50V", "EF_DVDT", fp=C0603, Note="dVdT slew: about 4 ms at 19 V")
-    R("220k", "DC_F", "EF_SHDN", Note="SHDN pull-up (needs 2 V, abs max 5.5 V)")
-    add(ref("D"), "ShtukaDruka:BZT52C3V3", "BZT52C3V3", SOD123, {"1": "GND", "2": "EF_SHDN"}, LCSC="C173413", Note="clamps SHDN to 3.3 V")
-    C("1u 50V", "DC_F", fp=C0805, Note="eFuse input")
-    C("10u 35V", "DC_P", fp=C1206, Note="eFuse output")
 
     # ---------------------------------------------------------------- rev 1.5 (P127): eFuse TPS26631 at the INPUT of the TPS25730 (was after it, rev 1.4)
     # connector -> TVS D2 (PD_VBUS) -> damper 47 uF electrolytic -> eFuse -> PD_VBUSF -> TPS25730 VBUS (pins 23/32) + 10 uF ceramic. The eFuse (IN 67 V absolute) takes the hot-plug

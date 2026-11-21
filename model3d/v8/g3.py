@@ -11,8 +11,8 @@ import os
 os.environ["W3_X1"] = "505"
 os.environ["W3_S1"] = "60.2"       # the real W3 (hardware/w3-system) ends at s 60.2 before the pocket; the old model slab over the whole slope was an overestimate
 B.FAN_SPEC.update(s=80.0, T=25.0, dy=-6.0, z0=3.5, gap=5.0)   # R182: 80 x 80 x 25 fan on the right wall
-PACKS = "113,219,6,226,3;225,331,6,226,3"      # two packs under P2 (x0,x1,y0,y1,shelf z0); P2 tall bottom parts start at y 227.8
-LIPO = 11.0
+PACKS = "345,495,6,146,3;345,495,148,288,3"   # P138 (21.11): two LiPo-stack blocks 150 x 140 x 12.5 under P3/P4 (x0,x1,y0,y1,shelf z0); the old 106 x 220 x 11 bays under P2 removed
+LIPO = 10.5                                    # shelf 2 + 10.5 = top z 15.5 (P3/P4 parts bottom 15.9)
 
 
 def vents_and_feet(m):

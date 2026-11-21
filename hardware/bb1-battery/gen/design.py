@@ -1,9 +1,9 @@
-"""BB1 - battery board (P143, R208): one long board (485 x 28 mm) along the ends of the three cell blocks under the pads. It joins all 6 Ampul cells (8 Ah, XT60PW-M, P142),
+"""BB1 - battery board (P143, R208): one long board (398 x 28 mm, P144) along the ends of the three cell blocks under the pads. It joins all 6 Ampul cells (8 Ah, XT60PW-M, P142),
 makes two 3S packs (pack A = cell 1 of blocks 1, 2, 3 in series, pack B the same) with one BQ7791500 protection each (the circuit of hardware/bm-bms3s, reused, nets suffixed _A / _B),
 and gives two Micro-Fit 2x3 outputs to PW (BAT+ x 2, GND x 2, NTC, GND, the harness of PW Battery 1 / 2) and four NTC sockets (103AT 10k: one per BQ chip, one per charger of PW).
 BM boards 38 x 38 mm are cancelled (P143). 2 layers, 2 oz copper (8 A: tracks >= 3 mm on 2 oz by IPC-2152, set at routing), 3 mm standoffs.
-Board coordinates: x = model x - 15 (0-485), y = model y - 302 (0-28); the cells are on the y < 0 side (model y <= 300), the wires of the cells come to the connectors at y 3-11.
-Source of the positions: model3d/batt_bays/bb1_outline.csv (designer, 21_r208_bb1.md). Rev 0.1 (21.11.2026): schematic and placed board. License: CERN-OHL-S-2.0, AGPL-3.0-or-later.
+Board coordinates: x = model x - 104 (0-398), y = model y - 156 (0-28); the cells are on the y < 0 side (model y <= 153), the wires of the cells come to the connectors at y 3-11.
+Source of the positions: model3d/batt_bays/under_pads.csv (P144; blocks x 104-234, 238-368, 372-502). Rev 0.1 (21.11.2026): schematic and placed board. License: CERN-OHL-S-2.0, AGPL-3.0-or-later.
 """
 import importlib.util
 import os
@@ -22,17 +22,17 @@ BUS_NOTE = ("6 cells (XT60PW-M): pack A = cells 1, 3, 5, pack B = cells 2, 4, 6,
             "(BAT+ x 2, GND x 2, NTC, GND); NTC sockets J9-J12 (chip A, chip B, PW A, PW B)")
 PWR_FLAG_NETS = ("BAT_P_A", "BAT_N_A", "BAT_P_B", "BAT_N_B", "VDD_A", "VDD_B")
 NO_PWR_FLAG = ("+5V", "+3V3", "GND")
-W, H = 485.0, 28.0
-HOLES = [(4.0, 3.5), (4.0, 24.5), (160.0, 3.5), (160.0, 24.5), (322.0, 3.5), (322.0, 24.5), (481.0, 3.5), (481.0, 24.5)]   # M3, on the ribs between the blocks and at the ends (assumed: the outline csv has no holes)
+W, H = 398.0, 28.0
+HOLES = [(4.0, 3.5), (4.0, 24.5), (132.0, 3.5), (132.0, 24.5), (266.0, 3.5), (266.0, 24.5), (394.0, 3.5), (394.0, 24.5)]   # M3, ends and the ribs between the blocks (model x 235-237, 369-371 minus 104); assumed: the csv has no holes
 LAYERS = 2
 
 # cell connectors (model x centres of bb1_outline.csv minus 15): block 1 (x 42.5, 67.5), block 2 (217.5, 242.5), block 3 (417.5, 442.5); A = first, B = second of every block
-CELL_X = ((42.5, "A"), (67.5, "B"), (217.5, "A"), (242.5, "B"), (417.5, "A"), (442.5, "B"))
+CELL_X = ((52.5, "A"), (77.5, "B"), (186.5, "A"), (211.5, "B"), (320.5, "A"), (345.5, "B"))   # block centres 65, 199, 333 (model 169, 303, 437 minus 104) +- 12.5
 XT60 = "Connector_AMASS:AMASS_XT60PW-M_1x02_P7.20mm_Horizontal"
 MF = "Connector_Molex:Molex_Micro-Fit_3.0_{}_P3.00mm_Horizontal"
 PH = "Connector_JST:JST_PH_S{n}B-PH-K_1x0{n}_P2.00mm_Horizontal"
-PW_X = {"A": 257.0, "B": 287.0}          # Micro-Fit 2x3 centres (csv 262-282, 292-312 minus 15)
-BM_X = {"A": 135.0, "B": 311.0}          # the protection circuits sit between the blocks (csv BM link x 136-174 and 312-350 minus 15)
+PW_X = {"A": 150.0, "B": 250.0}          # Micro-Fit 2x3 centres, between the blocks
+BM_X = {"A": 112.0, "B": 266.0}          # the protection circuits between the cell connectors (gaps 85-175 and 219-309)
 
 
 def _bm():
@@ -96,7 +96,7 @@ def placement():
         fixed[j[f"Cell {i + 1} (pack {s})"]] = (x, 7.0, 0, "top")
     for s in ("A", "B"):
         fixed[j[f"to PW (Battery {1 if s == 'A' else 2})"]] = (PW_X[s], 20.0, 180, "top")
-    ntc = {"NTC chip A": 25.0, "NTC chip B": 460.0, "NTC PW A": 35.0, "NTC PW B": 450.0}
+    ntc = {"NTC chip A": 25.0, "NTC chip B": 373.0, "NTC PW A": 35.0, "NTC PW B": 363.0}
     for name, x in ntc.items():
         fixed[j[name]] = (x, 23.0, 180, "top")
     G = []

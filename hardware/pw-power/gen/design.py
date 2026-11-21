@@ -42,8 +42,8 @@ BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two
             "+-12 V (TPS7A47 / TPS7A33), +48 V (LM5156H + TPS7A4101)")
 PWR_FLAG_NETS = ("DC_P", "B19_VCC", "B19_VIN", "BAT1_F", "BAT2_F", "BUS", "DC_F", "EXT", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "PD_VBUSF", "V12F", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
 NO_PWR_FLAG = ("+3V3",)     # no 3.3 V rail on this board
-W, H = 100.0, 110.0         # rough: under the slope on the right next to the battery bay (R109); with the board
-HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, 106.0), (96.0, 106.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
+W, H = 100.0, float(os.environ.get("PW_H", "100.0"))         # rough: under the slope on the right next to the battery bay (R109); with the board
+HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, H - 4.0), (96.0, H - 4.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
 LAYERS = 4
 
 R0402, C0402, C0603, C0805 = K.R0402, K.C0402, "Capacitor_SMD:C_0603_1608Metric", K.C0805
@@ -509,9 +509,15 @@ def parts():
     C("10n 50V", "PDF_DVDT", fp=C0603, Note="dVdT slew: about 4 ms at 19 V")
     R("220k", "PD_VBUS", "PDF_SHDN", Note="SHDN pull-up (needs 2 V, abs max 5.5 V; 5 V attach is above 2 V)")
     add(ref("D"), "ShtukaDruka:BZT52C3V3", "BZT52C3V3", SOD123, {"1": "GND", "2": "PDF_SHDN"}, LCSC="C173413", Note="clamps SHDN to 3.3 V")
-    # rev 1.8 (P130): connector to the hold-up module HU1 (4 x 470 uF behind 10 ohm + Schottky per rail, hardware/hu1-holdup): P14, GND, N14 before the LDOs, harness <= 80 mm
-    add(ref("J"), "Connector_Generic:Conn_01x03", "to HU1 (P14, GND, N14)", MF.format("43650-0315_1x03"), {"1": "P14", "2": "GND", "3": "N14"},
-        Note="Micro-Fit 3.0 1x3 vertical, latching (housing 43645-0300): hold-up module HU1 on a harness <= 80 mm, AWG 20; the 76 uF on P14/N14 stay on PW (P130)")
+    # ---------------------------------------------------------------- rev 1.8 (P129/P131): hold-up storage on the +-14 V rails, before the LDOs, on PW itself (HU1 cancelled)
+    # 2 x 470 uF 25 V per rail = 0.94 mF: 4.8 ms at 0.43 A, 7.1 ms at 0.29 A (tasks/12, dV 2.2 V with the Schottky drop). Behind 10 ohm: the LMR33640 (soft start 4 ms,
+    # low-side limit 3.9-5 A, total output capacitance at most about 1000 uF) would charge 1 mF at 3.5 A, through 10 ohm the peak is 1.4 A; Schottky in the discharge direction.
+    for rail, plus, minus, rs, anode, cathode in (("P14", "P14_ST", "GND", ("P14", "P14_ST"), "P14_ST", "P14"), ("N14", "GND", "N14_ST", ("N14", "N14_ST"), "N14", "N14_ST")):
+        for _ in range(2):
+            CP("470u 25V", plus, minus, fp=CP10, Note=f"hold-up storage {rail}: aluminium electrolytic 105 C, 10 x 10.5 on the bottom side (technologist: part)")
+        R("10", rs[0], rs[1], fp=R1206, Note=f"{rail} storage charge resistor: inrush 1.4 A instead of 3.5 A at 14 V (LMR33640 soft start 4 ms, limit 3.9-5 A)")
+        add(ref("D"), "Device:D_Schottky", "SS34", SMA, {"1": cathode, "2": anode}, LCSC="C8678",
+            Note=f"{rail} storage discharge diode (the storage feeds the rail when it sags), 40 V 3 A; check the part number and the stock")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 
@@ -535,6 +541,23 @@ def placement():
     # around U8 taken). Heights: SPM6530 3 mm, BQ25798 1 mm, 0805 caps; PW_TOP 24 (model3d/fit/fit_model.py) leaves ~7 mm above.
     for r, xy in CHARGER_XY.items():
         fixed[r] = xy + (0, "top")
+    # P131-c: hold-up storage first, by hand: bottom-left corner under the quiet LDO corner (the electrolytics are no noise source), 2 x 2 block, columns 12.2 mm apart
+    P = parts()
+    st = {}
+    for p in P:
+        nets = set(p["pins"].values())
+        if p["ref"].startswith("C") and p["value"] == "470u 25V":
+            st[p["ref"]] = "P" if "P14_ST" in nets else "N"
+        elif "P14_ST" in nets and not p["ref"].startswith("C"):
+            st[p["ref"]] = "PR" if p["ref"].startswith("R") else "PD"
+        elif "N14_ST" in nets and not p["ref"].startswith("C"):
+            st[p["ref"]] = "NR" if p["ref"].startswith("R") else "ND"
+    pos = {"P": [(13.2, 12.0), (25.0, 12.0)], "N": [(23.6, 26.0), (35.2, 26.0)]}   # iteration 3 (it. 2: 36.6 touched U13 at 45, 28): the TPS7A3301 U18 (12, 30) has through-hole thermal pads that shadow the bottom
+    cnt = {"P": 0, "N": 0}
+    for r, k in sorted(st.items()):
+        if k in ("P", "N"):
+            fixed[r] = pos[k][cnt[k]] + (90, "bottom")
+            cnt[k] += 1                                   # resistors and diodes of the storage are packed by the automatic placement
     follow = [r for r, v in fixed.items() if r in NOISY_XY or r.startswith("U") and v[3] == "top"]
     return autoplace.fit(sys.modules[__name__], lambda g, ic: autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 8.5, follow=follow, gap=g, ic_gap=ic))   # header row clear of the bottom holes
 

@@ -99,6 +99,6 @@ Courtyard gap 1.2 mm (ic_gap 1.8 mm around fine-pitch ICs) instead of 0.25 mm, t
 - LM70660 footprint from the TI example board layout; EN threshold 1.0 V: start 5.9 V, stop 5.3 V.
 - USB-C VBUS damper: Nichicon UWT1V470MCL1GS (C87068, 6.3 x 5.8) + 0.47 ohm 1206 in series (total ESR 0.5-1.2 ohm, tasks/11).
 
-## Rev 1.8 (21.11.2026): P130
-- New connector J "to HU1" Micro-Fit 1x3 (P14, GND, N14): the hold-up module HU1 (hardware/hu1-holdup) on a harness <= 80 mm; the 76 uF on P14/N14 stay.
-- INA226 ALERT limit 9.8 V = register 0x1EA0 (1.25 mV/LSB): "pack is running down"; the LM5176 stops by itself at 9.3 V.
+## Rev 1.8 (21.11.2026): hold-up storage on the board (P129, P131; HU1 cancelled)
+- Board 100 x 100 mm (was 110): 4 x 470 uF 25 V (2 per rail) fixed by hand in the bottom-left (design.py placement()), 2 x 10 ohm charge resistors, 2 x SS34 on P14 / N14 before the LDOs; 337 parts, bottom fill 44 %, top 22 %.
+- INA226 ALERT limit 9.8 V = register 0x1EA0; the LM5176 stops by itself at 9.3 V.

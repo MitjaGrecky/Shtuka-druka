@@ -27,5 +27,6 @@
 | [39_24-12-bokoviny-tri-koncepta](41_design_review/39_24-12-bokoviny-tri-koncepta.md) | 24.12 Боковины: три концепта K1 «Парус», K2 «Трубы», K3 | 3.7 |
 | [40_24-13-bokoviny-r196-truby-s-zatuhaniem](41_design_review/40_24-13-bokoviny-r196-truby-s-zatuhaniem.md) | 24.13 Боковины R196: трубы с затуханием, ред. 2, устарело → 24.14 | 3.3 |
 | [41_24-14-bokoviny-r196-truby-po-vsey-stenke](41_design_review/41_24-14-bokoviny-r196-truby-po-vsey-stenke.md) | 24.14 Боковины R196, ред. 3: трубы по всей стенке | 3.1 |
+| [42_24-15-stek-peda-testovoy-platy](41_design_review/42_24-15-stek-peda-testovoy-platy.md) | 24.15 Стек пэда тестовой платы 4 × 4: слои, высоты, три формы (R194) | 3.6 |
 
 Полная версия до сжатия: история git.

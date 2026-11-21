@@ -11,7 +11,7 @@ R116-R118, R135-R137, R142 (jack positions = 3D model).
 
 | Input | Jack | Path | ADC (A1) |
 |---|---|---|---|
-| Mic/Line 1-2 | Neutrik NCJ6FI-V combo, vertical (C368503) | phantom 6.81k + 47 uF on XLR only (R72); TRS joins after the caps; clamps to +-12 V; relay attenuator -12 dB (rev 0.3); OPA1612 two-op-amp front end x 4.01; OPA1637 loud x 0.681 (FS +11.9 dBu) and quiet x 68.1 (+40 dB, FS -28.1 dBu) | 1-4 (two per input, R117) |
+| Mic/Line 1-2 | Neutrik NCJ6FI-V combo, vertical (not at JLC: hand soldering, P122; the LCSC number is outdated) | phantom 6.81k + 47 uF on XLR only (R72); TRS joins after the caps; clamps to +-12 V; relay attenuator -12 dB (rev 0.3); OPA1612 two-op-amp front end x 4.01; OPA1637 loud x 0.681 (FS +11.9 dBu) and quiet x 68.1 (+40 dB, FS -28.1 dBu) | 1-4 (two per input, R117) |
 | Hi-Z 1-2 | Neutrik NJ3FD-V, vertical | 1 MOhm, clamps, OPA1642 buffer; OPA1637 loud x 1.37 (FS +17.9 dBu), quiet x 137 (+40 dB, FS -22.1 dBu) | 5-8 |
 | Phono L/R | RCA with nut (part to choose) | relay per channel (R118; off = line): line -> OPA1637 x 4.12 (FS +8.3 dBu); phono -> computed RIAA on OPA1612 (+35 dB at 1 kHz) -> OPA1637 x 4.12 | 9-10 |
 | Line 1-8 | NJ3FD-V | RF filter, OPA1637 diff x 0.674: FS +24.1 dBu (R135) | 11-18 |

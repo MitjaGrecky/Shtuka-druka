@@ -79,8 +79,7 @@ B: MCLK X0D11, PDM X1D00/X1D01. QSPI boot on X0D01 (SS), X0D10 (SCLK), X0D04-07.
 - Footprint: LCSC lists it as SOIC-20-300mil (rev 0.1 had a 15.4 mm body "per the LCSC part" - a 300-mil SOIC-20 is 12.8 mm): check against the datasheet drawing; the LCSC number of the BRIZ-RL
   is C5581725 (out of stock on 14.11.2026, $15), the schematic carries C5367256 from the PC - check which one is the stocked variant.
 
-**Oscillators** (R114): 24.576 MHz SiTime SiT8208AI-21-33E-24.576000 (C839665, 3225, 3.3 V, +-20 ppm, 0.5 ps; **out of stock** on 14.11), 22.5792 MHz SCTF SX3M22.5792M20F30TNN (C2901572,
-3225, 825 in stock, 1.62-3.63 V, +-20 ppm; jitter and enable pin polarity not on the page). Pin 1 = enable, high = on, as the schematic assumes. For a 123 dB ADC the clock jitter matters: SiTime
+**Oscillators** (R114; actual parts by the generator, P122): Y1 24.576 MHz SCTF SX3M24.576B10F20TNN (C7431342), Y2 22.5792 MHz SCTF SX3M22.5792B10F20TNN (C7431341), both 3.3 V CMOS, +-10 ppm, pin 1 tri-state; SiTime SiT8208AI-21-33E-24.576000 (C839665, 0.5 ps; **out of stock** on 14.11) is only the spare (В19). Earlier text (rev 0.2-0.5; SX3M22.5792M20F30TNN C2901572 and SiT8208 as the main part are outdated): Pin 1 = enable, high = on, as the schematic assumes. For a 123 dB ADC the clock jitter matters: SiTime
 has 0.5 ps; the SCTF part must be checked or replaced (SiT8208 22.5792). The 33 R + 22 R star is kept.
 
 **Supplies.** TPS7A4701: ANY-OUT 1.4 + 1.6 + 0.2 + 0.1 = 3.3 V with pins 8 (1.6 V), 11 (0.2 V), 12 (0.1 V) to ground - confirmed from the symbol; NR/SS 1 uF not verified (TI text not retrievable).

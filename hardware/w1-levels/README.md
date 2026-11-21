@@ -8,7 +8,7 @@ Spec and reasoning: `docs/ru/31_w1_levels.md`. Status: rev 0.3 (19.11.2026; see 
 | | |
 |---|---|
 | Board | 92 x 126 mm along the slope, 2 layers; panel x 10-102, slope s 12-138 mm from the fold; window 85 x 35 mm for M5 (rims 4.5 mm left, 2.5 mm right) |
-| Top side | 4 x Alps RK09K 10k pots (LCSC C209770), 2 x TS-1187A tact switches (C318884), 4 x XL-1615RGBC-RF (C965840) |
+| Top side | 4 x Alps RK09K1130A5R 10k pots (LCSC C209779, P122), 2 x TS-1187A tact switches (C318884), 4 x XL-1615RGBC-RF (C965840) |
 | Bottom side | ADS1115 16-bit ADC (C37593), IS31FL3218 LED driver (C2940546), 74HC165 (C80696), passives, J1 and J2 |
 | Bus | J1 to P1 over the fold, J2 to M5: 2 x 7, 1.27 mm, same pinout as every encoder module |
 | I2C | ADS1115 0x48 (AIN0 Main, AIN1 Cue Mix, AIN2 Phones 1, AIN3 Phones 2), IS31FL3218 0x54 (write only) |

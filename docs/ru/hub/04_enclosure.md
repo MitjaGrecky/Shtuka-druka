@@ -24,11 +24,11 @@
 
 ## 41. Дизайнерский разбор корпуса
 Почему «принтер и будка»; аналоги (размеры, эргономика, ссылки); откуда высота зада и идеи перестановки; прогон линий пользователя в модели (H5 в заднем углу, с
-- [10. Аналоги: размеры и форма (поиск 17.11.2026)](../41_design_review/08_10-analogi-razmery-i-forma-poisk.md) · 4.4 КБ
-- [11. Эргономика: что нашлось и что из этого следует](../41_design_review/09_11-ergonomika-chto-nashlos-i-chto.md) · 3.1 КБ
-- [19. «Зелёная» линия: дека 30, без ступеньки, глубина 500](../41_design_review/20_19-zelenaya-liniya-deka-30-bez.md) · 5.0 КБ
-- [22. Вентилятор на правой стенке, H5 вплотную к задней](../41_design_review/23_22-ventilyator-na-pravoy-stenke-h5.md) · 2.0 КБ
-- [23. Набросок пользователя на v8: макушка, зад, экран](../41_design_review/24_23-nabrosok-polzovatelya-na-v8-makushku.md) · 4.3 КБ
+- [10. Аналоги: размеры и форма](../41_design_review/08_10-analogi-razmery-i-forma-poisk.md) · 4.4 КБ
+- [11. Эргономика: что нашлось, выводы](../41_design_review/09_11-ergonomika-chto-nashlos-i-chto.md) · 3.1 КБ
+- [19. «Зелёная» линия: дека 30, глубина 500](../41_design_review/20_19-zelenaya-liniya-deka-30-bez.md) · 5.0 КБ
+- [22. Вентилятор справа, H5 вплотную к задней](../41_design_review/23_22-ventilyator-na-pravoy-stenke-h5.md) · 2.0 КБ
+- [23. Набросок пользователя на v8](../41_design_review/24_23-nabrosok-polzovatelya-na-v8-makushku.md) · 4.3 КБ
 - [24. Задняя стенка v5 и щели в люке (18.11.2026)](../41_design_review/25_24-zadnyaya-stenka-v5-i-scheli.md) · 1.1 КБ
 - [24.1 Раскладка v5 (v4 отклонена пользователем)](../41_design_review/26_24-1-raskladka-v5-v4-otklonena.md) · 3.4 КБ
 - [24.2 v5.2: единая сетка](../41_design_review/27_24-2-v5-2-edinaya-setka.md) · 2.1 КБ
@@ -39,12 +39,13 @@
 - [24.6 Задняя стенка в D-формате (v7-D)](../41_design_review/33_24-6-zadnyaya-stenka-v-d-format.md) · 0.4 КБ
 - [24.7 Задняя стенка: варианты A и B по даташитам Neutrik](../41_design_review/34_24-7-zadnyaya-stenka-a-b-po-datasheetam.md) · 0.5 КБ
 - [24.8 Выход вентилятора «поизящнее»: четыре варианта ≥ 20 см²](../41_design_review/35_24-8-vyhod-ventilyatora-poizyaschnee.md) · 4.5 КБ
-- [24.9 Передняя линия входа, передача инженеру (R195)](../41_design_review/36_24-9-perednyaya-liniya-i-peredacha.md) · 3.0 КБ
-- [24.10 Боковые стенки: один рисунок, выход — сквозная часть](../41_design_review/37_24-10-bokovye-stenki-odin-risunok.md) · 3.9 КБ
-- [24.11 S4: штриховка по скату, сквозная над вентилятором](../41_design_review/38_24-11-shtrihovka-po-skatu-s4.md) · 3.2 КБ
-- [24.12 Боковины: три концепта K1 «Парус», K2 «Трубы», K3](../41_design_review/39_24-12-bokoviny-tri-koncepta.md) · 3.7 КБ
+- [24.9 Передняя линия входа (R195)](../41_design_review/36_24-9-perednyaya-liniya-i-peredacha.md) · 3.0 КБ
+- [24.10 Боковые стенки: один рисунок](../41_design_review/37_24-10-bokovye-stenki-odin-risunok.md) · 3.9 КБ
+- [24.11 S4: штриховка по скату](../41_design_review/38_24-11-shtrihovka-po-skatu-s4.md) · 3.2 КБ
+- [24.12 Боковины: концепты K1, K2, K3](../41_design_review/39_24-12-bokoviny-tri-koncepta.md) · 3.7 КБ
 - [24.13 Боковины R196: трубы с затуханием, ред. 2, устарело → 24.14](../41_design_review/40_24-13-bokoviny-r196-truby-s-zatuhaniem.md) · 3.3 КБ
 - [24.14 Боковины R196, ред. 3: трубы по всей стенке](../41_design_review/41_24-14-bokoviny-r196-truby-po-vsey-stenke.md) · 3.1 КБ
+- [24.15 Стек пэда тестовой платы 4 × 4: слои, высоты, три формы (R194)](../41_design_review/42_24-15-stek-peda-testovoy-platy.md) · 3.6 КБ
 
 ## 42. Тепловой расчёт текущей версии корпуса (v8) (оценка)
 Тепло внутри 35 / 59 Вт, расход воздуха (вентиляция по R195–R196 — в 50), аккумуляторы под пэдами при 41–50 °C, что нужно измерить

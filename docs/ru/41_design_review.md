@@ -5,11 +5,11 @@
 
 | Часть | Раздел | КБ |
 |---|---|---|
-| [08_10-analogi-razmery-i-forma-poisk](41_design_review/08_10-analogi-razmery-i-forma-poisk.md) | 10. Аналоги: размеры и форма (поиск 17.11.2026) | 4.4 |
-| [09_11-ergonomika-chto-nashlos-i-chto](41_design_review/09_11-ergonomika-chto-nashlos-i-chto.md) | 11. Эргономика: что нашлось и что из этого следует | 3.1 |
-| [20_19-zelenaya-liniya-deka-30-bez](41_design_review/20_19-zelenaya-liniya-deka-30-bez.md) | 19. «Зелёная» линия: дека 30, без ступеньки, глубина 500 | 5.0 |
-| [23_22-ventilyator-na-pravoy-stenke-h5](41_design_review/23_22-ventilyator-na-pravoy-stenke-h5.md) | 22. Вентилятор на правой стенке, H5 вплотную к задней | 2.0 |
-| [24_23-nabrosok-polzovatelya-na-v8-makushku](41_design_review/24_23-nabrosok-polzovatelya-na-v8-makushku.md) | 23. Набросок пользователя на v8: макушка, зад, экран | 4.3 |
+| [08_10-analogi-razmery-i-forma-poisk](41_design_review/08_10-analogi-razmery-i-forma-poisk.md) | 10. Аналоги: размеры и форма | 4.4 |
+| [09_11-ergonomika-chto-nashlos-i-chto](41_design_review/09_11-ergonomika-chto-nashlos-i-chto.md) | 11. Эргономика: что нашлось, выводы | 3.1 |
+| [20_19-zelenaya-liniya-deka-30-bez](41_design_review/20_19-zelenaya-liniya-deka-30-bez.md) | 19. «Зелёная» линия: дека 30, глубина 500 | 5.0 |
+| [23_22-ventilyator-na-pravoy-stenke-h5](41_design_review/23_22-ventilyator-na-pravoy-stenke-h5.md) | 22. Вентилятор справа, H5 вплотную к задней | 2.0 |
+| [24_23-nabrosok-polzovatelya-na-v8-makushku](41_design_review/24_23-nabrosok-polzovatelya-na-v8-makushku.md) | 23. Набросок пользователя на v8 | 4.3 |
 | [25_24-zadnyaya-stenka-v5-i-scheli](41_design_review/25_24-zadnyaya-stenka-v5-i-scheli.md) | 24. Задняя стенка v5 и щели в люке (18.11.2026) | 1.1 |
 | [26_24-1-raskladka-v5-v4-otklonena](41_design_review/26_24-1-raskladka-v5-v4-otklonena.md) | 24.1 Раскладка v5 (v4 отклонена пользователем) | 3.4 |
 | [27_24-2-v5-2-edinaya-setka](41_design_review/27_24-2-v5-2-edinaya-setka.md) | 24.2 v5.2: единая сетка | 2.1 |
@@ -21,10 +21,10 @@
 | [33_24-6-zadnyaya-stenka-v-d-format](41_design_review/33_24-6-zadnyaya-stenka-v-d-format.md) | 24.6 Задняя стенка в D-формате (v7-D) | 0.4 |
 | [34_24-7-zadnyaya-stenka-a-b-po-datasheetam](41_design_review/34_24-7-zadnyaya-stenka-a-b-po-datasheetam.md) | 24.7 Задняя стенка: варианты A и B по даташитам Neutrik | 0.5 |
 | [35_24-8-vyhod-ventilyatora-poizyaschnee](41_design_review/35_24-8-vyhod-ventilyatora-poizyaschnee.md) | 24.8 Выход вентилятора «поизящнее»: четыре варианта ≥ 20 см² | 4.5 |
-| [36_24-9-perednyaya-liniya-i-peredacha](41_design_review/36_24-9-perednyaya-liniya-i-peredacha.md) | 24.9 Передняя линия входа, передача инженеру (R195) | 3.0 |
-| [37_24-10-bokovye-stenki-odin-risunok](41_design_review/37_24-10-bokovye-stenki-odin-risunok.md) | 24.10 Боковые стенки: один рисунок, выход — сквозная часть | 3.9 |
-| [38_24-11-shtrihovka-po-skatu-s4](41_design_review/38_24-11-shtrihovka-po-skatu-s4.md) | 24.11 S4: штриховка по скату, сквозная над вентилятором | 3.2 |
-| [39_24-12-bokoviny-tri-koncepta](41_design_review/39_24-12-bokoviny-tri-koncepta.md) | 24.12 Боковины: три концепта K1 «Парус», K2 «Трубы», K3 | 3.7 |
+| [36_24-9-perednyaya-liniya-i-peredacha](41_design_review/36_24-9-perednyaya-liniya-i-peredacha.md) | 24.9 Передняя линия входа (R195) | 3.0 |
+| [37_24-10-bokovye-stenki-odin-risunok](41_design_review/37_24-10-bokovye-stenki-odin-risunok.md) | 24.10 Боковые стенки: один рисунок | 3.9 |
+| [38_24-11-shtrihovka-po-skatu-s4](41_design_review/38_24-11-shtrihovka-po-skatu-s4.md) | 24.11 S4: штриховка по скату | 3.2 |
+| [39_24-12-bokoviny-tri-koncepta](41_design_review/39_24-12-bokoviny-tri-koncepta.md) | 24.12 Боковины: концепты K1, K2, K3 | 3.7 |
 | [40_24-13-bokoviny-r196-truby-s-zatuhaniem](41_design_review/40_24-13-bokoviny-r196-truby-s-zatuhaniem.md) | 24.13 Боковины R196: трубы с затуханием, ред. 2, устарело → 24.14 | 3.3 |
 | [41_24-14-bokoviny-r196-truby-po-vsey-stenke](41_design_review/41_24-14-bokoviny-r196-truby-po-vsey-stenke.md) | 24.14 Боковины R196, ред. 3: трубы по всей стенке | 3.1 |
 | [42_24-15-stek-peda-testovoy-platy](41_design_review/42_24-15-stek-peda-testovoy-platy.md) | 24.15 Стек пэда тестовой платы 4 × 4: слои, высоты, три формы (R194) | 3.6 |

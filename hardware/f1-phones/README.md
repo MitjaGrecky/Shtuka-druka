@@ -65,3 +65,6 @@ EasyEDA (19.11.2026): F1 0.6 = F1_v7: детали 57/57, цепи 40/40, LCSC (
 
 ## Rev 0.7 (20.11.2026)
 Mute-logic cluster moved to (88,10) (was 90,14): 2 unrouted after the GND pour instead of 4 (Freerouting 1.9.0, gap 1.4). Schematic unchanged.
+
+## Rev 0.8 (21.11.2026): cable detect (P124, R202)
+- Sleeve break contact SN of each Cliff jack = detect (high = plugged): 100k pull-up to +5V, 10k + 100 nF; 100k from tip and ring to GND at the jack side (discharge while the relay is open). The mute header is now 5 pins: MUTE, R2_OK, GND, DET_HP1, DET_HP2. HP2 group anchor 58,10, header 3 at x 84.

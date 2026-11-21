@@ -31,7 +31,7 @@ import kit as K  # noqa: E402
 NAME = "f1-phones"
 ID = "F1"
 TITLE = "F1 - Headphones: 2 x Cliff S1 6.35 mm, 2 x OPA1622 difference amplifiers x2, mute relays"
-REV = "0.7"
+REV = "0.8"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("From A1: Phones 1 and 2 as differential pairs (2 Vrms FS) -> OPA1622 difference amp x2 -> 10 R -> relay -> NMJ6HCD2; "
             "volume is the DAC's digital attenuator (R87); mute relays need MUTE and R2_OK (R66, R137)")
@@ -76,8 +76,8 @@ def parts():
         "2 Vrms differential full scale")
     add(ref("J"), "Connector_Generic:Conn_01x04", "from PW", PH.format(n=4), {"1": "+12V", "2": "GND", "3": "-12V", "4": "+5V"},
         Note="+-12 V for the amplifiers, +5 V for the relay coils (PW 'to F1', 4 pins from PW rev 0.5)")
-    add(ref("J"), "Connector_Generic:Conn_01x03", "from R1 (mute)", PH.format(n=3), {"1": "MUTE", "2": "R2_OK", "3": "GND"},
-        Note="MUTE and R2_OK from R2 via R1 ('to F1' header on R1 rev 0.4); low while R2 boots (R66, R137)")
+    add(ref("J"), "Connector_Generic:Conn_01x05", "from R1 (mute, detect)", PH.format(n=5), {"1": "MUTE", "2": "R2_OK", "3": "GND", "4": "DET_HP1", "5": "DET_HP2"},
+        Note="MUTE and R2_OK from R2 via R1 ('to F1' header on R1 rev 0.4); low while R2 boots (R66, R137). Rev 0.8 (P124): pins 4, 5 = cable detect HP1, HP2 to R2 (high = plugged)")
     for _ in range(2):
         C("10u 25V", "+12V", fp=C1210)
         C("10u 25V", "GND", "-12V", fp=C1210)
@@ -118,9 +118,16 @@ def parts():
             {"A1": "+5V", "A2": "COIL_K", "11": f"{h}L_OR", "12": None, "14": f"{h}_TIP", "21": f"{h}R_OR", "22": None, "24": f"{h}_RING"},
             LCSC="C2982926", Note=f"Phones {k} mute relay: normally open, opens without power (R66, R137)")
         add(ref("J"), "Connector_Audio:AudioJack3_Switch", f"PHONES {k}", JACK,
-            {"T": f"{h}_TIP", "TN": None, "R": f"{h}_RING", "RN": None, "S": "GND", "SN": None},
-            Note=f"Phones {k}: Cliff S1/BBB CL1115 (Digikey 4654-CL1115-ND), 6.35 mm stereo, switched (break contacts unused), 12.7 mm high, "
+            {"T": f"{h}_TIP", "TN": None, "R": f"{h}_RING", "RN": None, "S": "GND", "SN": f"{h}_SN"},
+            Note=f"Phones {k}: Cliff S1/BBB CL1115 (Digikey 4654-CL1115-ND), 6.35 mm stereo, switched (rev 0.8: the sleeve break contact SN is the cable detect), 12.7 mm high, "
             "hand-soldered (not at JLCPCB). Wall 3 mm + fibre washer 1.6 + nut 5.0 is 9.6 mm, the thread 9.35 mm: leave the washer out")
+        # rev 0.8 (P124, R202): cable detect and discharge. SN = sleeve (GND) while the jack is empty, opens when a plug goes in: 100k pull-up to +5V,
+        # 10k + 100 nF = 1 ms to the detect line (high = plugged); 100k from tip and ring to GND at the jack side discharge the cable while the relay is open.
+        R("100k", "+5V", f"{h}_SN", Note="cable detect pull-up (SN is on GND while the jack is empty)")
+        R("10k", f"{h}_SN", f"DET_{h}", Note="detect line, RC 1 ms with 100 nF")
+        C("100n", f"DET_{h}", Note="detect debounce, RC 1 ms")
+        R("100k", f"{h}_TIP", "GND", Note="discharge of the cable while the relay is open")
+        R("100k", f"{h}_RING", "GND", Note="discharge of the cable while the relay is open")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 
@@ -138,7 +145,7 @@ def placement():
     for r, x in zip(jacks, (27.0, 75.0)):
         fixed[r] = (x, 9.1, 0, t)                  # centre of the pad field: rows 4/1 at y 2.75, 2/5 at 9.1, 3/6 at 15.45; body to y 22.75
     heads = [p["ref"] for p in P if p["lib"].startswith("Connector_Generic") and p["ref"] not in jacks]
-    for r, (x, y, rot) in zip(heads, ((51.0, 25.5, 270), (70.0, 30.6, 0), (81.0, 30.6, 0))):
+    for r, (x, y, rot) in zip(heads, ((51.0, 25.5, 270), (70.0, 30.6, 0), (84.0, 30.6, 0))):
         fixed[r] = (x, y, rot, t)
     fixed.update(K.hole_fixed(P, HOLES))
     grp = {1: [], 2: [], 0: []}
@@ -154,7 +161,8 @@ def placement():
         if p["value"].startswith("G6K"):
             side = 1 if "HP1" in str(p["pins"]) else 2
         grp[side].append(p["ref"])
-    G = [(24.0, 29.0, t, grp[1], 0), (52.0, 10.0, t, grp[2], 0), (*[float(v) for v in os.environ.get("F1_G0", "88,10").split(",")], t, grp[0], 0)]
+    G = [(24.0, 29.0, t, grp[1], 0), (58.0, 10.0, t, grp[2], 0), (*[float(v) for v in os.environ.get("F1_G0", "88,10").split(",")], t, grp[0], 0)]
+    # rev 0.8 (P124): the HP2 group anchor 52,10 -> 58,10 (the relay K2 no longer fitted next to the jack after +10 small parts and the 5-pin header); header 3 at x 84 (5 pins, 12.4 mm)
     # rev 0.7: the mute-logic cluster (anchor 88,10; before 90,14): 2 unrouted after the GND pour instead of 4 (probes 88,10 -> 2, 95,24 -> 5, 62,18 -> 6, 40,12 -> 4; exp_gap, Freerouting 1.9.0)
     # rev 0.6 (20.11.2026, router finding f1-four-gaps.md): the pins +12V / GND / -12V of the OPA1622 are on a 0.5 mm pitch and the GND pad could not leave the chip:
     # courtyard gap 0.25 -> 1.4 mm so that the neighbouring resistors, capacitors and the relay leave a free corridor for the fan-out of pins 2-4 (and the EN, HP1R_IM, HP1L_O nets)

@@ -33,7 +33,7 @@ import kit as K  # noqa: E402
 NAME = "r2-control"
 ID = "R2"
 TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables"
-REV = "1.4"
+REV = "1.5"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = ODROID-H5, down = RP2350, panel P2, A1 port A, spare")
@@ -52,9 +52,9 @@ PH = "Connector_JST:JST_PH_B{n}B-PH-K_1x0{n}_P2.00mm_Vertical"
 # GPIO map of the RP2350A (30 GPIO, all used)
 GPIO = {0: "MIDI_TX1", 1: "MIDI_TX2", 2: "MIDI_TX3", 3: "MIDI_TX4", 4: "MIDI_RX1", 5: "MIDI_RX2",
         6: "TRS1_T", 7: "TRS1_R", 8: "TRS2_T", 9: "TRS2_R", 10: "TRSIN_A", 11: "TRSIN_B",
-        12: "MUTE", 13: "R2_OK", 14: "DAC_SCK", 15: "DAC_SDI", 16: "DAC_CS1", 17: "DAC_CS2",
+        12: "MUTE", 13: "R2_OK_FW", 14: "DAC_SCK", 15: "DAC_SDI", 16: "DAC_CS1", 17: "DAC_CS2",
         18: "CLK_OUT1", 19: "CLK_OUT2", 20: "RST_OUT", 21: "CLK_IN", 22: "RST_IN",
-        23: "XR_LATCH", 24: "XR_OE", 25: None, 26: "CVIN1", 27: "CVIN2", 28: "CVIN3", 29: "CVIN4"}
+        23: "XR_LATCH", 24: "XR_OE", 25: "DET_SDO", 26: "CVIN1", 27: "CVIN2", 28: "CVIN3", 29: "CVIN4"}
 GPIO_PIN = {0: "2", 1: "3", 2: "4", 3: "5", 4: "7", 5: "8", 6: "9", 7: "10", 8: "12", 9: "13", 10: "14", 11: "15",
             12: "16", 13: "17", 14: "18", 15: "19", 16: "27", 17: "28", 18: "29", 19: "31", 20: "32", 21: "33",
             22: "34", 23: "35", 24: "36", 25: "37", 26: "40", 27: "41", 28: "42", 29: "43"}
@@ -218,14 +218,39 @@ def parts():
     # DAC traffic only shifts the register; the outputs change on XR_LATCH. /OE is pulled high, so until the firmware
     # has loaded zeros and pulls XR_OE low the outputs are high-Z and the 100k pull-downs hold every line low.
     add(ref("U"), "74xx:74HC595", "74HC595", "Package_SO:SOIC-16_3.9x9.9mm_P1.27mm",
-        {"15": "PH48_1", "1": "PH48_2", "2": "PHONO", "3": "ATT1", "4": "ATT2", "5": None, "6": None, "7": None, "8": "GND",
+        {"15": "PH48_1", "1": "PH48_2", "2": "PHONO", "3": "ATT1", "4": "ATT2", "5": "DET_PL", "6": None, "7": None, "8": "GND",
          "9": None, "10": "+3V3", "11": "DAC_SCK", "12": "XR_LATCH", "13": "XR_OE", "14": "DAC_SDI", "16": "+3V3"},
-        LCSC="C5947", Note="output expander: QA PH48_1, QB PH48_2, QC PHONO, QD ATT1, QE ATT2, QF-QH spare; SRCLR high")
+        LCSC="C5947", Note="output expander: QA PH48_1, QB PH48_2, QC PHONO, QD ATT1, QE ATT2, QF = /PL of the cable-detect register (rev 1.5), QG-QH spare; SRCLR high")
     C("100n", "+3V3")
     R("10k", "XR_OE", "+3V3", Note="outputs high-Z until the firmware enables them")
     R("100k", "XR_LATCH", "GND")
     for net in ("PH48_1", "PH48_2", "PHONO", "MUTE", "ATT1", "ATT2"):
         R("100k", net, "GND", Note="off while the RP2350 boots")
+
+
+    # ---------------------------------------------------------------- rev 1.5 (P124, R202): cable detect inputs, supply-loss mute
+    # 74HC165 reads the jack cable-detect lines (high = plugged, MAIN AUX RCA from R1, HP1 HP2 from F1) on the DAC SPI clock: /PL = QF of the 74HC595
+    # (low pulse loads the lines, then 8 clocks shift them out on Q7 -> GPIO 25). 10k in series (5 V lines into a 3.3 V input), 100k pull-down = "not plugged" if a cable is missing.
+    # R2_OK now = GPIO 13 AND PM_ALERT (INA226 ALERT on PW, open drain, low = BUS under the limit): the relays open in hardware about 4 ms after the BUS drops.
+    add(ref("J"), "Connector_Generic:Conn_01x07", "detect and alert", PH.format(n=7),
+        {"1": "DET_MAIN", "2": "DET_AUX", "3": "DET_RCA", "4": "DET_HP1", "5": "DET_HP2", "6": "PM_ALERT", "7": "GND"},
+        Note="cable detect from the jacks (R1 Main, Aux, RCA; F1 HP1, HP2: high = plugged) and PM_ALERT from the PW telemetry harness (INA226, open drain); harness to be fixed by the chief engineer")
+    add(ref("U"), "74xx:74HC165", "74HC165", "Package_SO:SOIC-16_3.9x9.9mm_P1.27mm",
+        {"1": "DET_PL", "2": "DAC_SCK", "3": "DETI_HP2", "4": "GND", "5": "GND", "6": "GND", "7": None, "8": "GND",
+         "9": "DET_SDO", "10": "GND", "11": "DETI_MAIN", "12": "DETI_AUX", "13": "DETI_RCA", "14": "DETI_HP1", "15": "GND", "16": "+3V3"},
+        Note="cable-detect input register (rev 1.5): D0 MAIN (pin 11), D1 AUX, D2 RCA, D3 HP1, D4 HP2 (pin 3); D5-D7, /CE and DS to GND; Q7 (pin 9) -> GPIO 25. "
+        "Part number to select (technologist)")
+    C("100n", "+3V3")
+    R("10k", "DET_PL", "+3V3", Note="/PL idles high while the 595 outputs are high-Z")
+    for dn in ("MAIN", "AUX", "RCA", "HP1", "HP2"):
+        R("10k", f"DET_{dn}", f"DETI_{dn}", Note="series: 5 V detect line into a 3.3 V input")
+        R("100k", f"DETI_{dn}", "GND", Note="no cable = not plugged")
+    add(ref("U"), "74xGxx:74LVC1G08", "74LVC1G08", "Package_TO_SOT_SMD:SOT-23-5",
+        {"1": "R2_OK_FW", "2": "PM_ALERT", "3": "GND", "4": "R2_OK", "5": "+3V3"},
+        Note="R2_OK = GPIO 13 AND PM_ALERT: INA226 under-voltage opens the relays in hardware. Part number to select (technologist)")
+    C("100n", "+3V3")
+    R("10k", "PM_ALERT", "+3V3", Note="INA226 ALERT is open drain; an unplugged harness reads high (= no alarm)")
+    R("100k", "R2_OK_FW", "GND", Note="low while the RP2350 boots")
 
     # ---------------------------------------------------------------- MIDI (CA-033, 3.3 V)
     G[0] = "midi"

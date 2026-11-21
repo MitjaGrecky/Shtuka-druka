@@ -52,12 +52,13 @@ EXTRA = {"Interface_Expansion": ["TCA9546APW"],
          "Transistor_FET": ["CSD18540Q5B", "IRLML2060"]}
 EXTRA["Interface_USB"].append("TPS25730D")
 EXTRA["Regulator_Linear"] += ["TPS7A4701xRGW", "TPS7A3301RGW", "TPS7A4101DGN"]
-EXTRA["Connector_Generic"] += ["Conn_02x02_Odd_Even", "Conn_02x03_Odd_Even"]
+EXTRA["Connector_Generic"] += ["Conn_02x02_Odd_Even", "Conn_02x03_Odd_Even", "Conn_01x07"]   # Conn_01x07: R2 detect header (P124)
 EXTRA.setdefault("Sensor_Energy", []).append("INA226")    # PW power monitor (R146)
 EXTRA.setdefault("Battery_Management", []).append("BQ25798")   # PW battery chargers (R183)
 EXTRA["Connector_Generic"] += ["Conn_01x08"]
 EXTRA.setdefault("74xx", []).append("74HC595")              # R2 output expander (task #25)
 EXTRA.setdefault("74xx", []).append("74HC4051")          # P2 pad multiplexers
+EXTRA.setdefault("74xGxx", []).append("74LVC1G08")          # R2 R2_OK AND PM_ALERT (rev 1.5, P124)
 # A1 digital audio board (14.11.2026)
 EXTRA["Connector_Generic"] += ["Conn_01x06"]
 EXTRA["Device"] += ["FerriteBead_Small"]

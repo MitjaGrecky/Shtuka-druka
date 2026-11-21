@@ -115,3 +115,7 @@ EasyEDA (19.11.2026): R2 1.3 = R2_v9: детали 248/248, цепи 170/170, LC
 
 ## Rev 1.4 (20.11.2026): placement rule template
 Courtyard gap 1.4 mm (ic_gap 2.0 mm around fine-pitch ICs) instead of 0.25 mm, the largest that fits the outline (autoplace.fit); basis: notes/placement_analysis_2026-11-20.md. Schematic unchanged.
+
+## Rev 1.5 (21.11.2026): cable detect and supply-loss mute (P124, R202)
+- 74HC165 reads the detect lines (MAIN, AUX, RCA, HP1, HP2; high = plugged) on the DAC SPI clock; /PL = QF of the 74HC595, data to GPIO 25 (was free); new JST PH 1x7 header "detect and alert" (also PM_ALERT).
+- R2_OK = GPIO 13 AND PM_ALERT (74LVC1G08): INA226 under-voltage opens the relays in hardware, about 4 ms after the BUS drops. Harness R1/F1/PW to this header: to be fixed by the chief engineer. Part numbers of the 74HC165 and 74LVC1G08: technologist.

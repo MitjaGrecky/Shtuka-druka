@@ -35,7 +35,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "1.7"
+REV = "1.8"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Inputs DC 12-24 V, USB-C PD 15-20 V (TPS25730D) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -208,6 +208,8 @@ def parts():
         Note="mechanical On/Off on the rear wall: Carling 2GK51-73, both poles in parallel (>= 10 A DC); rev 1.2: Micro-Fit 2x2 (43045-0412, housing 43025-0400): two contacts per side, 5 A per contact at the "
         "10.2 A peak (95 W from a 9.3 V pack); was a 1x2 with 10 A on one contact, over the contact rating (harness H3: 4 wires, one pole = 2 wires)")
     # input power monitor (R146): everything the instrument draws passes the shunt; P2 reads it and caps the LEDs
+    # INA226 ALERT (P130): bus under-voltage limit set by the firmware (register 0x1EA0 = 9.8 V at 1.25 mV/LSB, "pack is running down"): the LM5176 stops by itself at 9.3 V (8.4-10.4 V),
+    # the BMS cuts at 3 x 2.9 V = 8.7 V; the alert mutes the outputs smoothly, the hold-up module HU1 covers the rest (tasks/13)
     R("5m", "BUS_SW", "BUS", fp=R2512, Note="shunt 5 mOhm 1 % 3 W: 8 A -> 40 mV (INA226 range 81.9 mV)")
     u = ref("U")
     add(u, "Sensor_Energy:INA226", "INA226", "Package_SO:MSOP-10_3x3mm_P0.5mm",
@@ -507,6 +509,9 @@ def parts():
     C("10n 50V", "PDF_DVDT", fp=C0603, Note="dVdT slew: about 4 ms at 19 V")
     R("220k", "PD_VBUS", "PDF_SHDN", Note="SHDN pull-up (needs 2 V, abs max 5.5 V; 5 V attach is above 2 V)")
     add(ref("D"), "ShtukaDruka:BZT52C3V3", "BZT52C3V3", SOD123, {"1": "GND", "2": "PDF_SHDN"}, LCSC="C173413", Note="clamps SHDN to 3.3 V")
+    # rev 1.8 (P130): connector to the hold-up module HU1 (4 x 470 uF behind 10 ohm + Schottky per rail, hardware/hu1-holdup): P14, GND, N14 before the LDOs, harness <= 80 mm
+    add(ref("J"), "Connector_Generic:Conn_01x03", "to HU1 (P14, GND, N14)", MF.format("43650-0315_1x03"), {"1": "P14", "2": "GND", "3": "N14"},
+        Note="Micro-Fit 3.0 1x3 vertical, latching (housing 43645-0300): hold-up module HU1 on a harness <= 80 mm, AWG 20; the 76 uF on P14/N14 stay on PW (P130)")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 

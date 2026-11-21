@@ -79,7 +79,7 @@ for prio, (_, n, net, poly) in enumerate(sorted(hulls, key=lambda t: -t[0])):   
     z.SetMinThickness(mm(0.3))
     z.SetLocalClearance(mm(0.3))
     z.SetPadConnection(pcbnew.ZONE_CONNECTION_FULL)
-    z.SetIslandRemovalMode(pcbnew.ISLAND_REMOVAL_MODE_ALWAYS)
+    z.SetIslandRemovalMode(pcbnew.ISLAND_REMOVAL_MODE_NEVER)    # no pads of the net on this layer: keep islands until the pad vias exist
     p = pcbnew.SHAPE_POLY_SET(poly)
     p.thisown = False
     z.SetOutline(p)
@@ -173,6 +173,9 @@ for n in nets:
             tr.SetNet(net)
             b.Add(tr)
             added += 1
+for z in b.Zones():                      # now islands with a pad via are connected; drop the orphans
+    if z.IsOnLayer(L) and z.GetNetname() in nets and not z.GetIsRuleArea():
+        z.SetIslandRemovalMode(pcbnew.ISLAND_REMOVAL_MODE_ALWAYS)
 R.fill(b)
 b.Save(out)
 print(f"power pours {[h[1] for h in hulls]} on {layer_name}: {added} pad vias, no room: {len(lost)} {lost[:20]}")

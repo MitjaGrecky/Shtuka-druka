@@ -35,7 +35,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "2.3"
+REV = "2.4"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Input USB-C PD 15-20 V (TPS25730D, also a MacBook charger; the DC input is removed, R205) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -61,7 +61,7 @@ FET = ("Transistor_FET:CSD18540Q5B", "Package_TO_SOT_SMD:TDSON-8-1")   # CSD1853
 
 def parts():
     P = []
-    n = {"H": 0, "R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "L": 0, "F": 0}
+    n = {"H": 0, "R": 0, "C": 0, "U": 0, "J": 0, "D": 0, "Q": 0, "L": 0, "F": 0, "TP": 0}
 
     def ref(k):
         n[k] += 1
@@ -193,7 +193,8 @@ def parts():
         add(ref("J"), "Connector_Generic:Conn_02x03_Odd_Even", f"Battery {k}", MF.format("43045-0612_2x03"),
             {"1": b, "2": b, "3": "GND", "4": "GND", "5": f"{cs}_TS", "6": "GND"},
             Note=f"3S pack {k} (3 x Jauch LP906090JH, doc 43 5c) with its own BMS board (BQ7791500, R183): BAT+ x 2, GND x 2, NTC 10k (103AT, B 3435) between pin 5 and pin 6; harness 150-250 mm")
-        add(ref("F"), "Device:Fuse", "10A", "Fuse:Fuse_2920_7451Metric", {"1": b, "2": bf}, Note="resettable, 10 A hold: the pack is 6 A (1C of the cell, Jauch datasheet), the BMS trips at 9.6-14.4 A")
+        add(ref("F"), "Device:Fuse", "10A", "Fuse:Fuse_2920_7451Metric", {"1": f"BAT{k}_J", "2": bf}, Note="resettable, 10 A hold: the pack is 6 A (1C of the cell, Jauch datasheet), the BMS trips at 9.6-14.4 A")
+        R("0", b, f"BAT{k}_J", fp=R1206, Note=f"P147: 0 ohm jumper in the pack {k} line (charge and discharge current): cut it out or solder a wire loop / current probe across it")
         add(ref("D"), "Device:D_TVS", "SMBJ13CA", SMB, {"1": bf, "2": "GND"}, LCSC="C224008",
             Note="hot-plug TVS at BAT (BQ25798 fig. 8-1, note 2): 13 V standoff above the 12.6 V pack, clamp 21.5 V at 28 A and about 16-17 V at a few A; BAT/BATP absolute maximum is 20 V (SMBJ20CA clamped at 32 V)")
         ideal_diode(f"IBAT{k}", bf, "BUS_IN")
@@ -486,7 +487,8 @@ def parts():
     # low-side limit 3.9-5 A, total output capacitance at most about 1000 uF) would charge 1 mF at 3.5 A, through 10 ohm the peak is 1.4 A; Schottky in the discharge direction.
     for rail, plus, minus, rs, anode, cathode in (("P14", "P14_ST", "GND", ("P14", "P14_ST"), "P14_ST", "P14"), ("N14", "GND", "N14_ST", ("N14", "N14_ST"), "N14", "N14_ST")):
         for _ in range(2):
-            CP("470u 25V", plus, minus, fp=CP10, Note=f"hold-up storage {rail}: aluminium electrolytic 105 C, 10 x 10.5 on the bottom side (technologist: part)")
+            CP("470u 25V", plus.replace("_ST", "_C"), minus.replace("_ST", "_C"), fp=CP10, Note=f"hold-up storage {rail}: aluminium electrolytic 105 C, 10 x 10.5 on the bottom side (technologist: part)")
+        R("0", rs[1], rs[1].replace("_ST", "_C"), fp=R1206, Note=f"P147: 0 ohm jumper between the {rail} storage node and its capacitors: charge and discharge current of the storage")
         R("10", rs[0], rs[1], fp=R1206, Note=f"{rail} storage charge resistor: LMR33640 datasheet 9.2.2: total output capacitance at most about 1000 uF (10 x design value), soft start 4 ms, low-side limit 3.9-5 A; 0.94 mF + 45 uF straight on the output would be 3.5 A; behind 10 ohm the peak is 1.4 A (tau 9.4 ms)")
         add(ref("D"), "Device:D_Schottky", "SS34", SMA, {"1": cathode, "2": anode}, LCSC="C8678",
             Note=f"{rail} storage discharge diode (the storage feeds the rail when it sags), 40 V 3 A; check the part number and the stock")
@@ -494,6 +496,9 @@ def parts():
     for net, ohm in (("P14", "1k"), ("N14", "1k"), ("V15", "1k"), ("V12F", "820")):
         for _ in range(2):
             R(ohm, net, "GND", fp=R1206, Note=f"PFM idle load P135: {net}, 2 x {ohm} = about 30 mA, <= 0.25 W each")
+    # rev 2.4 (P147): test points (D2.0 mm pads): VBUS after the damper, BUS, +-14 V, 5 V rails, 3V3, three GND
+    for net in ("PD_VBUS", "BUS", "P14", "N14", "+5V", "+5V_PANEL", "+3V3", "GND", "GND", "GND"):
+        add(ref("TP"), "Connector:TestPoint", net.replace("PD_VBUS", "VBUS"), "TestPoint:TestPoint_Pad_D2.0mm", {"1": net}, Note="P147 test point")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P
 
@@ -523,7 +528,7 @@ def placement():
     for p in P:
         nets = set(p["pins"].values())
         if p["ref"].startswith("C") and p["value"] == "470u 25V":
-            st[p["ref"]] = "P" if "P14_ST" in nets else "N"
+            st[p["ref"]] = "P" if "P14_C" in nets else "N"
         elif "P14_ST" in nets and not p["ref"].startswith("C"):
             st[p["ref"]] = "PR" if p["ref"].startswith("R") else "PD"
         elif "N14_ST" in nets and not p["ref"].startswith("C"):

@@ -99,7 +99,7 @@ def write_grid(D, ns, comment2, here, notes=()):
         nets = p["pins"] if not multi else {k: v for k, v in p["pins"].items() if k in nums}
         start = len(S.items)
         S.symbol(p["ref"], p["lib"], p["value"], (x + w / 2) * g, (y + h / 2) * g, 0, p["fp"], f, nets,
-                 dnp=p["fields"].get("DNP") == "yes", in_bom=not p["ref"].startswith(("H", "FSR")))   # FSR = copper electrodes of the board, not a part
+                 dnp=p["fields"].get("DNP") == "yes", in_bom=not p["ref"].startswith(("H", "FSR", "TP")))   # FSR = copper electrodes of the board, not a part
         if multi:                                          # this instance is unit u with only its own pins
             s = S.items[start].replace("(unit 1)", f"(unit {u})")
             s = s.replace(f"(uuid {M.uid('sym', p['ref'])})", f"(uuid {M.uid('sym', p['ref'], u)})")
@@ -140,7 +140,7 @@ def write(D, ns, comment2, here):
         p = P[ref]
         f = {k: v for k, v in p["fields"].items() if k not in ("DNP", "Side", "PadClearance")}
         S.symbol(ref, p["lib"], p["value"], x, y, r, p["fp"], f, p["pins"], dnp=p["fields"].get("DNP") == "yes",
-                 in_bom=not ref.startswith(("H", "FSR")))
+                 in_bom=not ref.startswith(("H", "FSR", "TP")))
 
     g = 2.54
     S.text(D.BUS_NOTE, 10 * g, 8 * g)

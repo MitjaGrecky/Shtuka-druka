@@ -53,6 +53,7 @@ EXTRA = {"Interface_Expansion": ["TCA9546APW"],
 EXTRA["Interface_USB"].append("TPS25730D")
 EXTRA["Regulator_Linear"] += ["TPS7A4701xRGW", "TPS7A3301RGW", "TPS7A4101DGN"]
 EXTRA["Connector_Generic"] += ["Conn_02x02_Odd_Even", "Conn_02x03_Odd_Even", "Conn_01x07"]   # Conn_01x07: R2 detect header (P124)
+EXTRA["Connector"] += ["TestPoint"]   # PW test points (P147)
 EXTRA.setdefault("Sensor_Energy", []).append("INA226")    # PW power monitor (R146)
 EXTRA.setdefault("Battery_Management", []).append("BQ25798")   # PW battery chargers (R183)
 EXTRA["Connector_Generic"] += ["Conn_01x08"]

@@ -6,7 +6,7 @@
 Plan, pinouts and sources: `PLAN.md`. Decisions: R82-R84 (two USB ports, TDM, 96 kHz hardware), R87 (volume in the DAC), R88 (two spare
 channels), R114 (two oscillators), R116/R117 (converters, two paths per mic), R136 (CS4308P, current outputs).
 
-**Status: rev 1.0 (20.11.2026) - placed board, not routed, pin rule (A-037) not yet applied; USB isolator TI ISOUSB211 since rev 0.9 (see the Rev sections at the end; rev 0.6 text below kept as history: 613 parts, 18.11.2026).** Schematic checked against the datasheets (cloud task #26, rev 0.2): CS4308P DS1317, CS53A04P DS1397
+**Status: rev 1.1 (25.11.2026) - placed board, not routed, pin rule (A-037) not yet applied; USB isolator TI ISOUSB211 since rev 0.9 (see the Rev sections at the end; rev 0.6 text below kept as history: 613 parts, 18.11.2026).** Schematic checked against the datasheets (cloud task #26, rev 0.2): CS4308P DS1317, CS53A04P DS1397
 (same family as the CS5304P/8P - the CS5308P/CS5304P datasheets themselves were not reachable), XU316-1024-QF60B, ADuM4165/4166, SiTime/SCTF oscillators.
 
 ## Blocks
@@ -131,3 +131,7 @@ EasyEDA (19.11.2026): A1 0.9 = A1_v7: детали 657/657, цепи 387/387, LC
 
 ## Rev 1.0 (20.11.2026): placement rule template
 Courtyard gap 1.0 mm (ic_gap 1.6 mm around fine-pitch ICs) instead of 0.25 mm, the largest that fits the outline (autoplace.fit); basis: notes/placement_analysis_2026-11-20.md. Schematic unchanged.
+
+## Rev 1.1 (25.11.2026): ISOUSB211 footprint (doc 52)
+
+U44 SSOP-28 DP0028A: pad rows 9.85 -> 9.30 mm, pads 2.05 x 0.45 (as KiCad SOIC-16W 7.5x10.3, same body and lead span); before, the lead heel sat off the pad. Placement unchanged.

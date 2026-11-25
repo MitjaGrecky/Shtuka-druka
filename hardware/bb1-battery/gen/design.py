@@ -36,7 +36,7 @@ BM_X = {"A": 112.0, "B": 266.0}          # the protection circuits between the c
 
 
 def _bm():
-    spec = importlib.util.spec_from_file_location("bm_design", os.path.join(HERE, "..", "..", "bm-bms3s", "gen", "design.py"))
+    spec = importlib.util.spec_from_file_location("bm_design", os.path.join(HERE, "..", "..", "archive", "bm-bms3s", "gen", "design.py"))
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
     return m

@@ -7,7 +7,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-sys.path.insert(0, os.path.join(HERE, "..", "..", "common", "gen"))
+sys.path.insert(0, os.path.join(HERE, "..", "..", "..", "common", "gen"))
 import design as D  # noqa: E402
 import module_pcb  # noqa: E402
 

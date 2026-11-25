@@ -7,6 +7,10 @@ Board map and reasoning: `docs/ru/29_board_map.md`.
 | Board | What | Status | Spec |
 |---|---|---|---|
 | [`m1-screen-knobs`](m1-screen-knobs/) | 8 encoders with touch and 13-LED rings under the screen | rev 0.1, routing (see `UNROUTED`, `QUILTER.md`) | `docs/ru/30_m1_screen_knobs.md` |
+| [`bb1-battery`](bb1-battery/) | Battery board: 6 cells, 2 x BQ7791500 (replaces BM, P143-P146) | rev 0.3, placed | `bb1-battery/README.md` |
 | [`w1-levels`](w1-levels/) | Volume pots, P48 buttons, window for M5 | rev 0.1, routed | `docs/ru/31_w1_levels.md` |
 
 License: CERN Open Hardware Licence Version 2 - Strongly Reciprocal (CERN-OHL-S-2.0), see `LICENSE`.
+
+
+Archive (`archive/`, not checked by CI): boards replaced by newer ones. `archive/bm-bms3s` (BM 0.3) - replaced by BB1 (P143, P144); BB1 still imports its protection circuit from `archive/bm-bms3s/gen/design.py`.

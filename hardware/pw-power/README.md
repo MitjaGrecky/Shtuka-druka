@@ -1,4 +1,6 @@
-# PW - Power board (rev 2.5, 25.11.2026; under the slope, right, next to the battery bay)
+# PW - Power board (rev 2.6, 25.11.2026; under the slope, right, next to the battery bay)
+
+**Rev 2.6 (doc 52):** LM70660 footprint RRX0029B checked against the TI drawing: 6 + 6 TI vias in the VIN and PGND pads, SW pad x -0.125..2.9, pad 30 at (0.037, 1.308).
 
 **Rev 2.5 (P151, P153):** pack jumpers 0 R 1206 -> 1 mm2 wire loop (33 mW at 8 A); SRP1038CC-4R7M, EEE-FK1E471P, EEH-ZA1V151P; PFM loads and the 10 R storage resistors in 2512.
 

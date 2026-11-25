@@ -35,7 +35,7 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "2.5"
+REV = "2.6"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Input USB-C PD 15-20 V (TPS25730D, also a MacBook charger; the DC input is removed, R205) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
@@ -303,7 +303,7 @@ def parts():
             {"1": "BUS", "2": "BUS", "3": "BUS", "4": f"{p}_BOOT", "5": f"{p}_SW", "6": net, "7": None, "8": "GND", "9": f"{p}_EN", "10": None,
              "11": f"{p}_LS", "12": net, "13": f"{p}_CFG", "14": f"{p}_RT", "15": f"{p}_XC", "16": f"{p}_FB", "17": "GND", "18": f"{p}_VDDA", "19": f"{p}_VCC",
              "20": f"{p}_SW", "21": f"{p}_SW", "22": f"{p}_SW", "23": "GND", "24": "GND", "25": "GND", "26": "GND", "27": "BUS", "28": "BUS", "29": "BUS", "30": "GND"},
-            LCSC="C42328952", Note=f"{note}; BUS -> 5 V 6 A, 400 kHz forced PWM + DRSS (P125); footprint read from the TI RRX0029B example board layout: verify before release")
+            LCSC="C42328952", Note=f"{note}; BUS -> 5 V 6 A, 400 kHz forced PWM + DRSS (P125); footprint checked against the TI RRX0029B drawing with TI vias (doc 52)")
         R("392k", "BUS", f"{p}_EN", Note="UVLO divider (datasheet 6.3.2, eq. 2): EN rising 1.0 V (0.95-1.05) x (1 + 392k / 49.9k) = start 8.86 V (8.4-9.3 V), stop at 90 % = 7.97 V; the pack runs 9-12.6 V (BMS cut-off 8.7 V); EN pin 65 V tolerant, 2.7 V at 24 V in")
         R("49.9k", f"{p}_EN", "GND")
         R("54.9k", f"{p}_RT", "GND", Note="RT: 400 kHz (datasheet 7.2.1.2.7, E96)")

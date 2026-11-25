@@ -287,7 +287,7 @@ def vqfn29():
     # Right: 17 18 19 at y -1.75 -1.25 -0.75; 20 21 22 (SW) at y 0.75 1.25 1.75 inside a large SW pad. Top: 23-26 (PGND) at x 2 1.5 1 0.5; 27-29 (VIN) at x -0.9 -1.4 -1.9
     # inside a large VIN pad (pins 1, 2, 3 join it too). Exposed pad 30 (PGND): 3.125 x 1.584 at (0.04, -1.32). Verify against the TI drawing before a release.
     n = "VQFN-29_RRX0029B_6x6_P0.5mm"
-    s = fp_head(n, "TI LM70660 RRX0029B VQFN-29 6x6 mm, land pattern read from the datasheet example board layout (verify before release)", "VQFN 29 LM70660")
+    s = fp_head(n, "TI LM70660 RRX0029B VQFN-29 6x6 mm, land pattern read from the datasheet example board layout (checked 25.11.2026, TI vias)", "VQFN 29 LM70660")
     s += fp_text("reference", "REF**", 0, -4.1, "F.SilkS", 0.8) + fp_text("value", n, 0, 4.1, "F.Fab", 0.5)
     c = 2.9
     for num, y in ((1, 2.25), (2, 1.75), (3, 1.25), (4, 0.25), (5, -0.25), (6, -1.25), (7, -1.75), (8, -2.25)):
@@ -298,9 +298,16 @@ def vqfn29():
         s += smd_pad(str(num), c, -y, 0.6, 0.25)                                # right
     for num, x in ((23, 2.0), (24, 1.5), (25, 1.0), (26, 0.5), (27, -0.9), (28, -1.4), (29, -1.9)):
         s += smd_pad(str(num), x, -c, 0.25, 0.6)                                # top
-    s += smd_pad("20", 1.5, -1.05, 3.0, 2.1, shape="rect")                       # large SW pad (pins 20-22)
+    # 25.11.2026 (doc 52): checked against the rendered drawing (p. 54): SW pad x -0.125..2.9, y 0.14..2.1; VIN pad x -2.4..-0.6, y 0.5..2.5;
+    # pad 30 3.125 x 1.584 at (0.037, -1.308); TI's 6 + 6 vias (0.3 / 0.6, tented): VIN at x -2.1 / -0.875, y 2.55 / 1.642 and (-1.834, 0.734), (-0.875, 0.734);
+    # PGND at x -1.275 / 0.037 / 1.35, y -0.766 / -1.85. Drawing y up -> KiCad y down.
+    s += smd_pad("20", 1.3875, -1.12, 3.025, 1.96, shape="rect")                 # large SW pad (pins 20-22)
     s += smd_pad("28", -1.5, -1.5, 1.8, 2.0, shape="rect")                       # large VIN pad (pins 1-3, 27-29)
-    s += smd_pad("30", 0.04, 1.32, 3.125, 1.584, shape="rect", layers='"F.Cu" "F.Paste" "F.Mask"')
+    s += smd_pad("30", 0.037, 1.308, 3.125, 1.584, shape="rect", layers='"F.Cu" "F.Paste" "F.Mask"')
+    for num, pts in (("28", ((-2.1, 2.55), (-0.875, 2.55), (-2.1, 1.642), (-0.875, 1.642), (-1.834, 0.734), (-0.875, 0.734))),
+                     ("30", ((-1.275, -0.766), (0.037, -0.766), (1.35, -0.766), (-1.275, -1.85), (0.037, -1.85), (1.35, -1.85)))):
+        for x, y in pts:
+            s += f'  (pad "{num}" thru_hole circle (at {x:g} {-y:g}) (size 0.6 0.6) (drill 0.3) (layers "*.Cu"))\n'
     s += fp_rect(-3.0, -3.0, 3.0, 3.0, "F.Fab", 0.1)
     s += fp_line(-3.4, -3.4, -2.8, -3.4, "F.SilkS", 0.12) + fp_line(-3.4, -3.4, -3.4, -2.8, "F.SilkS", 0.12)
     s += fp_rect(-3.6, -3.6, 3.6, 3.6, "F.CrtYd", 0.05)

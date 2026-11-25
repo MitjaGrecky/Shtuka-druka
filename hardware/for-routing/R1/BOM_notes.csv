@@ -2,9 +2,10 @@ Designator,Value,Footprint,LCSC,Status of the LCSC number
 J1,Power from PW,Molex_Micro-Fit_3.0_43045-1012_2x05_P3.00mm_Vertical,C277725,проверено 15.11.2026: 5 950 шт. (JLC)
 "C1,C2,C3,C4",47u 25V,CP_Elec_6.3x7.7,,номера нет: выбрать деталь
 J2,from R2,PinHeader_2x07_P2.54mm_Vertical,,номера нет: выбрать деталь
-J3,to F1 (mute),JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339,проверено 15.11.2026: 92 966 шт. (JLC)
-J4,to A1 (ADC 1-10),PinHeader_2x20_P2.54mm_Vertical,,номера нет: выбрать деталь
-J5,"to A1 (ADC 11-18, DAC 1-4, power)",PinHeader_2x25_P2.54mm_Vertical,,номера нет: выбрать деталь
+J3,"to F1 (mute, detect)",JST_PH_B5B-PH-K_1x05_P2.00mm_Vertical,C157993,проверено 15.11.2026: 54 490 шт. (JLC)
+J4,HP detect to R2,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339,проверено 15.11.2026: 92 966 шт. (JLC)
+J5,to A1 (ADC 1-10),PinHeader_2x20_P2.54mm_Vertical,,номера нет: выбрать деталь
+J6,"to A1 (ADC 11-18, DAC 1-4, power)",PinHeader_2x25_P2.54mm_Vertical,,номера нет: выбрать деталь
 "Q1,Q3",MMBTA92,SOT-23,C3009890,проверить в EasyEDA
 "R1,R2,R4,R6,R7,R9,R24,R53,R103,R116,R125,R217,R219",100k,R_0402_1005Metric,,номера нет: выбрать деталь
 "C5,C7",2.2u 100V,C_1210_3225Metric,,номера нет: выбрать деталь
@@ -12,7 +13,7 @@ J5,"to A1 (ADC 11-18, DAC 1-4, power)",PinHeader_2x25_P2.54mm_Vertical,,номе
 "R3,R8,R15,R19,R28,R29,R44,R48,R57,R58,R73,R74,R85,R86,R104,R105,R117,R118,R128,R129,R136,R137,R144,R145,R152,R153,R160,R161,R168,R169,R176,R177,R184,R185,R190,R192,R195,R197,R200,R202,R205,R207",10k,R_0402_1005Metric,C25744,"найден в библиотеке EasyEDA 13.11.2026 (ПК, tools/eda/eda_parts.py): UNI-ROYAL 0402WGF1002TCE 10 кОм 1% 0402, Basic; наличие и цена не смотрелись"
 "R5,R10",47k,R_0603_1608Metric,,номера нет: выбрать деталь
 "C6,C8",10u 63V,C_1210_3225Metric,,номера нет: выбрать деталь
-J6,MIC/LINE 1,Jack_XLR-6.35mm_Neutrik_NCJ6FI-V_Vertical,C368503,проверить в EasyEDA
+J7,MIC/LINE 1,Jack_XLR-6.35mm_Neutrik_NCJ6FI-V_Vertical,C368503,проверить в EasyEDA
 "R11,R12,R40,R41",6.81k,R_1206_3216Metric,,номера нет: выбрать деталь
 "C9,C10,C24,C25",47u 63V,CP_Elec_8x10.5,,номера нет: выбрать деталь
 "R13,R14,R42,R43",0,R_0402_1005Metric,,номера нет: выбрать деталь
@@ -36,17 +37,17 @@ J6,MIC/LINE 1,Jack_XLR-6.35mm_Neutrik_NCJ6FI-V_Vertical,C368503,проверит
 "C16,C21,C31,C36,C45,C50,C55,C60,C69,C78,C83,C84,C87,C90,C91,C94,C97,C98,C101,C104,C105,C108,C111,C112,C115,C118,C119,C122,C125,C126,C129,C132,C133,C136",1n C0G,C_0603_1608Metric,,номера нет: выбрать деталь
 "R36,R37,R65,R66,R100,R113",68.1k,R_0402_1005Metric,,номера нет: выбрать деталь
 "C19,C20,C34,C35,C48,C49,C58,C59",18p,C_0603_1608Metric,,номера нет: выбрать деталь
-J7,MIC/LINE 2,Jack_XLR-6.35mm_Neutrik_NCJ6FI-V_Vertical,C368503,проверить в EasyEDA
-J8,HI-Z 1,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J8,MIC/LINE 2,Jack_XLR-6.35mm_Neutrik_NCJ6FI-V_Vertical,C368503,проверить в EasyEDA
+J9,HI-Z 1,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
 "R69,R71",1M,R_0402_1005Metric,,номера нет: выбрать деталь
 "R70,R72",1k,R_0603_1608Metric,,номера нет: выбрать деталь
 "C39,C40,C63,C72",100p C0G,C_0603_1608Metric,,номера нет: выбрать деталь
-J9,HI-Z 2,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J10,HI-Z 2,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
 U7,OPA1642,SOIC-8_3.9x4.9mm_P1.27mm,C67640,проверить в EasyEDA
 "R75,R76,R87,R88",13.7k,R_0402_1005Metric,,номера нет: выбрать деталь
 "C43,C44,C53,C54",68p,C_0603_1608Metric,,номера нет: выбрать деталь
 "R81,R82,R93,R94",137k,R_0402_1005Metric,,номера нет: выбрать деталь
-J10,PHONO L,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609,"проверено 15.11.2026: 130 шт. (JLC), RCJ-025"
+J11,PHONO L,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609,"проверено 15.11.2026: 130 шт. (JLC), RCJ-025"
 "R97,R110",47k,R_0402_1005Metric,,номера нет: выбрать деталь
 "R98,R111,R126,R127,R134,R135,R142,R143,R150,R151,R158,R159,R166,R167,R174,R175,R182,R183,R214,R215",100,R_0603_1608Metric,,номера нет: выбрать деталь
 "R99,R112",130,R_0402_1005Metric,,номера нет: выбрать деталь
@@ -57,24 +58,24 @@ J10,PHONO L,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609,"проверено 15.11.
 "C66,C75",100n C0G,C_1206_3216Metric,,номера нет: выбрать деталь
 "R106,R107,R119,R120",41.2k,R_0402_1005Metric,,номера нет: выбрать деталь
 "C67,C68,C76,C77",22p,C_0603_1608Metric,,номера нет: выбрать деталь
-J11,PHONO R,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609,"проверено 15.11.2026: 130 шт. (JLC), RCJ-025"
-J12,LINE 1,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
-J13,LINE 2,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
-J14,LINE 3,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
-J15,LINE 4,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
-J16,LINE 5,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
-J17,LINE 6,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
-J18,LINE 7,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
-J19,LINE 8,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J12,PHONO R,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609,"проверено 15.11.2026: 130 шт. (JLC), RCJ-025"
+J13,LINE 1,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J14,LINE 2,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J15,LINE 3,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J16,LINE 4,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J17,LINE 5,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J18,LINE 6,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J19,LINE 7,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J20,LINE 8,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
 "R191,R193,R196,R198,R201,R203,R206,R208",30.9k,R_0402_1005Metric,,номера нет: выбрать деталь
 "C139,C140,C143,C144",47p C0G,C_0603_1608Metric,,номера нет: выбрать деталь
 "R194,R199,R204,R209,R210,R211,R212,R213",47,R_0603_1608Metric,,номера нет: выбрать деталь
-J20,MAIN L,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
-J21,MAIN R,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
-J22,AUX L,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
-J23,AUX R,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
-J24,RCA L,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609,"проверено 15.11.2026: 130 шт. (JLC), RCJ-025"
-J25,RCA R,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609,"проверено 15.11.2026: 130 шт. (JLC), RCJ-025"
+J21,MAIN L,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J22,MAIN R,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J23,AUX L,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J24,AUX R,Jack_6.35mm_Neutrik_NJ3FD-V_Vertical,,номера нет: выбрать деталь
+J25,RCA L,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609,"проверено 15.11.2026: 130 шт. (JLC), RCJ-025"
+J26,RCA R,Jack_RCA_SameSky_RCJ-02_Vertical,C4991609,"проверено 15.11.2026: 130 шт. (JLC), RCJ-025"
 "Q8,Q9",AO3400A,SOT-23,C20917,проверить в EasyEDA
-J26,GND terminal,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,C131337,проверено 15.11.2026: 289 254 шт. (JLC)
-J27,Phono/Line switch,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339,проверено 15.11.2026: 92 966 шт. (JLC)
+J27,GND terminal,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,C131337,проверено 15.11.2026: 289 254 шт. (JLC)
+J28,Phono/Line switch,JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical,C131339,проверено 15.11.2026: 92 966 шт. (JLC)

@@ -1,4 +1,6 @@
-# PW - Power board (rev 2.4, 22.11.2026; under the slope, right, next to the battery bay)
+# PW - Power board (rev 2.5, 25.11.2026; under the slope, right, next to the battery bay)
+
+**Rev 2.5 (P151, P153):** pack jumpers 0 R 1206 -> 1 mm2 wire loop (33 mW at 8 A); SRP1038CC-4R7M, EEE-FK1E471P, EEH-ZA1V151P; PFM loads and the 10 R storage resistors in 2512.
 
 All the power of the instrument: USB-C PD and two packs joined by ideal diodes (LM74700), the rear On/Off switch, every rail the boards need. **100 x 100 mm, 4 layers, 343 parts, not routed.**
 **No DC input (R205, 21.11.2026): the only external power is USB-C PD (also a MacBook charger) and the batteries.** Decisions: R36, R40/R59/R109 (battery), R72, R110, R118, R145; P111 (3S packs), P116, P123-P129, P131, P132. Research: `docs/ru/34_rear_boards_research.md`, doc 43 (batteries).

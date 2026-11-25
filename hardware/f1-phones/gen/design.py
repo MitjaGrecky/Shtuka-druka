@@ -18,6 +18,7 @@ Rev 0.3 (16.11.2026, PC, R165, doc 39): low case. The board lies on 1 mm standof
 side (no room underneath): jacks Cliff S1/BBB CL1115 (Digikey 4654-CL1115-ND, hand-soldered, not at JLCPCB; 12.7 mm high instead of 15.67), the
 cable headers lie flat (2x6 right angle, JST PH side entry), board 135 x 27 mm.
 Rev 0.5 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md): mute-chain FETs 2N7002 -> AO3400A (C20917), nothing else changed.
+Rev 0.9 (25.11.2026, P148, P149): per-jack relay FET gated by the tip break contact TN (hardware mute on pull-out before the springs slide over the plug), 50 ms firmware fade-in after insertion.
 Rev 0.6 (20.11.2026): placement only: the small parts are packed with a 1.4 mm courtyard gap (was 0.25) so that the router can fan out the 0.5 mm pitch pins of the OPA1622.
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
@@ -31,7 +32,7 @@ import kit as K  # noqa: E402
 NAME = "f1-phones"
 ID = "F1"
 TITLE = "F1 - Headphones: 2 x Cliff S1 6.35 mm, 2 x OPA1622 difference amplifiers x2, mute relays"
-REV = "0.8"
+REV = "0.9"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("From A1: Phones 1 and 2 as differential pairs (2 Vrms FS) -> OPA1622 difference amp x2 -> 10 R -> relay -> NMJ6HCD2; "
             "volume is the DAC's digital attenuator (R87); mute relays need MUTE and R2_OK (R66, R137)")
@@ -91,7 +92,7 @@ def parts():
         Note="MUTE and R2_OK in series: the relays close only when both are high. Rev 0.5 (audit 18.11.2026): AO3400A instead of 2N7002 (two coils of 21 mA "
         "through two 2N7002 at Vgs 3.3 V: coil voltage close to the 4.0 V must-operate of the G6K-2F-Y 5 V)")
     add(ref("Q"), "Transistor_FET:2N7002", "AO3400A", SOT23, {"1": "R2OK_G", "2": "GND", "3": "COIL_KS"}, LCSC="C20917")
-    add(ref("D"), "Diode:1N4148W", "1N4148W", SOD123, {"1": "+5V", "2": "COIL_K"}, Note="flyback")
+    # P149 (rev 0.9): COIL_K is the common low side; each relay has its own FET (gate from the tip break contact TN) and flyback diode
 
     # ---------------------------------------------------------------- per jack: OPA1622 difference amps, relay, jack
     for k in (1, 2):
@@ -115,10 +116,10 @@ def parts():
             R("10", f"{c}_O", f"{c}_OR", fp=R0603, Note="output build-out; feedback is taken before it")
         # relay: first contact set tip (left), second ring (right); common 11 / 21, normally open 14 / 24
         add(ref("K"), RELAY[0], "G6K-2F-Y 5V", RELAY[1],
-            {"A1": "+5V", "A2": "COIL_K", "11": f"{h}L_OR", "12": None, "14": f"{h}_TIP", "21": f"{h}R_OR", "22": None, "24": f"{h}_RING"},
+            {"A1": "+5V", "A2": f"{h}_COIL", "11": f"{h}L_OR", "12": None, "14": f"{h}_TIP", "21": f"{h}R_OR", "22": None, "24": f"{h}_RING"},
             LCSC="C2982926", Note=f"Phones {k} mute relay: normally open, opens without power (R66, R137)")
         add(ref("J"), "Connector_Audio:AudioJack3_Switch", f"PHONES {k}", JACK,
-            {"T": f"{h}_TIP", "TN": None, "R": f"{h}_RING", "RN": None, "S": "GND", "SN": f"{h}_SN"},
+            {"T": f"{h}_TIP", "TN": f"{h}_TN", "R": f"{h}_RING", "RN": None, "S": "GND", "SN": f"{h}_SN"},
             Note=f"Phones {k}: Cliff S1/BBB CL1115 (Digikey 4654-CL1115-ND), 6.35 mm stereo, switched (rev 0.8: the sleeve break contact SN is the cable detect), 12.7 mm high, "
             "hand-soldered (not at JLCPCB). Wall 3 mm + fibre washer 1.6 + nut 5.0 is 9.6 mm, the thread 9.35 mm: leave the washer out")
         # rev 0.8 (P124, R202): cable detect and discharge. SN = sleeve (GND) while the jack is empty, opens when a plug goes in: 100k pull-up to +5V,
@@ -126,7 +127,20 @@ def parts():
         R("100k", "+5V", f"{h}_SN", Note="cable detect pull-up (SN is on GND while the jack is empty)")
         R("10k", f"{h}_SN", f"DET_{h}", Note="detect line, RC 1 ms with 100 nF")
         C("100n", f"DET_{h}", Note="detect debounce, RC 1 ms")
-        R("100k", f"{h}_TIP", "GND", Note="discharge of the cable while the relay is open")
+        R("10k", f"{h}_TIP", "GND", Note="P149: 10k (was 100k): discharge of the cable while the relay is open, and holds TN low through the tip spring when the jack is empty")
+        # P149 (rev 0.9): fast local mute on pull-out. The tip spring is the deepest one: it drops onto TN as soon as the plug end leaves it,
+        # before the ring spring reaches the plug tip and before the sleeve spring slides over the ring (the L-R and R-GND clicks come later).
+        # TN -> 100 R -> Schottky -> gate node (100 nF, 1M from +5V): TN on the tip node pulls the gate below 0.4 V in about 10 us, the relay opens
+        # in <= 3 ms (G6K release) with no firmware in the loop. On insertion TN opens last (plug tip home), the gate rises with 1M x 100 nF:
+        # relay closes 25-70 ms later (AO3400A Vth 0.65-1.45 V), then the firmware fades the DAC in over 50 ms (P148).
+        R("1M", "+5V", f"{h}_G", Note="P149: relay gate pull-up, insertion delay 1M x 100 nF")
+        C("100n", f"{h}_G", Note="P149: gate hold, 25-70 ms to Vth after the plug is home")
+        R("100", f"{h}_G", f"{h}_GD", Note="P149: limits the discharge pulse from the amplifier output")
+        add(ref("D"), "Device:D_Schottky", "B5819W", SOD123, {"1": f"{h}_TN", "2": f"{h}_GD"}, LCSC="C8598",
+            Note="P149: Schottky: TN can only pull the gate down (0.25 V with the jack empty: 5 uA into the 10k tip discharge); audio on TN never charges it")
+        add(ref("Q"), "Transistor_FET:2N7002", "AO3400A", SOT23, {"1": f"{h}_G", "2": "COIL_K", "3": f"{h}_COIL"}, LCSC="C20917",
+            Note=f"P149: phones {k} relay closes only with MUTE, R2_OK AND a plug home (TN open)")
+        add(ref("D"), "Diode:1N4148W", "1N4148W", SOD123, {"1": "+5V", "2": f"{h}_COIL"}, Note="flyback")
         R("100k", f"{h}_RING", "GND", Note="discharge of the cable while the relay is open")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
     return P

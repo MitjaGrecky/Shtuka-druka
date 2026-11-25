@@ -1,4 +1,4 @@
-"""BM - Battery protection board for one 3S pack (BQ7791500, TI SLUSCU0L): sits at the end of the pack, 2 pcs per set (docs/ru/43_battery_power.md 5c).
+"""BB1 protection circuit (moved 25.11.2026 from hardware/archive/bm-bms3s/gen/design.py, P150; BB1 imports parts() only). BM - Battery protection board for one 3S pack (BQ7791500, TI SLUSCU0L): sits at the end of the pack, 2 pcs per set (docs/ru/43_battery_power.md 5c).
 Low-side protection: cell 1 negative = BAT_N = VSS, the series path goes BAT_N -> 5 mOhm -> CSD18540Q5B (DSG) -> CSD18540Q5B (CHG) -> PACK_N.
 Pack plus (cell 3 positive) is not switched: BAT_P goes straight to the output. Single source of truth for the schematic.
 
@@ -21,7 +21,7 @@ import os
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "..", "..", "..", "common", "gen"))
+sys.path.insert(0, os.path.join(HERE, "..", "..", "common", "gen"))
 import kit as K  # noqa: E402
 
 NAME = "bm-bms3s"

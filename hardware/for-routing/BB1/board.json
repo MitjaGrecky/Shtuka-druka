@@ -1,0 +1,95 @@
+{
+ "id": "BB1",
+ "name": "bb1-battery",
+ "title": "BB1 - battery board: 6 cell wire pads, 2 x BQ7791500 protection, 2 outputs to PW",
+ "rev": "0.4",
+ "w": 398.0,
+ "h": 28.0,
+ "layers": 2,
+ "parts": 70,
+ "holes": [
+  [
+   4.0,
+   3.5
+  ],
+  [
+   4.0,
+   24.5
+  ],
+  [
+   132.0,
+   3.5
+  ],
+  [
+   132.0,
+   24.5
+  ],
+  [
+   266.0,
+   3.5
+  ],
+  [
+   266.0,
+   24.5
+  ],
+  [
+   394.0,
+   3.5
+  ],
+  [
+   394.0,
+   24.5
+  ]
+ ],
+ "connectors": [
+  [
+   "J1",
+   "Cell 1 (pack A)"
+  ],
+  [
+   "J2",
+   "Cell 2 (pack B)"
+  ],
+  [
+   "J3",
+   "Cell 3 (pack A)"
+  ],
+  [
+   "J4",
+   "Cell 4 (pack B)"
+  ],
+  [
+   "J5",
+   "Cell 5 (pack A)"
+  ],
+  [
+   "J6",
+   "Cell 6 (pack B)"
+  ],
+  [
+   "J7",
+   "to PW (Battery 1)"
+  ],
+  [
+   "J8",
+   "to PW (Battery 2)"
+  ],
+  [
+   "J9",
+   "NTC chip A"
+  ],
+  [
+   "J10",
+   "NTC chip B"
+  ],
+  [
+   "J11",
+   "NTC PW A"
+  ],
+  [
+   "J12",
+   "NTC PW B"
+  ]
+ ],
+ "bom_lines": 26
+}

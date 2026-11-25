@@ -33,7 +33,7 @@ import kit as K  # noqa: E402
 NAME = "r2-control"
 ID = "R2"
 TITLE = "R2 - Control board (rear wall): RP2350, USB hub, MIDI, CV/Gate, sync; 3.5 mm jacks, DIN on cables"
-REV = "1.5"
+REV = "1.6"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (R85): MIDI DIN 2 in / 4 out, TRS 1 in / 2 out (A/B in firmware), 8 CV/Gate +-10 V (2 x DAC80504), "
             "4 CV in, sync 3 out / 2 in; USB2514B hub: up = ODROID-H5, down = RP2350, panel P2, A1 port A, spare")
@@ -239,15 +239,15 @@ def parts():
         {"1": "DET_PL", "2": "DAC_SCK", "3": "DETI_HP2", "4": "GND", "5": "GND", "6": "GND", "7": None, "8": "GND",
          "9": "DET_SDO", "10": "GND", "11": "DETI_MAIN", "12": "DETI_AUX", "13": "DETI_RCA", "14": "DETI_HP1", "15": "GND", "16": "+3V3"},
         Note="cable-detect input register (rev 1.5): D0 MAIN (pin 11), D1 AUX, D2 RCA, D3 HP1, D4 HP2 (pin 3); D5-D7, /CE and DS to GND; Q7 (pin 9) -> GPIO 25. "
-        "Part number to select (technologist)")
+        "MPN Nexperia 74HC165D (SOIC-16, SOT109-1)", MPN="74HC165D")
     C("100n", "+3V3")
     R("10k", "DET_PL", "+3V3", Note="/PL idles high while the 595 outputs are high-Z")
     for dn in ("MAIN", "AUX", "RCA", "HP1", "HP2"):
         R("10k", f"DET_{dn}", f"DETI_{dn}", Note="series: 5 V detect line into a 3.3 V input")
-        R("100k", f"DETI_{dn}", "GND", Note="no cable = not plugged")
+        R("220k", f"DETI_{dn}", "GND", Note="P152: no cable = not plugged; was 100k (2.27 V < VIH). F1 plugged: 5 V x 220 / (100 + 10 + 10 + 220) = 3.24 V vs VIH 0.75 x VCC = 2.48 V at 3.3 V (74HC165 datasheet: 1.5 V at 2 V, 3.15 V at 4.5 V)")
     add(ref("U"), "74xGxx:74LVC1G08", "74LVC1G08", "Package_TO_SOT_SMD:SOT-23-5",
         {"1": "R2_OK_FW", "2": "PM_ALERT", "3": "GND", "4": "R2_OK", "5": "+3V3"},
-        Note="R2_OK = GPIO 13 AND PM_ALERT: INA226 under-voltage opens the relays in hardware. Part number to select (technologist)")
+        Note="R2_OK = GPIO 13 AND PM_ALERT: INA226 under-voltage opens the relays in hardware. Nexperia 74LVC1G08GV (SOT753 = SOT-23-5: 1 B, 2 A, 3 GND, 4 Y, 5 VCC; GW is SOT353, not this footprint)", MPN="74LVC1G08GV")
     C("100n", "+3V3")
     R("10k", "PM_ALERT", "+3V3", Note="INA226 ALERT is open drain; an unplugged harness reads high (= no alarm)")
     R("100k", "R2_OK_FW", "GND", Note="low while the RP2350 boots")

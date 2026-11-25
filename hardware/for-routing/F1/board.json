@@ -2,11 +2,11 @@
  "id": "F1",
  "name": "f1-phones",
  "title": "F1 - Headphones: 2 x Cliff S1 6.35 mm, 2 x OPA1622 difference amplifiers x2, mute relays",
- "rev": "0.7",
+ "rev": "0.9",
  "w": 100.0,
  "h": 38.0,
  "layers": 2,
- "parts": 57,
+ "parts": 78,
  "holes": [
   [
    4.0,
@@ -40,7 +40,7 @@
   ],
   [
    "J3",
-   "from R1 (mute)"
+   "from R1 (mute, detect)"
   ],
   [
    "J4",
@@ -51,5 +51,5 @@
    "PHONES 2"
   ]
  ],
- "bom_lines": 17
+ "bom_lines": 22
 }

@@ -64,8 +64,8 @@ jobs:
               kicad-cli pcb export drill -o "$o/fab/" "$dir/$name.kicad_pcb" || true
               kicad-cli pcb export pos --format csv --units mm -o "$o/fab/$name-positions.csv" "$dir/$name.kicad_pcb" || true
             fi
-          # quilter/, quilter_raw/: downloaded routing candidates kept for comparison, not projects under work; archive/: boards replaced by newer ones (not checked)
-          done < <(find hardware -name '*.kicad_pro' -not -path 'hardware/archive/*' -not -path '*/backups/*' -not -path '*/quilter/*' -not -path '*/quilter_raw/*' | sort)
+          # quilter/, quilter_raw/: downloaded routing candidates kept for comparison, not projects under work; old boards are only in the git history (P150)
+          done < <(find hardware -name '*.kicad_pro' -not -path '*/backups/*' -not -path '*/quilter/*' -not -path '*/quilter_raw/*' | sort)
           ls -R out
           exit $status
 

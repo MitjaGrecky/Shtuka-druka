@@ -1,9 +1,9 @@
 """BB1 - battery board (P143, R208): one long board (398 x 28 mm, P144) along the ends of the three cell blocks under the pads. It joins all 6 Ampul cells (8 Ah, solder pads for the wires, P146),
-makes two 3S packs (pack A = cell 1 of blocks 1, 2, 3 in series, pack B the same) with one BQ7791500 protection each (the circuit of hardware/bm-bms3s, reused, nets suffixed _A / _B),
+makes two 3S packs (pack A = cell 1 of blocks 1, 2, 3 in series, pack B the same) with one BQ7791500 protection each (the circuit of bm_circuit.py, from the former hardware/bm-bms3s, reused, nets suffixed _A / _B),
 and gives two Micro-Fit 2x3 outputs to PW (BAT+ x 2, GND x 2, NTC, GND, the harness of PW Battery 1 / 2) and four NTC sockets (JST GH-class 1.25 mm latching, 103AT 10k: one per BQ chip, one per charger of PW).
 BM boards 38 x 38 mm are cancelled (P143). 2 layers, 2 oz copper (8 A: tracks >= 3 mm on 2 oz by IPC-2152, set at routing), 3 mm standoffs.
 Board coordinates: x = model x - 104 (0-398), y = model y - 156 (0-28); the cells are on the y < 0 side (model y <= 153), the wires of the cells come to the connectors at y 3-11.
-Source of the positions: model3d/batt_bays/under_pads.csv (P144; blocks x 104-234, 238-368, 372-502). Rev 0.3 (21.11.2026, P146): wire pads instead of XT60PW, GH-class NTC sockets. License: CERN-OHL-S-2.0, AGPL-3.0-or-later.
+Source of the positions: model3d/batt_bays/under_pads.csv (P144; blocks x 104-234, 238-368, 372-502). Rev 0.3 (21.11.2026, P146): wire pads instead of XT60PW, GH-class NTC sockets. Rev 0.4 (25.11.2026, P150): the protection circuit lives in gen/bm_circuit.py (archive removed); cell tracks for 8 A. License: CERN-OHL-S-2.0, AGPL-3.0-or-later.
 """
 import importlib.util
 import os
@@ -16,7 +16,7 @@ import kit as K  # noqa: E402
 NAME = "bb1-battery"
 ID = "BB1"
 TITLE = "BB1 - battery board: 6 cell wire pads, 2 x BQ7791500 protection, 2 outputs to PW"
-REV = "0.3"
+REV = "0.4"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("6 cells (solder pads): pack A = cells 1, 3, 5, pack B = cells 2, 4, 6, 3S each; two BQ7791500 protections (bm-bms3s circuit); outputs J7 (A) and J8 (B) = PW Battery 1 / 2 "
             "(BAT+ x 2, GND x 2, NTC, GND); NTC sockets J9-J12 (chip A, chip B, PW A, PW B)")
@@ -36,7 +36,7 @@ BM_X = {"A": 112.0, "B": 266.0}          # the protection circuits between the c
 
 
 def _bm():
-    spec = importlib.util.spec_from_file_location("bm_design", os.path.join(HERE, "..", "..", "archive", "bm-bms3s", "gen", "design.py"))
+    spec = importlib.util.spec_from_file_location("bm_design", os.path.join(HERE, "bm_circuit.py"))
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
     return m
@@ -61,7 +61,7 @@ def parts():
         lo, hi = chain[s][seen[s]]
         seen[s] += 1
         add(ref("J"), "Connector_Generic:Conn_01x02", f"Cell {i + 1} (pack {s})", WIRE, {"1": hi, "2": lo},
-            Note=f"solder pads for the two wires of the Ampul cell (>= 1.0 mm2, 5 A per track), wires fixed with a cable tie through the two 3 mm holes; cell {seen[s]} of pack {s}: + (pad 1) to {hi}, - (pad 2) to {lo}")
+            Note=f"solder pads for the two wires of the Ampul cell (>= 1.0 mm2; 8 A = 1C of the pack: tracks >= 3 mm at 2 oz or pours, P155), wires fixed with a cable tie through the two 3 mm holes; cell {seen[s]} of pack {s}: + (pad 1) to {hi}, - (pad 2) to {lo}")
     # ---- two protection circuits from bm-bms3s (without its connectors and holes), nets and references suffixed
     for s in ("A", "B"):
         off = 0 if s == "A" else 100

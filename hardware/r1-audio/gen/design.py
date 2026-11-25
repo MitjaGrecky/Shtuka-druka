@@ -39,7 +39,7 @@ import kit as K  # noqa: E402
 NAME = "r1-audio"
 ID = "R1"
 TITLE = "R1 - Audio jacks and analog front end: mic/Hi-Z two paths, line 1-8, phono, Main/Aux/RCA out on relays"
-REV = "1.3"
+REV = "1.4"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("R1 -> A1: 18 differential ADC pairs (FS 8 Vrms diff into the AN0635 buffers), A1 -> R1: 4 DAC pairs; phantom per channel and phono/line "
             "from R2 (R118); output relays need MUTE and R2_OK (R137)")
@@ -123,9 +123,11 @@ def parts():
          "10": "GND", "11": "ATT1", "12": "GND", "13": "ATT2", "14": "GND"},
         Note="same pinout as R2 'to A1/R1' (2x7 from rev 0.3: ATT1/ATT2 = Mic/Line attenuator relays); all lines pulled low on R2 while it boots")
 
-    add(ref("J"), "Connector_Generic:Conn_01x03", "to F1 (mute)", "Connector_JST:JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical",
-        {"1": "MUTE", "2": "R2_OK", "3": "GND"}, Note="MUTE and R2_OK for the headphone relays on F1 (parallel to the output relay logic); "
+    add(ref("J"), "Connector_Generic:Conn_01x05", "to F1 (mute, detect)", "Connector_JST:JST_PH_B5B-PH-K_1x05_P2.00mm_Vertical",
+        {"1": "MUTE", "2": "R2_OK", "3": "GND", "4": "DET_HP1", "5": "DET_HP2"}, Note="P154 (rev 1.4): 5 pins = F1 J3 (pins 4, 5 cable detect HP1/HP2, passed to R2 by the next header). MUTE and R2_OK for the headphone relays on F1 (parallel to the output relay logic); "
         "the headphone board is at the front edge, R2's connector to R1 stays 2x7")
+    add(ref("J"), "Connector_Generic:Conn_01x03", "HP detect to R2", "Connector_JST:JST_PH_B3B-PH-K_1x03_P2.00mm_Vertical",
+        {"1": "DET_HP1", "2": "DET_HP2", "3": "GND"}, Note="P154: headphone cable detect from F1 to the R2 7-pin detect header (pins 4, 5, 7); one harness housing on R2 collects R1, F1 and PW PM_ALERT wires")
 
     # ---------------------------------------------------------------- board-to-board to A1
     adc = [f"ADC{k}" for k in range(1, 19)]

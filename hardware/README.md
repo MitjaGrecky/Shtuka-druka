@@ -13,4 +13,4 @@ Board map and reasoning: `docs/ru/29_board_map.md`.
 License: CERN Open Hardware Licence Version 2 - Strongly Reciprocal (CERN-OHL-S-2.0), see `LICENSE`.
 
 
-Archive (`archive/`, not checked by CI): boards replaced by newer ones. `archive/bm-bms3s` (BM 0.3) - replaced by BB1 (P143, P144); BB1 still imports its protection circuit from `archive/bm-bms3s/gen/design.py`.
+Replaced boards are not kept in the tree (P150, 25.11.2026): BM 0.3 (`bm-bms3s`, replaced by BB1, P143, P144) is in the git history only; BB1 carries its protection circuit in `bb1-battery/gen/bm_circuit.py`.

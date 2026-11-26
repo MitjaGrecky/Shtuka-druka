@@ -70,7 +70,7 @@ def copy_fields(fp, fields):
             fp.SetProperty(k, str(v))
 
 
-def write_project(proj_dir, name, layers=2, hole_clearance=0.254):
+def write_project(proj_dir, name, layers=2, hole_clearance=0.254, extra_power=()):
     """Design rules into <name>.kicad_pro. 4 layers: JLCPCB minimum hole 0.2 mm and via 0.45 mm (hardware/for-routing/RULES.md),
     so the 0.2 mm thermal vias of the KiCad footprints (e.g. WQFN ..._ThermalVias) pass DRC; net classes stay the same."""
     hole, via_min = (0.2, 0.45) if layers >= 4 else (0.3, 0.5)
@@ -86,7 +86,7 @@ def write_project(proj_dir, name, layers=2, hole_clearance=0.254):
         "net_settings": {"meta": {"version": 3},
                          "classes": [dict(cls, name="Default"), dict(cls, name="Power", track_width=POWER_TRACK),
                                      dict(cls, name="LED_SW", track_width=SW_TRACK)],
-                         "netclass_patterns": [{"netclass": "Power", "pattern": n} for n in POWER_NETS] +
+                         "netclass_patterns": [{"netclass": "Power", "pattern": n} for n in POWER_NETS + tuple(extra_power)] +
                                               [{"netclass": "LED_SW", "pattern": p} for p in ("/?_SW*", "?_SW*")]},
         "meta": {"filename": name + ".kicad_pro", "version": 1},
     }

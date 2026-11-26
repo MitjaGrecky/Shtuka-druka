@@ -27,13 +27,14 @@ import kit as K  # noqa: E402
 NAME = "p2-grid"
 ID = "P2"
 TITLE = "P2 - Grid deck: RP2350 panel controller, 64 FSR pads, 109 RGB, scene buttons, Trill Bars, deck and module buses"
-REV = "0.9"
+REV = "0.10"
 RA_ROT = 270        # right-angle 1.27 mm bus headers: rotation that opens them towards the rear edge (checked on the built board)
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("RP2350 (panel): USB to the R2 hub; I2C + TCA9546A 0x73; 64 pads = 8 x 74HC4051 + ADC128S102 (SPI0); 5 x LP5864 for 109 RGB; "
             "buses to P1, P3, P4 (2x8) and M1 (2x7); power and INA226 from PW")
+EXTRA_POWER_NETS = ("/+5V_PANEL",)     # netclass Power for the local-label rail
 PWR_FLAG_NETS = ("+5V_PANEL", "DVDD", "VREG_AVDD", "ADC_AVDD", "+3V3A", "VAP")
-NO_PWR_FLAG = ("+3V3",)
+NO_PWR_FLAG = ("+3V3", "+5V")     # no "+5V" net on P2: the only 5 V input is +5V_PANEL (J1)
 W, H = 224.0, 258.0          # 16.11.2026: panel y 4-262 (was 290: it ran under M1, whose knob row is at y 263-297; fit model)
 Y0 = 4.0                     # panel y of the board's front edge
 HOLES = [(4.0, 4.0), (220.0, 4.0), (4.0, 254.0), (220.0, 254.0), (112.0, 254.0), (190.0, 4.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
@@ -215,8 +216,6 @@ def parts():
 
     # ================================================================ buses: M1 (2x7), P1, P3, P4 (2x8), Trill Bars, PW monitor
     m1 = {**K.CONN, 7: "M1_SDA", 8: "M1_SCL", 13: "SR_M1", 14: "SR_END", 5: "+3V3", 1: "+5V_PANEL", 2: "+5V_PANEL"}
-    m1 = {p: ("+5V" if v == "+5V_PANEL" else v) for p, v in m1.items()}
-    m1 = {p: ("+5V_PANEL" if v == "+5V" else v) for p, v in m1.items()}
     K.bus(add, ref("J"), "Module bus M1 (2x7)", conn=m1, lying=True)
     for deck, sr in (("P1", "SR_P1"), ("P3", "SR_P3"), ("P4", "SR_P4")):
         conn = {**K.DECK_CONN}
@@ -234,6 +233,9 @@ def parts():
         Note="cable from PW 'Power telemetry to P2' (INA226 R146, BQ25798 chargers via TCA9546A 0x70, fan, charge enable): SDA, SCL on mux channel 3, ALERT GP9, CHG_INT GP14, FAN_PWM GP11, FAN_TACH GP13, CHG_EN GP12")
     R("100k", "PM_ALERT", "+3V3", Note="ALERT is open drain")
     K.mount_holes(add, ref, HOLES, "M3 standoff (Codex review 15.11.2026): corners first; the final positions come with the enclosure")
+    # rev 0.10: the shared kit blocks (LP5864 and its capacitors) name their rail "+5V", which has no source on this board
+    for part in P:
+        part["pins"] = {n: ("+5V_PANEL" if v == "+5V" else v) for n, v in part["pins"].items()}
     return P
 
 

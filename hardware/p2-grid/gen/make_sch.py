@@ -19,4 +19,4 @@ if __name__ == "__main__":
                           notes=(D.BUS_NOTE,
                                  "64 pads = 8 x 74HC4051 + ADC128S102 (V17); LP5864 x5 on a TCA9546A (0x73)",
                                  "Rev 0.1: schematic only; electrodes are placeholders until the board is drawn"))
-    B.write_project(os.path.join(HERE, ".."), D.NAME, getattr(D, "LAYERS", 2))   # 21.11.2026: 4-layer rules were overwritten with 2-layer ones
+    B.write_project(os.path.join(HERE, ".."), D.NAME, getattr(D, "LAYERS", 2), extra_power=D.EXTRA_POWER_NETS)   # 21.11.2026: 4-layer rules were overwritten with 2-layer ones

@@ -43925,7 +43925,7 @@
 			(size 1 1.45)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "670fe099-532e-48dd-93f3-581cdfbdbb32")
 		)
 		(pad "2" smd roundrect
@@ -44761,7 +44761,7 @@
 			(size 0.55 0.2)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "982b790c-91c7-404e-bf4e-c242dfde4738")
 		)
 		(pad "2" smd roundrect
@@ -44873,7 +44873,7 @@
 			(size 0.2 0.55)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "06d5026b-7aed-473c-b8ee-ab0b0d246149")
 		)
 		(pad "16" smd roundrect
@@ -52092,7 +52092,7 @@
 			(size 0.55 0.2)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "826e8ff0-d33f-49e5-bffe-787448538248")
 		)
 		(pad "2" smd roundrect
@@ -52204,7 +52204,7 @@
 			(size 0.2 0.55)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "77323217-7295-4ea1-bbb2-5eecc309957f")
 		)
 		(pad "16" smd roundrect
@@ -53751,7 +53751,7 @@
 			(size 0.55 0.2)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "c56a3366-ec5c-4b6d-97a7-531c7f256b7c")
 		)
 		(pad "2" smd roundrect
@@ -53863,7 +53863,7 @@
 			(size 0.2 0.55)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "b893786b-8975-4b61-b795-8f22e2b8a0c1")
 		)
 		(pad "16" smd roundrect
@@ -55299,7 +55299,7 @@
 			(size 1 1.45)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "f3dc58b3-cff1-491c-8261-de33600ec190")
 		)
 		(pad "2" smd roundrect
@@ -60325,7 +60325,7 @@
 			(size 1 1.45)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "3ca9020d-eba4-46a1-9de4-e52f93b7e6d3")
 		)
 		(pad "2" smd roundrect
@@ -64653,7 +64653,7 @@
 			(size 0.56 0.62)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "e828eb35-39fb-4341-942b-27788b828f8c")
 		)
 		(pad "2" smd roundrect
@@ -68224,7 +68224,7 @@
 			(size 0.56 0.62)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "fd2498b4-eef3-4a57-8680-c56cbdfdf5b9")
 		)
 		(pad "2" smd roundrect
@@ -69635,7 +69635,7 @@
 			(size 1 1.45)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "f813c3f2-a759-4b08-bde5-85029cd8f0b4")
 		)
 		(pad "2" smd roundrect
@@ -75405,7 +75405,7 @@
 			(size 1 1.45)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "068d24c3-769c-40ad-85c1-170ef7419a2d")
 		)
 		(pad "2" smd roundrect
@@ -78386,7 +78386,7 @@
 			(size 0.56 0.62)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "528ba276-b8d1-4db1-9a6e-57ca938185a7")
 		)
 		(pad "2" smd roundrect
@@ -79814,7 +79814,7 @@
 			(size 0.56 0.62)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "d7285160-5858-44d6-8c5e-4060706c7f6c")
 		)
 		(pad "2" smd roundrect
@@ -80339,7 +80339,7 @@
 			(size 0.55 0.2)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "0dba46d6-02ca-42d0-874f-97d333401d90")
 		)
 		(pad "2" smd roundrect
@@ -80451,7 +80451,7 @@
 			(size 0.2 0.55)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "f7df15b9-b43e-4f65-b8df-b2a9e5ab3449")
 		)
 		(pad "16" smd roundrect
@@ -83460,7 +83460,7 @@
 			(size 0.56 0.62)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "f360a5a3-e535-404a-8c83-9114a292758f")
 		)
 		(pad "2" smd roundrect
@@ -83996,7 +83996,7 @@
 			(size 0.55 0.2)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "4504b7d6-5ade-4dcd-89d2-3b03594d2b5e")
 		)
 		(pad "2" smd roundrect
@@ -84108,7 +84108,7 @@
 			(size 0.2 0.55)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net "+5V")
+			(net "/+5V_PANEL")
 			(uuid "1ae396ce-bc83-4d7b-ad39-f6be60228a60")
 		)
 		(pad "16" smd roundrect

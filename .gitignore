@@ -25,3 +25,8 @@ model3d/fit/fit_parts.json
 # routed copies of boards must not look like KiCad projects to CI
 hardware/**/routed/**/*.kicad_pro
 hardware/**/routed/**/*.kicad_prl
+
+# Third-party datasheets stay on the PC only, in datasheets/ (user, 26.11.2026); only the index is published
+/datasheets/*
+!/datasheets/INDEX.md
+/notes/datasheets_text/

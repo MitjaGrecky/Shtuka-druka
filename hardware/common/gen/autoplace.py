@@ -14,15 +14,15 @@ ANCHOR = ("U", "Q", "K", "Y", "L", "F", "ENC")
 GAPS = (1.4, 1.2, 1.0, 0.8, 0.6, 0.4, 0.25)   # rule template 20.11.2026: the largest courtyard gap that fits the outline
 
 
-def fit(D, place, gaps=GAPS):
-    """place(gap, ic_gap) -> placement. Tries the gaps from the largest; the first that fits wins. ic_gap (fine-pitch ICs) = gap + 0.6,
+def fit(D, place, gaps=GAPS, ic_add=0.6):
+    """place(gap, ic_gap) -> placement. Tries the gaps from the largest; the first that fits wins. ic_gap (fine-pitch ICs) = gap + ic_add (0.6),
     at most 2.0. Env PLACE_GAP (and PLACE_ICGAP) force one value. Sets D.PLACED_GAP / D.PLACED_ICGAP (README records them)."""
     import os
     if os.environ.get("PLACE_GAP"):
         gaps = (float(os.environ["PLACE_GAP"]),)
     err = None
     for g in gaps:
-        ic = float(os.environ["PLACE_ICGAP"]) if os.environ.get("PLACE_ICGAP") else min(2.0, round(g + 0.6, 2))
+        ic = float(os.environ["PLACE_ICGAP"]) if os.environ.get("PLACE_ICGAP") else min(2.0, round(g + ic_add, 2))
         try:
             r = place(g, ic)
         except RuntimeError as e:
@@ -34,8 +34,12 @@ def fit(D, place, gaps=GAPS):
     raise err
 
 
-def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top", follow=(), gap=0.25, ic_gap=None):
-    """follow: fixed parts (e.g. ICs placed by hand) whose small parts gather around them, on their side (16.11.2026, PW LDOs)."""
+def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top", follow=(), gap=0.25, ic_gap=None,
+          anchor_side="bottom", grid=None, keepout=(), side_of=None):
+    """follow: fixed parts (e.g. ICs placed by hand) whose small parts gather around them, on their side (16.11.2026, PW LDOs).
+    26.11.2026 (PW rev 2.7, two-sided): anchor_side = side of the grid anchors' groups; grid = (x0, y0, x1, y1) of the anchor grid
+    (default: margin and the connector row); keepout = rectangles no grid cell centre may fall in; side_of(ref, side) -> side for a
+    part (passed to packer.pack: small parts to the other side)."""
     P = D.parts()
     fixed = dict(fixed or {})
     byref = {p["ref"]: p for p in P}
@@ -75,10 +79,22 @@ def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top
         anchors = [r for r in anchors if r not in sat]
     area = max(1.0, (W - 2 * margin) * (H - 2 * margin - (H - conns_top(fixed, H))))
     n = max(1, len(anchors))
-    cols = max(1, round(math.sqrt(n * (W - 2 * margin) / max(1.0, (conns_top(fixed, H) - 2 * margin)))))
+    gx0, gy0, gx1, gy1 = grid if grid else (margin, margin, W - margin, conns_top(fixed, H) - margin)
+    inko = lambda x, y: any(k[0] <= x <= k[2] and k[1] <= y <= k[3] for k in keepout)
+    cols = max(1, round(math.sqrt(n * (gx1 - gx0) / max(1.0, gy1 - gy0))))
     rows = math.ceil(n / cols)
-    top = conns_top(fixed, H)
-    cw, ch = (W - 2 * margin) / cols, (top - 2 * margin) / rows
+    while True:                                            # enough cells outside the keepouts
+        cw, ch = (gx1 - gx0) / cols, (gy1 - gy0) / rows
+        cells = []
+        for rr in range(rows):
+            for c in range(cols):
+                cc = cols - 1 - c if rr % 2 else c
+                xy = (gx0 + cw * (cc + 0.5), gy0 + ch * (rr + 0.5))
+                if not inko(*xy):
+                    cells.append(xy)
+        if len(cells) >= n:
+            break
+        rows += 1
     # order anchors by connectivity: neighbours get adjacent cells (greedy chain)
     nets_of = {r: {nn for nn in byref[r]["pins"].values() if nn in sig} for r in anchors}
     order, left = [], list(anchors)
@@ -91,10 +107,7 @@ def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top
                 cur = max(left, key=lambda r: len(nets_of[r] & nets_of[order[-1]]) * 1000 + len(nets_of[r]))
     pos = {}
     for k, r in enumerate(order):
-        rr, cc = divmod(k, cols)
-        if rr % 2:
-            cc = cols - 1 - cc
-        pos[r] = (margin + cw * (cc + 0.5), margin + ch * (rr + 0.5))
+        pos[r] = cells[k]
     groups = defaultdict(list)
     for p in P:
         r = p["ref"]
@@ -118,8 +131,8 @@ def place(D, fixed=None, margin=6.0, conn_y=None, skip_anchor=(), conn_side="top
     G = []
     for a, refs in groups.items():
         ax, ay = (pos[a] if a in pos else fixed[a][:2])
-        G.append((ax, ay, fixed[a][3] if a in follow else "bottom", refs, 0))
-    return packer.pack(sys.modules[D.__name__], P, fixed, G, [(0, 0, W, H)], rmax=max(W, H), gap=gap, ic_gap=ic_gap)
+        G.append((ax, ay, fixed[a][3] if a in follow else anchor_side, refs, 0))
+    return packer.pack(sys.modules[D.__name__], P, fixed, G, [(0, 0, W, H)], rmax=max(W, H), gap=gap, ic_gap=ic_gap, side_of=side_of)
 
 
 def conns_top(fixed, H):

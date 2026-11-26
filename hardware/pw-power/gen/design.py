@@ -23,6 +23,7 @@ The pack BMS is a separate small board in each pack (BQ7791500, doc 43 5c); the 
 Rev 1.1 (18.11.2026, schematic audit notes/reviews/schematics_2026-11-18.md): EXT and PD TVS SMBJ24CA / SMBJ22CA -> SMBJ20CA (BQ25798 VBUS 30 V abs. max / 24 V
 recommended, TPS25730 VBUS 28 V abs. max); DC adapter is 12-20 V. Values and nets unchanged otherwise (same placement).
 Rev 1.2 (19.11.2026, purchase_plan.md): all 60 V FETs CSD18540Q5B (C86513) -> CSD18532Q5B (C882766): R_DS 2.5 mOhm at 10 V instead of 1.8; LM5176 at 9.3 V in / 95 W: about +0.25 W in the four FETs (about 1.3 W total, DFN pads), ORing LM74700: drop 27 mV at 11 A (the chip regulates 20 mV, then the FET is fully on). Pack TVS SMBJ13CA C132568 -> C224008 (stock). L4, L5 stay Bourns SRP1038CC-8R2M. Rev 1.2 also (rear wall harness check): DC fuse 7 A -> 5 A (jack 721A 5 A); On/Off switch connector 1x2 -> Micro-Fit 2x2 (10.2 A peak split over two contacts per side). Rev 1.2 also (audit A-025): DC input eFuse TPS26631 (OVP 22.9 V) between DC_F and the ideal diode IDC; EXT stays below the 24 V recommended / 30 V absolute maximum of the chargers.
+Rev 2.7 (26.11.2026, decision P): board 100 x 80 (was 100 x 100: it hit R2 in the case), parts on both sides (placement()).
 License: CERN-OHL-S-2.0 (hardware data), AGPL-3.0-or-later (code).
 """
 import os
@@ -35,14 +36,14 @@ import kit as K  # noqa: E402
 NAME = "pw-power"
 ID = "PW"
 TITLE = "PW - Power: DC / USB-C PD / battery, 15 V ODROID-H5, 19 V internal, +5 V x 2, +-12 V quiet, +48 V phantom"
-REV = "2.6"
+REV = "2.7"
 M1_LIB = K.M1_LIB
 BUS_NOTE = ("Input USB-C PD 15-20 V (TPS25730D, also a MacBook charger; the DC input is removed, R205) -> EXT; EXT and two 3S packs (each with its own BQ25798 charger from EXT) -> ideal diodes (LM74700) -> rear On/Off "
             "switch -> BUS 9-24 V (packs 9-12.6 V) -> 19 V internal rail (LM5176) -> 15 V H5 (LMR33640), +5V_PANEL and +5V (TPS54560B), +-14 V (LMR33640) -> "
             "+-12 V (TPS7A47 / TPS7A33), +48 V (LM5156H + TPS7A4101)")
 PWR_FLAG_NETS = ("B19_VCC", "B19_VIN", "BAT1_F", "BAT2_F", "BUS", "EXT", "HV_RAW", "N14", "P14", "PD_OUT", "PD_VBUS", "PD_VBUSF", "V12F", "V19")         # ERC: nets with power inputs and no power output pin (connectors, switch, converters)
 NO_PWR_FLAG = ("+3V3",)     # no 3.3 V rail on this board
-W, H = 100.0, float(os.environ.get("PW_H", "100.0"))         # rough: under the slope on the right next to the battery bay (R109); with the board
+W, H = 100.0, float(os.environ.get("PW_H", "80.0"))         # rough: under the slope on the right next to the battery bay (R109); with the board
 HOLES = [(4.0, 4.0), (96.0, 4.0), (4.0, H - 4.0), (96.0, H - 4.0)]   # M3, board coordinates (KiCad, y down); 15.11.2026
 LAYERS = 4
 
@@ -505,54 +506,73 @@ def parts():
 
 
 def placement():
-    """Rev 0.2: rough automatic placement (hardware/common/gen/autoplace.py): connectors in a row along the bottom edge,
-    ICs on a grid, small parts around the IC they share signals with. A starting point for the routing; mechanics not fixed yet."""
+    """Rev 2.7 (26.11.2026, user via the main chief engineer, decision P: "rebuild at 100 x 80 ... spread the parts over both sides"):
+    100 x 80, two-sided. Top: every IC, FET, inductor, fuse, connector, electrolytic, 1206 / 1210 / 2512 part and the hot-loop
+    capacitors (input ceramics of the LM5176 / LM70660 / LMR33640 / LM5156H, bootstrap caps), the phantom boost diode, power shunts; bottom: the other
+    passives (resistors, output and decoupling caps, under the pins of their IC), TVS, SS34, 2N7002, LEDs, test points, INA226 / AP2112 / TCA9546 and the electrolytics (10.5 mm, as before). Connectors on the edges: inputs (USB-C PD, packs, On/Off) left, outputs
+    bottom, telemetry and fan right. Quiet LDO corner (TPS7A4701 / TPS7A3301 / TPS7A4101) bottom-right above the output row, no switcher
+    in it; the +-14 V hold-up electrolytics in a row under the board above the output connectors. The rest: autoplace grid (connectivity chain),
+    gap / ic_gap from autoplace.fit (template 20.11.2026, >= 1.4 mm wanted)."""
     import autoplace
-    fixed = K.hole_fixed(parts(), HOLES)
-    # 16.11.2026 (user: "do it properly, not hoping for the best"): the three low-noise LDOs (+-12 V and the phantom post-regulators)
-    # get their own corner, top side, away from every inductor and switcher (all of those stay on the bottom); their capacitors
-    # follow them. Positions are tuned below by QUIET_XY.
-    for p in parts():
-        if p["value"] in QUIET_XY:
-            fixed[p["ref"]] = QUIET_XY[p["value"]] + (0, "top")
-    # the switchers keep to the right two thirds, so nothing switching sits under the quiet corner (their inductors follow them)
-    for r, xy in NOISY_XY.items():
-        fixed[r] = xy + (0, "bottom")
-    # 21.11.2026 (task.md additions p. 2, P116): the chargers U6/U8 (BQ25798, QFN, with L1/L2 and their PMID/SYS banks) on the TOP
-    # side in the lower part, away from the quiet corner: on the bottom there was no room at their pins (87 % of a 15 mm circle
-    # around U8 taken). Heights: SPM6530 3 mm, BQ25798 1 mm, 0805 caps; PW_TOP 24 (model3d/fit/fit_model.py) leaves ~7 mm above.
-    for r, xy in CHARGER_XY.items():
-        fixed[r] = xy + (0, "top")
-    # P131-c: hold-up storage first, by hand: bottom-left corner under the quiet LDO corner (the electrolytics are no noise source), 2 x 2 block, columns 12.2 mm apart
+    import packer
     P = parts()
-    st = {}
-    for p in P:
-        nets = set(p["pins"].values())
-        if p["ref"].startswith("C") and p["value"] == "470u 25V":
-            st[p["ref"]] = "P" if "P14_C" in nets else "N"
-        elif "P14_ST" in nets and not p["ref"].startswith("C"):
-            st[p["ref"]] = "PR" if p["ref"].startswith("R") else "PD"
-        elif "N14_ST" in nets and not p["ref"].startswith("C"):
-            st[p["ref"]] = "NR" if p["ref"].startswith("R") else "ND"
-    pos = {"P": [(13.2, 12.0), (25.0, 12.0)], "N": [(23.6, 26.0), (35.2, 26.0)]}   # iteration 3 (it. 2: 36.6 touched U13 at 45, 28): the TPS7A3301 U18 (12, 30) has through-hole thermal pads that shadow the bottom
-    cnt = {"P": 0, "N": 0}
-    for r, k in sorted(st.items()):
-        if k in ("P", "N"):
-            fixed[r] = pos[k][cnt[k]] + (90, "bottom")
-            cnt[k] += 1                                   # resistors and diodes of the storage are packed by the automatic placement
-    follow = [r for r, v in fixed.items() if r in NOISY_XY or r.startswith("U") and v[3] == "top"]
-    return autoplace.fit(sys.modules[__name__], lambda g, ic: autoplace.place(sys.modules[__name__], fixed=fixed, conn_y=H - 8.5, follow=follow, gap=g, ic_gap=ic))   # header row clear of the bottom holes
+    byref = {p["ref"]: p for p in P}
+    fixed = K.hole_fixed(P, HOLES)
+    me = sys.modules[__name__]
+
+    def edge_column(refs, x_edge, y0, rot, right=False):
+        y = y0
+        for r in refs:
+            box, _ = packer._bbox(me, byref[r], rot, "top")
+            x = (x_edge - box[2]) if right else (x_edge - box[0])
+            fixed[r] = (round(x, 2), round(y - box[1], 2), rot, "top")
+            y += box[3] - box[1] + 2.0
+
+    def edge_row(refs, x0, y_edge):
+        x = x0
+        for r in refs:
+            box, _ = packer._bbox(me, byref[r], 0, "top")
+            fixed[r] = (round(x - box[0], 2), round(y_edge - box[3], 2), 0, "top")
+            x += box[2] - box[0] + 2.0
+
+    edge_column(["J1", "J2", "J3", "J4"], 0.8, 8.5, 90)             # inputs: USB-C PD, packs 1 and 2, On/Off
+    edge_column(["J5", "J12", "J11"], W - 0.8, 8.5, 90, right=True)  # telemetry to P2, fan, screen 5 V
+    edge_row(["J7", "J9", "J6", "J8", "J10"], 9.0, H - 0.8)  # outputs: +5V panel, A1/R1, 15 V H5, R2, F1
+    for v, xy in QUIET_XY.items():
+        r = next(p["ref"] for p in P if p["value"] == v)
+        fixed[r] = xy + (0, "top")
+    st = sorted(p["ref"] for p in P if p["ref"].startswith("C") and p["value"] == "470u 25V")
+    for r, x in zip(st, (21.0, 32.5, 44.0, 55.5)):
+        fixed[r] = (x, H - 18.0, 90, "bottom")                       # hold-up storage row under the board, above the output connectors
+    follow = [r for r, v in fixed.items() if r.startswith("U")]
+
+    def side_of(ref, side):
+        p = byref[ref]
+        fp = p["fp"]
+        nets = {n for n in p["pins"].values() if n}
+        if ref.startswith("U") and p["value"] in ("INA226", "AP2112K-3.3", "TCA9546APW"):
+            return "bottom"                        # small logic: monitor, its LDO, the I2C mux
+        if ref.startswith(("U", "L", "F", "J", "H")) or ref.startswith("Q") and p["value"] != "2N7002":
+            return "top"
+        if ref.startswith("D"):
+            return "top" if p["value"] == "SS1H10" else "bottom"   # the phantom boost diode is in the hot loop; TVS / SS34 / LEDs below
+        if ref.startswith("R"):
+            return "top" if p["value"] in ("5m", "8m", "6.8m") or fp == WIRE1 else "bottom"   # shunts in the power path, the wire loop
+        if ref.startswith("C") and "CP_Elec" not in fp:
+            hot = (any(k in n for n in nets for k in ("BOOT", "BTST")) or "high di/dt" in p["fields"].get("Note", "")
+                   or p["value"] in ("220n 50V", "4.7u 50V", "2.2u 50V", "4.7u 100V") and nets & {"BUS", "V19", "HV_RAW"})
+            return "top" if hot else "bottom"      # switcher input banks and bootstraps (hot loops) with their IC
+        if "CP_Elec" in fp:
+            return "top"                           # bulk electrolytics with their rails (the 470 uF hold-up row is fixed under the board)
+        return "bottom"                            # 2N7002, test points
+
+    return autoplace.fit(me, lambda g, ic: autoplace.place(me, fixed=fixed, follow=follow, gap=g, ic_gap=ic, anchor_side="top",
+                                                          grid=(14.0, 7.0, W - 12.0, H - 16.0), keepout=KEEPOUT, side_of=side_of),
+                         ic_add=0.2)   # gap 1.4 / ic_gap 1.6 fits 100 x 80 (1.4 / 2.0 does not)
 
 
-CHARGER_XY = {"U6": (50.0, 60.0), "U8": (64.0, 66.0)}   # above the connector rows (they reach y 82), clear of the U22 thermal-via pads
-QUIET_XY = {"TPS7A4701": (12.0, 12.0), "TPS7A3301": (12.0, 30.0), "TPS7A4101": (28.0, 12.0)}
-# (IC, its inductor) by the refs of parts() (rev 0.8): U12 LM5176 + L3, U13/U14 TPS54560B + L4/L5, U15 LMR33640 +14 V + L6, U16 -14 V + L7,
-# U19 LM5156H phantom + L8, U21 LMR33640 15 V + L9, U22 LMR33640 12 V fan + L10; all on the bottom, right of x 40 (the quiet corner is
-# x < 36, y < 38); the chargers (U6, U8 with L1, L2) and the rest are placed by autoplace in the lower part of the board
-NOISY_XY = {"U12": (46.0, 10.0), "L3": (62.0, 12.0), "U19": (80.0, 8.0), "L8": (93.0, 10.0),
-            "U13": (45.0, 28.0), "L4": (57.0, 30.0), "U14": (71.0, 28.0), "L5": (83.0, 30.0), "L9": (95.0, 34.0),
-            "U15": (43.0, 45.0), "L6": (53.0, 45.0), "U16": (64.0, 45.0), "L7": (74.0, 45.0), "U21": (85.0, 46.0),
-            "U22": (78.0, 62.0), "L10": (92.0, 63.0)}
+QUIET_XY = {"TPS7A4701": (76.0, 49.0), "TPS7A3301": (76.0, 60.0), "TPS7A4101": (87.0, 49.0)}   # rev 2.7: quiet corner bottom-right
+KEEPOUT = [(66.0, 42.0, 100.0, 80.0)]   # grid cells: not in the quiet corner
 
 
 if __name__ == "__main__":

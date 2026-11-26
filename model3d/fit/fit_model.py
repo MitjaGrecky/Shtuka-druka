@@ -490,7 +490,7 @@ def parts(usb=None):
     # the volume pots stand on W1: see w1_parts()
 
     # under the slope and the rear wall (doc 27 section 6, doc 29)
-    # 26.11.2026 (audit): outlines checked against the .kicad_pcb Edge.Cuts: A1 220 x 100 rev 1.1, PW 100 x 100 rev 2.6 (model box still 100 x 80: 100 deep hits R2 by 6.6 mm, open), R1 238 x 105 rev 1.4, R2 110 x 99 rev 1.6, P1 92 x 258, P3 67.5 x 258, P4 92 x 293.
+    # 26.11.2026 (audit): outlines checked against the .kicad_pcb Edge.Cuts: A1 220 x 100 rev 1.1, PW 100 x 80 rev 2.7 (decision P157, 26.11.2026: was 100 x 100, hit R2 by 6.6 mm; now two-sided), R1 238 x 105 rev 1.4, R2 110 x 99 rev 1.6, P1 92 x 258, P3 67.5 x 258, P4 92 x 293.
     # 15.11.2026: real outlines of the placed boards (A1 rev 0.4 220 x 100, PW rev 0.6 100 x 80, R1 rev 0.5 238 x 96, R2 rev 0.6 L-shape
     # 175 x 103); before they were the early estimates 140 x 90, 60 x 50, 238 x 104 and 258 x 104. Rear boards: model x = 515 - rear x.
     a(box("A1 audio board", "rear", A1_X0, A1_X0 + 220, A1_Y0, A1_Y0 + 100, A1_Z0, A1_Z0 + 22, color="pcb", note="220 x 100 (hardware/a1-digital, rev 1.1); on the floor on standoffs under the screen (R174/R179)"))
@@ -498,7 +498,7 @@ def parts(usb=None):
         # 16.11.2026, the user's idea: the H5 where the battery bay was (rear right, under the slope), lying flat; the battery
         # goes under the grid where the H5 used to be; PW moves 15 mm left to clear it.
         px = PW_X0 or 285
-        a(box("PW power", "rear", px, px + 100, 320 + RS, 400 + RS, 6, PW_TOP, color="pcb", note="STALE envelope 100 x 80: the real PW rev 2.6 is 100 x 100 and overlaps R2 by 6.6 mm (audit 26.11.2026, needs the engineer); moved for the H5"))
+        a(box("PW power", "rear", px, px + 100, 320 + RS, 400 + RS, 6, PW_TOP, color="pcb", note="100 x 80 (hardware/pw-power rev 2.7, two-sided, P157); moved for the H5"))
         rx, ry = H5_REAR_X, H5_REAR_Y
         if COMPUTER == "H5TILT":
             # the H5 lies parallel to the slope under the screen (user's sketch, 16.11.2026): board away from the slope, heatsink towards it
@@ -535,7 +535,7 @@ def parts(usb=None):
         else:
             a(box("Battery bay", "rear", 176, 266, 87, 173, 3, 48, color="battery", note="moved under the grid"))
     else:
-        a(box("PW power", "rear", 300, 400, 320 + RS, 400 + RS, 6, 24, color="pcb", note="STALE envelope 100 x 80 (real 100 x 100, rev 2.6); position not fixed"))
+        a(box("PW power", "rear", 300, 400, 320 + RS, 400 + RS, 6, 24, color="pcb", note="100 x 80 (rev 2.7, P157); position not fixed"))
         a(box("Battery bay", "rear", 414, 504, 312, 398, 3, 48, color="battery"))
     a(box("R1 audio rear board", "rear", 4, 242, 413.4 + RS, 415 + RS, 8, R1_TOP, color="pcb", note="rear x 273-511, z 8-113"))
     # R2 (hardware/r2-control/gen/design.py OUTLINE): rear x 88-263, z 10-113 without the DIN window rear x 88-156, z 38-113

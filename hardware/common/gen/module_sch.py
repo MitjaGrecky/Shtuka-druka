@@ -99,7 +99,7 @@ def write_grid(D, ns, comment2, here, notes=()):
         nets = p["pins"] if not multi else {k: v for k, v in p["pins"].items() if k in nums}
         start = len(S.items)
         S.symbol(p["ref"], p["lib"], p["value"], (x + w / 2) * g, (y + h / 2) * g, 0, p["fp"], f, nets,
-                 dnp=p["fields"].get("DNP") == "yes", in_bom=not p["ref"].startswith(("H", "FSR", "TP")))   # FSR = copper electrodes of the board, not a part
+                 dnp=p["fields"].get("DNP") == "yes", in_bom=not p["ref"].startswith(("H", "FSR", "TP")) and "SolderWire" not in p["fp"])   # FSR = copper electrodes of the board, not a part; SolderWire = wire loop (footprint excluded from BOM)
         if multi:                                          # this instance is unit u with only its own pins
             s = S.items[start].replace("(unit 1)", f"(unit {u})")
             s = s.replace(f"(uuid {M.uid('sym', p['ref'])})", f"(uuid {M.uid('sym', p['ref'], u)})")

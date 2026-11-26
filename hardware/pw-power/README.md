@@ -1,10 +1,12 @@
-# PW - Power board (rev 2.6, 25.11.2026; under the slope, right, next to the battery bay)
+# PW - Power board (rev 2.7, 26.11.2026; under the slope, right, next to the battery bay)
+
+**Rev 2.7 (P157):** board 100 x 80 (was 100 x 100, it hit R2 in the case), parts on both sides. Top: ICs, FETs, inductors, fuses, connectors, bulk electrolytics, switcher input ceramics and bootstrap caps (hot loops), power shunts; bottom: the other passives (decoupling under the pins of its IC), TVS, SS34, 2N7002, LEDs, test points, INA226 / AP2112 / TCA9546, 4 x 470 uF hold-up row. Connectors on the edges: inputs (USB-C PD, packs 1/2, On/Off) left, telemetry, fan and screen 5 V right, outputs (+5V panel, A1/R1, 15 V H5, R2, F1) bottom. Quiet LDO corner (TPS7A4701 / TPS7A3301 / TPS7A4101) bottom-right on top, no switcher in it. Placement gap 1.4 mm, ic_gap 1.6 mm (1.4 / 2.0 does not fit); no room was left for L5 (SRP1038, +5V) on top: it sits under the board next to U13.
 
 **Rev 2.6 (doc 52):** LM70660 footprint RRX0029B checked against the TI drawing: 6 + 6 TI vias in the VIN and PGND pads, SW pad x -0.125..2.9, pad 30 at (0.037, 1.308).
 
 **Rev 2.5 (P151, P153):** pack jumpers 0 R 1206 -> 1 mm2 wire loop (33 mW at 8 A); SRP1038CC-4R7M, EEE-FK1E471P, EEH-ZA1V151P; PFM loads and the 10 R storage resistors in 2512.
 
-All the power of the instrument: USB-C PD and two packs joined by ideal diodes (LM74700), the rear On/Off switch, every rail the boards need. **100 x 100 mm, 4 layers, 343 parts, not routed.**
+All the power of the instrument: USB-C PD and two packs joined by ideal diodes (LM74700), the rear On/Off switch, every rail the boards need. **100 x 80 mm, 4 layers, 343 parts (100 top / 243 bottom), two-sided.**
 **No DC input (R205, 21.11.2026): the only external power is USB-C PD (also a MacBook charger) and the batteries.** Decisions: R36, R40/R59/R109 (battery), R72, R110, R118, R145; P111 (3S packs), P116, P123-P129, P131, P132. Research: `docs/ru/34_rear_boards_research.md`, doc 43 (batteries).
 **DO NOT ORDER** the PW board or the battery packs until a real 3S pack is checked (dimensions, capacity, UN38.3), its BMS threshold is confirmed and the 45 C cut-off is checked on a sample (doc 43).
 Open: loops of the LM5176 and LM5156H (TI examples), bench check of the VBUS damper and of the quiescent currents behind the hold-up estimate, parts of the 470 uF storage and of the SS34 (technologist).
@@ -30,7 +32,7 @@ USB-C Power (Micro-Fit 2x3), Battery 1 and 2 (Micro-Fit 2x3), On/Off (1x2), 15 V
 ## Test points and jumpers (P147)
 10 test points (pads 2.0 mm): VBUS (after the damper), BUS, P14, N14, +5V, +5V_PANEL, +3V3, GND x 3. 0 ohm 1206 jumpers for current measurement: in the line of each pack (before its fuse: charge and discharge) and between the +-14 V storage node and its capacitors (P14, N14).
 
-## Checks (22.11.2026)
-ERC 0, DRC 0 errors, schematic parity 0, board 100.1 x 100.1 mm, courtyard fill bottom 49 %, top 16 %, HF decoupling 20 of 22 within 2 mm (P116). Generators: `gen/design.py`, `gen/make_sch.py`, `gen/make_pcb.py` (`KICAD_SYMBOL_DIR=<repo>/hardware/common/sym7`); height `PW_H` (default 100).
+## Checks (26.11.2026, rev 2.7)
+ERC 0 errors, DRC 0 errors (unrouted only), schematic parity 0 (wire loops R9/R20 now out of the BOM in the schematic too), board 100.1 x 80.1 mm, courtyards cover 75 % (top 58 %, bottom 39 %). Generators: `gen/design.py`, `gen/make_sch.py`, `gen/make_pcb.py` (`KICAD_SYMBOL_DIR=<repo>/hardware/common/sym7`); height `PW_H` (default 80).
 Budget (estimate): 44-64 W without LEDs; LED room by the input source, firmware caps the LEDs from the INA226 (R146, R147).
 License: CERN-OHL-S-2.0 (hardware), AGPL-3.0-or-later (scripts).

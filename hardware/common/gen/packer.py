@@ -51,7 +51,14 @@ def _bbox_raw(D, part, rot, side):
         if p.GetAttribute() in (pcbnew.PAD_ATTRIB_PTH, pcbnew.PAD_ATTRIB_NPTH):
             b = p.GetBoundingBox()
             tht.append((mm(b.GetLeft() + dx), mm(b.GetTop() + dy), mm(b.GetRight() + dx), mm(b.GetBottom() + dy)))
+    other = pcbnew.F_Cu if side == "bottom" else pcbnew.B_Cu      # SMD pads on the far copper (exposed pads of thermal-via footprints)
+    _BACK[(part["fp"], rot, side, part["ref"].startswith(("J", "RV")))] = [
+        (mm(b.GetLeft() + dx), mm(b.GetTop() + dy), mm(b.GetRight() + dx), mm(b.GetBottom() + dy))
+        for b in (q.GetBoundingBox() for q in fp.Pads() if q.GetAttribute() == pcbnew.PAD_ATTRIB_SMD and q.IsOnLayer(other))]
     return box, tht
+
+
+_BACK = {}
 
 
 _PADS = {}
@@ -185,7 +192,7 @@ def pin_targets(parts, movable, group_of):
     return out
 
 
-def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.0, ic_gap=None, pin_rule=None, tight_gap=0.0, pin_gap=0.5):
+def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.0, ic_gap=None, pin_rule=None, tight_gap=0.0, pin_gap=0.5, side_of=None):
     """ic_gap (rev 20.11.2026, routing analysis tools/placement_analysis.py): extra courtyard gap around the fine-pitch ICs (QFN, TSSOP, ...), so that
     the 0.4-0.65 mm pins can fan out; default = gap (old behaviour).
     pin_rule (rev 20.11.2026, audit A-037; default on, env PLACE_PINRULE=0 turns it off): the ICs of every group are placed first; then each
@@ -195,6 +202,7 @@ def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.
     spot within 15 mm of its pin falls back to its group.
 
     fixed: {ref: (x, y, rot, side)}; groups: [(anchor_x, anchor_y, side, [refs], rot)]; areas: [(x0, y0, x1, y1)].
+    side_of(ref, side) -> side (26.11.2026, PW two-sided): overrides the side of every non-fixed part (e.g. small passives to the bottom).
     Returns the full placement; raises if a part finds no spot."""
     import os
     if pin_rule is None:
@@ -207,14 +215,19 @@ def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.
     occ = {"top": [], "bottom": []}       # (raw courtyard box, box the other parts keep `gap` from)
     tht = []
 
-    def occupy(ref, box, pads, x, y, side, tight=False):
+    def occupy(ref, box, pads, x, y, side, tight=False, rot=None):
         raw = _shift(box, x, y)
         occ[side].append((raw, _shift(_grow(box, grow), x, y) if (_fine(P[ref]) and not tight) else raw))
         tht.extend(_shift(b, x, y) for b in pads)
+        if side_of and rot is not None:                   # two-sided mode: far-side SMD pads block the other side
+            other = "top" if side == "bottom" else "bottom"
+            for b in _BACK.get((P[ref]["fp"], rot, side, ref.startswith(("J", "RV"))), ()):
+                bb = _shift(b, x, y)
+                occ[other].append((bb, bb))
 
     for ref, (x, y, r, side) in fixed.items():
         box, pads = _bbox(D, P[ref], r, side)
-        occupy(ref, box, pads, x, y, side)
+        occupy(ref, box, pads, x, y, side, rot=r)
     inner = [(a[0] + edge, a[1] + edge, a[2] - edge, a[3] - edge) for a in areas]
 
     def inside(b):
@@ -232,18 +245,23 @@ def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.
         return not (pads and any(_hit(t, o[0], g) for t in pads for o in occ[other]))
 
     def place_near(ref, ax, ay, side, rot):
-        box, pads = _bbox(D, P[ref], rot, side)
-        r = 0.0
-        while r <= rmax:
-            n = max(1, int(2 * math.pi * r / step)) if r else 1
-            for k in range(n):
-                a = 2 * math.pi * k / n
-                x, y = round((ax + r * math.cos(a)) / 0.1) * 0.1, round((ay + r * math.sin(a)) / 0.1) * 0.1
-                if free(_shift(box, x, y), [_shift(t, x, y) for t in pads], side, gap, False):
-                    pl[ref] = (x, y, rot, side)
-                    occupy(ref, box, pads, x, y, side)
-                    return
-            r += step
+        sides = [side]
+        if side_of:                                       # two-sided boards: the preferred side, then the other one
+            side = side_of(ref, side)
+            sides = [side, "top" if side == "bottom" else "bottom"]
+        for side in sides:
+            box, pads = _bbox(D, P[ref], rot, side)
+            r = 0.0
+            while r <= rmax:
+                n = max(1, int(2 * math.pi * r / step)) if r else 1
+                for k in range(n):
+                    a = 2 * math.pi * k / n
+                    x, y = round((ax + r * math.cos(a)) / 0.1) * 0.1, round((ay + r * math.sin(a)) / 0.1) * 0.1
+                    if free(_shift(box, x, y), [_shift(t, x, y) for t in pads], side, gap, False):
+                        pl[ref] = (x, y, rot, side)
+                        occupy(ref, box, pads, x, y, side, rot=rot)
+                        return
+                r += step
         raise RuntimeError(f"no room for {ref} near ({ax}, {ay}) on {side}")
 
     def place_at_pin(ref, ic, pad, net, kind):
@@ -252,6 +270,8 @@ def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.
         if (kind == "decap" and under and "P0.4mm" in P[ic]["fp"] and _capval(P[ref]["value"]) <= 1.1e-6
                 and _is_power(net)):
             side = "top" if side == "bottom" else "bottom"   # P118: HF decoupling of a 0.4 mm pitch QFN under its pin on the other side
+        if side_of:
+            side = side_of(ref, side)
         if pp is None:
             return False
         tx, ty = ix + pp[0], iy + pp[1]
@@ -275,7 +295,7 @@ def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.
             return False
         _, x, y, rot, box, pads = min(found, key=lambda t: t[0])
         pl[ref] = (x, y, rot, side)
-        occupy(ref, box, pads, x, y, side, tight=True)
+        occupy(ref, box, pads, x, y, side, tight=True, rot=rot)
         return True
 
     group_of = {ref: k for k, (_, _, _, refs, _) in enumerate(groups) for ref in refs}
@@ -284,11 +304,18 @@ def pack(D, parts, fixed, groups, areas, edge=0.6, gap=0.25, step=0.5, rmax=120.
     for k, (ax, ay, side, refs, rot) in enumerate(groups):
         sized = [(((lambda b: (b[2] - b[0]) * (b[3] - b[1]))(_bbox(D, P[ref], rot, side)[0])), ref) for ref in refs]
         sized = sorted(sized, key=lambda t: -t[0])
-        for _, ref in sized:
+        for a, ref in sized:
             if pin_rule and _is_ic(ref):
                 place_near(ref, ax, ay, side, rot)        # phase 1: the ICs of the group
             elif ref not in targets:
                 rest.append((k, ref))
+        if side_of:                                       # two-sided mode: the big parts (>= 40 mm2: inductors, electrolytics, FETs, connectors) right after the ICs,
+            for a, ref in sized:                          # before the small ones fragment the free area
+                if a >= 40.0 and not _is_ic(ref) and ref not in pl:
+                    place_near(ref, ax, ay, side, rot)
+                    targets.pop(ref, None)
+                    if (k, ref) in rest:
+                        rest.remove((k, ref))
     if pin_rule:
         first = {}                                        # P116: the first (smallest) bulk capacitor of each bank (net + pin) goes before the rest
         for ref, (ic, pad, net, kind) in sorted(targets.items(), key=lambda t: (_capval(P[t[0]]["value"]), t[0])):

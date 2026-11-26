@@ -4,7 +4,7 @@
 Sources: z of the board and deck from the production model g3.build(30, 0, 117, 20, 0) (designer/runs/pad_stack_model.txt:
 P2 board z 18.9-20.5, top skin z 27-30, standoffs 20.5-27, pad cap in the model z 30.2-33.2); pad 25.5 x 21, pitch 28 x 25
 (doc 27 section 4); light hole 3-4 mm (R194); tape 0.05-0.1 and XactFSR ~0.13 mm (user's research via the chief engineer,
-NOT checked against the Interlink datasheet); Sorta-Clear 40, Shore 40A (Smooth-On, from memory - check the TDS).
+NOT checked against the Interlink datasheet); Sorta-Clear 40, Shore 40A (Smooth-On SORTA-Clear Series TB, datasheets/smoothon_sorta_clear.pdf).
 ASSUMPTION (designer): comb field of one pad 21 x 17 mm (the test board layout does not exist yet; electrodes are placeholders).
 Views: section A-A through the pad centre along x (across the row), seen from the FRONT (musician), z up from the outer floor,
 mm; and each foot seen from BELOW (from the board), x to the right as seen from the front, i.e. mirrored left-right against a

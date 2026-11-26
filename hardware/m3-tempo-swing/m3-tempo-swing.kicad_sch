@@ -1289,11 +1289,11 @@
         )
         (pin passive line (at -5.08 0 0) (length 2.54)
           (name "GK" (effects (font (size 1.27 1.27))))
-          (number "3" (effects (font (size 1.27 1.27))))
+          (number "4" (effects (font (size 1.27 1.27))))
         )
         (pin passive line (at -5.08 -5.08 0) (length 2.54)
           (name "BK" (effects (font (size 1.27 1.27))))
-          (number "4" (effects (font (size 1.27 1.27))))
+          (number "3" (effects (font (size 1.27 1.27))))
         )
       )
     )
@@ -3337,8 +3337,8 @@
     )
     (pin "2" (uuid bdd851ad-4ce4-5658-b770-0d2ec2679b5a))
     (pin "1" (uuid 9946f7f6-c7bd-51d8-86a7-91aa1694838c))
-    (pin "3" (uuid 374ee9d0-aaa9-581d-bb0d-dda0c65e9ca9))
-    (pin "4" (uuid f6ff7b1f-d601-557f-a5b4-437a638071b1))
+    (pin "4" (uuid 374ee9d0-aaa9-581d-bb0d-dda0c65e9ca9))
+    (pin "3" (uuid f6ff7b1f-d601-557f-a5b4-437a638071b1))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D1") (unit 1))
@@ -3387,8 +3387,8 @@
     )
     (pin "2" (uuid aecfdf13-be05-5150-88db-36a60a40a237))
     (pin "1" (uuid be4eb812-afa6-56fc-8211-5a1fe6b5aeb6))
-    (pin "3" (uuid a3ddfd26-e1fb-5712-b659-1a9e970c8a0a))
-    (pin "4" (uuid efa0d7ed-bca9-5d03-9f4d-13189106014c))
+    (pin "4" (uuid a3ddfd26-e1fb-5712-b659-1a9e970c8a0a))
+    (pin "3" (uuid efa0d7ed-bca9-5d03-9f4d-13189106014c))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D2") (unit 1))
@@ -3437,8 +3437,8 @@
     )
     (pin "2" (uuid 8d34fdf3-44b7-5d39-a2fd-a8fbc4371c6f))
     (pin "1" (uuid 307a94b5-c4ef-593e-926e-23a2e8213e68))
-    (pin "3" (uuid ff0e0b24-eadd-5a64-8f07-c7c8f047b40c))
-    (pin "4" (uuid 75f3af53-8173-5286-9f37-a7dadd29ba0e))
+    (pin "4" (uuid ff0e0b24-eadd-5a64-8f07-c7c8f047b40c))
+    (pin "3" (uuid 75f3af53-8173-5286-9f37-a7dadd29ba0e))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D3") (unit 1))
@@ -3487,8 +3487,8 @@
     )
     (pin "2" (uuid e9625b2f-dfdf-54d6-b58a-4c3272249033))
     (pin "1" (uuid 1455ebcb-93d3-5623-a6c5-c10380cce2af))
-    (pin "3" (uuid b3212196-1131-561c-9ac8-5dd840d5abf1))
-    (pin "4" (uuid 14450df0-07bc-5f62-be43-23e8d543940d))
+    (pin "4" (uuid b3212196-1131-561c-9ac8-5dd840d5abf1))
+    (pin "3" (uuid 14450df0-07bc-5f62-be43-23e8d543940d))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D4") (unit 1))
@@ -3537,8 +3537,8 @@
     )
     (pin "2" (uuid 54f2b342-8831-5a98-9699-f87a5c7afa47))
     (pin "1" (uuid 97085693-58f3-5b3c-9dc0-3a621f98f846))
-    (pin "3" (uuid 5845ff4e-2e0d-58db-bda8-a17d1e8d7177))
-    (pin "4" (uuid 256f4b72-1e08-5951-9762-52e539bfe9be))
+    (pin "4" (uuid 5845ff4e-2e0d-58db-bda8-a17d1e8d7177))
+    (pin "3" (uuid 256f4b72-1e08-5951-9762-52e539bfe9be))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D5") (unit 1))
@@ -3587,8 +3587,8 @@
     )
     (pin "2" (uuid 0f9ebfd1-fba4-53d8-8dd8-4a251f7d8673))
     (pin "1" (uuid d5b42df6-51c6-588b-8736-4411c2f5463c))
-    (pin "3" (uuid bafb0938-1eb6-5ac0-a73e-c6f91ef60410))
-    (pin "4" (uuid 9172b979-a9bc-5b9c-8d7a-a221edd78e27))
+    (pin "4" (uuid bafb0938-1eb6-5ac0-a73e-c6f91ef60410))
+    (pin "3" (uuid 9172b979-a9bc-5b9c-8d7a-a221edd78e27))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D6") (unit 1))
@@ -3637,8 +3637,8 @@
     )
     (pin "2" (uuid ea18219b-989d-5ff5-8378-6e332bd66369))
     (pin "1" (uuid 922d0681-3ca4-5643-ba21-9bc31cebcb1f))
-    (pin "3" (uuid a0957cd8-9367-53a5-b705-12dd85a701d2))
-    (pin "4" (uuid 9a7e93cd-5451-5760-bc84-2faf626f1023))
+    (pin "4" (uuid a0957cd8-9367-53a5-b705-12dd85a701d2))
+    (pin "3" (uuid 9a7e93cd-5451-5760-bc84-2faf626f1023))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D7") (unit 1))
@@ -3687,8 +3687,8 @@
     )
     (pin "2" (uuid d223768e-84b6-524f-95c3-d807ebee9c14))
     (pin "1" (uuid cf4397cd-8e26-5d30-9781-f6d4fea6ecfc))
-    (pin "3" (uuid 26422a4c-b697-5ea8-803b-7e6b25af5210))
-    (pin "4" (uuid 3c2ce7b9-3a70-55a8-945c-7016e7dfa4f5))
+    (pin "4" (uuid 26422a4c-b697-5ea8-803b-7e6b25af5210))
+    (pin "3" (uuid 3c2ce7b9-3a70-55a8-945c-7016e7dfa4f5))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D8") (unit 1))
@@ -3737,8 +3737,8 @@
     )
     (pin "2" (uuid 85f458d2-8388-517f-8c92-974e0bf50ec0))
     (pin "1" (uuid 666b65cc-1802-5e64-8ee3-3f84f1d086c0))
-    (pin "3" (uuid a044f004-afa5-5528-8f71-0be6e3329e3b))
-    (pin "4" (uuid 3e8c06c1-73bf-536e-9964-2929b7850e0f))
+    (pin "4" (uuid a044f004-afa5-5528-8f71-0be6e3329e3b))
+    (pin "3" (uuid 3e8c06c1-73bf-536e-9964-2929b7850e0f))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D9") (unit 1))
@@ -3787,8 +3787,8 @@
     )
     (pin "2" (uuid 3c254f87-059c-50ce-9cf2-2c059990af7a))
     (pin "1" (uuid 1f27bc2b-cc94-57ec-82c0-f53f43e24253))
-    (pin "3" (uuid d55bf7b5-fa2d-5781-936d-716ac71927b8))
-    (pin "4" (uuid 0eae77c7-77c4-5024-aef0-df3d2ddbb520))
+    (pin "4" (uuid d55bf7b5-fa2d-5781-936d-716ac71927b8))
+    (pin "3" (uuid 0eae77c7-77c4-5024-aef0-df3d2ddbb520))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D10") (unit 1))
@@ -3837,8 +3837,8 @@
     )
     (pin "2" (uuid 6dcff367-8391-5c61-99ae-99237b7d86f6))
     (pin "1" (uuid b02875a6-51c4-5a25-b618-c1684750090c))
-    (pin "3" (uuid e01abc79-f600-55da-a6ac-664ebf0cebfe))
-    (pin "4" (uuid 0a590fc9-7bf7-5302-8009-4e32d0c99b48))
+    (pin "4" (uuid e01abc79-f600-55da-a6ac-664ebf0cebfe))
+    (pin "3" (uuid 0a590fc9-7bf7-5302-8009-4e32d0c99b48))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D11") (unit 1))
@@ -3887,8 +3887,8 @@
     )
     (pin "2" (uuid 21ab0d7a-321f-568c-a044-1ba834d790c3))
     (pin "1" (uuid 62ac59a8-6df3-559c-b5c8-88c960e1bff9))
-    (pin "3" (uuid cd93de65-454c-596f-949d-b178ac4e872d))
-    (pin "4" (uuid ef6b8716-7968-5603-abfc-f6f07014ff3a))
+    (pin "4" (uuid cd93de65-454c-596f-949d-b178ac4e872d))
+    (pin "3" (uuid ef6b8716-7968-5603-abfc-f6f07014ff3a))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D12") (unit 1))
@@ -3937,8 +3937,8 @@
     )
     (pin "2" (uuid d1845edf-014b-5e14-b3d6-f7ce407ef9ce))
     (pin "1" (uuid 37b791fe-4e2b-5213-8351-85cbe5715240))
-    (pin "3" (uuid 16293b91-e2ab-56a5-824b-5ef60de5e15e))
-    (pin "4" (uuid 04b12c49-be36-50f8-9d44-b9c09e5625be))
+    (pin "4" (uuid 16293b91-e2ab-56a5-824b-5ef60de5e15e))
+    (pin "3" (uuid 04b12c49-be36-50f8-9d44-b9c09e5625be))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D13") (unit 1))
@@ -3987,8 +3987,8 @@
     )
     (pin "2" (uuid e3ce3079-e5c5-56d8-b8ca-d757d94b25f0))
     (pin "1" (uuid 88491ea5-cd83-5a5b-9761-23f7cc005d30))
-    (pin "3" (uuid 2fc15059-51d1-5900-9017-93860bec8b30))
-    (pin "4" (uuid 4dfabdb0-07dd-5291-970d-9b0f04db40dd))
+    (pin "4" (uuid 2fc15059-51d1-5900-9017-93860bec8b30))
+    (pin "3" (uuid 4dfabdb0-07dd-5291-970d-9b0f04db40dd))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D14") (unit 1))
@@ -4037,8 +4037,8 @@
     )
     (pin "2" (uuid 1ab786f1-c1a2-596a-bd21-4062db56e09a))
     (pin "1" (uuid 013ae544-3029-50b6-b619-bfb6a5b68f73))
-    (pin "3" (uuid 306dbb0d-fbf9-5dbd-8f73-1c14c3264640))
-    (pin "4" (uuid fea3d418-8789-53db-9f6d-652b16b90bef))
+    (pin "4" (uuid 306dbb0d-fbf9-5dbd-8f73-1c14c3264640))
+    (pin "3" (uuid fea3d418-8789-53db-9f6d-652b16b90bef))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D15") (unit 1))
@@ -4087,8 +4087,8 @@
     )
     (pin "2" (uuid 5f0a7d7f-563d-5454-b356-ddac1de74f28))
     (pin "1" (uuid 558f81c8-480e-591d-8cd7-6817e26a699b))
-    (pin "3" (uuid c9176288-c780-5684-b46b-9656275378db))
-    (pin "4" (uuid 31f1aa26-1668-56e0-9b5a-70b89c938afe))
+    (pin "4" (uuid c9176288-c780-5684-b46b-9656275378db))
+    (pin "3" (uuid 31f1aa26-1668-56e0-9b5a-70b89c938afe))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D16") (unit 1))
@@ -4137,8 +4137,8 @@
     )
     (pin "2" (uuid 988de5ac-5356-586f-980d-5b1aa5b3484a))
     (pin "1" (uuid 204c910d-c62d-52e9-8680-db321fa93c75))
-    (pin "3" (uuid 96858758-c104-5c0f-b0ca-7aa60f4a8ca2))
-    (pin "4" (uuid 3e4db49f-a31f-5351-8c12-2ffde63b6c69))
+    (pin "4" (uuid 96858758-c104-5c0f-b0ca-7aa60f4a8ca2))
+    (pin "3" (uuid 3e4db49f-a31f-5351-8c12-2ffde63b6c69))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D17") (unit 1))
@@ -4187,8 +4187,8 @@
     )
     (pin "2" (uuid cc1441a8-2d33-5fc8-b3d2-0c4ac4f5e37a))
     (pin "1" (uuid 143dd8fb-1731-5595-afc9-385e3d6c8aae))
-    (pin "3" (uuid 9bef3e06-913b-5d26-b4fb-6bd67ad4104a))
-    (pin "4" (uuid 6c219ec9-1a84-5417-9c43-25ab05480c94))
+    (pin "4" (uuid 9bef3e06-913b-5d26-b4fb-6bd67ad4104a))
+    (pin "3" (uuid 6c219ec9-1a84-5417-9c43-25ab05480c94))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D18") (unit 1))
@@ -4237,8 +4237,8 @@
     )
     (pin "2" (uuid f05fbf6f-3151-5dd8-8f74-c82e8ba8eddf))
     (pin "1" (uuid 3463239d-c64f-5796-8d39-8fe5b5f07a54))
-    (pin "3" (uuid 70f93b8a-d46a-5204-82db-db089e571c7b))
-    (pin "4" (uuid 06079a46-efd5-5694-b38c-cacb766a2125))
+    (pin "4" (uuid 70f93b8a-d46a-5204-82db-db089e571c7b))
+    (pin "3" (uuid 06079a46-efd5-5694-b38c-cacb766a2125))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D19") (unit 1))
@@ -4287,8 +4287,8 @@
     )
     (pin "2" (uuid 7417ee2f-18af-5d3c-9500-2dc3a2bdebad))
     (pin "1" (uuid 1b7e5563-5efd-59e5-b403-e9a79a1bdd04))
-    (pin "3" (uuid 02ac2f5b-bb97-5139-ac0c-ab9b0e6f8f65))
-    (pin "4" (uuid a2463711-2215-5198-b00f-a5e59fe9b25a))
+    (pin "4" (uuid 02ac2f5b-bb97-5139-ac0c-ab9b0e6f8f65))
+    (pin "3" (uuid a2463711-2215-5198-b00f-a5e59fe9b25a))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D20") (unit 1))
@@ -4337,8 +4337,8 @@
     )
     (pin "2" (uuid 705ceab4-e3dd-5a41-8880-abdbaa0da844))
     (pin "1" (uuid 80025b6a-cdfe-5dc8-be1a-e7da2e10e79c))
-    (pin "3" (uuid 5dfee115-16c2-5c5c-845c-ae1de8cd8ef2))
-    (pin "4" (uuid b1f238f7-e53d-5526-9cc8-36ab50500cb5))
+    (pin "4" (uuid 5dfee115-16c2-5c5c-845c-ae1de8cd8ef2))
+    (pin "3" (uuid b1f238f7-e53d-5526-9cc8-36ab50500cb5))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D21") (unit 1))
@@ -4387,8 +4387,8 @@
     )
     (pin "2" (uuid 5204dc2e-0da2-5360-ba4f-a27a4fde21be))
     (pin "1" (uuid df350354-1f42-5e37-b986-0672b34ceb9e))
-    (pin "3" (uuid f08be70e-c692-5aad-b0e3-dae86788aa24))
-    (pin "4" (uuid d833feff-ec79-53c3-af84-6c2d445686e5))
+    (pin "4" (uuid f08be70e-c692-5aad-b0e3-dae86788aa24))
+    (pin "3" (uuid d833feff-ec79-53c3-af84-6c2d445686e5))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D22") (unit 1))
@@ -4437,8 +4437,8 @@
     )
     (pin "2" (uuid 832562fb-f591-5cfd-9d3b-29fa8e3e4de0))
     (pin "1" (uuid c5715ab3-4e23-5bf8-bf8f-45db67c115a7))
-    (pin "3" (uuid 42e531fc-9e0d-57ac-9beb-c758dc9022d2))
-    (pin "4" (uuid 50054bb4-6e26-5b38-bb43-bf3937b9a792))
+    (pin "4" (uuid 42e531fc-9e0d-57ac-9beb-c758dc9022d2))
+    (pin "3" (uuid 50054bb4-6e26-5b38-bb43-bf3937b9a792))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D23") (unit 1))
@@ -4487,8 +4487,8 @@
     )
     (pin "2" (uuid 346329fe-3edf-5447-a0c9-11fc23c38db1))
     (pin "1" (uuid 22174924-9bee-5a2f-86be-7d3c45f0ff4d))
-    (pin "3" (uuid a5e84588-c6a4-51bb-aa99-8bba9c820368))
-    (pin "4" (uuid 8ae06036-881c-5c10-abce-20bef2e207a0))
+    (pin "4" (uuid a5e84588-c6a4-51bb-aa99-8bba9c820368))
+    (pin "3" (uuid 8ae06036-881c-5c10-abce-20bef2e207a0))
     (instances
       (project "m3-tempo-swing"
         (path "/bf562275-ba32-50e3-be92-04543303eac8" (reference "D24") (unit 1))

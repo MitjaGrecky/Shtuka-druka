@@ -325,7 +325,7 @@
 			(net "/A_SW1")
 			(uuid "8653f070-26ee-4f4c-a270-3c161a80ca53")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -333,7 +333,7 @@
 			(net "/A_CS1")
 			(uuid "ef924cd0-d0e5-417e-9d1f-26117f940894")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -467,7 +467,7 @@
 			(net "/A_SW0")
 			(uuid "eedbd7e1-647b-4aba-b1e3-2fba9968e43c")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -475,7 +475,7 @@
 			(net "/A_CS4")
 			(uuid "db63c973-bbe9-4f88-a983-c02830165276")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -609,7 +609,7 @@
 			(net "/A_SW0")
 			(uuid "83032ab0-ff46-4226-875c-cd6bfdac78ef")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -617,7 +617,7 @@
 			(net "/A_CS1")
 			(uuid "daee2b7f-3925-484f-9335-4ffa733b2ea1")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -967,7 +967,7 @@
 			(net "/A_SW3")
 			(uuid "5bf96c90-b3e9-435e-a8f4-69d32fb5210f")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -975,7 +975,7 @@
 			(net "/A_CS1")
 			(uuid "1949ba7c-99a6-4f8f-b8b1-922bc554e826")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -1715,7 +1715,7 @@
 			(net "/A_SW2")
 			(uuid "2e5562c3-d18e-4a43-98a7-3eea3259a5f5")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -1723,7 +1723,7 @@
 			(net "/A_CS1")
 			(uuid "c78d8553-1396-428a-85a6-e58393fcbd3b")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")

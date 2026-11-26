@@ -1201,11 +1201,11 @@
         )
         (pin passive line (at -5.08 0 0) (length 2.54)
           (name "GK" (effects (font (size 1.27 1.27))))
-          (number "3" (effects (font (size 1.27 1.27))))
+          (number "4" (effects (font (size 1.27 1.27))))
         )
         (pin passive line (at -5.08 -5.08 0) (length 2.54)
           (name "BK" (effects (font (size 1.27 1.27))))
-          (number "4" (effects (font (size 1.27 1.27))))
+          (number "3" (effects (font (size 1.27 1.27))))
         )
       )
     )
@@ -3844,8 +3844,8 @@
     )
     (pin "2" (uuid b055a650-d2c7-5071-8f0d-a40e3b5c19e0))
     (pin "1" (uuid 28e69a39-08b2-588e-973c-40fc98b9c406))
-    (pin "3" (uuid 661ec011-f4e1-53e2-9e85-11e1f644b96d))
-    (pin "4" (uuid 26a3c0cd-891f-527f-8b1f-3a74df820fcf))
+    (pin "4" (uuid 661ec011-f4e1-53e2-9e85-11e1f644b96d))
+    (pin "3" (uuid 26a3c0cd-891f-527f-8b1f-3a74df820fcf))
     (instances
       (project "w1-levels"
         (path "/03b0f2e0-9103-56a7-b6f3-27a97250d3fe" (reference "D1") (unit 1))
@@ -3906,8 +3906,8 @@
     )
     (pin "2" (uuid 5450781d-2c56-5cb6-a8dd-c3c5914464de))
     (pin "1" (uuid 59e09a88-01e4-56be-b6c3-7cc2bd2f72d8))
-    (pin "3" (uuid bff610bb-817d-553f-aca8-95f5fda8f032))
-    (pin "4" (uuid b690aa59-ea8e-5f62-b6fa-c52721c709cd))
+    (pin "4" (uuid bff610bb-817d-553f-aca8-95f5fda8f032))
+    (pin "3" (uuid b690aa59-ea8e-5f62-b6fa-c52721c709cd))
     (instances
       (project "w1-levels"
         (path "/03b0f2e0-9103-56a7-b6f3-27a97250d3fe" (reference "D2") (unit 1))
@@ -3968,8 +3968,8 @@
     )
     (pin "2" (uuid ccb933a8-11e5-52ca-ac52-a944ac675ec8))
     (pin "1" (uuid 5fe3886a-ff43-5337-873c-cd8c22997781))
-    (pin "3" (uuid 6584b666-ff47-5eee-a27b-a792051b3a73))
-    (pin "4" (uuid d495c843-9891-5457-8e80-0608338d2a6d))
+    (pin "4" (uuid 6584b666-ff47-5eee-a27b-a792051b3a73))
+    (pin "3" (uuid d495c843-9891-5457-8e80-0608338d2a6d))
     (instances
       (project "w1-levels"
         (path "/03b0f2e0-9103-56a7-b6f3-27a97250d3fe" (reference "D3") (unit 1))
@@ -4030,8 +4030,8 @@
     )
     (pin "2" (uuid b9597b55-b287-5a0c-8be3-4fd2a9c21cb1))
     (pin "1" (uuid 6044179f-406e-5e3c-af50-ee998c54c427))
-    (pin "3" (uuid c41f2ded-301c-50c3-b23a-b4329cb33e05))
-    (pin "4" (uuid 11d8e7b6-69e6-5a13-aa23-0d097353b175))
+    (pin "4" (uuid c41f2ded-301c-50c3-b23a-b4329cb33e05))
+    (pin "3" (uuid 11d8e7b6-69e6-5a13-aa23-0d097353b175))
     (instances
       (project "w1-levels"
         (path "/03b0f2e0-9103-56a7-b6f3-27a97250d3fe" (reference "D4") (unit 1))

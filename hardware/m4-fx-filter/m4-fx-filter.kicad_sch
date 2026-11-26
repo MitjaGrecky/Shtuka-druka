@@ -1289,11 +1289,11 @@
         )
         (pin passive line (at -5.08 0 0) (length 2.54)
           (name "GK" (effects (font (size 1.27 1.27))))
-          (number "3" (effects (font (size 1.27 1.27))))
+          (number "4" (effects (font (size 1.27 1.27))))
         )
         (pin passive line (at -5.08 -5.08 0) (length 2.54)
           (name "BK" (effects (font (size 1.27 1.27))))
-          (number "4" (effects (font (size 1.27 1.27))))
+          (number "3" (effects (font (size 1.27 1.27))))
         )
       )
     )
@@ -3337,8 +3337,8 @@
     )
     (pin "2" (uuid 37cbc043-bc2e-50a4-8e08-f721f8aacab9))
     (pin "1" (uuid 3743d483-c8d0-5e3a-863f-06373aa4f156))
-    (pin "3" (uuid fc4ef314-ee22-5e1a-967e-7778b14948b1))
-    (pin "4" (uuid 6a58afb4-19d4-5be4-8712-fb2fba184b5f))
+    (pin "4" (uuid fc4ef314-ee22-5e1a-967e-7778b14948b1))
+    (pin "3" (uuid 6a58afb4-19d4-5be4-8712-fb2fba184b5f))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D1") (unit 1))
@@ -3387,8 +3387,8 @@
     )
     (pin "2" (uuid 124d37d7-8761-5716-a5d5-365e39f52a0b))
     (pin "1" (uuid 24947568-6829-5360-a184-f9690111dc39))
-    (pin "3" (uuid 8df9adfe-f558-5811-8f87-92b9b86b3305))
-    (pin "4" (uuid a1433b40-a0c3-59ef-aca0-485387deecc8))
+    (pin "4" (uuid 8df9adfe-f558-5811-8f87-92b9b86b3305))
+    (pin "3" (uuid a1433b40-a0c3-59ef-aca0-485387deecc8))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D2") (unit 1))
@@ -3437,8 +3437,8 @@
     )
     (pin "2" (uuid 36daab0b-38da-5662-9a5e-eaaf2aaf2376))
     (pin "1" (uuid d7021ca8-883d-5728-87ec-75f052de33b2))
-    (pin "3" (uuid 5069547b-c054-5d8b-a09b-836fe3469e54))
-    (pin "4" (uuid 05363231-6e86-5796-a49b-057b0e0476ff))
+    (pin "4" (uuid 5069547b-c054-5d8b-a09b-836fe3469e54))
+    (pin "3" (uuid 05363231-6e86-5796-a49b-057b0e0476ff))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D3") (unit 1))
@@ -3487,8 +3487,8 @@
     )
     (pin "2" (uuid d18154cf-1c31-5e35-b57b-e3d2bd8db7ba))
     (pin "1" (uuid 704550a1-545d-5866-b726-407a18e49f7c))
-    (pin "3" (uuid 18eaf701-3de3-590c-a9af-b2d7e8941c6c))
-    (pin "4" (uuid 6c90fab6-47da-51c2-bdbe-b7fbaac04b49))
+    (pin "4" (uuid 18eaf701-3de3-590c-a9af-b2d7e8941c6c))
+    (pin "3" (uuid 6c90fab6-47da-51c2-bdbe-b7fbaac04b49))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D4") (unit 1))
@@ -3537,8 +3537,8 @@
     )
     (pin "2" (uuid 9522b17b-208e-51ac-9e76-09222e022f02))
     (pin "1" (uuid bd3ab6b0-9fe3-5b39-b784-e6b6fc790625))
-    (pin "3" (uuid c03c24c6-fc6d-5ba6-80da-0fdb4ef31eeb))
-    (pin "4" (uuid 5e8dbfe3-a028-5c11-84f4-6208a92b9abe))
+    (pin "4" (uuid c03c24c6-fc6d-5ba6-80da-0fdb4ef31eeb))
+    (pin "3" (uuid 5e8dbfe3-a028-5c11-84f4-6208a92b9abe))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D5") (unit 1))
@@ -3587,8 +3587,8 @@
     )
     (pin "2" (uuid 29680e7d-3a75-5ac2-8084-1a8edbce3cce))
     (pin "1" (uuid d07c89df-848b-5266-9db1-5abed5495e52))
-    (pin "3" (uuid 2c5e08c0-83cc-5ea3-af65-5b2f3cf63f74))
-    (pin "4" (uuid e2f89231-a513-5d0a-a155-bd4a05f73af3))
+    (pin "4" (uuid 2c5e08c0-83cc-5ea3-af65-5b2f3cf63f74))
+    (pin "3" (uuid e2f89231-a513-5d0a-a155-bd4a05f73af3))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D6") (unit 1))
@@ -3637,8 +3637,8 @@
     )
     (pin "2" (uuid 0fbaa682-c5bd-50a4-9b66-fbe8882e28dd))
     (pin "1" (uuid bfdb0819-4970-5b05-9004-c1e473da7cae))
-    (pin "3" (uuid a5ecb4c0-2ed0-5e8f-8edc-a437a701037c))
-    (pin "4" (uuid 5b71bf6d-134a-5b5e-8017-aa056669c844))
+    (pin "4" (uuid a5ecb4c0-2ed0-5e8f-8edc-a437a701037c))
+    (pin "3" (uuid 5b71bf6d-134a-5b5e-8017-aa056669c844))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D7") (unit 1))
@@ -3687,8 +3687,8 @@
     )
     (pin "2" (uuid 63640a57-21cc-5476-9327-bb8710cc795a))
     (pin "1" (uuid 354e4056-05ed-5b8c-b2b9-5388606459f8))
-    (pin "3" (uuid c244e61e-ec2c-57b9-82da-4dc1fc23e508))
-    (pin "4" (uuid 6ae8d0c7-9872-5f13-99d6-f35052ed65d5))
+    (pin "4" (uuid c244e61e-ec2c-57b9-82da-4dc1fc23e508))
+    (pin "3" (uuid 6ae8d0c7-9872-5f13-99d6-f35052ed65d5))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D8") (unit 1))
@@ -3737,8 +3737,8 @@
     )
     (pin "2" (uuid 15c69817-48ba-5702-86bc-dde3adffe499))
     (pin "1" (uuid 3ee18c49-14e2-571b-a939-630add03f1a8))
-    (pin "3" (uuid 1c7f2739-b9c6-556b-a6fb-5bd1bf884c3e))
-    (pin "4" (uuid d3448230-1868-5f64-853b-01d1490b1ac4))
+    (pin "4" (uuid 1c7f2739-b9c6-556b-a6fb-5bd1bf884c3e))
+    (pin "3" (uuid d3448230-1868-5f64-853b-01d1490b1ac4))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D9") (unit 1))
@@ -3787,8 +3787,8 @@
     )
     (pin "2" (uuid b61c51cc-e576-5389-8252-d42ad8922c5f))
     (pin "1" (uuid 4af58f52-5fa9-5fc2-85a6-061259602031))
-    (pin "3" (uuid b0bcfee6-5d39-5454-a116-3ffafbbf99b9))
-    (pin "4" (uuid c1c81288-acff-5cd0-8fa8-7cbea3218d93))
+    (pin "4" (uuid b0bcfee6-5d39-5454-a116-3ffafbbf99b9))
+    (pin "3" (uuid c1c81288-acff-5cd0-8fa8-7cbea3218d93))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D10") (unit 1))
@@ -3837,8 +3837,8 @@
     )
     (pin "2" (uuid e26f163c-d86a-5b24-b326-3baa9609416a))
     (pin "1" (uuid 01353cc5-4667-52bb-b748-891fb8dadf5c))
-    (pin "3" (uuid 6bc9c49b-97be-5aac-8467-27e4ccfa76d2))
-    (pin "4" (uuid b2f5ff10-7a02-552a-ba57-bf2c070d0964))
+    (pin "4" (uuid 6bc9c49b-97be-5aac-8467-27e4ccfa76d2))
+    (pin "3" (uuid b2f5ff10-7a02-552a-ba57-bf2c070d0964))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D11") (unit 1))
@@ -3887,8 +3887,8 @@
     )
     (pin "2" (uuid 34195545-c9eb-5eb5-a9fb-c6b08d4c2bd1))
     (pin "1" (uuid 4ac4edf9-978a-5d2f-918e-9078dd25bb9c))
-    (pin "3" (uuid 7ec3694c-60bc-5f17-a813-d542def55928))
-    (pin "4" (uuid e6fa22c2-dfdd-5edc-8f82-8e0a698bab33))
+    (pin "4" (uuid 7ec3694c-60bc-5f17-a813-d542def55928))
+    (pin "3" (uuid e6fa22c2-dfdd-5edc-8f82-8e0a698bab33))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D12") (unit 1))
@@ -3937,8 +3937,8 @@
     )
     (pin "2" (uuid 4b0c0433-da7f-5acd-9bba-9ccfa6bb21f1))
     (pin "1" (uuid f5edf364-f0e2-5acf-bf78-535559ff7f62))
-    (pin "3" (uuid da992e9b-c50e-5a3e-a5ed-7e7c7fe40823))
-    (pin "4" (uuid 570203db-3389-5c28-934b-2ba94d3d1ba6))
+    (pin "4" (uuid da992e9b-c50e-5a3e-a5ed-7e7c7fe40823))
+    (pin "3" (uuid 570203db-3389-5c28-934b-2ba94d3d1ba6))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D13") (unit 1))
@@ -3987,8 +3987,8 @@
     )
     (pin "2" (uuid f259caa1-a82e-5001-937d-a6e1e050eef2))
     (pin "1" (uuid 75573763-ccb8-593d-8cdd-6b65d0e0650c))
-    (pin "3" (uuid d5affb61-95c0-50f1-96a9-291283fb8990))
-    (pin "4" (uuid f558eb66-918f-53a2-be50-c104f003311f))
+    (pin "4" (uuid d5affb61-95c0-50f1-96a9-291283fb8990))
+    (pin "3" (uuid f558eb66-918f-53a2-be50-c104f003311f))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D14") (unit 1))
@@ -4037,8 +4037,8 @@
     )
     (pin "2" (uuid abfc8885-916b-5c44-9ee1-cd7d492d3116))
     (pin "1" (uuid b9b8584b-c3d4-58c6-bc9b-0be9420dc8dd))
-    (pin "3" (uuid 11d17614-6846-563e-9695-a032f5012337))
-    (pin "4" (uuid ab54604d-e8bd-5752-aa9f-140df0fcf4d8))
+    (pin "4" (uuid 11d17614-6846-563e-9695-a032f5012337))
+    (pin "3" (uuid ab54604d-e8bd-5752-aa9f-140df0fcf4d8))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D15") (unit 1))
@@ -4087,8 +4087,8 @@
     )
     (pin "2" (uuid dfde6715-2f81-52eb-97b9-f57ab058bb97))
     (pin "1" (uuid 4d05f08d-1686-557f-b6f7-706c82b0c4f7))
-    (pin "3" (uuid 10d5cf0f-56c6-5618-94e1-6c594f81ac72))
-    (pin "4" (uuid 8afd3fe1-254c-5fdd-9511-f3fa3f0d9975))
+    (pin "4" (uuid 10d5cf0f-56c6-5618-94e1-6c594f81ac72))
+    (pin "3" (uuid 8afd3fe1-254c-5fdd-9511-f3fa3f0d9975))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D16") (unit 1))
@@ -4137,8 +4137,8 @@
     )
     (pin "2" (uuid f8c6632e-9b75-5afa-a3df-4df24f36579d))
     (pin "1" (uuid 76a05c75-b1fd-5024-86bc-f6f8acd01215))
-    (pin "3" (uuid 6d1a6978-958d-57f0-87be-e703e2b4ea4a))
-    (pin "4" (uuid 8d9d5957-6673-5da0-861c-886ba0fac122))
+    (pin "4" (uuid 6d1a6978-958d-57f0-87be-e703e2b4ea4a))
+    (pin "3" (uuid 8d9d5957-6673-5da0-861c-886ba0fac122))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D17") (unit 1))
@@ -4187,8 +4187,8 @@
     )
     (pin "2" (uuid 463dde2a-5396-588d-80ea-9fb9bf2c03fc))
     (pin "1" (uuid 404711f4-3198-528f-9f16-b9faf66eb15b))
-    (pin "3" (uuid 8ef97563-30e8-55b3-a569-fd5d5a78e929))
-    (pin "4" (uuid 4f376c8f-e09b-529e-8b03-5a29a74703fc))
+    (pin "4" (uuid 8ef97563-30e8-55b3-a569-fd5d5a78e929))
+    (pin "3" (uuid 4f376c8f-e09b-529e-8b03-5a29a74703fc))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D18") (unit 1))
@@ -4237,8 +4237,8 @@
     )
     (pin "2" (uuid 07d83908-c5cb-584b-991e-6ade808fe1f9))
     (pin "1" (uuid 5fe25e5f-522f-56a3-a2ee-62f377cb5b6d))
-    (pin "3" (uuid f70cf83e-99db-5ca7-b047-51dd8d7276ab))
-    (pin "4" (uuid 79566069-8812-5faf-a51d-f8d28bdc09f5))
+    (pin "4" (uuid f70cf83e-99db-5ca7-b047-51dd8d7276ab))
+    (pin "3" (uuid 79566069-8812-5faf-a51d-f8d28bdc09f5))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D19") (unit 1))
@@ -4287,8 +4287,8 @@
     )
     (pin "2" (uuid 72c80787-b85a-517b-8d07-79dd779a65b8))
     (pin "1" (uuid d13d5c7f-9993-50d8-bbf9-ec8fb3ccfa01))
-    (pin "3" (uuid 8f20b4d0-3f6c-52c4-8c64-e0f78b66f353))
-    (pin "4" (uuid 0330d1ac-9bf3-5985-a2fb-35b5e41cbf3d))
+    (pin "4" (uuid 8f20b4d0-3f6c-52c4-8c64-e0f78b66f353))
+    (pin "3" (uuid 0330d1ac-9bf3-5985-a2fb-35b5e41cbf3d))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D20") (unit 1))
@@ -4337,8 +4337,8 @@
     )
     (pin "2" (uuid ef2ad333-c407-57fd-a8f9-808aaced29b0))
     (pin "1" (uuid b692f041-c764-5afb-b45c-3029eb8a4c00))
-    (pin "3" (uuid 9e342fda-9e0c-5252-814a-ebb1f8cf2d77))
-    (pin "4" (uuid 215ed34a-2f96-5890-8dc3-68837c6ff9ba))
+    (pin "4" (uuid 9e342fda-9e0c-5252-814a-ebb1f8cf2d77))
+    (pin "3" (uuid 215ed34a-2f96-5890-8dc3-68837c6ff9ba))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D21") (unit 1))
@@ -4387,8 +4387,8 @@
     )
     (pin "2" (uuid f54014cb-39f9-5705-867d-1320c3760e62))
     (pin "1" (uuid 66dda29f-6fa9-5a3a-acb0-0ed588d12466))
-    (pin "3" (uuid 4295e847-0f07-588c-bfa1-c5b4e03148d0))
-    (pin "4" (uuid ab819f96-e5dc-5574-a22c-f2d0097bdca7))
+    (pin "4" (uuid 4295e847-0f07-588c-bfa1-c5b4e03148d0))
+    (pin "3" (uuid ab819f96-e5dc-5574-a22c-f2d0097bdca7))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D22") (unit 1))
@@ -4437,8 +4437,8 @@
     )
     (pin "2" (uuid fc0b5c09-1c34-5d73-a919-d8b8e0fa10d7))
     (pin "1" (uuid 5032c72a-c0e1-5e80-896d-f2f283ca6019))
-    (pin "3" (uuid 3ea149b3-bc5e-5625-b921-b48fbb9fd30a))
-    (pin "4" (uuid 86f2f674-8cd2-5826-91e1-461f7d492e0e))
+    (pin "4" (uuid 3ea149b3-bc5e-5625-b921-b48fbb9fd30a))
+    (pin "3" (uuid 86f2f674-8cd2-5826-91e1-461f7d492e0e))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D23") (unit 1))
@@ -4487,8 +4487,8 @@
     )
     (pin "2" (uuid c515146b-bfdd-5c9b-8e3b-589dec83c2f6))
     (pin "1" (uuid 99f161c7-0ac1-5072-b92f-900a39be6370))
-    (pin "3" (uuid 3a7bca10-e746-571b-8ed5-611f5e569803))
-    (pin "4" (uuid 46b1e9fd-d1ba-59f4-b591-753b05665fcb))
+    (pin "4" (uuid 3a7bca10-e746-571b-8ed5-611f5e569803))
+    (pin "3" (uuid 46b1e9fd-d1ba-59f4-b591-753b05665fcb))
     (instances
       (project "m4-fx-filter"
         (path "/ea4e1612-4406-534b-966f-4a4562b5b21c" (reference "D24") (unit 1))

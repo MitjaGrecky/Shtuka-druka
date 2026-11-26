@@ -862,11 +862,11 @@
         )
         (pin passive line (at -5.08 0 0) (length 2.54)
           (name "GK" (effects (font (size 1.27 1.27))))
-          (number "3" (effects (font (size 1.27 1.27))))
+          (number "4" (effects (font (size 1.27 1.27))))
         )
         (pin passive line (at -5.08 -5.08 0) (length 2.54)
           (name "BK" (effects (font (size 1.27 1.27))))
-          (number "4" (effects (font (size 1.27 1.27))))
+          (number "3" (effects (font (size 1.27 1.27))))
         )
       )
     )
@@ -2447,8 +2447,8 @@
     )
     (pin "2" (uuid 6306d51d-736e-5df0-bd25-b04129debe5a))
     (pin "1" (uuid bf91161d-5a58-57cb-b48c-fac71ff9d8b9))
-    (pin "3" (uuid 6264055e-bd71-5810-a227-16f7f23a15cd))
-    (pin "4" (uuid cd1aea57-ba0a-52d6-a534-64eeb519e16f))
+    (pin "4" (uuid 6264055e-bd71-5810-a227-16f7f23a15cd))
+    (pin "3" (uuid cd1aea57-ba0a-52d6-a534-64eeb519e16f))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D1") (unit 1))
@@ -2497,8 +2497,8 @@
     )
     (pin "2" (uuid 5bb33160-7a04-51d4-906b-6ea4663c7c83))
     (pin "1" (uuid ea57b0b2-f43f-5bb5-949a-d286ed3dfd4d))
-    (pin "3" (uuid 66f25037-7b52-59d1-95c1-2159bb99d449))
-    (pin "4" (uuid 2600375b-0e81-599e-a6d4-bf9f3a91441d))
+    (pin "4" (uuid 66f25037-7b52-59d1-95c1-2159bb99d449))
+    (pin "3" (uuid 2600375b-0e81-599e-a6d4-bf9f3a91441d))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D2") (unit 1))
@@ -2547,8 +2547,8 @@
     )
     (pin "2" (uuid f90c62ff-f9a0-5496-9bf1-e04e4b62e556))
     (pin "1" (uuid 53ef8e3c-ff68-55c7-a055-2e9cfb217f57))
-    (pin "3" (uuid c9a103ad-c053-52a8-a095-c7a718a1d5dd))
-    (pin "4" (uuid 5443ed76-655f-5865-a3de-d1100b36609c))
+    (pin "4" (uuid c9a103ad-c053-52a8-a095-c7a718a1d5dd))
+    (pin "3" (uuid 5443ed76-655f-5865-a3de-d1100b36609c))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D3") (unit 1))
@@ -2597,8 +2597,8 @@
     )
     (pin "2" (uuid 4711649b-8e43-59a8-b23a-8c74b8e3535f))
     (pin "1" (uuid 27038736-7fb9-529c-be26-62b1558dc2aa))
-    (pin "3" (uuid e193496d-a952-5dea-9ea2-562c588bbac5))
-    (pin "4" (uuid bbd9ee73-f5b0-5e5d-8592-a33bbef2dcec))
+    (pin "4" (uuid e193496d-a952-5dea-9ea2-562c588bbac5))
+    (pin "3" (uuid bbd9ee73-f5b0-5e5d-8592-a33bbef2dcec))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D4") (unit 1))
@@ -2647,8 +2647,8 @@
     )
     (pin "2" (uuid 5f99901d-cde2-5c9a-b96c-6afe05ee9c18))
     (pin "1" (uuid 03f860a7-212c-5c07-9f9b-0537b6e7c396))
-    (pin "3" (uuid 55b476c2-2994-51e6-b1e5-19a0e85d3fd4))
-    (pin "4" (uuid 6934ff15-5a22-5fd2-a359-43b8fd34303a))
+    (pin "4" (uuid 55b476c2-2994-51e6-b1e5-19a0e85d3fd4))
+    (pin "3" (uuid 6934ff15-5a22-5fd2-a359-43b8fd34303a))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D5") (unit 1))
@@ -2697,8 +2697,8 @@
     )
     (pin "2" (uuid c0af00c5-5f42-562d-a266-96fad2a9b5c5))
     (pin "1" (uuid d3a07773-df4b-5179-b812-f894f39852f7))
-    (pin "3" (uuid 3933b3af-e87c-511d-8380-d9186afba3ee))
-    (pin "4" (uuid aeda810b-9898-541f-a27d-2c559574d769))
+    (pin "4" (uuid 3933b3af-e87c-511d-8380-d9186afba3ee))
+    (pin "3" (uuid aeda810b-9898-541f-a27d-2c559574d769))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D6") (unit 1))
@@ -2747,8 +2747,8 @@
     )
     (pin "2" (uuid 8c00fa66-a171-516c-99a2-a067cfb1d60f))
     (pin "1" (uuid 3900d9e3-502c-5c37-9c16-0f63f14d42e8))
-    (pin "3" (uuid e42d78ab-6569-5d93-8dbf-58ccdeb65686))
-    (pin "4" (uuid 810f77c8-0dd0-5d68-8b3d-416e7677e0d2))
+    (pin "4" (uuid e42d78ab-6569-5d93-8dbf-58ccdeb65686))
+    (pin "3" (uuid 810f77c8-0dd0-5d68-8b3d-416e7677e0d2))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D7") (unit 1))
@@ -2797,8 +2797,8 @@
     )
     (pin "2" (uuid 82e9f9bc-8cc9-54b0-b078-f0d284edcc38))
     (pin "1" (uuid 47cc7e92-41c2-5770-8e45-a7c533c8129f))
-    (pin "3" (uuid f6002764-46dc-5ea8-bc1e-a2cb81804b82))
-    (pin "4" (uuid 0292b7e2-3a6b-5888-92cf-c50cda5244f6))
+    (pin "4" (uuid f6002764-46dc-5ea8-bc1e-a2cb81804b82))
+    (pin "3" (uuid 0292b7e2-3a6b-5888-92cf-c50cda5244f6))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D8") (unit 1))
@@ -2847,8 +2847,8 @@
     )
     (pin "2" (uuid 7399c4cc-234b-52e9-8c50-2fea84f9eb98))
     (pin "1" (uuid cfa4b1ad-e3a2-5e90-95e3-ed0977114896))
-    (pin "3" (uuid 870e1471-a2a5-5bcc-ac76-42f44e4db7ae))
-    (pin "4" (uuid 11c57c7c-288c-55c7-b507-579eba1a26dc))
+    (pin "4" (uuid 870e1471-a2a5-5bcc-ac76-42f44e4db7ae))
+    (pin "3" (uuid 11c57c7c-288c-55c7-b507-579eba1a26dc))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D9") (unit 1))
@@ -2897,8 +2897,8 @@
     )
     (pin "2" (uuid 94ce2372-7229-5be6-8237-c51d4ac490cb))
     (pin "1" (uuid 68f7ef02-aa2a-5f82-89da-a88e43339ea5))
-    (pin "3" (uuid 4b7a256b-df5f-5e81-9b41-32b58df37c82))
-    (pin "4" (uuid e745af2a-27a1-57c4-b721-518649ceb120))
+    (pin "4" (uuid 4b7a256b-df5f-5e81-9b41-32b58df37c82))
+    (pin "3" (uuid e745af2a-27a1-57c4-b721-518649ceb120))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D10") (unit 1))
@@ -2947,8 +2947,8 @@
     )
     (pin "2" (uuid e938570f-87fa-59a4-a0dd-564971352c6e))
     (pin "1" (uuid c88d31e5-5031-53e2-ad72-2e16d03dcbb1))
-    (pin "3" (uuid cece5ed6-8017-5fce-adb6-af34c0c7573b))
-    (pin "4" (uuid c4cc001f-4fa1-5e65-9de7-dc7a512b5296))
+    (pin "4" (uuid cece5ed6-8017-5fce-adb6-af34c0c7573b))
+    (pin "3" (uuid c4cc001f-4fa1-5e65-9de7-dc7a512b5296))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D11") (unit 1))
@@ -2997,8 +2997,8 @@
     )
     (pin "2" (uuid 0676da0d-1a2b-50c6-825c-a267dd368a2e))
     (pin "1" (uuid 3dcedba9-d321-566c-9e57-0a601d3b5bb4))
-    (pin "3" (uuid d077de1a-e8e2-505c-b833-0a2325eee58e))
-    (pin "4" (uuid a5a277ee-5ffe-5187-86a0-3eba34af73e1))
+    (pin "4" (uuid d077de1a-e8e2-505c-b833-0a2325eee58e))
+    (pin "3" (uuid a5a277ee-5ffe-5187-86a0-3eba34af73e1))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D12") (unit 1))
@@ -3047,8 +3047,8 @@
     )
     (pin "2" (uuid 766c78c3-8b9f-5217-ae59-38ebe1afc573))
     (pin "1" (uuid bf036609-19b5-5a88-b6c5-0f2d13e80831))
-    (pin "3" (uuid 270645ec-1e45-5a60-8adf-d3be02b5b70f))
-    (pin "4" (uuid 7fc7f8a0-6d3f-5523-af34-2f3b0dd20ef0))
+    (pin "4" (uuid 270645ec-1e45-5a60-8adf-d3be02b5b70f))
+    (pin "3" (uuid 7fc7f8a0-6d3f-5523-af34-2f3b0dd20ef0))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D13") (unit 1))
@@ -3097,8 +3097,8 @@
     )
     (pin "2" (uuid ef886b9b-fb3f-57c4-bc09-dd93ae391ca5))
     (pin "1" (uuid 2a0d44f6-07f9-5a2e-9d39-66a888fc6436))
-    (pin "3" (uuid bb9f2cc1-73b6-51c1-9f02-1399a0e69628))
-    (pin "4" (uuid 1e864ee7-17a5-57a0-93ae-730a15f7fe74))
+    (pin "4" (uuid bb9f2cc1-73b6-51c1-9f02-1399a0e69628))
+    (pin "3" (uuid 1e864ee7-17a5-57a0-93ae-730a15f7fe74))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D14") (unit 1))
@@ -3421,8 +3421,8 @@
     )
     (pin "2" (uuid 56f1c7b6-023a-5c1d-997a-4cc0e834292e))
     (pin "1" (uuid 9e2b0677-72b9-598d-baa7-59c188709b89))
-    (pin "3" (uuid 4154d5a4-5169-5537-993c-8422eba8c68c))
-    (pin "4" (uuid 2d299eb8-f042-5c40-91b5-f3d267c527cb))
+    (pin "4" (uuid 4154d5a4-5169-5537-993c-8422eba8c68c))
+    (pin "3" (uuid 2d299eb8-f042-5c40-91b5-f3d267c527cb))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D15") (unit 1))
@@ -3471,8 +3471,8 @@
     )
     (pin "2" (uuid d565a9d8-a83c-5a0a-95d0-10a48d4d671f))
     (pin "1" (uuid 61bde528-f6e9-5975-8534-e0e09db0b524))
-    (pin "3" (uuid 47b6536d-0a61-54bb-897d-6d628e85e1dc))
-    (pin "4" (uuid d2f07fb3-4d54-5225-8b73-e7f2d8fdd648))
+    (pin "4" (uuid 47b6536d-0a61-54bb-897d-6d628e85e1dc))
+    (pin "3" (uuid d2f07fb3-4d54-5225-8b73-e7f2d8fdd648))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D16") (unit 1))
@@ -3521,8 +3521,8 @@
     )
     (pin "2" (uuid 9cb6eb45-d230-5c26-8dc1-7f1845c0a120))
     (pin "1" (uuid 12644c7f-4496-544b-85a5-3e9db59ab741))
-    (pin "3" (uuid b0bc8917-2221-5605-909d-55bf6cdeae33))
-    (pin "4" (uuid 411ea76b-553d-5f28-9eee-0b50b14e7a81))
+    (pin "4" (uuid b0bc8917-2221-5605-909d-55bf6cdeae33))
+    (pin "3" (uuid 411ea76b-553d-5f28-9eee-0b50b14e7a81))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D17") (unit 1))
@@ -3571,8 +3571,8 @@
     )
     (pin "2" (uuid fc4ecc13-6ee2-526d-b1a1-a9cbfd6b5129))
     (pin "1" (uuid 59b110eb-2055-5c5a-83a4-71179e589593))
-    (pin "3" (uuid d0458b21-27a6-52b2-834d-7baf825802e7))
-    (pin "4" (uuid a85f339b-c27a-502f-b13b-04a4be1944a4))
+    (pin "4" (uuid d0458b21-27a6-52b2-834d-7baf825802e7))
+    (pin "3" (uuid a85f339b-c27a-502f-b13b-04a4be1944a4))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D18") (unit 1))
@@ -3621,8 +3621,8 @@
     )
     (pin "2" (uuid 0c3b5258-bdcd-502f-bffc-1710fb1e0642))
     (pin "1" (uuid cd7c364b-8d76-5895-92b0-e1420dbdeb67))
-    (pin "3" (uuid 0cbff773-b98a-57c1-9fa0-c59882fd6cb3))
-    (pin "4" (uuid 6a3590dc-dfc3-558d-a434-6d03c18b1d12))
+    (pin "4" (uuid 0cbff773-b98a-57c1-9fa0-c59882fd6cb3))
+    (pin "3" (uuid 6a3590dc-dfc3-558d-a434-6d03c18b1d12))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D19") (unit 1))
@@ -3671,8 +3671,8 @@
     )
     (pin "2" (uuid 3ee4fc43-683a-5828-96cc-6d61e1089502))
     (pin "1" (uuid 3b749e11-9730-5454-98ff-b790d7781a5b))
-    (pin "3" (uuid 565c20d9-ba05-5362-b692-dc507b7f902d))
-    (pin "4" (uuid ea2c0105-9a43-5934-ac1d-f3c534f0df55))
+    (pin "4" (uuid 565c20d9-ba05-5362-b692-dc507b7f902d))
+    (pin "3" (uuid ea2c0105-9a43-5934-ac1d-f3c534f0df55))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D20") (unit 1))
@@ -3721,8 +3721,8 @@
     )
     (pin "2" (uuid 3f9e1942-5c1f-5f68-a41f-14ea739bb98a))
     (pin "1" (uuid 64eb71f3-8e47-5ae2-89c9-58c5a752e7a0))
-    (pin "3" (uuid 2f98b40f-a79d-533a-996a-71b68d309a23))
-    (pin "4" (uuid 5b89e82e-7012-513b-aead-edd8b00a726a))
+    (pin "4" (uuid 2f98b40f-a79d-533a-996a-71b68d309a23))
+    (pin "3" (uuid 5b89e82e-7012-513b-aead-edd8b00a726a))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D21") (unit 1))
@@ -3771,8 +3771,8 @@
     )
     (pin "2" (uuid 1964d473-7671-5c02-a229-2bbeae237498))
     (pin "1" (uuid f327aff8-64b3-50f6-a097-e84fe2041484))
-    (pin "3" (uuid fb1e4ef4-ffe4-5985-891b-f877f84769de))
-    (pin "4" (uuid b35cb7ec-9e03-5527-9bca-af9db49d0bc2))
+    (pin "4" (uuid fb1e4ef4-ffe4-5985-891b-f877f84769de))
+    (pin "3" (uuid b35cb7ec-9e03-5527-9bca-af9db49d0bc2))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D22") (unit 1))
@@ -3821,8 +3821,8 @@
     )
     (pin "2" (uuid 7f441508-3fc0-5e81-8c7c-926b394f602c))
     (pin "1" (uuid 5be1d4fd-ff7c-51ec-84b4-eb86ea102381))
-    (pin "3" (uuid 03587038-31f2-50ef-be87-320a17271aeb))
-    (pin "4" (uuid f2573e7d-dfe2-58e6-90ef-0ace6dfb1d50))
+    (pin "4" (uuid 03587038-31f2-50ef-be87-320a17271aeb))
+    (pin "3" (uuid f2573e7d-dfe2-58e6-90ef-0ace6dfb1d50))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D23") (unit 1))
@@ -3871,8 +3871,8 @@
     )
     (pin "2" (uuid d4cf9af6-db43-5067-a1f7-fd954d758de3))
     (pin "1" (uuid 6aadc0d2-3375-5f24-8bac-07b3a9a6c2dc))
-    (pin "3" (uuid a44b2329-751e-57aa-b08c-0a94003ad33a))
-    (pin "4" (uuid c5b40818-00b4-58d5-b344-affb1dee7ec8))
+    (pin "4" (uuid a44b2329-751e-57aa-b08c-0a94003ad33a))
+    (pin "3" (uuid c5b40818-00b4-58d5-b344-affb1dee7ec8))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D24") (unit 1))
@@ -3921,8 +3921,8 @@
     )
     (pin "2" (uuid df06700c-f660-52ca-a466-e69f27cf5c7c))
     (pin "1" (uuid 27e7a329-0873-56d6-9e6d-7ede20932e29))
-    (pin "3" (uuid e3a6352e-8f02-5c71-94dd-6ad8c5348b0c))
-    (pin "4" (uuid 48ba3f46-c000-59e4-9c01-aefe5861d269))
+    (pin "4" (uuid e3a6352e-8f02-5c71-94dd-6ad8c5348b0c))
+    (pin "3" (uuid 48ba3f46-c000-59e4-9c01-aefe5861d269))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D25") (unit 1))
@@ -3971,8 +3971,8 @@
     )
     (pin "2" (uuid ef79839f-3996-5889-a9c9-7444ad851e61))
     (pin "1" (uuid a0c274be-996c-54e1-aaf3-043d73c559cd))
-    (pin "3" (uuid 6e2ddcaf-0c3d-536b-8388-d8d44e746b5c))
-    (pin "4" (uuid 104015fb-585a-586f-988c-15911b46669b))
+    (pin "4" (uuid 6e2ddcaf-0c3d-536b-8388-d8d44e746b5c))
+    (pin "3" (uuid 104015fb-585a-586f-988c-15911b46669b))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D26") (unit 1))
@@ -4021,8 +4021,8 @@
     )
     (pin "2" (uuid 64f3f049-cb71-5eb6-be4d-b4e36bf4d3f5))
     (pin "1" (uuid adbcf1da-d35f-5d36-bbf4-9756b756fb33))
-    (pin "3" (uuid 14f97ddf-3da8-5caf-ad83-9c83cd1d7a31))
-    (pin "4" (uuid ce20276a-0a85-5c4a-97a1-02cb8976a33f))
+    (pin "4" (uuid 14f97ddf-3da8-5caf-ad83-9c83cd1d7a31))
+    (pin "3" (uuid ce20276a-0a85-5c4a-97a1-02cb8976a33f))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D27") (unit 1))
@@ -4071,8 +4071,8 @@
     )
     (pin "2" (uuid 193f1d24-a389-566d-a74e-a24a3baf71ac))
     (pin "1" (uuid 86b38d8e-edc2-50dd-8493-b570052380eb))
-    (pin "3" (uuid 76c29436-a040-588b-838e-65f88f826187))
-    (pin "4" (uuid 08382d22-3838-54b9-837d-feaddf68c795))
+    (pin "4" (uuid 76c29436-a040-588b-838e-65f88f826187))
+    (pin "3" (uuid 08382d22-3838-54b9-837d-feaddf68c795))
     (instances
       (project "w2-meters"
         (path "/16dbdec5-688e-5be6-98a9-a7e715a26b92" (reference "D28") (unit 1))

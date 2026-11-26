@@ -715,7 +715,7 @@
 			(net "/A_SW0")
 			(uuid "72c2cb10-ed06-41c9-a9f9-1c2f7e8460c8")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -723,7 +723,7 @@
 			(net "/A_CS13")
 			(uuid "59bd4297-d0c4-4ccf-91bc-427b9d43c5c9")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -1571,7 +1571,7 @@
 			(net "/A_SW2")
 			(uuid "ad1b76e2-f50b-42d1-98da-e12b9966823d")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -1579,7 +1579,7 @@
 			(net "/A_CS1")
 			(uuid "85cfc8cd-354a-4a57-bca9-748598114b77")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -1821,7 +1821,7 @@
 			(net "/B_SW2")
 			(uuid "ded78828-d7e5-47de-bc57-ea9d0bf106e9")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -1829,7 +1829,7 @@
 			(net "/B_CS1")
 			(uuid "2e7e7792-8832-4d5e-a3de-42430d0d6d18")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -2071,7 +2071,7 @@
 			(net "/B_SW0")
 			(uuid "77a4f8e7-0c35-4458-b614-266a7d68e563")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -2079,7 +2079,7 @@
 			(net "/B_CS4")
 			(uuid "e60df3e4-c55b-4119-b384-1b6fc6eacbf9")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -2213,7 +2213,7 @@
 			(net "/B_SW0")
 			(uuid "349499ae-4153-475f-8f38-7934822f05ae")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -2221,7 +2221,7 @@
 			(net "/B_CS7")
 			(uuid "61a5d3b6-5d87-4b68-9be8-754100b91f61")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -2463,7 +2463,7 @@
 			(net "/B_SW1")
 			(uuid "2a953571-ea44-4be0-8df7-60d1128d5081")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -2471,7 +2471,7 @@
 			(net "/B_CS4")
 			(uuid "d2948f2e-0afb-467b-91ea-506d0dec9520")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -3103,7 +3103,7 @@
 			(net "/B_SW0")
 			(uuid "f51a3f03-5f6a-403e-809c-0cccf926c8ed")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -3111,7 +3111,7 @@
 			(net "/B_CS10")
 			(uuid "cf9ec8fa-d017-4e74-8293-0e8362c6148e")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -3245,7 +3245,7 @@
 			(net "/B_SW1")
 			(uuid "3a36205f-4d0f-4fd1-b06e-6ced6235eb97")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -3253,7 +3253,7 @@
 			(net "/B_CS1")
 			(uuid "807fbc53-37fb-410f-a54a-86cb309dded5")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -3387,7 +3387,7 @@
 			(net "/B_SW3")
 			(uuid "6aa4d91a-bc91-419e-b1fc-1b33bfe5d9d7")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -3395,7 +3395,7 @@
 			(net "/B_CS10")
 			(uuid "c3a0ec44-6777-4557-b5de-9985a1e5e0b0")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -3529,7 +3529,7 @@
 			(net "/A_SW0")
 			(uuid "23005214-f109-46e5-9453-a5966edfc07c")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -3537,7 +3537,7 @@
 			(net "/A_CS4")
 			(uuid "700c2af1-1e15-4ba2-a932-2635ad1ff5b4")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -3671,7 +3671,7 @@
 			(net "/A_SW2")
 			(uuid "65a11c6c-e57b-4c88-8f28-af745ad8053c")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -3679,7 +3679,7 @@
 			(net "/A_CS10")
 			(uuid "f1ae6fb5-172e-4643-8532-91188214125d")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -4917,7 +4917,7 @@
 			(net "/A_SW1")
 			(uuid "4e9714eb-7b9b-4e5b-bce6-0df456161085")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -4925,7 +4925,7 @@
 			(net "/A_CS1")
 			(uuid "6793576f-46eb-4d8f-8a45-bc2b8a8069a7")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -5059,7 +5059,7 @@
 			(net "/B_SW3")
 			(uuid "2bbaf1fe-e0e7-4f17-a210-2c9ab30215df")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -5067,7 +5067,7 @@
 			(net "/B_CS1")
 			(uuid "6530ec1d-4be9-4b69-b699-b7fa9fe4afa7")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -5201,7 +5201,7 @@
 			(net "/B_SW3")
 			(uuid "87355554-ca13-4279-ad75-3933ec0f2001")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -5209,7 +5209,7 @@
 			(net "/B_CS7")
 			(uuid "6a947b9f-e0e1-483d-b6c0-a359447fe192")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -5841,7 +5841,7 @@
 			(net "/A_SW2")
 			(uuid "8ee1a5c1-293c-40ef-b4c7-9ec41fdde8fd")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -5849,7 +5849,7 @@
 			(net "/A_CS16")
 			(uuid "abdea6a9-72e4-4b7c-8d6a-1f8347233a74")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -6091,7 +6091,7 @@
 			(net "/B_SW2")
 			(uuid "e4d918f7-7276-469a-8e90-75de4e15b508")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -6099,7 +6099,7 @@
 			(net "/B_CS10")
 			(uuid "03c8090d-ee87-4490-a089-218a629c5c2a")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -6233,7 +6233,7 @@
 			(net "/A_SW3")
 			(uuid "4640ac6c-75c4-47cb-b44f-91a76f95bef3")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -6241,7 +6241,7 @@
 			(net "/A_CS1")
 			(uuid "27e38e13-ac8e-491c-8840-056ffa161593")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -6375,7 +6375,7 @@
 			(net "/A_SW1")
 			(uuid "13b1077a-4e32-40b5-9ecf-909346bbb37d")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -6383,7 +6383,7 @@
 			(net "/A_CS16")
 			(uuid "0104303e-1b14-4c14-9380-25673f9213ba")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -6517,7 +6517,7 @@
 			(net "/B_SW2")
 			(uuid "e5c24d38-10c7-4ae3-b431-424c3a4ec760")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -6525,7 +6525,7 @@
 			(net "/B_CS7")
 			(uuid "12c720b7-e761-4051-86a1-16cb3632bb59")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -7446,7 +7446,7 @@
 			(net "/B_SW1")
 			(uuid "a699d67b-ff3c-4a62-b7e7-a9e434bfc188")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -7454,7 +7454,7 @@
 			(net "/B_CS7")
 			(uuid "c81e6fa7-3393-4ae3-9532-348af09fabb6")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -7588,7 +7588,7 @@
 			(net "/A_SW2")
 			(uuid "5c77c228-7876-44eb-9fe8-1daf1e01379e")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -7596,7 +7596,7 @@
 			(net "/A_CS7")
 			(uuid "66c9abd5-621a-4b6f-a2f0-8438a8fe953a")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -7730,7 +7730,7 @@
 			(net "/A_SW2")
 			(uuid "2c27352c-8fae-4cce-bd46-470f6e2d52d7")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -7738,7 +7738,7 @@
 			(net "/A_CS4")
 			(uuid "40e0345a-0ea2-4179-80c5-e337ce6a362e")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -7980,7 +7980,7 @@
 			(net "/A_SW1")
 			(uuid "98757fa3-ac1f-47a8-8c45-46f4aeafa90f")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -7988,7 +7988,7 @@
 			(net "/A_CS7")
 			(uuid "be1c7fb2-2b16-401c-a188-610b63672427")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -9496,7 +9496,7 @@
 			(net "/A_SW0")
 			(uuid "f67ea77e-4557-4315-961b-5cacc1d02dfd")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -9504,7 +9504,7 @@
 			(net "/A_CS7")
 			(uuid "1c4d9438-0bf3-4197-ac78-08c71406e232")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -10244,7 +10244,7 @@
 			(net "/A_SW1")
 			(uuid "0bbc5b8b-f510-4b90-bdc5-9016a57ca60e")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -10252,7 +10252,7 @@
 			(net "/A_CS10")
 			(uuid "01f7c6ee-27d6-4b0a-9fb7-b97e53935cc4")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -10992,7 +10992,7 @@
 			(net "/A_SW3")
 			(uuid "c697934b-228e-48cd-b251-3f04e2d2fbb5")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -11000,7 +11000,7 @@
 			(net "/A_CS4")
 			(uuid "d0152e9c-3e54-481c-9771-30940ac5ab67")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -11134,7 +11134,7 @@
 			(net "/B_SW0")
 			(uuid "1c6cd345-11d5-4f2b-886e-6be9a60c95c8")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -11142,7 +11142,7 @@
 			(net "/B_CS1")
 			(uuid "4cc32f0e-43db-407e-8029-639ab2189431")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -11774,7 +11774,7 @@
 			(net "/A_SW1")
 			(uuid "1afeab4f-9dbf-48ec-940a-ee70b911e94a")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -11782,7 +11782,7 @@
 			(net "/A_CS13")
 			(uuid "51147b70-7823-45be-8ed4-507289809bc5")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -11916,7 +11916,7 @@
 			(net "/B_SW2")
 			(uuid "036003fd-36b6-47b2-8c82-46b9ab6ee107")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -11924,7 +11924,7 @@
 			(net "/B_CS4")
 			(uuid "81432541-838b-43dc-94d4-68c97f24ec98")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -12058,7 +12058,7 @@
 			(net "/A_SW3")
 			(uuid "2f09329f-d147-4499-9ca2-b5fdad1af77e")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -12066,7 +12066,7 @@
 			(net "/A_CS13")
 			(uuid "332253e2-8bd1-40cb-910c-6f00cda59c4f")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -12200,7 +12200,7 @@
 			(net "/A_SW3")
 			(uuid "0e6d210f-fc9b-4b6f-96f4-f7fa2b8d0e04")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -12208,7 +12208,7 @@
 			(net "/A_CS10")
 			(uuid "6b4f4b0f-e912-49eb-a85d-8b3b2060efbe")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -15048,7 +15048,7 @@
 			(net "/A_SW0")
 			(uuid "dc949c35-e3a2-41d3-98eb-98df5521ee19")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -15056,7 +15056,7 @@
 			(net "/A_CS1")
 			(uuid "d09c493e-4a22-4864-8e1c-0009d58a9cc8")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -16186,7 +16186,7 @@
 			(net "/B_SW1")
 			(uuid "0c0c73a1-264b-496e-94d2-650d3594d604")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -16194,7 +16194,7 @@
 			(net "/B_CS10")
 			(uuid "bc01d105-df9f-4f09-bc46-3901cc03205f")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -16826,7 +16826,7 @@
 			(net "/A_SW1")
 			(uuid "bb43884d-8b0e-4a40-ad8a-a29908c73ee2")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -16834,7 +16834,7 @@
 			(net "/A_CS4")
 			(uuid "530ce90c-ba25-4ee1-a7bc-c64920c29919")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -16968,7 +16968,7 @@
 			(net "/A_SW3")
 			(uuid "1d5f5c23-26a3-4df0-89e1-001e515e98d5")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -16976,7 +16976,7 @@
 			(net "/A_CS7")
 			(uuid "0ddb1ccc-e5e4-4f87-a8f0-06da7803d758")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -17110,7 +17110,7 @@
 			(net "/B_SW3")
 			(uuid "83fd532e-ba86-416b-8b1d-2f687ed928ad")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -17118,7 +17118,7 @@
 			(net "/B_CS4")
 			(uuid "a99057eb-eae8-4e36-92a6-198125d9592d")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -17360,7 +17360,7 @@
 			(net "/A_SW3")
 			(uuid "272b33d0-819b-4ed2-aeda-601ea500fc49")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -17368,7 +17368,7 @@
 			(net "/A_CS16")
 			(uuid "3992546b-a427-4cb3-9054-8caa6def29f3")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -17502,7 +17502,7 @@
 			(net "/A_SW2")
 			(uuid "4f27698c-831f-4643-8edf-f8bbc1b2861b")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -17510,7 +17510,7 @@
 			(net "/A_CS13")
 			(uuid "539704a5-4950-436c-8bae-51e0b4ef5f0c")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -18250,7 +18250,7 @@
 			(net "/A_SW0")
 			(uuid "b8dbc162-54ab-465d-9755-a668e0c00641")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -18258,7 +18258,7 @@
 			(net "/A_CS10")
 			(uuid "bee56121-6de1-4ea1-802d-d32bd74c775e")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -18392,7 +18392,7 @@
 			(net "/A_SW0")
 			(uuid "d9465141-1568-4c5e-a2a4-970c4e6bd806")
 		)
-		(pad "3" smd roundrect
+		(pad "4" smd roundrect
 			(at 0.625 -0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
@@ -18400,7 +18400,7 @@
 			(net "/A_CS16")
 			(uuid "9442344f-4983-49b0-9016-8b74e0a2dfce")
 		)
-		(pad "4" smd roundrect
+		(pad "3" smd roundrect
 			(at 0.625 0.475)
 			(size 0.45 0.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")

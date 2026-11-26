@@ -1329,11 +1329,11 @@
         )
         (pin passive line (at -5.08 0 0) (length 2.54)
           (name "GK" (effects (font (size 1.27 1.27))))
-          (number "3" (effects (font (size 1.27 1.27))))
+          (number "4" (effects (font (size 1.27 1.27))))
         )
         (pin passive line (at -5.08 -5.08 0) (length 2.54)
           (name "BK" (effects (font (size 1.27 1.27))))
-          (number "4" (effects (font (size 1.27 1.27))))
+          (number "3" (effects (font (size 1.27 1.27))))
         )
       )
     )
@@ -7343,8 +7343,8 @@
     )
     (pin "2" (uuid c0cf033f-346f-544a-ab3e-c46aa65093a0))
     (pin "1" (uuid 84f541ff-f81d-5ffd-87de-3d034d54d86e))
-    (pin "3" (uuid 298a2683-eceb-5cb3-9f3e-1873c9609d8e))
-    (pin "4" (uuid c1941964-3b83-5c20-ac03-78b2fde3c446))
+    (pin "4" (uuid 298a2683-eceb-5cb3-9f3e-1873c9609d8e))
+    (pin "3" (uuid c1941964-3b83-5c20-ac03-78b2fde3c446))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D1") (unit 1))
@@ -7393,8 +7393,8 @@
     )
     (pin "2" (uuid 47ce7d1a-2a23-56a5-90bc-67123b0bc616))
     (pin "1" (uuid 1dda5724-e1b9-57da-ab17-68daadb7a194))
-    (pin "3" (uuid ab292dcf-23bc-5151-baea-9f3c89739fd8))
-    (pin "4" (uuid 3e99c24c-b8bf-56e4-8cb6-163710c6564f))
+    (pin "4" (uuid ab292dcf-23bc-5151-baea-9f3c89739fd8))
+    (pin "3" (uuid 3e99c24c-b8bf-56e4-8cb6-163710c6564f))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D2") (unit 1))
@@ -7443,8 +7443,8 @@
     )
     (pin "2" (uuid 0a4a69fb-3331-5a2d-8f1b-6377f9db3044))
     (pin "1" (uuid 519c3598-bca2-58fc-99d5-49ad694021a7))
-    (pin "3" (uuid 86d48cb9-1aa7-58f4-9f5f-7cf935995f72))
-    (pin "4" (uuid bdbedfde-0629-5d53-871a-dae3b04716c8))
+    (pin "4" (uuid 86d48cb9-1aa7-58f4-9f5f-7cf935995f72))
+    (pin "3" (uuid bdbedfde-0629-5d53-871a-dae3b04716c8))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D3") (unit 1))
@@ -7493,8 +7493,8 @@
     )
     (pin "2" (uuid 3dfeaa66-3bab-5bff-8d7d-4118886e1f36))
     (pin "1" (uuid 7c9e2264-78fe-562d-8ad5-45edb93f9afa))
-    (pin "3" (uuid ecdc08db-9ed2-5b44-a208-de356bfce34d))
-    (pin "4" (uuid 00d38417-460c-5a79-af37-60fbc6463d37))
+    (pin "4" (uuid ecdc08db-9ed2-5b44-a208-de356bfce34d))
+    (pin "3" (uuid 00d38417-460c-5a79-af37-60fbc6463d37))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D4") (unit 1))
@@ -7543,8 +7543,8 @@
     )
     (pin "2" (uuid 68c2a080-cf7c-551d-936d-e7093d6e60de))
     (pin "1" (uuid eaa749b6-0451-52bf-b923-0473c37e1fd1))
-    (pin "3" (uuid 2026e827-e2cd-5a13-b54c-1ea9c5060f92))
-    (pin "4" (uuid 2a1fc61c-b88f-5adf-b5ee-3089eb372546))
+    (pin "4" (uuid 2026e827-e2cd-5a13-b54c-1ea9c5060f92))
+    (pin "3" (uuid 2a1fc61c-b88f-5adf-b5ee-3089eb372546))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D5") (unit 1))
@@ -7593,8 +7593,8 @@
     )
     (pin "2" (uuid c409ae18-b8c7-5535-a592-e70b9eb307eb))
     (pin "1" (uuid 8f897501-319a-5a45-9279-f1f8845d8fd8))
-    (pin "3" (uuid df18a0a7-75fa-5903-8e42-4c2e8d9bd063))
-    (pin "4" (uuid 50d0502c-6eea-5c95-aabe-767c80ee6081))
+    (pin "4" (uuid df18a0a7-75fa-5903-8e42-4c2e8d9bd063))
+    (pin "3" (uuid 50d0502c-6eea-5c95-aabe-767c80ee6081))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D6") (unit 1))
@@ -7643,8 +7643,8 @@
     )
     (pin "2" (uuid db641044-fea0-5c51-9f52-6346ff705bfe))
     (pin "1" (uuid 03f3f952-c86d-57b3-abfc-99640b3e774f))
-    (pin "3" (uuid f416b65f-f07e-5ff0-90ba-cbc45c6933b5))
-    (pin "4" (uuid a5b3975a-ea65-5419-8fe8-cfb97d7c3771))
+    (pin "4" (uuid f416b65f-f07e-5ff0-90ba-cbc45c6933b5))
+    (pin "3" (uuid a5b3975a-ea65-5419-8fe8-cfb97d7c3771))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D7") (unit 1))
@@ -7693,8 +7693,8 @@
     )
     (pin "2" (uuid 336e4fbe-3241-5460-a99c-bf2654903d5b))
     (pin "1" (uuid 7d177c39-9446-585a-b9fc-a892c2871b0e))
-    (pin "3" (uuid 146e4b05-26a6-5397-91e9-65747c87adec))
-    (pin "4" (uuid 27773352-7ad4-5003-a265-3c02d8139d88))
+    (pin "4" (uuid 146e4b05-26a6-5397-91e9-65747c87adec))
+    (pin "3" (uuid 27773352-7ad4-5003-a265-3c02d8139d88))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D8") (unit 1))
@@ -7743,8 +7743,8 @@
     )
     (pin "2" (uuid 2b20d513-2aca-52bf-8283-7f79883a5e04))
     (pin "1" (uuid a4402a5b-77e8-5800-800e-a7c891a649d0))
-    (pin "3" (uuid 20674a49-8c1f-5f70-859d-61841371ab43))
-    (pin "4" (uuid 5b18a680-3b0e-5b18-a377-2ad850cc472d))
+    (pin "4" (uuid 20674a49-8c1f-5f70-859d-61841371ab43))
+    (pin "3" (uuid 5b18a680-3b0e-5b18-a377-2ad850cc472d))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D9") (unit 1))
@@ -7793,8 +7793,8 @@
     )
     (pin "2" (uuid 9e6c7932-2882-51ec-b2b9-e4f31fb54176))
     (pin "1" (uuid 31086612-8ad5-52fc-811c-0401ba4c51c8))
-    (pin "3" (uuid 67e520f9-ac37-56ca-8a0d-7aa209acaf23))
-    (pin "4" (uuid 410a7330-1fc7-591c-b389-191f88fba644))
+    (pin "4" (uuid 67e520f9-ac37-56ca-8a0d-7aa209acaf23))
+    (pin "3" (uuid 410a7330-1fc7-591c-b389-191f88fba644))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D10") (unit 1))
@@ -7843,8 +7843,8 @@
     )
     (pin "2" (uuid 796069ac-0a14-56dd-a3fb-db3cf12a2143))
     (pin "1" (uuid 2fc0fcd7-7706-5ba1-bbd3-df9358ae4d1c))
-    (pin "3" (uuid 850b5342-81ff-5ae4-9651-f2d6984536d8))
-    (pin "4" (uuid 28e7eb51-cc05-5851-b24e-dc1c3c00a945))
+    (pin "4" (uuid 850b5342-81ff-5ae4-9651-f2d6984536d8))
+    (pin "3" (uuid 28e7eb51-cc05-5851-b24e-dc1c3c00a945))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D11") (unit 1))
@@ -7893,8 +7893,8 @@
     )
     (pin "2" (uuid 1a0faa25-bf1f-5757-b4cd-2120d27eb75b))
     (pin "1" (uuid d22913fb-56d3-5a7d-8ad4-0014e4fd1709))
-    (pin "3" (uuid f70660fb-5edb-5ba5-8530-d18bb7149efa))
-    (pin "4" (uuid 34385500-21d6-5c61-a2a5-9e93f446f881))
+    (pin "4" (uuid f70660fb-5edb-5ba5-8530-d18bb7149efa))
+    (pin "3" (uuid 34385500-21d6-5c61-a2a5-9e93f446f881))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D12") (unit 1))
@@ -7943,8 +7943,8 @@
     )
     (pin "2" (uuid db3a176b-46c5-5c1e-b335-49785057136a))
     (pin "1" (uuid 4d4af5f0-e28e-5524-a99f-5148b1b1ea26))
-    (pin "3" (uuid 132446cc-6a79-54b1-bba4-10347e758e79))
-    (pin "4" (uuid 98ce54bc-4da7-5912-b2a4-e2ac748eb9b1))
+    (pin "4" (uuid 132446cc-6a79-54b1-bba4-10347e758e79))
+    (pin "3" (uuid 98ce54bc-4da7-5912-b2a4-e2ac748eb9b1))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D13") (unit 1))
@@ -7993,8 +7993,8 @@
     )
     (pin "2" (uuid 82e241ae-7ba4-5250-abb0-8b32a91ee2bc))
     (pin "1" (uuid 5134c8cb-094b-5446-802e-b996b2843289))
-    (pin "3" (uuid 8983256d-ca8c-5639-9461-7f64e8d5b4fe))
-    (pin "4" (uuid d0c84f36-b5ac-509e-a645-ef61ac5b44ed))
+    (pin "4" (uuid 8983256d-ca8c-5639-9461-7f64e8d5b4fe))
+    (pin "3" (uuid d0c84f36-b5ac-509e-a645-ef61ac5b44ed))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D14") (unit 1))
@@ -8043,8 +8043,8 @@
     )
     (pin "2" (uuid e09651d6-fcf7-569d-9684-a930fff8e834))
     (pin "1" (uuid d36dbb73-5b63-5830-b254-b3944c18b858))
-    (pin "3" (uuid ca70f03f-047b-5677-9921-a13f1da5dd18))
-    (pin "4" (uuid e9c2cc24-f2f1-5e9d-b518-650811a86c3a))
+    (pin "4" (uuid ca70f03f-047b-5677-9921-a13f1da5dd18))
+    (pin "3" (uuid e9c2cc24-f2f1-5e9d-b518-650811a86c3a))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D15") (unit 1))
@@ -8093,8 +8093,8 @@
     )
     (pin "2" (uuid 2d7d9e8d-2f8a-5708-aa3f-9f0e85333297))
     (pin "1" (uuid 020c94a5-3033-5574-93a0-e55b0c70ec9d))
-    (pin "3" (uuid 39a7306b-14ff-514e-a6f5-f824db10d25a))
-    (pin "4" (uuid 5b5d831d-44c6-5176-a7cc-a6521c076ae2))
+    (pin "4" (uuid 39a7306b-14ff-514e-a6f5-f824db10d25a))
+    (pin "3" (uuid 5b5d831d-44c6-5176-a7cc-a6521c076ae2))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D16") (unit 1))
@@ -8143,8 +8143,8 @@
     )
     (pin "2" (uuid f3e48d6e-0476-592c-bb85-760cf0f16d96))
     (pin "1" (uuid 6cab195a-72c9-5291-82e2-2f4174c81379))
-    (pin "3" (uuid 6542270a-8c8a-5f55-9aa6-51f30b585784))
-    (pin "4" (uuid 071522bc-1805-525d-a72e-6fe547e51793))
+    (pin "4" (uuid 6542270a-8c8a-5f55-9aa6-51f30b585784))
+    (pin "3" (uuid 071522bc-1805-525d-a72e-6fe547e51793))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D17") (unit 1))
@@ -8193,8 +8193,8 @@
     )
     (pin "2" (uuid 3455a317-4eb0-57b4-a525-220b646a1945))
     (pin "1" (uuid 7a844113-4f16-582a-b303-2e4d735607a1))
-    (pin "3" (uuid cd448528-4057-508a-8cff-fc0d65907fa4))
-    (pin "4" (uuid 249934f8-822f-516a-a864-abe0da42e657))
+    (pin "4" (uuid cd448528-4057-508a-8cff-fc0d65907fa4))
+    (pin "3" (uuid 249934f8-822f-516a-a864-abe0da42e657))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D18") (unit 1))
@@ -8243,8 +8243,8 @@
     )
     (pin "2" (uuid 727199ec-cdae-5918-a7ed-753da0957ad8))
     (pin "1" (uuid 73bada66-fcf4-5839-b7fe-0f3be7c9b9ba))
-    (pin "3" (uuid 74257e66-20bf-5348-8c90-39d5edabb013))
-    (pin "4" (uuid fd2d47dc-e62c-588f-82a2-9c1dfcf72f61))
+    (pin "4" (uuid 74257e66-20bf-5348-8c90-39d5edabb013))
+    (pin "3" (uuid fd2d47dc-e62c-588f-82a2-9c1dfcf72f61))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D19") (unit 1))
@@ -8293,8 +8293,8 @@
     )
     (pin "2" (uuid e25d4a82-c02a-55d6-8926-c46dc9d365ef))
     (pin "1" (uuid 08457bc9-6be0-5694-9974-698331b1cceb))
-    (pin "3" (uuid 51d593ca-6dce-5603-ba20-122e1903cf88))
-    (pin "4" (uuid 67bd9103-de4c-5e5e-84a3-af016ee0f398))
+    (pin "4" (uuid 51d593ca-6dce-5603-ba20-122e1903cf88))
+    (pin "3" (uuid 67bd9103-de4c-5e5e-84a3-af016ee0f398))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D20") (unit 1))
@@ -8343,8 +8343,8 @@
     )
     (pin "2" (uuid cd3c65f7-7a95-5f8b-9ca0-668c1a6b2f84))
     (pin "1" (uuid e2b5806f-f401-5f9c-a676-754b37b5b2da))
-    (pin "3" (uuid 9a563f89-bd5c-5be4-a568-37418a988046))
-    (pin "4" (uuid 9933357c-aa80-55f5-8837-fd5faa9b7318))
+    (pin "4" (uuid 9a563f89-bd5c-5be4-a568-37418a988046))
+    (pin "3" (uuid 9933357c-aa80-55f5-8837-fd5faa9b7318))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D21") (unit 1))
@@ -8393,8 +8393,8 @@
     )
     (pin "2" (uuid 8c6a64e9-abc8-551c-8deb-892d2b4d386a))
     (pin "1" (uuid 2154802f-c433-5957-9fea-73046c543d34))
-    (pin "3" (uuid 19d12a8b-6242-5575-ae7d-7f9212ebd3fe))
-    (pin "4" (uuid 74887617-1912-5ba7-aad7-728fe8be55a2))
+    (pin "4" (uuid 19d12a8b-6242-5575-ae7d-7f9212ebd3fe))
+    (pin "3" (uuid 74887617-1912-5ba7-aad7-728fe8be55a2))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D22") (unit 1))
@@ -8443,8 +8443,8 @@
     )
     (pin "2" (uuid 6a3045fc-7ef7-511e-886c-6c9f63abf5dd))
     (pin "1" (uuid 795a2b4c-ed47-5cad-9394-ab2d050e3a7c))
-    (pin "3" (uuid 373bb263-60e3-5117-a558-da95883af01d))
-    (pin "4" (uuid 86f2bf3c-b416-5bc1-bc61-c1010d1f9e78))
+    (pin "4" (uuid 373bb263-60e3-5117-a558-da95883af01d))
+    (pin "3" (uuid 86f2bf3c-b416-5bc1-bc61-c1010d1f9e78))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D23") (unit 1))
@@ -8493,8 +8493,8 @@
     )
     (pin "2" (uuid c7dc68a6-40f4-591b-a34b-5b82a191005c))
     (pin "1" (uuid b8463c37-3229-5646-a0e6-e62786084be8))
-    (pin "3" (uuid 37e44d86-857f-5da3-9735-0d5a3b806fd3))
-    (pin "4" (uuid 37f4618b-0fc1-5ec9-9856-000d129117ca))
+    (pin "4" (uuid 37e44d86-857f-5da3-9735-0d5a3b806fd3))
+    (pin "3" (uuid 37f4618b-0fc1-5ec9-9856-000d129117ca))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D24") (unit 1))
@@ -8543,8 +8543,8 @@
     )
     (pin "2" (uuid 906e8b66-61d0-512a-b01a-d27aeb58b463))
     (pin "1" (uuid e6379b8a-e7e4-5422-826a-1efeb45dac4e))
-    (pin "3" (uuid 53a4178a-338f-5b17-be44-363d805c8ca3))
-    (pin "4" (uuid 6314ef0c-9ee0-580c-a9d5-8cb001741dc3))
+    (pin "4" (uuid 53a4178a-338f-5b17-be44-363d805c8ca3))
+    (pin "3" (uuid 6314ef0c-9ee0-580c-a9d5-8cb001741dc3))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D25") (unit 1))
@@ -8593,8 +8593,8 @@
     )
     (pin "2" (uuid e73ff153-41ab-54df-91f4-639f3eaa2f79))
     (pin "1" (uuid 01aaf218-c558-5de9-9069-f3912eb4170b))
-    (pin "3" (uuid f965415a-6930-585b-b2db-e6ba11dfdf6a))
-    (pin "4" (uuid 01436b25-e2d2-5e9e-a27c-733382dce963))
+    (pin "4" (uuid f965415a-6930-585b-b2db-e6ba11dfdf6a))
+    (pin "3" (uuid 01436b25-e2d2-5e9e-a27c-733382dce963))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D26") (unit 1))
@@ -8643,8 +8643,8 @@
     )
     (pin "2" (uuid 0c48c5cd-7c5c-5fd0-aa18-14db75f368d0))
     (pin "1" (uuid d04a5cfe-c8f7-5b47-b6d9-5a25009c8d86))
-    (pin "3" (uuid 92f148f3-462b-5272-92a6-ba5954f9a4ca))
-    (pin "4" (uuid 90b53544-0ba4-50fc-b008-820c3a04e2f3))
+    (pin "4" (uuid 92f148f3-462b-5272-92a6-ba5954f9a4ca))
+    (pin "3" (uuid 90b53544-0ba4-50fc-b008-820c3a04e2f3))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D27") (unit 1))
@@ -8693,8 +8693,8 @@
     )
     (pin "2" (uuid a91edd25-67d7-56f1-88f6-a8011c728a0c))
     (pin "1" (uuid e5160d36-f76b-5d9a-ad83-0be620fdf966))
-    (pin "3" (uuid 968d0d62-52e1-5064-be95-8da67f107dfa))
-    (pin "4" (uuid 83623d78-b31f-5750-b109-8f5a15b40f44))
+    (pin "4" (uuid 968d0d62-52e1-5064-be95-8da67f107dfa))
+    (pin "3" (uuid 83623d78-b31f-5750-b109-8f5a15b40f44))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D28") (unit 1))
@@ -8743,8 +8743,8 @@
     )
     (pin "2" (uuid 5f3abbe0-c7e0-5806-8710-9839e507eed3))
     (pin "1" (uuid 31abd03d-4bc6-553e-9639-b090663816c5))
-    (pin "3" (uuid e26e9832-e587-574e-81aa-331948d2ae90))
-    (pin "4" (uuid 41f25297-0ece-5ebc-b401-e745a1333318))
+    (pin "4" (uuid e26e9832-e587-574e-81aa-331948d2ae90))
+    (pin "3" (uuid 41f25297-0ece-5ebc-b401-e745a1333318))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D29") (unit 1))
@@ -8793,8 +8793,8 @@
     )
     (pin "2" (uuid 95cbda88-091d-5ffc-8999-64b3ac995991))
     (pin "1" (uuid c6be0a91-f7e0-5239-a602-6720366bc5d0))
-    (pin "3" (uuid a7ae9264-dfcf-57ba-ba9b-2720fdf16a2f))
-    (pin "4" (uuid 2263d642-ac62-536a-8562-352b92b4dae8))
+    (pin "4" (uuid a7ae9264-dfcf-57ba-ba9b-2720fdf16a2f))
+    (pin "3" (uuid 2263d642-ac62-536a-8562-352b92b4dae8))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D30") (unit 1))
@@ -8843,8 +8843,8 @@
     )
     (pin "2" (uuid ef7e86f5-b2db-5b90-b1ee-529b1e5bd2a4))
     (pin "1" (uuid ab41fab9-7fe7-5723-9fda-ba8947019af4))
-    (pin "3" (uuid 85679a66-a118-5d5d-82f2-73000e726346))
-    (pin "4" (uuid 5061b377-d901-58ff-a103-c7c51934d83e))
+    (pin "4" (uuid 85679a66-a118-5d5d-82f2-73000e726346))
+    (pin "3" (uuid 5061b377-d901-58ff-a103-c7c51934d83e))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D31") (unit 1))
@@ -8893,8 +8893,8 @@
     )
     (pin "2" (uuid f8e6c6a6-e4cf-5ff2-9d05-c783ae294f6f))
     (pin "1" (uuid ab8d1a95-19d4-57d7-ab49-52c3a37462a7))
-    (pin "3" (uuid c486d0b9-1bf7-588b-944b-c0787295855f))
-    (pin "4" (uuid 56e8ba6b-7048-5638-a0c9-d03987aa3a19))
+    (pin "4" (uuid c486d0b9-1bf7-588b-944b-c0787295855f))
+    (pin "3" (uuid 56e8ba6b-7048-5638-a0c9-d03987aa3a19))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D32") (unit 1))
@@ -8943,8 +8943,8 @@
     )
     (pin "2" (uuid 61fa46e7-19c1-5270-8f6c-fe0e90829843))
     (pin "1" (uuid 211310f5-d6f0-5272-8b00-c6f115a3749e))
-    (pin "3" (uuid a2b065fe-f58c-5844-a8df-4f445ee32f32))
-    (pin "4" (uuid 72aa6d75-e36c-5d93-b2b7-3fa2a1906e09))
+    (pin "4" (uuid a2b065fe-f58c-5844-a8df-4f445ee32f32))
+    (pin "3" (uuid 72aa6d75-e36c-5d93-b2b7-3fa2a1906e09))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D33") (unit 1))
@@ -8993,8 +8993,8 @@
     )
     (pin "2" (uuid 4dfbaf35-7650-5a0f-a7db-2617dd49f8a1))
     (pin "1" (uuid 8f1bb8c4-68d4-5b66-b0a7-f5276b4f9fe4))
-    (pin "3" (uuid 6238f0f4-550b-5f57-903f-509b375a874d))
-    (pin "4" (uuid 705f08c6-fe1f-50e8-9c7b-31321891c6ed))
+    (pin "4" (uuid 6238f0f4-550b-5f57-903f-509b375a874d))
+    (pin "3" (uuid 705f08c6-fe1f-50e8-9c7b-31321891c6ed))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D34") (unit 1))
@@ -9043,8 +9043,8 @@
     )
     (pin "2" (uuid 96b6eb5a-ba5f-5a8d-b1bc-8c6aadc67b2a))
     (pin "1" (uuid b5318e92-3d15-536f-9584-005e97fe666f))
-    (pin "3" (uuid fc9ed76b-796a-5e5a-99ce-f3e33b2d285a))
-    (pin "4" (uuid 820a8b9f-edca-5758-bac3-3e010541599f))
+    (pin "4" (uuid fc9ed76b-796a-5e5a-99ce-f3e33b2d285a))
+    (pin "3" (uuid 820a8b9f-edca-5758-bac3-3e010541599f))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D35") (unit 1))
@@ -9093,8 +9093,8 @@
     )
     (pin "2" (uuid dd670f2b-09b0-5c6b-a9c4-2a64c5304f15))
     (pin "1" (uuid 91ef8984-0935-50af-b7a6-9235f20b310c))
-    (pin "3" (uuid 325def19-827f-54ed-b65f-646b54430175))
-    (pin "4" (uuid eb3c500a-67ae-5b64-b388-f073e9d6232a))
+    (pin "4" (uuid 325def19-827f-54ed-b65f-646b54430175))
+    (pin "3" (uuid eb3c500a-67ae-5b64-b388-f073e9d6232a))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D36") (unit 1))
@@ -9143,8 +9143,8 @@
     )
     (pin "2" (uuid cf92fab3-3386-5e80-b072-f1d4d7a35b89))
     (pin "1" (uuid 2620bbac-538e-56b5-8eed-8cc1ae8a7b80))
-    (pin "3" (uuid 7a36584d-467b-59af-abfa-c5698cf8e652))
-    (pin "4" (uuid 3e97bac8-cdb7-5b45-adcd-160eea27ff51))
+    (pin "4" (uuid 7a36584d-467b-59af-abfa-c5698cf8e652))
+    (pin "3" (uuid 3e97bac8-cdb7-5b45-adcd-160eea27ff51))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D37") (unit 1))
@@ -9193,8 +9193,8 @@
     )
     (pin "2" (uuid 68b8f06f-b290-5003-acbf-c095fa7e905a))
     (pin "1" (uuid 176f3d2d-71e8-5542-a173-ea8ea6baf606))
-    (pin "3" (uuid dce701e0-ed29-58ed-beab-d2dcc5c67c28))
-    (pin "4" (uuid 0e0b3d4e-5586-5b37-ad15-6a4749ff5cbc))
+    (pin "4" (uuid dce701e0-ed29-58ed-beab-d2dcc5c67c28))
+    (pin "3" (uuid 0e0b3d4e-5586-5b37-ad15-6a4749ff5cbc))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D38") (unit 1))
@@ -9243,8 +9243,8 @@
     )
     (pin "2" (uuid b6081185-f730-5d2a-a424-751f922a7506))
     (pin "1" (uuid 8c0121cb-4b01-598d-92e9-a03b3060cf42))
-    (pin "3" (uuid c9b0b3f5-7b5d-52f1-95e6-cc834b4817a1))
-    (pin "4" (uuid 8210b236-7409-517e-8a47-6eddc4e17a71))
+    (pin "4" (uuid c9b0b3f5-7b5d-52f1-95e6-cc834b4817a1))
+    (pin "3" (uuid 8210b236-7409-517e-8a47-6eddc4e17a71))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D39") (unit 1))
@@ -9293,8 +9293,8 @@
     )
     (pin "2" (uuid ffc1e0a3-8fad-5279-9068-d60f3e1ae62e))
     (pin "1" (uuid 5fc7d2e8-0ea6-591c-b938-c878ee23c48e))
-    (pin "3" (uuid bef90c88-b913-5a01-b901-8d3897b1043a))
-    (pin "4" (uuid 47b70d48-5036-56f4-9bba-7dea91eaf4ec))
+    (pin "4" (uuid bef90c88-b913-5a01-b901-8d3897b1043a))
+    (pin "3" (uuid 47b70d48-5036-56f4-9bba-7dea91eaf4ec))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D40") (unit 1))
@@ -9343,8 +9343,8 @@
     )
     (pin "2" (uuid 1c4f87a0-44b4-5962-bcc0-81fd333b4d7f))
     (pin "1" (uuid 85ff9344-c23c-52e2-b1cf-4b0292bc9655))
-    (pin "3" (uuid ef2d94e8-986e-5fc1-a2c5-1f41de0455ca))
-    (pin "4" (uuid f24fd3ea-1a6e-5b0c-8b85-a45590ba1199))
+    (pin "4" (uuid ef2d94e8-986e-5fc1-a2c5-1f41de0455ca))
+    (pin "3" (uuid f24fd3ea-1a6e-5b0c-8b85-a45590ba1199))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D41") (unit 1))
@@ -9393,8 +9393,8 @@
     )
     (pin "2" (uuid 47cd8b4b-5cb2-5181-b9a0-cfcfc6eb1c52))
     (pin "1" (uuid c7ef4482-e77a-5d41-9769-fb3f16d737f3))
-    (pin "3" (uuid 9655072e-06f0-55e4-bcbf-4157ac051bc1))
-    (pin "4" (uuid 9e1cf566-592d-5556-97ed-581936e5e4eb))
+    (pin "4" (uuid 9655072e-06f0-55e4-bcbf-4157ac051bc1))
+    (pin "3" (uuid 9e1cf566-592d-5556-97ed-581936e5e4eb))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D42") (unit 1))
@@ -9443,8 +9443,8 @@
     )
     (pin "2" (uuid 40eec13d-80e5-52fc-9566-22a1fe0748a0))
     (pin "1" (uuid fcbf8d7a-846d-5eb8-b1a4-3564a1ebc88d))
-    (pin "3" (uuid 7658d5b9-f98c-56dd-b93c-f9a400ec55e0))
-    (pin "4" (uuid 768f4f94-8a7f-5234-91e6-fc946964d557))
+    (pin "4" (uuid 7658d5b9-f98c-56dd-b93c-f9a400ec55e0))
+    (pin "3" (uuid 768f4f94-8a7f-5234-91e6-fc946964d557))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D43") (unit 1))
@@ -9493,8 +9493,8 @@
     )
     (pin "2" (uuid 6fec7530-33ec-5560-84cf-7069f9351a66))
     (pin "1" (uuid e9ed21ff-e4d0-500e-b373-b7170eb228dd))
-    (pin "3" (uuid af78928b-48ae-5808-b091-b51559a13b78))
-    (pin "4" (uuid 86925cb8-87d8-5e54-a311-96d3fe9e1396))
+    (pin "4" (uuid af78928b-48ae-5808-b091-b51559a13b78))
+    (pin "3" (uuid 86925cb8-87d8-5e54-a311-96d3fe9e1396))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D44") (unit 1))
@@ -9543,8 +9543,8 @@
     )
     (pin "2" (uuid d898547a-95a2-530a-b5a3-d3f64e2b281f))
     (pin "1" (uuid 271eb090-622f-52f2-adbe-9e9bc7abe948))
-    (pin "3" (uuid a1e69a79-3ddd-5ccc-9c2b-50132e64df20))
-    (pin "4" (uuid 625f5491-810d-5819-bef4-84872c43e48a))
+    (pin "4" (uuid a1e69a79-3ddd-5ccc-9c2b-50132e64df20))
+    (pin "3" (uuid 625f5491-810d-5819-bef4-84872c43e48a))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D45") (unit 1))
@@ -9593,8 +9593,8 @@
     )
     (pin "2" (uuid a9050939-c315-5879-91e3-f1ba13e38f1a))
     (pin "1" (uuid a571abcd-544e-5288-af28-be05da9eec1f))
-    (pin "3" (uuid 15fe6e7d-2491-5d9d-8ebb-9c12d517e2f6))
-    (pin "4" (uuid 5a70e319-be16-55f7-aa9c-939f865a15ad))
+    (pin "4" (uuid 15fe6e7d-2491-5d9d-8ebb-9c12d517e2f6))
+    (pin "3" (uuid 5a70e319-be16-55f7-aa9c-939f865a15ad))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D46") (unit 1))
@@ -9643,8 +9643,8 @@
     )
     (pin "2" (uuid a0e071df-ac2f-5df3-a754-e2e931f2204e))
     (pin "1" (uuid e04715c2-7244-50ff-b67f-58c7831a5e39))
-    (pin "3" (uuid 0653e76f-5201-5f80-babd-0c7dfb85cfa4))
-    (pin "4" (uuid 40292141-6849-5341-9c09-fb9c439746fe))
+    (pin "4" (uuid 0653e76f-5201-5f80-babd-0c7dfb85cfa4))
+    (pin "3" (uuid 40292141-6849-5341-9c09-fb9c439746fe))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D47") (unit 1))
@@ -9693,8 +9693,8 @@
     )
     (pin "2" (uuid ddf52021-1023-5531-a7c5-370100dcbf54))
     (pin "1" (uuid 8c97e4a8-8b5e-5bf5-81a6-a0ec80fb6e7f))
-    (pin "3" (uuid f1ff82be-b1c9-5af5-aa62-6c9717340fb8))
-    (pin "4" (uuid b96f1d22-fb86-52c8-a377-211d6f1b1c9a))
+    (pin "4" (uuid f1ff82be-b1c9-5af5-aa62-6c9717340fb8))
+    (pin "3" (uuid b96f1d22-fb86-52c8-a377-211d6f1b1c9a))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D48") (unit 1))
@@ -9743,8 +9743,8 @@
     )
     (pin "2" (uuid 390ec983-a1bb-54b5-bcdf-42872c6e5e4a))
     (pin "1" (uuid fd1343ae-9d0f-5ae2-baaa-9374bea10a7d))
-    (pin "3" (uuid 4a8a0114-e4ee-54a0-b915-668056ff544d))
-    (pin "4" (uuid 887f3db5-1a83-52c9-8acb-9f4761430c6e))
+    (pin "4" (uuid 4a8a0114-e4ee-54a0-b915-668056ff544d))
+    (pin "3" (uuid 887f3db5-1a83-52c9-8acb-9f4761430c6e))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D49") (unit 1))
@@ -9793,8 +9793,8 @@
     )
     (pin "2" (uuid 78e996dc-9de8-59a4-97fc-b4c20b37359b))
     (pin "1" (uuid 3e9cd8dc-0a37-508a-93d7-d2c6a6fc4f7e))
-    (pin "3" (uuid 81c2c2ef-cebb-503a-8298-92102e604c12))
-    (pin "4" (uuid 264caa37-988c-53bc-bfa9-a2b373a8d6cb))
+    (pin "4" (uuid 81c2c2ef-cebb-503a-8298-92102e604c12))
+    (pin "3" (uuid 264caa37-988c-53bc-bfa9-a2b373a8d6cb))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D50") (unit 1))
@@ -9843,8 +9843,8 @@
     )
     (pin "2" (uuid dd6696f4-cfa0-53dc-a49d-dc71156af4d9))
     (pin "1" (uuid 993053c6-95d2-5c03-9f1f-6894645816ad))
-    (pin "3" (uuid 32094319-4315-5793-b9f7-fe9b2163cfae))
-    (pin "4" (uuid d3d7a635-7685-5852-bcbb-5b13ee8b5114))
+    (pin "4" (uuid 32094319-4315-5793-b9f7-fe9b2163cfae))
+    (pin "3" (uuid d3d7a635-7685-5852-bcbb-5b13ee8b5114))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D51") (unit 1))
@@ -9893,8 +9893,8 @@
     )
     (pin "2" (uuid 38f04d74-ef0f-5ce7-afa3-c4d23e6da9ba))
     (pin "1" (uuid 80464276-8f48-594f-8a14-fab726c79849))
-    (pin "3" (uuid cea25225-9915-5f9e-b4d9-ddba889df600))
-    (pin "4" (uuid 101b1384-4675-5e3e-b0cc-269052fe6075))
+    (pin "4" (uuid cea25225-9915-5f9e-b4d9-ddba889df600))
+    (pin "3" (uuid 101b1384-4675-5e3e-b0cc-269052fe6075))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D52") (unit 1))
@@ -9943,8 +9943,8 @@
     )
     (pin "2" (uuid 14c1a3e0-51a2-5315-8c2a-fed5c50a3712))
     (pin "1" (uuid d3a7abda-5bfb-5825-a238-3c064713171d))
-    (pin "3" (uuid c01b2aad-1279-5edf-9e6a-447bb8585da9))
-    (pin "4" (uuid e213c9a7-e8ae-5c1e-9414-87e5a5060531))
+    (pin "4" (uuid c01b2aad-1279-5edf-9e6a-447bb8585da9))
+    (pin "3" (uuid e213c9a7-e8ae-5c1e-9414-87e5a5060531))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D53") (unit 1))
@@ -9993,8 +9993,8 @@
     )
     (pin "2" (uuid c7f34d9d-932f-541d-8545-f2d8c89857e5))
     (pin "1" (uuid 972e70bd-cea3-5d40-8cf6-cd30e3a8107f))
-    (pin "3" (uuid a83073e3-c22b-583c-aac5-d9ec86bc290b))
-    (pin "4" (uuid f626cc5a-b78c-5287-82b9-68d5933ec921))
+    (pin "4" (uuid a83073e3-c22b-583c-aac5-d9ec86bc290b))
+    (pin "3" (uuid f626cc5a-b78c-5287-82b9-68d5933ec921))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D54") (unit 1))
@@ -10043,8 +10043,8 @@
     )
     (pin "2" (uuid beb2d84f-d4de-53b5-88c8-0c8c8886f08f))
     (pin "1" (uuid 8247be71-7631-5cbb-977c-10754e063416))
-    (pin "3" (uuid 5daba6ac-8b31-5a18-8a47-1c34353ba853))
-    (pin "4" (uuid 0ec12175-583b-5b2c-806f-8bc6977936b5))
+    (pin "4" (uuid 5daba6ac-8b31-5a18-8a47-1c34353ba853))
+    (pin "3" (uuid 0ec12175-583b-5b2c-806f-8bc6977936b5))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D55") (unit 1))
@@ -10093,8 +10093,8 @@
     )
     (pin "2" (uuid 0965b6f2-77c7-5a57-ab30-6afcb48d9e9d))
     (pin "1" (uuid 27465e7d-d566-5458-a03f-31cbc3bc6e1b))
-    (pin "3" (uuid dc69f44e-2142-5363-b903-7db488ce9e10))
-    (pin "4" (uuid 040b5e21-1111-51ba-bb3c-249a772ef6d7))
+    (pin "4" (uuid dc69f44e-2142-5363-b903-7db488ce9e10))
+    (pin "3" (uuid 040b5e21-1111-51ba-bb3c-249a772ef6d7))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D56") (unit 1))
@@ -10143,8 +10143,8 @@
     )
     (pin "2" (uuid dfeeb12f-4f3c-5667-b4dd-285bc05b8e41))
     (pin "1" (uuid 9adb1f8a-7469-550c-993e-62878202e85c))
-    (pin "3" (uuid eb1b6023-5a95-5377-937b-1d62b9339de9))
-    (pin "4" (uuid 5b10d286-f3ea-5b04-9ead-561aec57ae25))
+    (pin "4" (uuid eb1b6023-5a95-5377-937b-1d62b9339de9))
+    (pin "3" (uuid 5b10d286-f3ea-5b04-9ead-561aec57ae25))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D57") (unit 1))
@@ -10193,8 +10193,8 @@
     )
     (pin "2" (uuid c3ac25dd-e39d-506f-b831-27a163bc562f))
     (pin "1" (uuid de62bc3b-bb1d-5aa0-b09f-665c8fd59025))
-    (pin "3" (uuid 9c659428-cfaf-569f-8029-aa6f34f1a871))
-    (pin "4" (uuid 188af9cf-caf6-5422-bd82-ed91d4b5c825))
+    (pin "4" (uuid 9c659428-cfaf-569f-8029-aa6f34f1a871))
+    (pin "3" (uuid 188af9cf-caf6-5422-bd82-ed91d4b5c825))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D58") (unit 1))
@@ -10243,8 +10243,8 @@
     )
     (pin "2" (uuid da74c7cf-0c6c-55bc-bbf9-dcd967c92a94))
     (pin "1" (uuid 9696f473-3c80-59b2-8d84-5837458e18e0))
-    (pin "3" (uuid 2e69f287-2d67-552d-b719-583c0fe50bfe))
-    (pin "4" (uuid 55055944-2230-5e5b-b5be-d383a866e4a0))
+    (pin "4" (uuid 2e69f287-2d67-552d-b719-583c0fe50bfe))
+    (pin "3" (uuid 55055944-2230-5e5b-b5be-d383a866e4a0))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D59") (unit 1))
@@ -10293,8 +10293,8 @@
     )
     (pin "2" (uuid 0af72689-2d9b-50f6-b135-be5d3a03b42f))
     (pin "1" (uuid 0258a9b2-84a2-5b01-b12a-0edd75aadedc))
-    (pin "3" (uuid acd9d637-32c6-5be8-87f9-5fde60c751d3))
-    (pin "4" (uuid cfc473ac-d174-516d-8e30-58a0dc6fa58b))
+    (pin "4" (uuid acd9d637-32c6-5be8-87f9-5fde60c751d3))
+    (pin "3" (uuid cfc473ac-d174-516d-8e30-58a0dc6fa58b))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D60") (unit 1))
@@ -10343,8 +10343,8 @@
     )
     (pin "2" (uuid 19aa967b-1224-5e99-94aa-6220939339f4))
     (pin "1" (uuid 279b43b0-d6cb-5dff-a0af-8ef209f20a04))
-    (pin "3" (uuid 1c110602-1de6-5d6d-8882-97cf8eba1adc))
-    (pin "4" (uuid 440acab3-b255-5ae2-973d-4b4b047ae81a))
+    (pin "4" (uuid 1c110602-1de6-5d6d-8882-97cf8eba1adc))
+    (pin "3" (uuid 440acab3-b255-5ae2-973d-4b4b047ae81a))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D61") (unit 1))
@@ -10393,8 +10393,8 @@
     )
     (pin "2" (uuid d798d07c-ad20-5ae3-b74f-fb55043c9c11))
     (pin "1" (uuid 4c0445f9-4727-5ee7-9aca-85c848d723c9))
-    (pin "3" (uuid a78ef7f2-26a0-5529-b6b0-809f9997349c))
-    (pin "4" (uuid 196d4963-bc05-5bdd-885e-cdd9f78a308f))
+    (pin "4" (uuid a78ef7f2-26a0-5529-b6b0-809f9997349c))
+    (pin "3" (uuid 196d4963-bc05-5bdd-885e-cdd9f78a308f))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D62") (unit 1))
@@ -10443,8 +10443,8 @@
     )
     (pin "2" (uuid 7775323e-bbbb-5570-9caa-fad066624e6c))
     (pin "1" (uuid 210bda4d-9f81-519c-b038-c9df76446d4a))
-    (pin "3" (uuid aadaa38b-4e8c-55da-92d7-790ceb6054c2))
-    (pin "4" (uuid 0d10d179-7cd1-5675-9576-5c57be345220))
+    (pin "4" (uuid aadaa38b-4e8c-55da-92d7-790ceb6054c2))
+    (pin "3" (uuid 0d10d179-7cd1-5675-9576-5c57be345220))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D63") (unit 1))
@@ -10493,8 +10493,8 @@
     )
     (pin "2" (uuid 5bfd5f11-cd6c-5a5d-ae56-dc8ba653bb5d))
     (pin "1" (uuid 4d314479-37b2-5cd0-b0a6-7da4c887645d))
-    (pin "3" (uuid 476d2cad-d431-5f0b-812c-543c57015c85))
-    (pin "4" (uuid 8a4e2580-7ae4-54c7-accd-2708f9737651))
+    (pin "4" (uuid 476d2cad-d431-5f0b-812c-543c57015c85))
+    (pin "3" (uuid 8a4e2580-7ae4-54c7-accd-2708f9737651))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D64") (unit 1))
@@ -10543,8 +10543,8 @@
     )
     (pin "2" (uuid 49ebdeec-652d-5c0b-b13d-20730db85c49))
     (pin "1" (uuid 30ef0365-1665-5601-80b4-bb71afeab016))
-    (pin "3" (uuid 7000c36c-81fc-5d7a-805e-2b00422119f1))
-    (pin "4" (uuid cab5b08e-be7a-5448-813f-f4fea26c47b1))
+    (pin "4" (uuid 7000c36c-81fc-5d7a-805e-2b00422119f1))
+    (pin "3" (uuid cab5b08e-be7a-5448-813f-f4fea26c47b1))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D65") (unit 1))
@@ -10593,8 +10593,8 @@
     )
     (pin "2" (uuid ee35647c-d2ff-5b37-a408-6e2adb1eef24))
     (pin "1" (uuid 0cb4dffb-ccad-526e-ac6f-c89aad16846c))
-    (pin "3" (uuid 3a712dbe-c349-511d-bbfb-518741423420))
-    (pin "4" (uuid 12ff005e-8700-5002-9d8e-3b5c007f47d5))
+    (pin "4" (uuid 3a712dbe-c349-511d-bbfb-518741423420))
+    (pin "3" (uuid 12ff005e-8700-5002-9d8e-3b5c007f47d5))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D66") (unit 1))
@@ -10643,8 +10643,8 @@
     )
     (pin "2" (uuid 867f2a58-5ca9-5d46-80f3-02cbe77f6070))
     (pin "1" (uuid 2e088b14-dfe7-5f2c-8e0c-22f5722c033c))
-    (pin "3" (uuid 367a0589-035e-56e6-b89d-ca7f2446f8c6))
-    (pin "4" (uuid a8b59dc5-c188-5bc2-981b-b25b6047f747))
+    (pin "4" (uuid 367a0589-035e-56e6-b89d-ca7f2446f8c6))
+    (pin "3" (uuid a8b59dc5-c188-5bc2-981b-b25b6047f747))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D67") (unit 1))
@@ -10693,8 +10693,8 @@
     )
     (pin "2" (uuid ead8ac71-d80a-52e6-aa7b-5ecd0a5f3c9b))
     (pin "1" (uuid 17ce3af9-1605-5659-a52a-438fcfb85f0e))
-    (pin "3" (uuid b079c7a0-f9fe-5a12-942e-d7399fe67cfd))
-    (pin "4" (uuid 40b2af2c-bdef-5187-80cd-a75f2fc580fe))
+    (pin "4" (uuid b079c7a0-f9fe-5a12-942e-d7399fe67cfd))
+    (pin "3" (uuid 40b2af2c-bdef-5187-80cd-a75f2fc580fe))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D68") (unit 1))
@@ -10743,8 +10743,8 @@
     )
     (pin "2" (uuid a70971fa-1be1-510f-87bf-4f6a389265f8))
     (pin "1" (uuid 73b27928-3651-54ae-883f-c6638397a4de))
-    (pin "3" (uuid aaa5c9a3-fa94-57a6-a042-e7759186186b))
-    (pin "4" (uuid 86032f4d-79a4-56ca-aca8-2caa7db3721f))
+    (pin "4" (uuid aaa5c9a3-fa94-57a6-a042-e7759186186b))
+    (pin "3" (uuid 86032f4d-79a4-56ca-aca8-2caa7db3721f))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D69") (unit 1))
@@ -10793,8 +10793,8 @@
     )
     (pin "2" (uuid 48e4f906-21cc-5ad9-9c85-1e1309e8d79a))
     (pin "1" (uuid c3a253e7-8b92-5985-920a-d92407a379b8))
-    (pin "3" (uuid 533f3ce0-96e7-5a95-9311-f0007515c801))
-    (pin "4" (uuid 595c734c-a22d-5e12-bbab-d5c182f19f43))
+    (pin "4" (uuid 533f3ce0-96e7-5a95-9311-f0007515c801))
+    (pin "3" (uuid 595c734c-a22d-5e12-bbab-d5c182f19f43))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D70") (unit 1))
@@ -10843,8 +10843,8 @@
     )
     (pin "2" (uuid aebd08a6-205f-5be5-a4a3-737888a89241))
     (pin "1" (uuid 55d57c81-3fc8-50a5-9475-bd1548217b71))
-    (pin "3" (uuid c6b16817-36e0-586b-b612-b8439473e3e1))
-    (pin "4" (uuid 459387d2-14f3-51e8-97d4-571e3edb3a8a))
+    (pin "4" (uuid c6b16817-36e0-586b-b612-b8439473e3e1))
+    (pin "3" (uuid 459387d2-14f3-51e8-97d4-571e3edb3a8a))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D71") (unit 1))
@@ -10893,8 +10893,8 @@
     )
     (pin "2" (uuid 01e738ae-1e0a-56bc-bd40-83dcec4ad54d))
     (pin "1" (uuid 5996b7e3-760b-567c-9e43-3eb5a9ee2a37))
-    (pin "3" (uuid 7693f5e9-9d78-5532-ab3c-6c0287a43d8d))
-    (pin "4" (uuid 8c6cc4db-eabe-58cc-9d3e-56230fe4925b))
+    (pin "4" (uuid 7693f5e9-9d78-5532-ab3c-6c0287a43d8d))
+    (pin "3" (uuid 8c6cc4db-eabe-58cc-9d3e-56230fe4925b))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D72") (unit 1))
@@ -10943,8 +10943,8 @@
     )
     (pin "2" (uuid 01cc7e10-f1ac-5176-ba8a-67d23ca5dfae))
     (pin "1" (uuid d3f6af03-f010-5e39-9359-62ac206d0053))
-    (pin "3" (uuid 66654ae7-5f3f-58f9-b00c-04e2bd4b5b72))
-    (pin "4" (uuid cf4c0668-92d2-58ea-a82e-2b798ba6f13c))
+    (pin "4" (uuid 66654ae7-5f3f-58f9-b00c-04e2bd4b5b72))
+    (pin "3" (uuid cf4c0668-92d2-58ea-a82e-2b798ba6f13c))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D73") (unit 1))
@@ -10993,8 +10993,8 @@
     )
     (pin "2" (uuid 29ed6008-7995-53d6-8de7-b5fe537500e9))
     (pin "1" (uuid 398d50ca-04cd-5328-b01c-88016d0e5369))
-    (pin "3" (uuid 0fe9fa3d-4386-5b9d-a49f-8d9dd0138d60))
-    (pin "4" (uuid 779c228c-2bf5-55b0-bf4e-dd81d80e1430))
+    (pin "4" (uuid 0fe9fa3d-4386-5b9d-a49f-8d9dd0138d60))
+    (pin "3" (uuid 779c228c-2bf5-55b0-bf4e-dd81d80e1430))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D74") (unit 1))
@@ -11043,8 +11043,8 @@
     )
     (pin "2" (uuid b4b8b95e-f639-5909-820a-983b27c958e7))
     (pin "1" (uuid c76e010b-6793-5fb0-a904-69614b6e91f1))
-    (pin "3" (uuid 005533de-a589-56b5-bf88-e65979a8a588))
-    (pin "4" (uuid 0a83d92b-7dbc-5994-9f39-550abf8f4cd3))
+    (pin "4" (uuid 005533de-a589-56b5-bf88-e65979a8a588))
+    (pin "3" (uuid 0a83d92b-7dbc-5994-9f39-550abf8f4cd3))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D75") (unit 1))
@@ -11093,8 +11093,8 @@
     )
     (pin "2" (uuid 264825c6-e114-5d1f-b45d-cde91773752e))
     (pin "1" (uuid 2a7f639c-e865-51bb-9fb4-cf913fb1a573))
-    (pin "3" (uuid e9b3c14c-4462-58fe-9fa5-bfd0f85477be))
-    (pin "4" (uuid 8187f57e-c68e-53b2-89f8-4878a373045b))
+    (pin "4" (uuid e9b3c14c-4462-58fe-9fa5-bfd0f85477be))
+    (pin "3" (uuid 8187f57e-c68e-53b2-89f8-4878a373045b))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D76") (unit 1))
@@ -11143,8 +11143,8 @@
     )
     (pin "2" (uuid c1d5b716-f995-54d8-962e-d2a2639a65e9))
     (pin "1" (uuid 7213d0f8-ebe2-5256-84a1-3ae4ddf5e365))
-    (pin "3" (uuid b5ead48c-06c5-54a8-81c5-4d66a34a3777))
-    (pin "4" (uuid 57f1f4fc-bdf4-5201-8e47-71116346f768))
+    (pin "4" (uuid b5ead48c-06c5-54a8-81c5-4d66a34a3777))
+    (pin "3" (uuid 57f1f4fc-bdf4-5201-8e47-71116346f768))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D77") (unit 1))
@@ -11193,8 +11193,8 @@
     )
     (pin "2" (uuid ba5218dc-66c9-5710-bbbe-e9f55620a09b))
     (pin "1" (uuid 02b3e9f3-17cb-5b0c-bede-27be464e032a))
-    (pin "3" (uuid c685bb17-d0c1-5df8-bc6c-89ff7ae84d36))
-    (pin "4" (uuid f5eae79b-988e-5a52-90f3-16fdb17ebbdc))
+    (pin "4" (uuid c685bb17-d0c1-5df8-bc6c-89ff7ae84d36))
+    (pin "3" (uuid f5eae79b-988e-5a52-90f3-16fdb17ebbdc))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D78") (unit 1))
@@ -11243,8 +11243,8 @@
     )
     (pin "2" (uuid 5d3f679d-fce5-50b5-8bdf-a2c59756625c))
     (pin "1" (uuid a920971d-70d0-5d5a-a7e2-1eb6ba54f664))
-    (pin "3" (uuid e5569160-b73f-5a9f-8e29-8c25fb59c710))
-    (pin "4" (uuid fe0908a8-759c-5b6f-904f-3301c85e4f41))
+    (pin "4" (uuid e5569160-b73f-5a9f-8e29-8c25fb59c710))
+    (pin "3" (uuid fe0908a8-759c-5b6f-904f-3301c85e4f41))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D79") (unit 1))
@@ -11293,8 +11293,8 @@
     )
     (pin "2" (uuid 858b002e-eaeb-55ee-ae94-0c805d753f2f))
     (pin "1" (uuid ce3ae08f-b435-5a7b-97df-fbb18c89e7cd))
-    (pin "3" (uuid e6866bed-c3b1-5c33-b2cf-d9bf502acefc))
-    (pin "4" (uuid 851df878-10b2-5cca-948c-f34c26dd7822))
+    (pin "4" (uuid e6866bed-c3b1-5c33-b2cf-d9bf502acefc))
+    (pin "3" (uuid 851df878-10b2-5cca-948c-f34c26dd7822))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D80") (unit 1))
@@ -11343,8 +11343,8 @@
     )
     (pin "2" (uuid 38534480-2d49-5917-aea0-a3c33c6bcf00))
     (pin "1" (uuid 6387bf18-c6e2-5ab8-8bb2-8b623cd9d1fa))
-    (pin "3" (uuid 3979e5de-dc18-52cf-a662-681b13ee62a5))
-    (pin "4" (uuid 3948dd02-ecdd-57da-a8dd-2ee861ddbe55))
+    (pin "4" (uuid 3979e5de-dc18-52cf-a662-681b13ee62a5))
+    (pin "3" (uuid 3948dd02-ecdd-57da-a8dd-2ee861ddbe55))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D81") (unit 1))
@@ -11393,8 +11393,8 @@
     )
     (pin "2" (uuid 17969199-36c1-55ef-a6cc-a5211f1a5381))
     (pin "1" (uuid 06502347-ac29-518a-abc1-705e8ca17dfd))
-    (pin "3" (uuid a6df446a-d34d-5003-9932-f1739963bc92))
-    (pin "4" (uuid d72b4ac2-6398-590a-bccb-dd9ab8737d4d))
+    (pin "4" (uuid a6df446a-d34d-5003-9932-f1739963bc92))
+    (pin "3" (uuid d72b4ac2-6398-590a-bccb-dd9ab8737d4d))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D82") (unit 1))
@@ -11443,8 +11443,8 @@
     )
     (pin "2" (uuid ed920209-ad26-5ca0-bd4c-35b3d4987260))
     (pin "1" (uuid b5f43342-9f42-5319-ae13-df1ce6f27189))
-    (pin "3" (uuid e5da0b28-537b-5506-a6f2-9aded08e5add))
-    (pin "4" (uuid d8897f26-c825-53d9-8cd7-95f618b6e5f3))
+    (pin "4" (uuid e5da0b28-537b-5506-a6f2-9aded08e5add))
+    (pin "3" (uuid d8897f26-c825-53d9-8cd7-95f618b6e5f3))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D83") (unit 1))
@@ -11493,8 +11493,8 @@
     )
     (pin "2" (uuid 218a25c6-c5b9-5448-85d8-ab9ca8e70578))
     (pin "1" (uuid d7f79f1e-621e-50d5-a04c-fc692adb0937))
-    (pin "3" (uuid ffe5cc56-16bd-58b9-bda8-846e8773740e))
-    (pin "4" (uuid d61a014e-a916-55ce-9d9b-5e0895e232a2))
+    (pin "4" (uuid ffe5cc56-16bd-58b9-bda8-846e8773740e))
+    (pin "3" (uuid d61a014e-a916-55ce-9d9b-5e0895e232a2))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D84") (unit 1))
@@ -11543,8 +11543,8 @@
     )
     (pin "2" (uuid 15406ab5-fa4d-5afb-bf30-7c12e303ddb0))
     (pin "1" (uuid e41d7ad1-e50b-5236-b870-506503c6a8b1))
-    (pin "3" (uuid 682ca17b-330b-594d-9b11-d7d2a849fcc7))
-    (pin "4" (uuid b572c7f6-bbf0-5661-888f-8d30ee4067e9))
+    (pin "4" (uuid 682ca17b-330b-594d-9b11-d7d2a849fcc7))
+    (pin "3" (uuid b572c7f6-bbf0-5661-888f-8d30ee4067e9))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D85") (unit 1))
@@ -11593,8 +11593,8 @@
     )
     (pin "2" (uuid fbb64ef2-8118-5167-a222-2d2e44ba84ef))
     (pin "1" (uuid 4b756a0a-af9e-52c5-85c7-ba1f86f08411))
-    (pin "3" (uuid f6cf60b8-884d-515b-ad93-aa66b0e349b1))
-    (pin "4" (uuid 94256b19-5c17-5bd7-9d02-757bf33df653))
+    (pin "4" (uuid f6cf60b8-884d-515b-ad93-aa66b0e349b1))
+    (pin "3" (uuid 94256b19-5c17-5bd7-9d02-757bf33df653))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D86") (unit 1))
@@ -11643,8 +11643,8 @@
     )
     (pin "2" (uuid 1679d685-10f9-52db-9761-df90ffece303))
     (pin "1" (uuid 98da9765-7fec-505d-bbe6-68acf63b69f1))
-    (pin "3" (uuid da1666a1-1578-5e1f-9581-78089bc4e34c))
-    (pin "4" (uuid 8c96c02b-8b75-5e7f-b006-a73327bde2db))
+    (pin "4" (uuid da1666a1-1578-5e1f-9581-78089bc4e34c))
+    (pin "3" (uuid 8c96c02b-8b75-5e7f-b006-a73327bde2db))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D87") (unit 1))
@@ -11693,8 +11693,8 @@
     )
     (pin "2" (uuid 1cffe11a-6839-5fc3-b854-9f19af17ceea))
     (pin "1" (uuid 4f0f2732-1914-5b00-9612-0950d0da7fbe))
-    (pin "3" (uuid 3197212e-d7fd-53ac-8f6c-dff21fafcbb0))
-    (pin "4" (uuid 06692929-1343-5574-b356-ec413c7ccf85))
+    (pin "4" (uuid 3197212e-d7fd-53ac-8f6c-dff21fafcbb0))
+    (pin "3" (uuid 06692929-1343-5574-b356-ec413c7ccf85))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D88") (unit 1))
@@ -11743,8 +11743,8 @@
     )
     (pin "2" (uuid d5634999-8797-50b4-aec5-3852d79ff835))
     (pin "1" (uuid c2ca360d-d7a4-5e8a-aa05-fb8edc8b0664))
-    (pin "3" (uuid d33f5ae7-f370-5c15-af81-ba3b014af39e))
-    (pin "4" (uuid ce3fa4e7-52a4-5202-a4f2-1b3f228bfee0))
+    (pin "4" (uuid d33f5ae7-f370-5c15-af81-ba3b014af39e))
+    (pin "3" (uuid ce3fa4e7-52a4-5202-a4f2-1b3f228bfee0))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D89") (unit 1))
@@ -11793,8 +11793,8 @@
     )
     (pin "2" (uuid fb07ec02-fa56-573f-b6b1-f921692c1c60))
     (pin "1" (uuid 3e7061e6-c0ec-540e-a98d-e051fc9f0a4c))
-    (pin "3" (uuid fd31dda6-fd7b-57be-9e1d-5b1e29f10427))
-    (pin "4" (uuid e2635b20-7c23-51dc-bf49-c469fa176b9a))
+    (pin "4" (uuid fd31dda6-fd7b-57be-9e1d-5b1e29f10427))
+    (pin "3" (uuid e2635b20-7c23-51dc-bf49-c469fa176b9a))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D90") (unit 1))
@@ -11843,8 +11843,8 @@
     )
     (pin "2" (uuid bdb68bb8-6f09-5bb6-aa69-7eadb3c92bd1))
     (pin "1" (uuid d228b18d-80c1-5aad-8f7e-b2ed4fa55a02))
-    (pin "3" (uuid ec991e07-a278-59f6-994d-268bb6641093))
-    (pin "4" (uuid 2e089853-f243-5113-954b-bb3ba6d83f67))
+    (pin "4" (uuid ec991e07-a278-59f6-994d-268bb6641093))
+    (pin "3" (uuid 2e089853-f243-5113-954b-bb3ba6d83f67))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D91") (unit 1))
@@ -11893,8 +11893,8 @@
     )
     (pin "2" (uuid a20b760c-0234-546b-9371-861852b61864))
     (pin "1" (uuid 6039c62d-6ae9-5b94-9936-4e5bcfd6ab07))
-    (pin "3" (uuid f7c6778c-25a1-5471-9c37-731fb126e9bd))
-    (pin "4" (uuid 2530f08d-db43-55de-a369-a1e3549afd2e))
+    (pin "4" (uuid f7c6778c-25a1-5471-9c37-731fb126e9bd))
+    (pin "3" (uuid 2530f08d-db43-55de-a369-a1e3549afd2e))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D92") (unit 1))
@@ -11943,8 +11943,8 @@
     )
     (pin "2" (uuid ddc5f6ff-d881-55ca-94e1-7f2ef3c7afe0))
     (pin "1" (uuid b41fd477-d9c2-5987-a044-e4cb39784ee2))
-    (pin "3" (uuid c3c0def2-9f5c-5ff6-b372-e19bf2d867b5))
-    (pin "4" (uuid ecb55c20-4781-5ece-9ebc-cddb48f53b08))
+    (pin "4" (uuid c3c0def2-9f5c-5ff6-b372-e19bf2d867b5))
+    (pin "3" (uuid ecb55c20-4781-5ece-9ebc-cddb48f53b08))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D93") (unit 1))
@@ -11993,8 +11993,8 @@
     )
     (pin "2" (uuid 0d77df4a-e59c-5e3e-8479-99811545e63f))
     (pin "1" (uuid 60190580-08af-508c-8334-0b1334b164e3))
-    (pin "3" (uuid 20b5b3c6-581a-50bb-b07d-83f1eb3d0690))
-    (pin "4" (uuid 067754af-5dbc-5327-9e5a-f1d56702e9ed))
+    (pin "4" (uuid 20b5b3c6-581a-50bb-b07d-83f1eb3d0690))
+    (pin "3" (uuid 067754af-5dbc-5327-9e5a-f1d56702e9ed))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D94") (unit 1))
@@ -12043,8 +12043,8 @@
     )
     (pin "2" (uuid 0161ece4-d996-57ee-b07e-522e6a972500))
     (pin "1" (uuid 593091dc-f5e6-52ab-acf4-b33cfed1ee89))
-    (pin "3" (uuid e0bd8f26-2659-5b7b-b4e0-4abe52e5d595))
-    (pin "4" (uuid 7a343712-a992-51d8-ae51-62a9bec58071))
+    (pin "4" (uuid e0bd8f26-2659-5b7b-b4e0-4abe52e5d595))
+    (pin "3" (uuid 7a343712-a992-51d8-ae51-62a9bec58071))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D95") (unit 1))
@@ -12093,8 +12093,8 @@
     )
     (pin "2" (uuid 2106c28b-b425-5fb3-81a5-5dbdc533c4ea))
     (pin "1" (uuid 741452a8-df9c-5d13-96c8-593e285714d0))
-    (pin "3" (uuid 544230c8-2e92-5305-93f3-e669cde3a097))
-    (pin "4" (uuid 74ce8786-4c68-56c7-ba5e-84fa7fdcfc4f))
+    (pin "4" (uuid 544230c8-2e92-5305-93f3-e669cde3a097))
+    (pin "3" (uuid 74ce8786-4c68-56c7-ba5e-84fa7fdcfc4f))
     (instances
       (project "m1-screen-knobs"
         (path "/9fce7bc1-56ab-52fd-8b1b-34e95a856246" (reference "D96") (unit 1))

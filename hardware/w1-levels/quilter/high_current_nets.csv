@@ -1,0 +1,3 @@
+net_name,max_current,use_power_pour
++5V,500,false
++3V3,300,false

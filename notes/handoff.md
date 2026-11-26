@@ -52,3 +52,16 @@ Route only (all parts pre-placed), via 0.45/0.2, clearance 0.152 (project 0.15),
 | 6b07edcb9f9b114eee405f75 | PW | 4L JLCPCB with power plane 6/6 (In1 Ground, In2 Power, 1 oz: no 2 oz in README); power nets from CSV (BUS 10 A, packs 8 A, 19 V/5 V 5-8 A), 13 duplicate rows deleted; auto diff pair PM_INP/N (INA226 sense) deleted; warning: pin count mismatch U16/U17/U19 (EP via pads) | 09:36 |
 | 6b07efc29f9b114eee405f7e | P1 | 2L JLCPCB 6/6; auto +3V3/+5V/GND 500 mA kept (CSV not loaded, same content) | 09:40 |
 | 6b07f09a9f9b114eee405f81 | P4 | 2L JLCPCB 6/6; job moved into project "P1 left" (Quilter offer, saves 503 pins); same auto nets; warning: RV1 pin count (board 4, schematic 3) | 09:43 |
+
+## Quilter jobs 26.11.2026, third batch (rev 7024900, Riga time)
+Route only, JLC 2L 6/6, via 0.45/0.2, clearance 0.152. Power nets: auto rows deleted, `hardware/<board>/quilter/high_current_nets.csv` uploaded (ground: auto GND kept). No diff pairs detected on the 2L boards.
+| Job id | Board | Project / notes | Start |
+|---|---|---|---|
+| 6b08139c9f9b114eee405fa7 | M3 | new project "M3-M5 modules" | 12:10 |
+| 6b0814a39f9b114eee405fa8 | M4 | same project (pins of M3 reused) | 12:14 |
+| 6b081563d811c3754ddac926 | M5 | same project | 12:17 |
+| 6b0816472434cbecec7e1bfe | W2 | project "W1-W3 modules" | 12:24 |
+| 6b0817612434cbecec7e1c05 | W3 | DRAFT, fully set up, not started (limit); own project "W3 system" (Quilter: not the same design as W2) | - |
+| 6b0818169f9b114eee405fb4 | M1 | DRAFT, fully set up, not started (limit). 4L JLC 6/6, In1 Ground, In2 Signal (ring chords on In2), 216 PCB_ARC -> chords (8/quarter) in the upload copy only | - |
+Free plan limit hit: 10 jobs per 24 h (next start ~06:05 27.11 Riga). Not created yet: R1, R2, A1, P2, P3 (CSV ready in hardware/<board>/quilter/). Plan for 4L: "JLCPCB 4-Layer (with power plane) 6/6" (In1 Ground, In2 Power); A1 keep USB pair 90 Ohm. W1 skipped: its board is already routed (908 tracks), Quilter would only analyze it.
+quilter_inputs.py fails on the PC (no KiCad footprint plugin / symbol path in the PC Python); CSV made by a scratch script from the board nets.

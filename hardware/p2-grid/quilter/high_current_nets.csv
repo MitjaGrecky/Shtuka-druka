@@ -1,0 +1,6 @@
+net_name,max_current,use_power_pour
++5V,1500,false
++3V3,500,false
+/+5V_PANEL,2000,false
+/+5V_PANEL_S,2000,false
+/+3V3A,100,false

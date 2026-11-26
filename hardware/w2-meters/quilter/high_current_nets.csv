@@ -1,0 +1,11 @@
+net_name,max_current,use_power_pour
++5V,800,false
++3V3,300,false
+/L_SW0,300,false
+/L_SW1,300,false
+/L_SW2,300,false
+/L_SW3,300,false
+/R_SW0,300,false
+/R_SW1,300,false
+/R_SW2,300,false
+/R_SW3,300,false

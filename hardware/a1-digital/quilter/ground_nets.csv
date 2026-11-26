@@ -1,0 +1,3 @@
+net_name,is_primary,use_region_pour
+GND,true,false
+/GNDPC,false,false

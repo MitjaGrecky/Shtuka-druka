@@ -1,0 +1,12 @@
+net_name,max_current,use_power_pour
++5V,2000,false
++3V3,500,false
+/+12V,200,false
+/-12V,200,false
+/UP_VBUS,900,false
+/A1_VBUS,900,false
+/P2_VBUS,900,false
+/SP_VBUS,900,false
+/A1_PWR,900,false
+/P2_PWR,900,false
+/SP_PWR,900,false

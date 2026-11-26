@@ -44,3 +44,11 @@ Mode for all three: route only (all parts pre-placed in the PCB, Quilter keeps t
 | 6b07c0632434cbecec7e1b8d | U1 | route only; PD_VBUS and GND 5 A, power pour | 07:18 |
 | 6b07c136d811c3754ddac8d1 | F1 | route only; auto power nets 500 mA; 4 auto 100-ohm diff pairs (balanced audio in) deleted | 07:21 |
 Links: https://app.quilter.ai/jobs/<id>. Result check: later, import + DRC in CI.
+
+## Quilter jobs 26.11.2026, second batch (rev b74e5cc, Riga time)
+Route only (all parts pre-placed), via 0.45/0.2, clearance 0.152 (project 0.15), Full Layout. CSV in hardware/<board>/quilter/.
+| job id | board | mode / notes | start |
+|---|---|---|---|
+| 6b07edcb9f9b114eee405f75 | PW | 4L JLCPCB with power plane 6/6 (In1 Ground, In2 Power, 1 oz: no 2 oz in README); power nets from CSV (BUS 10 A, packs 8 A, 19 V/5 V 5-8 A), 13 duplicate rows deleted; auto diff pair PM_INP/N (INA226 sense) deleted; warning: pin count mismatch U16/U17/U19 (EP via pads) | 09:36 |
+| 6b07efc29f9b114eee405f7e | P1 | 2L JLCPCB 6/6; auto +3V3/+5V/GND 500 mA kept (CSV not loaded, same content) | 09:40 |
+| 6b07f09a9f9b114eee405f81 | P4 | 2L JLCPCB 6/6; job moved into project "P1 left" (Quilter offer, saves 503 pins); same auto nets; warning: RV1 pin count (board 4, schematic 3) | 09:43 |

@@ -1,0 +1,157 @@
+(session bng
+  (base_design bng)
+  (placement
+    (resolution um 10)
+    (component "Capacitor_SMD:C_0402_1005Metric"
+      (place C1 655000 -510000 front 90)
+    )
+    (component "Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal"
+      (place J1 560000 -558025 front 0)
+    )
+    (component "MountingHole:MountingHole_3.2mm_M3_ISO7380"
+      (place H2 685000 -565000 front 0)
+      (place H1 435000 -565000 front 0)
+    )
+    (component "Resistor_SMD:R_0402_1005Metric"
+      (place R1 465000 -510000 front 90)
+    )
+    (component "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical"
+      (place J2 496500 -458100 front 90)
+    )
+  )
+  (was_is
+  )
+  (routes 
+    (resolution um 10)
+    (parser
+      (host_cad "KiCad's Pcbnew")
+      (host_version "10.0.8")
+    )
+    (library_out 
+      (padstack "Via[0-1]_600:300_um"
+        (shape
+          (circle F.Cu 6000 0 0)
+        )
+        (shape
+          (circle B.Cu 6000 0 0)
+        )
+        (attach off)
+      )
+    )
+    (network_out 
+      (net "/SHIELD"
+        (wire
+          (path F.Cu 1500
+            603200 -568775
+            603200 -557508
+          )
+        )
+        (wire
+          (path F.Cu 1500
+            516800 -568775
+            516800 -557508
+          )
+        )
+        (wire
+          (path F.Cu 1500
+            516800 -557508
+            603200 -557508
+          )
+        )
+        (wire
+          (path B.Cu 1500
+            516800 -568775
+            516800 -526975
+          )
+        )
+        (wire
+          (path F.Cu 1500
+            603200 -526975
+            603200 -514208
+          )
+        )
+        (wire
+          (path F.Cu 1500
+            603200 -514208
+            654408 -514208
+            655000 -514800
+          )
+        )
+        (wire
+          (path B.Cu 1500
+            603200 -568775
+            603200 -526975
+          )
+        )
+        (wire
+          (path F.Cu 1500
+            516800 -526975
+            516800 -514208
+          )
+        )
+        (wire
+          (path F.Cu 1500
+            465000 -515100
+            465892 -514208
+            516800 -514208
+          )
+        )
+      )
+      (net "/PD_VBUS"
+        (wire
+          (path F.Cu 1500
+            582757 -526475
+            582757 -522468
+            584000 -521225
+          )
+        )
+        (wire
+          (path F.Cu 1124
+            581255 -529718
+            582757 -528216
+            582757 -526475
+          )
+        )
+        (wire
+          (path F.Cu 1500
+            536000 -521225
+            536000 -525265
+            540453 -529718
+            581255 -529718
+          )
+        )
+        (wire
+          (path F.Cu 1500
+            521900 -458100
+            536000 -472200
+            536000 -521225
+          )
+        )
+        (wire
+          (path F.Cu 1500
+            521900 -458100
+            496500 -458100
+          )
+        )
+      )
+      (net "/PD_CC1"
+        (wire
+          (path F.Cu 1500
+            598100 -458100
+            547500 -508700
+            547500 -521225
+          )
+        )
+      )
+      (net "/PD_CC2"
+        (wire
+          (path F.Cu 1500
+            623500 -458100
+            577500 -504100
+            577500 -521225
+          )
+        )
+      )
+    )
+  )
+)

@@ -1,0 +1,299 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-11-26T13:18:30",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.8",
+    "schematic_parity": [],
+    "source": "u1-usbc-pd.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 2 [GND] of R1 on F.Cu",
+                    "pos": {
+                        "x": 46.5,
+                        "y": 50.49
+                    },
+                    "uuid": "fc785698-b69f-448f-a0a5-3cce9b787ccb"
+                },
+                {
+                    "description": "Pad A1 [GND] of J1 on F.Cu",
+                    "pos": {
+                        "x": 52.8,
+                        "y": 52.1225
+                    },
+                    "uuid": "6be0a3cc-1d74-44bb-b081-b02a0061542a"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad A1 [GND] of J1 on F.Cu",
+                    "pos": {
+                        "x": 52.8,
+                        "y": 52.1225
+                    },
+                    "uuid": "6be0a3cc-1d74-44bb-b081-b02a0061542a"
+                },
+                {
+                    "description": "Pad B1 [GND] of J1 on F.Cu",
+                    "pos": {
+                        "x": 59.2,
+                        "y": 52.1225
+                    },
+                    "uuid": "59677f6e-40e4-4658-bb55-d4aa1c308412"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad 4 [GND] of J2",
+                    "pos": {
+                        "x": 57.27,
+                        "y": 45.81
+                    },
+                    "uuid": "7ab50799-b104-4466-9b88-694059f475cd"
+                },
+                {
+                    "description": "PTH pad 3 [GND] of J2",
+                    "pos": {
+                        "x": 54.73,
+                        "y": 45.81
+                    },
+                    "uuid": "55f65f78-8285-4dae-b078-4cc4fff01687"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad B1 [GND] of J1 on F.Cu",
+                    "pos": {
+                        "x": 59.2,
+                        "y": 52.1225
+                    },
+                    "uuid": "59677f6e-40e4-4658-bb55-d4aa1c308412"
+                },
+                {
+                    "description": "Pad 2 [GND] of C1 on F.Cu",
+                    "pos": {
+                        "x": 65.5,
+                        "y": 50.52
+                    },
+                    "uuid": "3671bdcf-8ae9-4df1-be06-5c39cedb17c5"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad B1 [GND] of J1 on F.Cu",
+                    "pos": {
+                        "x": 59.2,
+                        "y": 52.1225
+                    },
+                    "uuid": "59677f6e-40e4-4658-bb55-d4aa1c308412"
+                },
+                {
+                    "description": "PTH pad 4 [GND] of J2",
+                    "pos": {
+                        "x": 57.27,
+                        "y": 45.81
+                    },
+                    "uuid": "7ab50799-b104-4466-9b88-694059f475cd"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/PD_VBUS] on F.Cu, length 0.1741 mm",
+                    "pos": {
+                        "x": 58.2757,
+                        "y": 52.8216
+                    },
+                    "uuid": "81474743-dd99-4628-a493-c8c458a12bcf"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/PD_VBUS] on F.Cu, length 0.2124 mm",
+                    "pos": {
+                        "x": 58.1255,
+                        "y": 52.9718
+                    },
+                    "uuid": "b417d0c4-06c1-4755-af80-2997fc0fe479"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Rectangle on Edge.Cuts",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 40.0
+                    },
+                    "uuid": "c913c619-ced9-4ad9-bc25-2bf2338dc42f"
+                },
+                {
+                    "description": "PCB text 'U1 USB-C PD rev 0.1' on B.Silkscreen",
+                    "pos": {
+                        "x": 43.0,
+                        "y": 57.0
+                    },
+                    "uuid": "1d7227c4-02a1-4122-8abf-a64bef583438"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Rectangle on Edge.Cuts",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 40.0
+                    },
+                    "uuid": "c913c619-ced9-4ad9-bc25-2bf2338dc42f"
+                },
+                {
+                    "description": "PCB text 'Shtuka Druka CERN-OHL-S-2.0' on B.Silkscreen",
+                    "pos": {
+                        "x": 43.0,
+                        "y": 58.2
+                    },
+                    "uuid": "18a0c559-8b45-4bdb-b27e-2e8a74106643"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "PCB text 'U1 USB-C PD rev 0.1' on B.Silkscreen",
+                    "pos": {
+                        "x": 43.0,
+                        "y": 57.0
+                    },
+                    "uuid": "1d7227c4-02a1-4122-8abf-a64bef583438"
+                },
+                {
+                    "description": "NPTH pad of H1",
+                    "pos": {
+                        "x": 43.5,
+                        "y": 56.5
+                    },
+                    "uuid": "98a32ac7-1a06-4502-8fa7-30206ef5f73d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "PCB text 'Shtuka Druka CERN-OHL-S-2.0' on B.Silkscreen",
+                    "pos": {
+                        "x": 43.0,
+                        "y": 58.2
+                    },
+                    "uuid": "18a0c559-8b45-4bdb-b27e-2e8a74106643"
+                },
+                {
+                    "description": "NPTH pad of H1",
+                    "pos": {
+                        "x": 43.5,
+                        "y": 56.5
+                    },
+                    "uuid": "98a32ac7-1a06-4502-8fa7-30206ef5f73d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "PCB text 'Shtuka Druka CERN-OHL-S-2.0' on B.Silkscreen",
+                    "pos": {
+                        "x": 43.0,
+                        "y": 58.2
+                    },
+                    "uuid": "18a0c559-8b45-4bdb-b27e-2e8a74106643"
+                },
+                {
+                    "description": "PTH pad SH [/SHIELD] of J1",
+                    "pos": {
+                        "x": 51.68,
+                        "y": 56.8775
+                    },
+                    "uuid": "7784b791-8bf8-4ae4-9e44-a1b46218fe71"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

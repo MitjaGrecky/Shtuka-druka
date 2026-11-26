@@ -8,8 +8,8 @@
 |---|---|---|
 | LM74700-Q1 | TI SNOSD17G, 12.2020: таблица Electrical Characteristics, 9.3.4 Enable, 9.4.1 Shutdown Mode | `datasheets/ti_lm74700-q1.pdf` |
 | BQ25798 | TI SLUSDV2C, 06.2026: Quiescent Currents, 7.3.12 Ship FET, регистр ADC Control | `datasheets/ti_bq25798.pdf` |
-| BQ7791500 | TI SLUSCU0L: Supply Current, 9.4.1.4 | `notes/datasheets_text/bq77915.md` |
-| SMBJ13CA | лист серии SMBJ **Semiware** (прислан пользователем 26.11): VRWM 13,0 В, IR ≤ 1 мкА при VRWM. В BOM — C224008 (Littelfuse по карточке LCSC), лист Littelfuse не получен | `datasheets/semiware_smbj_series.pdf` |
+| BQ7791500 | TI SLUSCU0L: Supply Current, 9.4.1.4 | `datasheets/text/ti_bq77915.md` |
+| SMBJ13CA | VRWM 13,0 В, IR ≤ 1 мкА при VRWM: лист Littelfuse (C224008 в BOM), стр. 2, подтверждено 26.11; лист серии Semiware даёт то же | `datasheets/littelfuse_smbj_series.pdf`, `datasheets/semiware_smbj_series.pdf` |
 
 ## Что подключено к батарее при выключенном заднем выключателе
 
@@ -23,7 +23,7 @@
 | BQ25798, только батарея, АЦП выключен | 17 / 24 | 17 / 24 |
 | BQ7791500 на BB1, NORMAL | 8 / 15 | 8 / 15 |
 | Катоды LM74700 на `BUS_IN` (оценка по таблице CATHODE sink current, ≤ 2,2 на диод) | ≈ 3 | ≈ 3 |
-| TVS SMBJ13CA (≤ 1 мкА по листу Semiware) | 1 | 1 |
+| TVS SMBJ13CA (≤ 1 мкА по листу Littelfuse) | 1 | 1 |
 | **Сумма (без защиты внутри пакета)** | **≈ 109 / 173** | **≈ 30 / 45** |
 | От 8 А·ч в месяц (по типовому) | ≈ 1,0 % | ≈ 0,27 % |
 
@@ -43,4 +43,4 @@
 
 ## Не проверено
 
-Утечка TVS по листу Littelfuse (взято значение Semiware); ток встроенной защиты пакета; включение прибора от батарей через встроенный диод (на образце).
+ток встроенной защиты пакета; включение прибора от батарей через встроенный диод (на образце).

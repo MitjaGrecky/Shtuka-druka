@@ -30,14 +30,14 @@
 
 Добавлено 19.11.2026 (док. 49, D-формат задней стенки): Rane Note 151 «Grounding and Shielding Audio Devices» и Note 110 «Sound System Interconnection» (ranecommercial.com/legacy/pdf/ranenotes/, прочитаны только в выдержках поиска); AES48-2005 (платный стандарт, не скачан); Neutrik: размеры D-вырезов и экранирование NC3FD/NJ3FD, Hicon HI-J35SEFD (габарит D, наличие не проверено); JST PH/XH (номинальный ток и напряжение из даташита, цифры в док. 49 по памяти).
 
-## Закрыто 19.11.2026 (Neutrik, см. notes/datasheets_text/neutrik_*.md и док. 48 разд. 6)
+## Закрыто 19.11.2026 (Neutrik, см. datasheets/text/neutrik_*.md и док. 48 разд. 6)
 Получены и разобраны: NE8FDP, NE8FDV, NAUSB-W, NCJ6FI-S/-V/-H, NCJ6FA-V, NJ3FD-V, NJ3FP6C, NF2D-0, NMJ3HF-S. Вычеркнуто из списка выше: Neutrik NE8FDP, NAUSB-W, NCJ6FI-S/-V/-H, NCJ6FA-V, NJ3FD-V, NF2D, NJ3FP6C.
 Ещё нужны (не Neutrik или нет чертежа): NRJ6HF и NMJ2HC-S (только DXF), NC3FD (чертёж не прочитан), TAD 114BPC, Adam Hall 7217 PCB02, Hicon HI-J35SEFD, Seetronic SCCMCDF-01, Thomann MIDI Socket, Cliff CL1115, Molex 43045-0612, Würth 865250349007.
 
 Добавлено 19.11.2026 (жгуты): Molex 43030-0001 (диапазон проводов, обжим 18 AWG), Carling 2GK51-73 (DC-рейтинг, глубина), Switchcraft 721A (вырез), Johnson 111-0702-001 (вырез), NKK M2012 (глубина), Thomann MIDI Socket (чертёж), Amphenol FCI 71600 (MPN IDC-розеток).
 
 ## Добавлено 19.11.2026 (ПО и испытания, док. 45)
-Можно скачать и прислать (чтение через markitdown): GCT USB4105-GF-A (распиновка, CC для U1; уже есть выписка в док. 46); TI TPS25730D (нет в notes/datasheets_text; ADCIN-пороги, без I2C), TI BQ7791500 и BQ25798 (тоже нет в notes/datasheets_text); Jauch LP906090JH (ток заряда, NTC, защита ячейки, для шагов 8–11); Carling 2GK51-73 (ток, вырез, выводы).
+Можно скачать и прислать (чтение через markitdown): GCT USB4105-GF-A (распиновка, CC для U1; уже есть выписка в док. 46); TI TPS25730D (нет в datasheets/text; ADCIN-пороги, без I2C), TI BQ7791500 и BQ25798 (тоже нет в datasheets/text); Jauch LP906090JH (ток заряда, NTC, защита ячейки, для шагов 8–11); Carling 2GK51-73 (ток, вырез, выводы).
 
 ## Добавлено 21.11.2026 (аудитор, по поручению главного инженера, А-038)
 
@@ -51,7 +51,7 @@
 | GL6028RGB01-B (LCSC C51933363) | Gui guang light | цвета катодов 1/2/4, высота корпуса, посадка и прорезь | hardware/pt-padtest |
 | IS31FL3218 | Lumissil/ISSI | получен 26.11; частоты PWM в нём нет — прослушать на образце | W1, notes/closing/led_noise.md |
 | Ячейка 40125140 (ampul.eu, артикул AM6966) | OEM | лист продавца получен 26.11; спросить у продавца: макс. ток заряда, пороги защиты, UN38.3 | BB1, PW, док. 43 |
-| SMBJ13CA (серия SMBJ) | Semiware получен 26.11; Littelfuse (C224008 в BOM) — не получен, сайт 403 | подтвердить IR ≤ 1 мкА по листу Littelfuse | PW, notes/closing/r216_option_b.md |
+| SMBJ13CA (серия SMBJ) | **Закрыто 26.11:** лист Littelfuse (`datasheets/littelfuse_smbj_series.pdf`, стр. 2): VR 13,0 В, IR 1 мкА; лист Semiware даёт то же | — | PW, notes/closing/r216_option_b.md |
 
 ## Добавлено 26.11.2026 (аудитор, проверка утверждений «по памяти», R217)
 

@@ -1,6 +1,6 @@
 # LP5864 и слышимый шум (R199), схемотехник, 26.11.2026
 
-Источники: `notes/datasheets_text/ti_lp5864.md` (SNVSC52A), TI SNVU786 «LP5860 Register Maps» (поля Dev_initial, [ссылка](https://ti.com/lit/pdf/snvu786), прочитано поиском), `ti_lm70660.md`, `gen/design.py` плат. Расчёты частот — по формулам (1), (2) даташита; на железе не измерялось.
+Источники: `datasheets/text/ti_lp5864.md` (SNVSC52A), TI SNVU786 «LP5860 Register Maps» (поля Dev_initial, [ссылка](https://ti.com/lit/pdf/snvu786), прочитано поиском), `ti_lm70660.md`, `gen/design.py` плат. Расчёты частот — по формулам (1), (2) даташита; на железе не измерялось.
 
 ## Вердикт
 

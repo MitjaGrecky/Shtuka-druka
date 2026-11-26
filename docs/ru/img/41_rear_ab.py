@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rear wall variants A and B on Neutrik datasheet sizes (docs/ru/48 sec. 6, notes/datasheets_text/neutrik_*.md), doc 41 sec. 24.7.
+"""Rear wall variants A and B on Neutrik datasheet sizes (docs/ru/48 sec. 6, datasheets/text/neutrik_*.md), doc 41 sec. 24.7.
 A = v6.1 as is: TRS NJ3FD-V (hole 12, nut 14.5, NOT D), combo NCJ6FI flange 27x30 hole 23.8.
 B = A + LAN NE8FDP and USB-A NAUSB-W in D (26x31, hole 24); DIN moved +6 mm, USB-C PC moved to the power block (z 17).
 Rear view, r = mm from LEFT edge (model x = 515 - r), z from floor, wall to z 110. Writes 41_rear_A/B .svg/.csv."""

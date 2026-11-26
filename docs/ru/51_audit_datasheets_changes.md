@@ -6,8 +6,8 @@
 
 | Где | Что | Прочитан (md) | Платы |
 |---|---|---|---|
-| `ShtukaDruka/claude/technologist/datasheets/` | 25 PDF: bq25798, lm5176, lm51770, lm51772, lm70660, lm74700-q1, lm76005, lmr33640, tps25730, tps2663 (TPS26631), tps54560b, smbj58ca, smbj_littelfuse, uwt, cell_pdf (Jauch), g6k, opa1622, lp5864, pj005b, usb3cftv, nc3fdv, nj3fp6c, nj6fdv, neutrik_guide | да, все 25 (.md рядом) | PW, BB1, R1, F1, A1, U1 |
-| `notes/datasheets_text/` | 21 md: Neutrik (NC3FD, NE8F, NJ3FP6C, NAUSB и др.), ADuM4165/4166 | да | R1, R2, A1 |
+| `datasheets/` | 25 PDF: bq25798, lm5176, lm51770, lm51772, lm70660, lm74700-q1, lm76005, lmr33640, tps25730, tps2663 (TPS26631), tps54560b, smbj58ca, smbj_littelfuse, uwt, cell_pdf (Jauch), g6k, opa1622, lp5864, pj005b, usb3cftv, nc3fdv, nj3fp6c, nj6fdv, neutrik_guide | да, все 25 (.md рядом) | PW, BB1, R1, F1, A1, U1 |
+| `datasheets/text/` | 21 md: Neutrik (NC3FD, NE8F, NJ3FP6C, NAUSB и др.), ADuM4165/4166 | да | R1, R2, A1 |
 | PDF в репозитории | только чертежи корпуса (`model3d/fit/*.pdf`, макет) | — | — |
 
 Нет листа для деталей из изменений: BQ7791500, CSD18532Q5B (BB1); Panasonic EEE-FK1V470P, SS34, 150 мкФ 35 В полимер, 470 мкФ 25 В, 4,7 мкГн SRP1038CC-4R7M, перемычка 0 Ом (PW); KL1E470M-CRE77 (A1); 74HC165, 74LVC1G08 (R2). Список — пользователю.
@@ -48,7 +48,7 @@ kicad-cli 10.0, по одной плате, 19 действующих проек
 
 ## 5. Перепроверка по листам пользователя (25.11.2026)
 
-Листы: `notes/datasheets_text/` bq77915, csd18532q5b, panasonic_eee_fk, kl_series_elcap (файл без имени = серия KL), ss32, 74hc_hct165, 74lvc1g08, srp1038cc.
+Листы: `datasheets/text/` ti_bq77915, ti_csd18532q5b, panasonic_eee-fk, semtech_kl_series (файл без имени = серия KL), vishay_ss32, nexperia_74hc165, nexperia_74lvc1g08, bourns_srp1038cc.
 
 | Строка | Новый вердикт | Решение |
 |---|---|---|

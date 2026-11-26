@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-11-19T22:31:52",
+    "date": "2026-11-26T01:00:16",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -32,7 +32,123 @@
     "kicad_version": "10.0.8",
     "schematic_parity": [],
     "source": "u1-usbc-pd.kicad_pcb",
-    "unconnected_items": [],
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 2 [GND] of R1 on F.Cu",
+                    "pos": {
+                        "x": 46.5,
+                        "y": 50.49
+                    },
+                    "uuid": "fc785698-b69f-448f-a0a5-3cce9b787ccb"
+                },
+                {
+                    "description": "Pad B12 [GND] of J1 on F.Cu",
+                    "pos": {
+                        "x": 52.8,
+                        "y": 52.1225
+                    },
+                    "uuid": "3510ddcb-aadd-4dfa-8ff7-b0c2a7c02343"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad B12 [GND] of J1 on F.Cu",
+                    "pos": {
+                        "x": 52.8,
+                        "y": 52.1225
+                    },
+                    "uuid": "3510ddcb-aadd-4dfa-8ff7-b0c2a7c02343"
+                },
+                {
+                    "description": "Pad B1 [GND] of J1 on F.Cu",
+                    "pos": {
+                        "x": 59.2,
+                        "y": 52.1225
+                    },
+                    "uuid": "59677f6e-40e4-4658-bb55-d4aa1c308412"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad 4 [GND] of J2",
+                    "pos": {
+                        "x": 57.27,
+                        "y": 45.81
+                    },
+                    "uuid": "7ab50799-b104-4466-9b88-694059f475cd"
+                },
+                {
+                    "description": "PTH pad 3 [GND] of J2",
+                    "pos": {
+                        "x": 54.73,
+                        "y": 45.81
+                    },
+                    "uuid": "55f65f78-8285-4dae-b078-4cc4fff01687"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad B1 [GND] of J1 on F.Cu",
+                    "pos": {
+                        "x": 59.2,
+                        "y": 52.1225
+                    },
+                    "uuid": "59677f6e-40e4-4658-bb55-d4aa1c308412"
+                },
+                {
+                    "description": "Pad 2 [GND] of C1 on F.Cu",
+                    "pos": {
+                        "x": 65.5,
+                        "y": 50.52
+                    },
+                    "uuid": "3671bdcf-8ae9-4df1-be06-5c39cedb17c5"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad B1 [GND] of J1 on F.Cu",
+                    "pos": {
+                        "x": 59.2,
+                        "y": 52.1225
+                    },
+                    "uuid": "59677f6e-40e4-4658-bb55-d4aa1c308412"
+                },
+                {
+                    "description": "PTH pad 4 [GND] of J2",
+                    "pos": {
+                        "x": 57.27,
+                        "y": 45.81
+                    },
+                    "uuid": "7ab50799-b104-4466-9b88-694059f475cd"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
     "violations": [
         {
             "description": "Silkscreen clipped by board edge",

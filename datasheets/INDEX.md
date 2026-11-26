@@ -25,7 +25,7 @@
 | nexperia | 74lvc1g08 | `nexperia_74lvc1g08.pdf` | text/nexperia_74lvc1g08.md | Rev. 16.1 — 3 September 2024 | скопирован из присланного пользователем (uploads); присылался пользователем (uploads) |
 | nichicon | uwt | `nichicon_uwt.pdf` | text/nichicon_uwt.md | не указана в листе | перемещён из ShtukaDruka/claude/technologist/datasheets/uwt.pdf; присылался пользователем (uploads) |
 | omron | g6k | `omron_g6k.pdf` | text/omron_g6k.md | не указана в листе | перемещён из ShtukaDruka/claude/technologist/datasheets/g6k.pdf; присылался пользователем (uploads) |
-| (контактор) | CL1115/02 — не гнездо Cliff, к проекту не относится | `other_contactor_cl1115-02.pdf` | — | не указана в листе | скопирован из присланного пользователем (uploads); присылался пользователем (uploads) |
+| (контактор) | CL1115/02 — не гнездо Cliff, к проекту не относится | `other_contactor_cl1115-02.pdf` | text/other_contactor_cl1115-02.md | не указана в листе | скопирован из присланного пользователем (uploads); присылался пользователем (uploads) |
 | panasonic | eee-fk | `panasonic_eee-fk.pdf` | text/panasonic_eee-fk.md | не указана в листе | скопирован из присланного пользователем (uploads); присылался пользователем (uploads) |
 | panasonic | eeh-za | `panasonic_eeh-za.pdf` | text/panasonic_eeh-za.md | не указана в листе | скопирован из присланного пользователем (uploads); присылался пользователем (uploads) |
 | samesky | pj-005b | `samesky_pj-005b.pdf` | text/samesky_pj-005b.md | 05/27/2026 | перемещён из ShtukaDruka/claude/technologist/datasheets/pj005b.pdf; присылался пользователем (uploads) |

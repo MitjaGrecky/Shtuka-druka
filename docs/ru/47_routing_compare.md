@@ -195,4 +195,7 @@ M2 в репозитории без `.kicad_pcb`, пропущена. На W1 0 
 | P4 | 29 мин 26 с | 106 / 30 | 722 | 130 track_width, 4 shorting, 2 crossing, 2 mask_bridge, 1 starved_thermal | 101/24, 779, 0 | 31, 500 via, 14 |
 | R1 | 50 мин 41 с | 229 / 98 | 610 | 199 track_width | 230/107, 579, 10 | - |
 | R2 | 1 ч 4 мин | 278 / 155 | 429 | 199 track_width, 1 starved_thermal | 222/103, 378, 0 | - |
+| M1 | 1 ч 30 мин (таймаут, SES есть) | 205 / 180 | 447 | 148 track_width, 50 hole_clearance, 46 annular_width, 4 clearance, 2 shorting | зависание, нет SES | - |
+| A1 | 1 ч 30 мин (таймаут, SES есть) | 598 / 386 | 689 | 199 track_width, 3 starved_thermal | таймаут, нет SES | - |
+| P2 | 15 мин, ошибка (rc=1), SES нет | - | - | - | таймаут, нет SES | - |
 | PW | пропущена: плата пересобирается (100×80, двусторонняя) | - | - | - | - | - |

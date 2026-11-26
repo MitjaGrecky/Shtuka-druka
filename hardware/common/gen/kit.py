@@ -124,9 +124,9 @@ def lp5864(add, ref, cell, caps, addr=(0, 0), cs_used=18):
 
 
 def rgb(add, ref, sw, cs, **f):
-    """XL-1615RGBC-RF: 2 common anode on an SW line, cathodes 1 R, 3 G, 4 B on the CS triple cs, cs+1, cs+2."""
+    """XL-1615RGBC-RF: 2 common anode on an SW line, cathodes 1 R, 4 G, 3 B (datasheet) on the CS triple cs, cs+1, cs+2."""
     add(ref, "ShtukaDruka:XL-1615RGBC-RF", "XL-1615RGBC-RF", "ShtukaDruka:LED_RGB_XL-1615RGBC_1.6x1.5mm",
-        {"2": sw, "1": cs[0], "3": cs[1], "4": cs[2]}, LCSC="C965840", **f)
+        {"2": sw, "1": cs[0], "4": cs[1], "3": cs[2]}, LCSC="C965840", **f)
 
 
 def ring_matrix(cell, r, i):

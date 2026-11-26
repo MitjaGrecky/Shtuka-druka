@@ -214,7 +214,7 @@ def parts():
             cell, sw, cs = led_matrix(k, i)
             add(f"D{n}", "ShtukaDruka:XL-1615RGBC-RF", "XL-1615RGBC-RF",
                 "ShtukaDruka:LED_RGB_XL-1615RGBC_1.6x1.5mm",
-                {"2": f"{cell}_SW{sw}", "1": f"{cell}_CS{cs}", "3": f"{cell}_CS{cs + 1}", "4": f"{cell}_CS{cs + 2}"},
+                {"2": f"{cell}_SW{sw}", "1": f"{cell}_CS{cs}", "4": f"{cell}_CS{cs + 1}", "3": f"{cell}_CS{cs + 2}"},
                 LCSC="C965840", Ring=str(k + 1), Dot=str(i + 1))
     for h in range(len(HOLES)):
         add(f"H{h + 1}", "Mechanical:MountingHole", "M2", "MountingHole:MountingHole_2.2mm_M2", {})

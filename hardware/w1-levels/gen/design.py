@@ -127,7 +127,7 @@ def parts():
     for n in range(4):                       # D1 = P48 1 left, D2 = P48 1 right, D3, D4 = P48 2
         o = 3 * n
         add(f"D{n + 1}", "ShtukaDruka:XL-1615RGBC-RF", "XL-1615RGBC-RF", "ShtukaDruka:LED_RGB_XL-1615RGBC_1.6x1.5mm",
-            {"2": "+5V", "1": f"OUT{o + 1}", "3": f"OUT{o + 2}", "4": f"OUT{o + 3}"}, LCSC="C965840")
+            {"2": "+5V", "1": f"OUT{o + 1}", "4": f"OUT{o + 2}", "3": f"OUT{o + 3}"}, LCSC="C965840")
     for h in range(6):
         add(f"H{h + 1}", "Mechanical:MountingHole", "M2", "MountingHole:MountingHole_2.2mm_M2", {})
     return P

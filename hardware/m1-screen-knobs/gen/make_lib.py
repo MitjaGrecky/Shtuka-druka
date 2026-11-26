@@ -120,10 +120,10 @@ def stock(lib, name):
 
 # ---------------------------------------------------------------- XL-1615RGBC-RF
 # XINGLIGHT datasheet (LCSC C965840), "Outline Dimension": 1 = R cathode, 2 = common anode,
-# 3 = G cathode, 4 = B cathode. Graphics from Device:LED_ARGB, pins renumbered to the datasheet.
+# 3 = B cathode, 4 = G cathode (3 bottom-right, 4 top-right; fixed 26.11, was 3 G / 4 B). Graphics from Device:LED_ARGB, pins renumbered to the datasheet.
 def xl1615():
     s = stock("Device", "LED_ARGB").replace('"LED_ARGB', '"XL-1615RGBC-RF')
-    renum = {"A": "2", "RK": "1", "GK": "3", "BK": "4"}
+    renum = {"A": "2", "RK": "1", "GK": "4", "BK": "3"}
     def fix(m):
         return f'(name "{m.group(1)}"{m.group(2)}(number "{renum[m.group(1)]}"'
     s = re.sub(r'\(name "(A|RK|GK|BK)"(.*?)\(number "\d"', fix, s, flags=re.S)
@@ -131,7 +131,7 @@ def xl1615():
     s = re.sub(r'\(property "Footprint" "[^"]*"', '(property "Footprint" "ShtukaDruka:LED_RGB_XL-1615RGBC_1.6x1.5mm"', s)
     s = re.sub(r'\(property "Datasheet" "[^"]*"', '(property "Datasheet" "https://www.lcsc.com/datasheet/C965840.pdf"', s)
     s = s.replace('(property "ki_description" "RGB LED, anode/red/green/blue"',
-                  '(property "ki_description" "RGB LED 1.6x1.5 mm, common anode; pins 1 R, 2 A, 3 G, 4 B"')
+                  '(property "ki_description" "RGB LED 1.6x1.5 mm, common anode; pins 1 R, 2 A, 3 B, 4 G"')
     s = s.replace("    (symbol \"XL-1615RGBC-RF_0_0\"", "    (symbol \"XL-1615RGBC-RF_0_0\"")
     s = s.replace('    (property "ki_fp_filters"', '    (property "LCSC" "C965840" (at 0 0 0)\n      ' + FH + '\n    )\n    (property "ki_fp_filters"', 1)
     return s
@@ -217,12 +217,12 @@ def smd_pad(num, x, y, w, h, angle=0, shape="roundrect", layers='"F.Cu" "F.Paste
 
 def led1615():
     # Datasheet "Recommended Soldering Pattern": pads 0.45 x 0.65, gaps 0.8 (x) and 0.3 (y),
-    # centre pitch 1.25 x 0.95. Top view: 1 top-left, 2 bottom-left (anode, mark), 3 top-right, 4 bottom-right.
+    # centre pitch 1.25 x 0.95. Top view: 1 top-left (R), 2 bottom-left (anode, mark), 4 top-right (G), 3 bottom-right (B).
     n = "LED_RGB_XL-1615RGBC_1.6x1.5mm"
     s = fp_head(n, "RGB LED 1.6x1.5 mm common anode, XINGLIGHT XL-1615RGBC-RF (LCSC C965840), land pattern from the datasheet",
                 "LED RGB 1615")
     s += fp_text("reference", "REF**", 0, -1.6, "F.SilkS", 0.6) + fp_text("value", n, 0, 1.6, "F.Fab", 0.4)
-    for num, x, y in (("1", -0.625, -0.475), ("2", -0.625, 0.475), ("3", 0.625, -0.475), ("4", 0.625, 0.475)):
+    for num, x, y in (("1", -0.625, -0.475), ("2", -0.625, 0.475), ("4", 0.625, -0.475), ("3", 0.625, 0.475)):
         s += smd_pad(num, x, y, 0.45, 0.65)
     s += fp_rect(-0.8, -0.75, 0.8, 0.75, "F.Fab", 0.1)
     s += fp_line(-1.15, 0.2, -1.15, 0.75, "F.SilkS", 0.12)     # anode (pin 2) side mark

@@ -11,5 +11,7 @@ One long board, **398 x 28 mm, 2 layers, 2 oz copper, 70 parts, 58 nets**, along
 | 4 NTC sockets | JST GH-class 1.25 mm latching, 2 pins (BM02B-GHS-TBT footprint; series by the technologist), 103AT 10k | J9 chip A, J10 chip B (TS), J11, J12 for the chargers of PW (separate thermistors) |
 | 8 mounting holes | M3 | assumed: ends and ribs (x 4, 132, 266, 394, on the ribs); the csv has no holes |
 
+**Order requirement: 2 oz copper (70 um) on both layers is mandatory** (state it in the fab order; 1 oz is not acceptable). Power tracks >= 3 mm, 8 A per cell/pack path.
+
 8 A (1C of an 8 Ah cell): tracks on 2 oz copper **>= 3 mm** (IPC-2152) at routing; the 4 nets of each pack and PACK_N run the length of the board, use both layers.
 Open: the 4th NTC (the order said 3), holes with the designer, GH or ZH series (technologist), routing. License: CERN-OHL-S-2.0, AGPL-3.0-or-later.

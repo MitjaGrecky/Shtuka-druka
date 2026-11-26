@@ -196,7 +196,7 @@ def w1_parts():
     # M5 Gain module in the window, in the plane of the encoder modules (6.5 mm under the skin), estimate
     gs = W1.s_of(W1.GAIN[0][2])
     out.append(slope_box("M5 module board", "slope", bx(W1.M5_X[0]), bx(W1.M5_X[1]), gs - 17, gs + 17, WZ0, WZ1,
-                         color="pcb", est=True, note="Gain 1 + 2, not designed yet; outline assumed in doc 31"))
+                         color="pcb", note="Gain 1 + 2, rev 0.2: 84 x 34 mm as hardware/m5-gain (W1 board x M5_X 5-89 = panel x 15-99)"))
     for nm, px, _ in W1.GAIN:
         out.append(slope_box(f"M5 {nm} encoder", "slope", px - 6.2, px + 6.2, gs - 6.7, gs + 6.7, WZ1, -SKIN,
                              color="metal", note="Alps EC11E body"))
@@ -492,7 +492,7 @@ def parts(usb=None):
     # under the slope and the rear wall (doc 27 section 6, doc 29)
     # 15.11.2026: real outlines of the placed boards (A1 rev 0.4 220 x 100, PW rev 0.6 100 x 80, R1 rev 0.5 238 x 96, R2 rev 0.6 L-shape
     # 175 x 103); before they were the early estimates 140 x 90, 60 x 50, 238 x 104 and 258 x 104. Rear boards: model x = 515 - rear x.
-    a(box("A1 audio board", "rear", A1_X0, A1_X0 + 220, A1_Y0, A1_Y0 + 100, A1_Z0, A1_Z0 + 22, color="pcb", note="220 x 100, rev 0.4; position not fixed"))
+    a(box("A1 audio board", "rear", A1_X0, A1_X0 + 220, A1_Y0, A1_Y0 + 100, A1_Z0, A1_Z0 + 22, color="pcb", note="220 x 100 (hardware/a1-digital, rev 0.6); on the floor on standoffs under the screen (R174/R179)"))
     if COMPUTER in ("H5REAR", "H5TILT"):
         # 16.11.2026, the user's idea: the H5 where the battery bay was (rear right, under the slope), lying flat; the battery
         # goes under the grid where the H5 used to be; PW moves 15 mm left to clear it.

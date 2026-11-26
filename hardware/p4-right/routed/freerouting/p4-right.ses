@@ -1,5 +1,5 @@
-(session p4ng
-  (base_design p4ng)
+(session bng
+  (base_design bng)
   (placement
     (resolution um 10)
     (component "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A"

@@ -38,15 +38,9 @@ def battery_parts(m):
 
 
 def vents_and_feet(m):
-    """R185 (user): holes through the case walls are removed; only slots in the hatch under the batteries stay.
-    12 slots 4 x 40 mm per compartment (2 columns x 6 rows, pitch 34 mm), about 19 cm2 per pack. No wall slots, no feet."""
+    """Vents and feet: R196 side grooves, fan exhaust, front intake line, P144 battery hatches, P145 lid slots, R187 feet.
+    2026-11-26 (user): the old R185 floor slots under the old battery packs are removed; battery air goes through the P145 lid slots."""
     out = []
-    for k, x0 in enumerate((113.0, 225.0)):
-        for cx in (x0 + 26.0, x0 + 80.0):
-            for r in range(6):
-                y0 = 20.0 + r * 34.0
-                if y0 < 156.0: continue                       # P144: rows under the battery hatches (y < 156) are replaced by the hatches
-                out.append(m.box(f"Hatch vent slot {k + 1}.{int(cx)}.{r}", "vents", cx - 2, cx + 2, y0, y0 + 40, -0.4, 0.0, color="grey", est=True, check=False))
     # R196 rev 3.1 (user): vertical grooves 2 mm, pitch 5, on BOTH side walls (x 0-3 and 512-515), blind depth 1.2 mm,
     # down to the bottom edge z 0; 15 grooves on the right wall go through over the fan (R195/P115). Source: docs/ru/img/41_sides_r196.csv
     import csv

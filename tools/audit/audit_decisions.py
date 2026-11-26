@@ -36,7 +36,7 @@ def parse_blocks():
     """Возвращает список записей: dict(id, kind, num, file, line, section, text)."""
     rows = []
     for name in sorted(os.listdir(DEC)):
-        if not name.endswith(".md") or name in ("README.md",):
+        if not name.endswith(".md") or name in ("README.md", "98_quotes.md"):
             continue
         section = ""
         for i, line in enumerate(read(os.path.join(DEC, name)).split("\n"), 1):
@@ -107,9 +107,10 @@ def run(findings, rows):
                 F(("WARN", "J3 ссылка на несуществующий R", f"{r['id']} ({r['file']}:{r['line']}) ссылается на R{n}"))
 
     # 4. Живое R без цитаты пользователя (свежие R >= 150 — WARN, старые — одной строкой INFO)
+    quoted = set(re.findall(r"^\| (R\d+) \|", read(os.path.join(DEC, "98_quotes.md")), re.M))
     old_no_quote = []
     for r in rows:
-        if r["kind"] == "R" and section_kind(r["section"]) == "active" and not QUOTE.search(r["text"]):
+        if r["kind"] == "R" and section_kind(r["section"]) == "active" and r["id"] not in quoted and not QUOTE.search(r["text"]):
             if "предварительно" in r["text"].lower() or "пока" in r["text"].lower() or "нженерн" in r["text"]:
                 continue
             if r["num"] >= 150:

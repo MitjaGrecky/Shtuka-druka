@@ -1,0 +1,2470 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-11-26T13:56:35",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.8",
+    "schematic_parity": [],
+    "source": "m5-gain.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad MP [GND] of ENC1",
+                    "pos": {
+                        "x": 57.0,
+                        "y": 51.4
+                    },
+                    "uuid": "9a5a9894-236b-489d-8821-3ff49b424c94"
+                },
+                {
+                    "description": "PTH pad C [GND] of ENC1",
+                    "pos": {
+                        "x": 49.5,
+                        "y": 57.0
+                    },
+                    "uuid": "c04e19d0-4f18-4d98-99b8-63d7e8d24679"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad S2 [GND] of ENC1",
+                    "pos": {
+                        "x": 64.0,
+                        "y": 54.5
+                    },
+                    "uuid": "ed3bbeee-da5a-4fac-b831-42c99adb6b07"
+                },
+                {
+                    "description": "PTH pad MP [GND] of ENC1",
+                    "pos": {
+                        "x": 57.0,
+                        "y": 51.4
+                    },
+                    "uuid": "9a5a9894-236b-489d-8821-3ff49b424c94"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 2 [GND] of C1 on B.Cu",
+                    "pos": {
+                        "x": 74.5,
+                        "y": 71.95
+                    },
+                    "uuid": "4171fa12-e968-40ad-97ac-d2aac0254da0"
+                },
+                {
+                    "description": "PTH pad 4 [GND] of J1",
+                    "pos": {
+                        "x": 78.46,
+                        "y": 71.635
+                    },
+                    "uuid": "22c711f4-cf30-499d-bed9-0567e3f4b08b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad 3 [GND] of J1",
+                    "pos": {
+                        "x": 78.46,
+                        "y": 70.365
+                    },
+                    "uuid": "689c4726-1099-48fb-aabe-42ce17d3885f"
+                },
+                {
+                    "description": "PTH pad 4 [GND] of J1",
+                    "pos": {
+                        "x": 78.46,
+                        "y": 71.635
+                    },
+                    "uuid": "22c711f4-cf30-499d-bed9-0567e3f4b08b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad 3 [GND] of J1",
+                    "pos": {
+                        "x": 78.46,
+                        "y": 70.365
+                    },
+                    "uuid": "689c4726-1099-48fb-aabe-42ce17d3885f"
+                },
+                {
+                    "description": "Pad 15 [GND] of U2 on B.Cu",
+                    "pos": {
+                        "x": 79.375,
+                        "y": 62.3625
+                    },
+                    "uuid": "27e7cbcf-4ab5-40b5-a809-fb6f6815b8fe"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad 4 [GND] of J1",
+                    "pos": {
+                        "x": 78.46,
+                        "y": 71.635
+                    },
+                    "uuid": "22c711f4-cf30-499d-bed9-0567e3f4b08b"
+                },
+                {
+                    "description": "PTH pad 6 [GND] of J1",
+                    "pos": {
+                        "x": 79.73,
+                        "y": 71.635
+                    },
+                    "uuid": "b6383613-230d-4c21-9647-787251da324f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad 6 [GND] of J1",
+                    "pos": {
+                        "x": 79.73,
+                        "y": 71.635
+                    },
+                    "uuid": "b6383613-230d-4c21-9647-787251da324f"
+                },
+                {
+                    "description": "PTH pad 10 [GND] of J1",
+                    "pos": {
+                        "x": 82.27,
+                        "y": 71.635
+                    },
+                    "uuid": "56cab096-6698-4580-a756-fe896f00fa91"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 31 [GND] of U1 on B.Cu",
+                    "pos": {
+                        "x": 80.0,
+                        "y": 51.425
+                    },
+                    "uuid": "61a3c9b3-1bb6-4ff0-99b1-57e54cf15744"
+                },
+                {
+                    "description": "Pad 30 [GND] of U1 on B.Cu",
+                    "pos": {
+                        "x": 80.4,
+                        "y": 51.425
+                    },
+                    "uuid": "918e9282-e06b-473a-acda-5baac5eb9be8"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 31 [GND] of U1 on B.Cu",
+                    "pos": {
+                        "x": 80.0,
+                        "y": 51.425
+                    },
+                    "uuid": "61a3c9b3-1bb6-4ff0-99b1-57e54cf15744"
+                },
+                {
+                    "description": "PTH pad S2 [GND] of ENC1",
+                    "pos": {
+                        "x": 64.0,
+                        "y": 54.5
+                    },
+                    "uuid": "ed3bbeee-da5a-4fac-b831-42c99adb6b07"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 30 [GND] of U1 on B.Cu",
+                    "pos": {
+                        "x": 80.4,
+                        "y": 51.425
+                    },
+                    "uuid": "918e9282-e06b-473a-acda-5baac5eb9be8"
+                },
+                {
+                    "description": "PTH pad 33 [GND] of U1",
+                    "pos": {
+                        "x": 81.0,
+                        "y": 50.3
+                    },
+                    "uuid": "99b9f487-1369-4e56-a3e4-1035c368a048"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 27 [GND] of U1 on B.Cu",
+                    "pos": {
+                        "x": 81.6,
+                        "y": 51.425
+                    },
+                    "uuid": "7cddb022-2ea4-4e61-bc83-724c8f0b2290"
+                },
+                {
+                    "description": "Pad 30 [GND] of U1 on B.Cu",
+                    "pos": {
+                        "x": 80.4,
+                        "y": 51.425
+                    },
+                    "uuid": "918e9282-e06b-473a-acda-5baac5eb9be8"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 26 [GND] of U1 on B.Cu",
+                    "pos": {
+                        "x": 82.0,
+                        "y": 51.425
+                    },
+                    "uuid": "cf3f126e-82ea-420a-95fe-c56f0b79c9ee"
+                },
+                {
+                    "description": "Pad 27 [GND] of U1 on B.Cu",
+                    "pos": {
+                        "x": 81.6,
+                        "y": 51.425
+                    },
+                    "uuid": "7cddb022-2ea4-4e61-bc83-724c8f0b2290"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad 10 [GND] of J1",
+                    "pos": {
+                        "x": 82.27,
+                        "y": 71.635
+                    },
+                    "uuid": "56cab096-6698-4580-a756-fe896f00fa91"
+                },
+                {
+                    "description": "Pad 2 [GND] of C2 on B.Cu",
+                    "pos": {
+                        "x": 87.5,
+                        "y": 71.48
+                    },
+                    "uuid": "56087277-d004-40cd-98df-c50eebff6bf5"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 8 [GND] of U2 on B.Cu",
+                    "pos": {
+                        "x": 83.275,
+                        "y": 56.6375
+                    },
+                    "uuid": "4dbd0774-05c8-4982-805f-4dd5b07f29c3"
+                },
+                {
+                    "description": "Pad 2 [GND] of C7 on B.Cu",
+                    "pos": {
+                        "x": 86.0,
+                        "y": 58.98
+                    },
+                    "uuid": "5c7b4979-568d-4c51-8984-188f0a7c6eac"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 8 [GND] of U2 on B.Cu",
+                    "pos": {
+                        "x": 83.275,
+                        "y": 56.6375
+                    },
+                    "uuid": "4dbd0774-05c8-4982-805f-4dd5b07f29c3"
+                },
+                {
+                    "description": "Pad 15 [GND] of U2 on B.Cu",
+                    "pos": {
+                        "x": 79.375,
+                        "y": 62.3625
+                    },
+                    "uuid": "27e7cbcf-4ab5-40b5-a809-fb6f6815b8fe"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 2 [GND] of C5 on B.Cu",
+                    "pos": {
+                        "x": 85.98,
+                        "y": 50.5
+                    },
+                    "uuid": "d5279d0d-83cc-407c-9b1a-4fa7544463d3"
+                },
+                {
+                    "description": "Pad 2 [GND] of C6 on B.Cu",
+                    "pos": {
+                        "x": 85.98,
+                        "y": 52.5
+                    },
+                    "uuid": "8d9c4e1e-a752-47d8-b6f4-fb9c4595fe21"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 2 [GND] of C5 on B.Cu",
+                    "pos": {
+                        "x": 85.98,
+                        "y": 50.5
+                    },
+                    "uuid": "d5279d0d-83cc-407c-9b1a-4fa7544463d3"
+                },
+                {
+                    "description": "Pad 26 [GND] of U1 on B.Cu",
+                    "pos": {
+                        "x": 82.0,
+                        "y": 51.425
+                    },
+                    "uuid": "cf3f126e-82ea-420a-95fe-c56f0b79c9ee"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 2 [GND] of C6 on B.Cu",
+                    "pos": {
+                        "x": 85.98,
+                        "y": 52.5
+                    },
+                    "uuid": "8d9c4e1e-a752-47d8-b6f4-fb9c4595fe21"
+                },
+                {
+                    "description": "Pad 8 [GND] of U2 on B.Cu",
+                    "pos": {
+                        "x": 83.275,
+                        "y": 56.6375
+                    },
+                    "uuid": "4dbd0774-05c8-4982-805f-4dd5b07f29c3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 2 [GND] of C7 on B.Cu",
+                    "pos": {
+                        "x": 86.0,
+                        "y": 58.98
+                    },
+                    "uuid": "5c7b4979-568d-4c51-8984-188f0a7c6eac"
+                },
+                {
+                    "description": "PTH pad C [GND] of ENC2",
+                    "pos": {
+                        "x": 97.5,
+                        "y": 57.0
+                    },
+                    "uuid": "019623c2-d0d3-4229-842b-f0c73df534f3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 2 [GND] of C4 on B.Cu",
+                    "pos": {
+                        "x": 86.45,
+                        "y": 48.5
+                    },
+                    "uuid": "d9b36a05-5273-4c43-9aad-2f61fce37be5"
+                },
+                {
+                    "description": "Pad 2 [GND] of C3 on B.Cu",
+                    "pos": {
+                        "x": 85.98,
+                        "y": 46.5
+                    },
+                    "uuid": "207b8231-4c0c-4584-b593-ad0c19f6b17a"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 2 [GND] of C4 on B.Cu",
+                    "pos": {
+                        "x": 86.45,
+                        "y": 48.5
+                    },
+                    "uuid": "d9b36a05-5273-4c43-9aad-2f61fce37be5"
+                },
+                {
+                    "description": "Pad 2 [GND] of C5 on B.Cu",
+                    "pos": {
+                        "x": 85.98,
+                        "y": 50.5
+                    },
+                    "uuid": "d5279d0d-83cc-407c-9b1a-4fa7544463d3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad MP [GND] of ENC2",
+                    "pos": {
+                        "x": 105.0,
+                        "y": 51.4
+                    },
+                    "uuid": "0073b9cc-ae9c-4c7e-b5f3-27099aed0720"
+                },
+                {
+                    "description": "PTH pad C [GND] of ENC2",
+                    "pos": {
+                        "x": 97.5,
+                        "y": 57.0
+                    },
+                    "uuid": "019623c2-d0d3-4229-842b-f0c73df534f3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "PTH pad S2 [GND] of ENC2",
+                    "pos": {
+                        "x": 112.0,
+                        "y": 54.5
+                    },
+                    "uuid": "b51e0bda-f238-4cea-8064-3453b53eee8d"
+                },
+                {
+                    "description": "PTH pad MP [GND] of ENC2",
+                    "pos": {
+                        "x": 105.0,
+                        "y": 51.4
+                    },
+                    "uuid": "0073b9cc-ae9c-4c7e-b5f3-27099aed0720"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 22 [/A_CS15] of U1 on B.Cu",
+                    "pos": {
+                        "x": 82.925,
+                        "y": 50.1
+                    },
+                    "uuid": "480dd198-e7f3-4415-9675-a3f6da254659"
+                },
+                {
+                    "description": "Track [/A_CS15] on F.Cu, length 3.3435 mm",
+                    "pos": {
+                        "x": 76.2452,
+                        "y": 50.2429
+                    },
+                    "uuid": "6baccb36-ab47-4863-b834-154044f4395e"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 13 [/A_SW2] of U1 on B.Cu",
+                    "pos": {
+                        "x": 81.2,
+                        "y": 47.575
+                    },
+                    "uuid": "3cea291b-b089-43db-ac5d-bb0235a37d57"
+                },
+                {
+                    "description": "Track [/A_SW2] on F.Cu, length 4.4247 mm",
+                    "pos": {
+                        "x": 93.4753,
+                        "y": 57.4878
+                    },
+                    "uuid": "905ec20e-df82-4caf-ac82-21ea76e69c59"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [/A_CS11] on F.Cu, length 1.2446 mm",
+                    "pos": {
+                        "x": 49.4161,
+                        "y": 52.0057
+                    },
+                    "uuid": "827e0d40-9197-4e4f-9d4f-f20f392fb14b"
+                },
+                {
+                    "description": "Pad 18 [/A_CS11] of U1 on B.Cu",
+                    "pos": {
+                        "x": 82.925,
+                        "y": 48.5
+                    },
+                    "uuid": "acae763e-ca7a-4128-a02a-a432319e70c6"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [/A_SW1] on B.Cu, length 1.7981 mm",
+                    "pos": {
+                        "x": 67.4184,
+                        "y": 60.8047
+                    },
+                    "uuid": "60221626-cbbc-462d-914f-fe2e0ff0f8fe"
+                },
+                {
+                    "description": "Pad 12 [/A_SW1] of U1 on B.Cu",
+                    "pos": {
+                        "x": 80.8,
+                        "y": 47.575
+                    },
+                    "uuid": "9969078e-5615-4128-b7f9-7b3d599cad5c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [/A_CS4] on F.Cu, length 1.7276 mm",
+                    "pos": {
+                        "x": 100.5743,
+                        "y": 46.9374
+                    },
+                    "uuid": "479f52af-5081-4961-90bc-0f031cbbbba7"
+                },
+                {
+                    "description": "Pad 6 [/A_CS4] of U1 on B.Cu",
+                    "pos": {
+                        "x": 79.075,
+                        "y": 48.9
+                    },
+                    "uuid": "c78f15fd-4492-46ac-a1bb-8a4953b7927d"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [/A_CS12] on F.Cu, length 1.3477 mm",
+                    "pos": {
+                        "x": 64.1639,
+                        "y": 50.0435
+                    },
+                    "uuid": "b6fae1db-4f42-4642-bcc3-6c98c23e2660"
+                },
+                {
+                    "description": "Pad 19 [/A_CS12] of U1 on B.Cu",
+                    "pos": {
+                        "x": 82.925,
+                        "y": 48.9
+                    },
+                    "uuid": "05bdc03f-cfc7-4ca9-83e3-aaf592491661"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 9 [/A_CS7] of U1 on B.Cu",
+                    "pos": {
+                        "x": 79.6,
+                        "y": 47.575
+                    },
+                    "uuid": "9870e5ef-aa60-4584-a282-614102195f1b"
+                },
+                {
+                    "description": "Track [/A_CS7] on F.Cu, length 1.2949 mm",
+                    "pos": {
+                        "x": 112.3185,
+                        "y": 65.2024
+                    },
+                    "uuid": "f73ffc69-e068-4553-8d2f-3078e38f548b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [/A_CS0] of D14 on F.Cu",
+                    "pos": {
+                        "x": 94.062348,
+                        "y": 55.900437
+                    },
+                    "uuid": "96622bf0-58ba-48e5-bf18-b28f68c1454d"
+                },
+                {
+                    "description": "Pad 2 [/A_CS0] of U1 on B.Cu",
+                    "pos": {
+                        "x": 79.075,
+                        "y": 50.5
+                    },
+                    "uuid": "8093f0af-4630-41fc-b90a-a2f8051dadf6"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [/A_CS0] of D13 on F.Cu",
+                    "pos": {
+                        "x": 94.75529,
+                        "y": 60.985871
+                    },
+                    "uuid": "006013e6-74a2-4476-a62b-c3e2cd87a766"
+                },
+                {
+                    "description": "Pad 1 [/A_CS0] of D14 on F.Cu",
+                    "pos": {
+                        "x": 94.062348,
+                        "y": 55.900437
+                    },
+                    "uuid": "96622bf0-58ba-48e5-bf18-b28f68c1454d"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [/A_CS0] of D15 on F.Cu",
+                    "pos": {
+                        "x": 95.753672,
+                        "y": 51.054692
+                    },
+                    "uuid": "1aa23c55-b0e9-48e8-9e85-3688733c860c"
+                },
+                {
+                    "description": "Pad 1 [/A_CS0] of D14 on F.Cu",
+                    "pos": {
+                        "x": 94.062348,
+                        "y": 55.900437
+                    },
+                    "uuid": "96622bf0-58ba-48e5-bf18-b28f68c1454d"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pad 1 [/A_CS0] of D12 on F.Cu",
+                    "pos": {
+                        "x": 97.681444,
+                        "y": 65.202438
+                    },
+                    "uuid": "064528c7-7832-45d8-9ad1-9397747e4e98"
+                },
+                {
+                    "description": "Pad 1 [/A_CS0] of D13 on F.Cu",
+                    "pos": {
+                        "x": 94.75529,
+                        "y": 60.985871
+                    },
+                    "uuid": "006013e6-74a2-4476-a62b-c3e2cd87a766"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [/A_CS1] on F.Cu, length 2.9345 mm",
+                    "pos": {
+                        "x": 94.2579,
+                        "y": 54.6658
+                    },
+                    "uuid": "a884ff14-e89b-4564-baaf-74f604730f59"
+                },
+                {
+                    "description": "Pad 3 [/A_CS1] of U1 on B.Cu",
+                    "pos": {
+                        "x": 79.075,
+                        "y": 50.1
+                    },
+                    "uuid": "804c06a6-78be-4e8d-8e5c-93f5efd44743"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/E0_B] on B.Cu, length 0.1327 mm",
+                    "pos": {
+                        "x": 75.7374,
+                        "y": 57.2502
+                    },
+                    "uuid": "01d1c9cf-a621-47aa-9ff3-d14f8fbb6961"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/E0_B] on B.Cu, length 0.2124 mm",
+                    "pos": {
+                        "x": 75.7374,
+                        "y": 57.4626
+                    },
+                    "uuid": "e92bc1e2-bad7-438e-9faa-0a1924b32a52"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/E0_SW] on B.Cu, length 0.2124 mm",
+                    "pos": {
+                        "x": 76.2001,
+                        "y": 57.4499
+                    },
+                    "uuid": "664c6822-91d8-4871-9223-795a1a697b65"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/E0_SW] on B.Cu, length 0.1236 mm",
+                    "pos": {
+                        "x": 76.2001,
+                        "y": 57.2375
+                    },
+                    "uuid": "fd5df88b-e7df-4ae3-9079-16f7ae5b4696"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS16] on F.Cu, length 2.1917 mm",
+                    "pos": {
+                        "x": 67.3193,
+                        "y": 57.6658
+                    },
+                    "uuid": "2d443b74-c9a3-4eb6-960c-0ca879778003"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS9] on B.Cu, length 1.4821 mm",
+                    "pos": {
+                        "x": 48.3452,
+                        "y": 61.0987
+                    },
+                    "uuid": "27e79502-f453-4550-845c-64a885b2c6e9"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS11] on B.Cu, length 0.0779 mm",
+                    "pos": {
+                        "x": 47.776,
+                        "y": 59.3632
+                    },
+                    "uuid": "bafd19c2-996f-4dcc-8e61-c6294c4729d0"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS11] on B.Cu, length 0.2124 mm",
+                    "pos": {
+                        "x": 48.9989,
+                        "y": 60.7985
+                    },
+                    "uuid": "f028ac2b-7fe5-41a3-9da8-22e955192f7a"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS10] on F.Cu, length 0.7140 mm",
+                    "pos": {
+                        "x": 48.479,
+                        "y": 63.9998
+                    },
+                    "uuid": "06734aef-7d5a-4c6b-a047-fffbd9785e4d"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS10] on F.Cu, length 0.3290 mm",
+                    "pos": {
+                        "x": 48.9839,
+                        "y": 63.4949
+                    },
+                    "uuid": "ffe52567-f281-4294-99cf-700cb9565455"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS3] on F.Cu, length 0.1488 mm",
+                    "pos": {
+                        "x": 109.5288,
+                        "y": 47.7932
+                    },
+                    "uuid": "635d592e-aa48-4bb0-83a7-2e7b0b1b6b16"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS3] on F.Cu, length 0.0705 mm",
+                    "pos": {
+                        "x": 109.1579,
+                        "y": 47.1347
+                    },
+                    "uuid": "9264cc68-85ca-41b4-9f7c-9febd21a488e"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS3] on F.Cu, length 0.1238 mm",
+                    "pos": {
+                        "x": 109.1579,
+                        "y": 47.1349
+                    },
+                    "uuid": "980c01de-0e39-4c71-8073-e7e3d4f23351"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS3] on F.Cu, length 0.3134 mm",
+                    "pos": {
+                        "x": 109.2817,
+                        "y": 47.1349
+                    },
+                    "uuid": "a1135a9b-8384-4b60-b539-98ebf5aa78cf"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS3] on F.Cu, length 0.3493 mm",
+                    "pos": {
+                        "x": 109.5288,
+                        "y": 47.4439
+                    },
+                    "uuid": "a3bb7739-e38b-46c9-8287-dce5956fb8fa"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS3] on F.Cu, length 0.2790 mm",
+                    "pos": {
+                        "x": 109.2284,
+                        "y": 47.1347
+                    },
+                    "uuid": "c47249b4-deb0-43e7-8b9d-f7190a6aacfd"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS5] on F.Cu, length 0.4413 mm",
+                    "pos": {
+                        "x": 110.005,
+                        "y": 47.9046
+                    },
+                    "uuid": "37df8c57-d3bf-496b-b897-9704b83a5478"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS5] on F.Cu, length 0.1424 mm",
+                    "pos": {
+                        "x": 109.9601,
+                        "y": 47.073
+                    },
+                    "uuid": "41a593d9-fb96-4822-8399-2e0951eb0b78"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS5] on F.Cu, length 0.2894 mm",
+                    "pos": {
+                        "x": 109.9601,
+                        "y": 47.3624
+                    },
+                    "uuid": "62361762-3e30-4c81-82bb-9837be2d226f"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS5] on F.Cu, length 0.1031 mm",
+                    "pos": {
+                        "x": 110.005,
+                        "y": 47.4633
+                    },
+                    "uuid": "f53fd1d0-ab18-4b25-8fb4-29ebbc25d8a0"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS12] on F.Cu, length 0.3493 mm",
+                    "pos": {
+                        "x": 61.5288,
+                        "y": 47.4439
+                    },
+                    "uuid": "a328f678-ca3b-4bf9-a359-3eebb5fc0047"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS12] on F.Cu, length 0.1488 mm",
+                    "pos": {
+                        "x": 61.5288,
+                        "y": 47.7932
+                    },
+                    "uuid": "aaa6678b-d315-4bfd-a75b-f867c8031efc"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS14] on F.Cu, length 0.2000 mm",
+                    "pos": {
+                        "x": 61.9342,
+                        "y": 47.7123
+                    },
+                    "uuid": "8788be8f-adaf-4415-99d9-eeb83be9fc3f"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS14] on F.Cu, length 0.0930 mm",
+                    "pos": {
+                        "x": 62.0756,
+                        "y": 47.8537
+                    },
+                    "uuid": "abbcc526-a67e-4895-a5d1-68e5ae81a24f"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS14] on F.Cu, length 0.3733 mm",
+                    "pos": {
+                        "x": 62.005,
+                        "y": 47.1554
+                    },
+                    "uuid": "c78471c3-ee3a-4253-99bc-308d9decfb64"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS14] on F.Cu, length 0.1360 mm",
+                    "pos": {
+                        "x": 62.005,
+                        "y": 47.5287
+                    },
+                    "uuid": "e78598f0-77e2-433e-b96b-b8703d17a1ff"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS14] on B.Cu, length 0.3549 mm",
+                    "pos": {
+                        "x": 64.8703,
+                        "y": 53.6375
+                    },
+                    "uuid": "a7a6331a-baca-4e62-be09-a5ebce9b2983"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS14] on B.Cu, length 1.6180 mm",
+                    "pos": {
+                        "x": 63.7262,
+                        "y": 52.4934
+                    },
+                    "uuid": "e8071005-b44b-467d-a2af-cfbbab0e6a7c"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS13] on F.Cu, length 0.4248 mm",
+                    "pos": {
+                        "x": 81.2334,
+                        "y": 48.1026
+                    },
+                    "uuid": "64a01319-cdf0-4885-a5a0-f12721cb4e26"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS13] on F.Cu, length 0.6412 mm",
+                    "pos": {
+                        "x": 81.5338,
+                        "y": 48.403
+                    },
+                    "uuid": "c54f34e3-a22d-4a73-a5ed-597455abc6c8"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS13] on B.Cu, length 0.1055 mm",
+                    "pos": {
+                        "x": 82.9996,
+                        "y": 49.3746
+                    },
+                    "uuid": "08c44e47-aed1-440d-b894-e68d319ad5f5"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS13] on B.Cu, length 0.4555 mm",
+                    "pos": {
+                        "x": 83.4551,
+                        "y": 49.3746
+                    },
+                    "uuid": "f1bd00e6-b6fe-4123-8d91-306b06f51edd"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/E1_B] on B.Cu, length 1.1319 mm",
+                    "pos": {
+                        "x": 77.2374,
+                        "y": 60.5697
+                    },
+                    "uuid": "95546330-a8bc-4160-99dc-938beb921639"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/E1_B] on B.Cu, length 0.2124 mm",
+                    "pos": {
+                        "x": 77.2374,
+                        "y": 60.3573
+                    },
+                    "uuid": "d41faeea-b72e-423a-86de-e2bbb2858c06"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.0900 mm)",
+            "items": [
+                {
+                    "description": "Track [/E1_SW] on B.Cu, length 0.1780 mm",
+                    "pos": {
+                        "x": 75.775,
+                        "y": 60.825
+                    },
+                    "uuid": "41686c5e-bb8a-4aa8-ae76-19cb42fcff3a"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.0900 mm)",
+            "items": [
+                {
+                    "description": "Track [/E1_SW] on B.Cu, length 0.0258 mm",
+                    "pos": {
+                        "x": 75.9009,
+                        "y": 60.9509
+                    },
+                    "uuid": "4b868d05-21b5-4128-9c0e-9c1598be1825"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS6] on F.Cu, length 0.0585 mm",
+                    "pos": {
+                        "x": 115.1191,
+                        "y": 59.9296
+                    },
+                    "uuid": "3036c530-ea25-4e29-a72e-fa1d3bbc6e69"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS6] on F.Cu, length 0.3741 mm",
+                    "pos": {
+                        "x": 114.8546,
+                        "y": 60.1941
+                    },
+                    "uuid": "e09a6fe7-6598-4eb0-aff2-89a1b0fe8d87"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS8] on F.Cu, length 0.2072 mm",
+                    "pos": {
+                        "x": 115.1132,
+                        "y": 60.477
+                    },
+                    "uuid": "010f9075-9cb7-4ebf-896f-315a58e133a9"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS8] on F.Cu, length 3.6246 mm",
+                    "pos": {
+                        "x": 119.1482,
+                        "y": 52.1534
+                    },
+                    "uuid": "0b13d657-d43e-4624-98e3-aaece95946e8"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS8] on F.Cu, length 0.2102 mm",
+                    "pos": {
+                        "x": 115.9094,
+                        "y": 55.1469
+                    },
+                    "uuid": "12c8989e-591d-4cbf-816c-83720c84d06d"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS8] on F.Cu, length 0.1121 mm",
+                    "pos": {
+                        "x": 121.7112,
+                        "y": 49.5904
+                    },
+                    "uuid": "1c981cef-b0db-45de-9735-3a914d17189d"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS8] on F.Cu, length 0.2458 mm",
+                    "pos": {
+                        "x": 115.5267,
+                        "y": 60.512
+                    },
+                    "uuid": "58f70ea5-029c-4e7a-87b3-5b4d9194a8cd"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS8] on F.Cu, length 4.0206 mm",
+                    "pos": {
+                        "x": 116.3049,
+                        "y": 54.9967
+                    },
+                    "uuid": "6d56b70b-5dd1-41f6-a7bc-167395a61c16"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS8] on F.Cu, length 0.0003 mm",
+                    "pos": {
+                        "x": 119.1479,
+                        "y": 52.1537
+                    },
+                    "uuid": "be047bf8-b38a-4081-accc-40bae1259044"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS8] on F.Cu, length 0.3572 mm",
+                    "pos": {
+                        "x": 116.2666,
+                        "y": 55.1469
+                    },
+                    "uuid": "c21a77cb-6adb-41c6-a188-d6307ae4b8a7"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS8] on F.Cu, length 0.2892 mm",
+                    "pos": {
+                        "x": 115.3222,
+                        "y": 60.3075
+                    },
+                    "uuid": "ccb2654e-680a-4c6e-b3c2-e789ddc57654"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS8] on F.Cu, length 0.7720 mm",
+                    "pos": {
+                        "x": 114.3412,
+                        "y": 60.477
+                    },
+                    "uuid": "fc9447c0-3586-4e69-aafb-27b1b4db0e66"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS2] on F.Cu, length 0.2892 mm",
+                    "pos": {
+                        "x": 94.6778,
+                        "y": 60.3075
+                    },
+                    "uuid": "33e021f2-48a4-461e-9c83-2d4218894578"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS2] on F.Cu, length 0.1260 mm",
+                    "pos": {
+                        "x": 95.3454,
+                        "y": 59.5764
+                    },
+                    "uuid": "71fdb8c5-5cdb-4b1c-b889-22f8efa85c08"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS2] on F.Cu, length 0.1424 mm",
+                    "pos": {
+                        "x": 94.4733,
+                        "y": 60.512
+                    },
+                    "uuid": "78e78c52-0f39-4e6c-b62c-1dd347b4da27"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS2] on F.Cu, length 0.8557 mm",
+                    "pos": {
+                        "x": 95.3454,
+                        "y": 59.7024
+                    },
+                    "uuid": "9166effa-25ac-4654-9d90-e29fa1fbab47"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS2] on B.Cu, length 0.1055 mm",
+                    "pos": {
+                        "x": 78.728,
+                        "y": 49.7
+                    },
+                    "uuid": "ae2cd277-5be0-43ca-8151-05f3b5e88d8c"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS2] on B.Cu, length 0.3470 mm",
+                    "pos": {
+                        "x": 79.075,
+                        "y": 49.7
+                    },
+                    "uuid": "fbdbac2a-627f-49d6-bab2-029ba7bbf6e6"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS1] on F.Cu, length 0.1649 mm",
+                    "pos": {
+                        "x": 94.3406,
+                        "y": 55.3969
+                    },
+                    "uuid": "6f4f6c41-ebd3-41cc-887f-da28672d3fb1"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/A_CS1] on F.Cu, length 0.5773 mm",
+                    "pos": {
+                        "x": 94.4572,
+                        "y": 55.5135
+                    },
+                    "uuid": "b326bf79-3a94-4a86-b715-fba3b3102554"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/SCL] on B.Cu, length 0.0521 mm",
+                    "pos": {
+                        "x": 81.2,
+                        "y": 51.425
+                    },
+                    "uuid": "671a3a57-056b-4bd5-ad61-2a401a13473b"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/SCL] on B.Cu, length 0.2124 mm",
+                    "pos": {
+                        "x": 76.5,
+                        "y": 46.8082
+                    },
+                    "uuid": "8484a978-a7c0-4730-8f59-3acabf975936"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/SDA] on B.Cu, length 0.3173 mm",
+                    "pos": {
+                        "x": 80.7916,
+                        "y": 51.9966
+                    },
+                    "uuid": "024a41dc-856c-44f6-a851-8ce96171e117"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/SR_CLK] on B.Cu, length 0.1245 mm",
+                    "pos": {
+                        "x": 79.5372,
+                        "y": 57.0233
+                    },
+                    "uuid": "40a33659-0879-4683-b85b-412bb6b38f1a"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/SR_CLK] on B.Cu, length 0.8150 mm",
+                    "pos": {
+                        "x": 86.1131,
+                        "y": 73.3626
+                    },
+                    "uuid": "69fac336-0e4e-456f-951c-2e083dd5b8a8"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/SR_CLK] on B.Cu, length 0.2124 mm",
+                    "pos": {
+                        "x": 86.3255,
+                        "y": 73.3626
+                    },
+                    "uuid": "a01491dd-ea12-4ee4-85f6-4071d2086518"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "Track width (board setup constraints min width 0.1270 mm; actual 0.1124 mm)",
+            "items": [
+                {
+                    "description": "Track [/SR_CLK] on B.Cu, length 0.2124 mm",
+                    "pos": {
+                        "x": 79.5372,
+                        "y": 56.8109
+                    },
+                    "uuid": "da6487ed-8207-4949-b094-9a7179dab875"
+                }
+            ],
+            "severity": "error",
+            "type": "track_width"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint ENC1",
+                    "pos": {
+                        "x": 49.5,
+                        "y": 54.5
+                    },
+                    "uuid": "0699f13a-cb3a-40e8-93cf-185fdcb67387"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D9",
+                    "pos": {
+                        "x": 67.370727,
+                        "y": 55.357438
+                    },
+                    "uuid": "0d4ae960-54ee-4453-b1a7-20cf77217200"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D3",
+                    "pos": {
+                        "x": 46.629272,
+                        "y": 55.357438
+                    },
+                    "uuid": "0dabc52e-1992-4eb4-9717-e0c7880e3b06"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D4",
+                    "pos": {
+                        "x": 48.505321,
+                        "y": 50.828254
+                    },
+                    "uuid": "14e6202a-d36f-492b-a79d-5a0f49722f53"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D2",
+                    "pos": {
+                        "x": 47.013906,
+                        "y": 60.244678
+                    },
+                    "uuid": "21987485-abed-4ae2-8953-bbd371d66f55"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D18",
+                    "pos": {
+                        "x": 109.7669,
+                        "y": 47.644431
+                    },
+                    "uuid": "2afcd09a-4b73-4c3b-bfa7-09d66f5d7bc0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D6",
+                    "pos": {
+                        "x": 57.0,
+                        "y": 46.5
+                    },
+                    "uuid": "35beffc3-888f-416e-b365-352a1f4566bc"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint ENC2",
+                    "pos": {
+                        "x": 97.5,
+                        "y": 54.5
+                    },
+                    "uuid": "37834611-8136-42ce-b70a-e4b629537e0d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D17",
+                    "pos": {
+                        "x": 105.0,
+                        "y": 46.5
+                    },
+                    "uuid": "4546ffe7-973e-4a2d-8802-e8c833d9b44b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D24",
+                    "pos": {
+                        "x": 121.0,
+                        "y": 48.917096
+                    },
+                    "uuid": "46112d85-22c8-4a35-86c9-edcd1a76ec6d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D14",
+                    "pos": {
+                        "x": 94.629272,
+                        "y": 55.357438
+                    },
+                    "uuid": "4aee3692-7752-4039-a3c9-26ecbe31e7e6"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D21",
+                    "pos": {
+                        "x": 114.986093,
+                        "y": 60.244678
+                    },
+                    "uuid": "605a3f3b-f44d-4b85-80d8-016e1cf47dbd"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D11",
+                    "pos": {
+                        "x": 64.424621,
+                        "y": 64.424621
+                    },
+                    "uuid": "716bb352-1d81-4b51-8fe6-d29ac1937c21"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D19",
+                    "pos": {
+                        "x": 113.494678,
+                        "y": 50.828254
+                    },
+                    "uuid": "87d03e1b-0bad-435b-b104-18836bf5a321"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D20",
+                    "pos": {
+                        "x": 115.370727,
+                        "y": 55.357438
+                    },
+                    "uuid": "88db6e50-6e2c-4622-bb1d-cd541a9b091b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D7",
+                    "pos": {
+                        "x": 61.7669,
+                        "y": 47.644431
+                    },
+                    "uuid": "8aa78ff6-2a84-4a8c-b172-40db6feb8a2e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D1",
+                    "pos": {
+                        "x": 49.575378,
+                        "y": 64.424621
+                    },
+                    "uuid": "a16012de-478a-4d27-b1fb-f93e5c3ebeb5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D22",
+                    "pos": {
+                        "x": 112.424621,
+                        "y": 64.424621
+                    },
+                    "uuid": "a5b76f55-8d4c-4664-a1c2-bf823f72100e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D10",
+                    "pos": {
+                        "x": 66.986093,
+                        "y": 60.244678
+                    },
+                    "uuid": "a7279c86-39fc-4695-8e7d-2599bdd2fb99"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D15",
+                    "pos": {
+                        "x": 96.505321,
+                        "y": 50.828254
+                    },
+                    "uuid": "af6ec753-7660-4257-8538-1de3893dd6bf"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D23",
+                    "pos": {
+                        "x": 73.0,
+                        "y": 48.917096
+                    },
+                    "uuid": "ba53730c-05dc-4cd6-9031-b74a26c64990"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D12",
+                    "pos": {
+                        "x": 97.575378,
+                        "y": 64.424621
+                    },
+                    "uuid": "d2584b09-4138-41d5-bcdd-3f065197003f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D16",
+                    "pos": {
+                        "x": 100.233099,
+                        "y": 47.644431
+                    },
+                    "uuid": "d8ac1a03-4ac1-44bd-a550-8cca1915582d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D8",
+                    "pos": {
+                        "x": 65.494678,
+                        "y": 50.828254
+                    },
+                    "uuid": "d8d258cb-afc3-400f-9b2b-fd57edb11668"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D5",
+                    "pos": {
+                        "x": 52.233099,
+                        "y": 47.644431
+                    },
+                    "uuid": "e54b8d12-f34b-4ea5-b1cd-6b9023a4f4c0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D13",
+                    "pos": {
+                        "x": 95.013906,
+                        "y": 60.244678
+                    },
+                    "uuid": "fe30bc18-041f-4fad-9954-a88702e63d09"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 81.0,
+                        "y": 49.5
+                    },
+                    "uuid": "2f62e4f7-80df-46c1-b9b9-8153ccf28745"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C1 on B.Silkscreen",
+                    "pos": {
+                        "x": 75.235,
+                        "y": 70.738748
+                    },
+                    "uuid": "6398696c-78b9-4c3e-ae16-d63d6218df64"
+                },
+                {
+                    "description": "Reference field of J1",
+                    "pos": {
+                        "x": 75.445,
+                        "y": 71.0
+                    },
+                    "uuid": "cce931e0-87ed-46b4-a2f5-6463fb04744c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R1",
+                    "pos": {
+                        "x": 76.5,
+                        "y": 48.17
+                    },
+                    "uuid": "9ebaaedf-fa1d-427a-8100-27f74f86ce1f"
+                },
+                {
+                    "description": "Segment of R2 on B.Silkscreen",
+                    "pos": {
+                        "x": 76.346359,
+                        "y": 48.62
+                    },
+                    "uuid": "f4573921-773a-44a5-9176-46a35ef65c3b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of C5",
+                    "pos": {
+                        "x": 85.5,
+                        "y": 51.66
+                    },
+                    "uuid": "7efdd62b-a722-4996-b6c9-facb2a50d849"
+                },
+                {
+                    "description": "Segment of C6 on B.Silkscreen",
+                    "pos": {
+                        "x": 85.392164,
+                        "y": 52.14
+                    },
+                    "uuid": "881ef7b7-8fbf-43db-a106-100b1fc54794"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of J1",
+                    "pos": {
+                        "x": 75.445,
+                        "y": 71.0
+                    },
+                    "uuid": "cce931e0-87ed-46b4-a2f5-6463fb04744c"
+                },
+                {
+                    "description": "Pad 2 [GND] of C1 on B.Cu",
+                    "pos": {
+                        "x": 74.5,
+                        "y": 71.95
+                    },
+                    "uuid": "4171fa12-e968-40ad-97ac-d2aac0254da0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of U1 on B.Silkscreen",
+                    "pos": {
+                        "x": 78.85,
+                        "y": 51.65
+                    },
+                    "uuid": "54f2b666-e346-4fcd-b2f4-bacf8bd4b7b1"
+                },
+                {
+                    "description": "Pad 1 [+5V] of U1 on B.Cu",
+                    "pos": {
+                        "x": 79.075,
+                        "y": 50.9
+                    },
+                    "uuid": "99d9456e-771f-4cc1-b5b2-b41148148038"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of U1 on B.Silkscreen",
+                    "pos": {
+                        "x": 78.85,
+                        "y": 51.65
+                    },
+                    "uuid": "610e71c4-313d-4fe8-aad3-cca07dd1aba0"
+                },
+                {
+                    "description": "Pad 32 [+3V3] of U1 on B.Cu",
+                    "pos": {
+                        "x": 79.6,
+                        "y": 51.425
+                    },
+                    "uuid": "27b2fedb-6e1c-4c65-bbf5-fe591698fad5"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of U2",
+                    "pos": {
+                        "x": 77.55,
+                        "y": 59.5
+                    },
+                    "uuid": "63654078-320a-4fc6-a426-211e47fa066c"
+                },
+                {
+                    "description": "Pad 5 [+3V3] of RN1 on B.Cu",
+                    "pos": {
+                        "x": 76.75,
+                        "y": 58.5
+                    },
+                    "uuid": "0e6c285f-7b0a-4a1c-bc8f-e1cd33fd808d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R1",
+                    "pos": {
+                        "x": 76.5,
+                        "y": 48.17
+                    },
+                    "uuid": "9ebaaedf-fa1d-427a-8100-27f74f86ce1f"
+                },
+                {
+                    "description": "Pad 1 [/SCL] of R2 on B.Cu",
+                    "pos": {
+                        "x": 75.99,
+                        "y": 49.0
+                    },
+                    "uuid": "496635c0-9480-4553-a4dd-39110730671f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C3",
+                    "pos": {
+                        "x": 85.5,
+                        "y": 47.66
+                    },
+                    "uuid": "8251cede-51eb-4c20-8321-0f7cc25bef8a"
+                },
+                {
+                    "description": "Pad 2 [GND] of C4 on B.Cu",
+                    "pos": {
+                        "x": 86.45,
+                        "y": 48.5
+                    },
+                    "uuid": "d9b36a05-5273-4c43-9aad-2f61fce37be5"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C4",
+                    "pos": {
+                        "x": 85.5,
+                        "y": 50.18
+                    },
+                    "uuid": "0bb92829-c3dc-47a6-be3e-d1c148b4a857"
+                },
+                {
+                    "description": "Pad 2 [GND] of C5 on B.Cu",
+                    "pos": {
+                        "x": 85.98,
+                        "y": 50.5
+                    },
+                    "uuid": "d5279d0d-83cc-407c-9b1a-4fa7544463d3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C4",
+                    "pos": {
+                        "x": 85.5,
+                        "y": 50.18
+                    },
+                    "uuid": "0bb92829-c3dc-47a6-be3e-d1c148b4a857"
+                },
+                {
+                    "description": "Pad 1 [/A_VCAP] of C5 on B.Cu",
+                    "pos": {
+                        "x": 85.02,
+                        "y": 50.5
+                    },
+                    "uuid": "30b28b16-27f9-4586-95b5-c40b83faf431"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C3",
+                    "pos": {
+                        "x": 85.5,
+                        "y": 47.66
+                    },
+                    "uuid": "8251cede-51eb-4c20-8321-0f7cc25bef8a"
+                },
+                {
+                    "description": "Pad 1 [+5V] of C4 on B.Cu",
+                    "pos": {
+                        "x": 84.55,
+                        "y": 48.5
+                    },
+                    "uuid": "f08e0845-77d7-4f80-a15a-61dea153d078"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

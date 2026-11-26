@@ -35,3 +35,12 @@
 
 (Закрытые и старые записи 18–19.11.2026 перенесены в [`notes/handoff_archive/18.md`](handoff_archive/18.md) без изменений; сводка состояния: [`notes/STATUS.md`](STATUS.md).)
 (Старые отчёты и закрытые записи перенесены в [`notes/handoff_archive/`](handoff_archive/README.md): индекс записей по заголовкам, текст без изменений.)
+
+## Quilter jobs 26.11.2026 (rev 0205bcb, Riga time)
+Mode for all three: route only (all parts pre-placed in the PCB, Quilter keeps them; freeing non-mechanical parts would need moving them off-board in the generator). JLCPCB 2-Layer 6/6 mil, via 0.45/0.2, Full Layout. CSV in hardware/<board>/quilter/.
+| job id | board | mode / notes | start |
+|---|---|---|---|
+| 6b07bf702434cbecec7e1b8b | BB1 | route only; 16 power nets 8 A, ground BAT_N_A/B; stack 1 oz (README wants 2 oz: widen after import) | 07:14 |
+| 6b07c0632434cbecec7e1b8d | U1 | route only; PD_VBUS and GND 5 A, power pour | 07:18 |
+| 6b07c136d811c3754ddac8d1 | F1 | route only; auto power nets 500 mA; 4 auto 100-ohm diff pairs (balanced audio in) deleted | 07:21 |
+Links: https://app.quilter.ai/jobs/<id>. Result check: later, import + DRC in CI.

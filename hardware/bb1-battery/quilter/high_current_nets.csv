@@ -1,0 +1,17 @@
+net_name,max_current,use_power_pour
+/BAT_P_A,8000,false
+/B1_A,8000,false
+/B2_A,8000,false
+/MID_A,8000,false
+/BAT_N_A,8000,false
+/PACK_N_A,8000,false
+/SRN_NODE_A,8000,false
+/LD_A,8000,false
+/BAT_P_B,8000,false
+/B1_B,8000,false
+/B2_B,8000,false
+/MID_B,8000,false
+/BAT_N_B,8000,false
+/PACK_N_B,8000,false
+/SRN_NODE_B,8000,false
+/LD_B,8000,false

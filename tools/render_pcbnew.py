@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PNG previews of a board without kicad-cli and without a browser (the PC blue-screens on kicad-cli): the layers are plotted
+"""PNG previews of a board without kicad-cli and without a browser (written under the kicad-cli ban, lifted 19.11.2026): the layers are plotted
 to one SVG per side with pcbnew's PLOT_CONTROLLER, then rasterised with PyMuPDF (fitz, ships with KiCad 10 on the PC).
 
   python tools/render_pcbnew.py BOARD.kicad_pcb OUT_DIR       -> OUT_DIR/preview_top.png, preview_bottom.png

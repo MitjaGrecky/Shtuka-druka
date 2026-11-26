@@ -3,7 +3,7 @@
 was    - the final model of 16.11.2026 (deck 22, 28 mm front overhang, step 56, depth 548);
 orange - no overhang, deck 22, 3.5 mm jacks under P1, H5 in the rear right corner on 8 mm standoffs, slope 33 deg, depth 515;
 green  - deck 30, 6.35 mm jacks under P1, battery under the pads, A1 on the floor, no step, depth 500.
-Run: KiCad python (the model is only read; never kicad-cli).  Writes v8.html (template.html with the data inserted)."""
+Run: KiCad python (the model is only read; kicad-cli is not needed here).  Writes v8.html (template.html with the data inserted)."""
 import importlib.util, json, math, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))

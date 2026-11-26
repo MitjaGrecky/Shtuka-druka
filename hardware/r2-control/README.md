@@ -5,7 +5,7 @@ USB hub and the control lines to the audio boards. DIN, USB, LAN and DC are pane
 Research and decisions: `docs/ru/34_rear_boards_research.md`, R118, R135-R143. Map of boards: `docs/ru/29_board_map.md`.
 
 **Rev 1.6 (25.11.2026, P152):** detect pull-downs 100k -> 220k (3.24 V vs VIH 2.48 V), MPN 74HC165D and 74LVC1G08GV.
-**Status: rev 1.4 (20.11.2026) - schematic and placed board, not routed, pin rule (A-037) not yet applied (changes in the Rev sections at the end); rev 1.1 (19.11.2026): rectangle 110 x 99 without the low arm, see the end of this file. Earlier:** (234 parts, 4 layers; 14.11.2026; rev 0.5 = ATT1/ATT2 and the 74HC595, task #25; rev 0.6 = 7 x M3 mounting holes). Rear wall = the 3D model
+**Status (audit 26.11.2026): current rev 1.6, outline 110 x 99 mm (r2-control.kicad_pcb); the 110 x 103 / 107 x 103 sizes below are history.** **Status: rev 1.4 (20.11.2026) - schematic and placed board, not routed, pin rule (A-037) not yet applied (changes in the Rev sections at the end); rev 1.1 (19.11.2026): rectangle 110 x 99 without the low arm, see the end of this file. Earlier:** (234 parts, 4 layers; 14.11.2026; rev 0.5 = ATT1/ATT2 and the 74HC595, task #25; rev 0.6 = 7 x M3 mounting holes). Rear wall = the 3D model
 of panel v7 (R142). MIDI DIN, USB, LAN and DC are panel parts on nuts with short cables (R141, the shelf R2b of rev 0.3 is
 dropped): R2 carries the twenty 3.5 mm jacks and six JST PH headers for the DIN cables. Outline: the Control block, rear
 x 156-266, z 10-113, a rectangle 110 x 103 mm (rev 0.9).

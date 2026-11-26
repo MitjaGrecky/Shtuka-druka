@@ -67,7 +67,7 @@ def main():
     except ImportError:
         import render_pcbnew            # pcbnew plot + PyMuPDF: no kicad-cli, no browser (16.11.2026)
         PK.render = lambda pcb, out, w, h: print("previews (pcbnew):", render_pcbnew.render(pcb, out, w, h))
-    if "--no-cli" in sys.argv:          # the PC blue-screens on kicad-cli: keep netlist/pdf/dxf of the last build
+    if "--no-cli" in sys.argv:          # keep netlist/pdf/dxf of the last build (flag from the kicad-cli ban, lifted 19.11.2026)
         sys.argv.remove("--no-cli")
         real = PK.subprocess.run
 

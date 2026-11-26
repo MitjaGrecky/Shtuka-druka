@@ -9,7 +9,7 @@
 | Аудитор | [auditor.md](auditor.md) | `audit/`, `tools/audit/`, навык `shtuka-druka-auditor`; чужое не правит |
 | Схемотехник | [specialists.md](specialists.md) | схема, детали, посадки, проверки заданной стадии `hardware/<плата>/` по поручению главного инженера |
 | ПО и испытания | [specialists.md](specialists.md) | встроенное ПО, протокол, стенд, программа первого включения, измерения |
-| Технолог | [specialists.md](specialists.md) | BOM/CPL, монтаж, закупка; заказ и оплата только по поручению пользователя |
+| Технолог | [specialists.md](specialists.md) | BOM/CPL, монтаж; закупки сейчас нет (R192, «закупку забудь»: только чистые BOM) |
 | Редактор | [specialists.md](specialists.md) | индексы, хабы, ссылки документов, навыки; смысл решений не меняет |
 | Остальные специалисты | [specialists.md](specialists.md) | по поручению главного инженера |
 

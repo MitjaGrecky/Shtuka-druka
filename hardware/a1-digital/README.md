@@ -1,5 +1,7 @@
 # A1 - Digital audio board (under the slope, left; mates R1 at a right angle)
 
+> *Outdated as a heading (audit 26.11.2026): current rev 1.1, see Status below and the Rev sections at the end; the rev 0.6 block is history.*
+>
 > **Rev 0.6 (18.11.2026, решение главного инженера, P108):** конденсаторы связи — по одному неполярному Würth WCAP-ASNP 865250349007 (47 мкФ 16 В, Ø8×6,5, LCSC C5530373) на канал, 40 шт., паять вручную (на JLC нет в наличии, Digikey 239 шт.). THD+N на 20–100 Гц замерить на первой плате. Rev 0.5 с парами FVH016 не заказывать.
 
 20 differential ADC channels, 8 DAC channels, two XMOS xcore.ai, USB isolation, two clock sources, quiet supplies.

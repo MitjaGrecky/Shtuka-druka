@@ -8,7 +8,7 @@
 - Следующая проверка обновлений: 2026-11-25 (напоминание в каталоге, расписание не создаётся автоматически).
 - **Установка новых навыков (`npx skills add`) только с разрешения пользователя**: 20.11.2026 запрос без разрешения отклонён системой (скачивание по `CLAUDE.md`). Кандидаты для технолога, не установлены, ждут разрешения: `digikey`, `mouser`, `bom` (aklofas/kicad-happy). Плагины PartsPlan и BoardRepo предложены пользователю, решения нет.
 - **Инструмент (не навык): markitdown 0.1.9**, установлен 20.11.2026: `uv tool install "markitdown[all]" --python 3.12`, путь `C:\Users\karpa\.local\bin\markitdown`. Правило: PDF и DOCX (даташиты, документы) читать через него (`markitdown FILE -o OUT.md`), в чат только суть.
-- Не установлены намеренно: `kicad` (kicad-happy; построен на kicad-cli), digikey/mouser/element14/bom/pcbway (по необходимости закупки), ee-analog/general-pcb/high-speed/hv-safety/low-power/rf (по теме).
+- Не установлены намеренно: `kicad` (kicad-happy; построен на kicad-cli; причина «kicad-cli запрещён» устарела 19.11.2026, ставить по необходимости), digikey/mouser/element14/bom/pcbway (по необходимости закупки), ee-analog/general-pcb/high-speed/hv-safety/low-power/rf (по теме).
 
 | Навык | Для кого | Источник | КБ | Файл от | Статус | Назначение (из описания) |
 |---|---|---|---|---|---|---|

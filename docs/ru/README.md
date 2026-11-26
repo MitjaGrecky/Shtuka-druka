@@ -58,14 +58,14 @@
 | 04 | [Отзывы о грувбоксах](04_doc_groovebox_reviews.md) | 01_project | Что хвалят, что раздражает, чего не хватает |
 | 03 | [Открытые проекты](03_doc_open_source_analysis.md) | 09_software | OTTO, Zynthian, SamplerBox, разбор кода Behringer Kick |
 
-## Рабочие заметки закупки и стенки (`notes/`, не документы)
+## Рабочие заметки стенки и деталей (`notes/`, не документы; закупка снята R192)
 
 | Файл | Что внутри |
 |---|---|
 | [`notes/STATUS.md`](../../notes/STATUS.md) | Состояние проекта на одну страницу: платы, проверки, трассировка, закупка, открытые вопросы |
 | [`notes/rear_wall_parts.md`](../../notes/rear_wall_parts.md) | Задняя стенка, вариант A: список деталей (54 гнезда), MPN, где купить |
 | [`notes/harness_bom.md`](../../notes/harness_bom.md) | BOM жгутов задней стенки и внутренних, хвосты ≤ 12 см |
-| [`notes/purchase_plan.md`](../../notes/purchase_plan.md) | План закупки вне JLC на 2 комплекта: источник, SKU, цена, остаток |
+| [`notes/purchase_plan.md`](../../notes/purchase_plan.md) | **Устарело (R192, закупки нет):** план закупки вне JLC от 19–20.11, справочно |
 | [`notes/parts_missing.md`](../../notes/parts_missing.md) | Детали без наличия по 17 платам |
 | [`notes/datasheets_wanted.md`](../../notes/datasheets_wanted.md) | Даташиты, которые пользователь должен прислать |
 

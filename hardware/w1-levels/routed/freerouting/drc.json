@@ -1,0 +1,5151 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-11-26T01:05:46",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.8",
+    "schematic_parity": [],
+    "source": "w1-levels.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [+5V] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 88.9228,
+                        "y": 55.9153
+                    },
+                    "uuid": "20346e68-9aa5-4098-a628-e05914336a97"
+                },
+                {
+                    "description": "Via [+5V] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 88.9228,
+                        "y": 55.9153
+                    },
+                    "uuid": "b0d17277-b7d6-47ec-aec3-674cfbe43bbc"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 114.0
+                    },
+                    "uuid": "0004aae9-d550-4cb4-b149-ed254703b975"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 114.0
+                    },
+                    "uuid": "fb47d127-fcb9-42a1-a254-ffc87ad4f81a"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 46.0
+                    },
+                    "uuid": "0030428e-f7c6-43c3-9262-26d1db56c72b"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 46.0
+                    },
+                    "uuid": "28f54341-0d60-4f76-b2e8-89cfe7d8afce"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 162.0
+                    },
+                    "uuid": "0035169f-cc22-4043-81ad-36bfae7bf10b"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 162.0
+                    },
+                    "uuid": "c0de6d43-4ac2-460f-bb5a-7157f80e5dbc"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 146.0
+                    },
+                    "uuid": "0064155b-a8cf-435e-9985-19cba5af816c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 146.0
+                    },
+                    "uuid": "b912de80-b536-4a32-b081-b9ba8c7c2c9f"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 142.0
+                    },
+                    "uuid": "008c48fb-b680-44a9-bc79-3930529b3b64"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 142.0
+                    },
+                    "uuid": "d5d2f3d9-8913-466a-9b0a-d4362df5a5f8"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 46.0
+                    },
+                    "uuid": "00b49628-0ccd-462c-909a-0cd6af26b3fa"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 46.0
+                    },
+                    "uuid": "9d2fa4ca-19a7-488b-a8e8-eeed7308c1b7"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 126.0
+                    },
+                    "uuid": "022759c2-28da-4dca-a87d-dd8e51d1e108"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 126.0
+                    },
+                    "uuid": "8d6298c8-e4a9-4bbc-ab2b-c1f5ea6f1258"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 42.0
+                    },
+                    "uuid": "02444874-5efa-4d89-a1fa-44167cf2df70"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 42.0
+                    },
+                    "uuid": "37f5f206-14bd-4cc2-90a0-d0bec1001f48"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 66.0
+                    },
+                    "uuid": "0294a331-a3eb-4ec5-873c-81aaccafb204"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 66.0
+                    },
+                    "uuid": "33d12f7b-e012-48ee-b475-5f9b31c21911"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 114.0
+                    },
+                    "uuid": "03316a02-3ba6-4c22-873f-d948fc2465ef"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 114.0
+                    },
+                    "uuid": "bce914a1-d41c-4ab7-abb1-78424e070e93"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 130.0
+                    },
+                    "uuid": "033bd816-6ebd-4210-afc4-6cad77eaef9a"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 130.0
+                    },
+                    "uuid": "f4d59986-e49f-4796-95ae-6bb9a9a40288"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 46.0
+                    },
+                    "uuid": "037d5902-e7bd-45df-a401-72044306b8cf"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 46.0
+                    },
+                    "uuid": "5f4c808e-f327-48fb-b76c-d5b6354062a6"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 154.0
+                    },
+                    "uuid": "037e3e10-1f7b-4880-a9b2-f88b51265a97"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 154.0
+                    },
+                    "uuid": "805a39c0-3780-43ef-9213-a658f6f998e5"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 66.0
+                    },
+                    "uuid": "03a62e25-62cf-4ab0-9d6e-b75848be4c7c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 66.0
+                    },
+                    "uuid": "8f758642-2955-4ab4-ab90-b9cf96fb6c73"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 150.0
+                    },
+                    "uuid": "03c371ea-b628-4911-a7c9-5045cdae3de8"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 150.0
+                    },
+                    "uuid": "ca30a31f-16c7-448c-beff-270c58c1b8dc"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 154.0
+                    },
+                    "uuid": "03fe6907-c0f2-46cc-91ed-6bd6a4df93d5"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 154.0
+                    },
+                    "uuid": "1a42aed9-4322-43b9-a64b-47caec690522"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 106.0
+                    },
+                    "uuid": "0443fe98-c584-4ce3-b10e-ccff38b2ef9f"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 106.0
+                    },
+                    "uuid": "87aad0f3-1d21-4c0c-b60f-5910cc43f17c"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 62.0
+                    },
+                    "uuid": "04f1df0a-5521-4ca0-8c74-b3c249a2c562"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 62.0
+                    },
+                    "uuid": "4acdd2c3-9344-4c44-8d5e-cbe483e27229"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 118.0
+                    },
+                    "uuid": "06001622-ad1e-439a-8f48-05e58ddcb423"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 118.0
+                    },
+                    "uuid": "5aca2548-3de2-49b1-a8ac-0c3a217f6005"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 46.0
+                    },
+                    "uuid": "06b34ee6-d1cd-4b21-a584-f1834c7b1596"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 46.0
+                    },
+                    "uuid": "3986d6a8-3140-4e46-873b-ef855d0ec55b"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 162.0
+                    },
+                    "uuid": "06d76869-53ae-48c4-b985-67e54e124dad"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 162.0
+                    },
+                    "uuid": "e1ed0f0b-7fd9-466c-a5d6-1bb8f7b888d0"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 142.0
+                    },
+                    "uuid": "06fb1fe3-a7a1-4882-8439-21edc1932304"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 142.0
+                    },
+                    "uuid": "15809faf-298f-47f4-8b8e-91a70dd142fd"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 142.0
+                    },
+                    "uuid": "0714cd3f-33b3-4dac-b744-4398c1f331c2"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 142.0
+                    },
+                    "uuid": "b71fb6c5-7fde-4e21-b14a-3a9da6bbdc1c"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 118.0
+                    },
+                    "uuid": "07756e94-b7f2-46b0-b057-fab75a8cb4cb"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 118.0
+                    },
+                    "uuid": "cc05c177-1625-40f7-847a-eb19b5103155"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 50.0
+                    },
+                    "uuid": "08206186-261d-416f-965a-7d174a9f8207"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 50.0
+                    },
+                    "uuid": "3625860c-7359-4104-82c8-f0036aa922ea"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 150.0
+                    },
+                    "uuid": "082d8daf-feea-4bb1-be31-e136ade32569"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 150.0
+                    },
+                    "uuid": "d55fa4d2-2127-4e27-9eda-c98b163a7bf7"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 90.0,
+                        "y": 46.0
+                    },
+                    "uuid": "0941ae6b-e088-4995-bc13-3a91ce8f2c26"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 90.0,
+                        "y": 46.0
+                    },
+                    "uuid": "1ec8f5f0-3c49-4c04-b898-ce35a35af2c2"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 134.0
+                    },
+                    "uuid": "0952e406-7e8b-49eb-9900-db967688e505"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 134.0
+                    },
+                    "uuid": "35884f48-feff-4fc0-affe-d8a9a1d03a85"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 66.0
+                    },
+                    "uuid": "09f8b770-437a-4cae-bd6d-7c35f452031c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 66.0
+                    },
+                    "uuid": "5cfb8c76-2b76-4f12-bbad-939f5a39c658"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 138.0
+                    },
+                    "uuid": "0a192f0d-cb1b-445f-a061-cd804e16283c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 138.0
+                    },
+                    "uuid": "f48e40c4-4e5f-49bf-be65-56064b595850"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 50.0
+                    },
+                    "uuid": "0a246ad6-dea4-4476-9996-c755b5dbea3e"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 50.0
+                    },
+                    "uuid": "9f6f867f-e915-4e0e-8f12-6a8094a877a5"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 146.0
+                    },
+                    "uuid": "0a374f36-66e6-4815-b5a8-931100f32000"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 146.0
+                    },
+                    "uuid": "135dd44b-219b-481f-b164-6701759f6763"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 54.0
+                    },
+                    "uuid": "0a7240cb-eba8-4ac8-96ee-1c674a93e0ab"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 54.0
+                    },
+                    "uuid": "61ab8508-34e9-4928-b4a1-2fcee57fe839"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 50.0
+                    },
+                    "uuid": "0ac4a6e1-1666-4a1d-a5a1-1177222b9acb"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 50.0
+                    },
+                    "uuid": "c79398ff-8259-4c26-9f12-7fa13bc62b50"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 50.0
+                    },
+                    "uuid": "0b97417f-2c99-48f3-a9ec-e00508b9e075"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 50.0
+                    },
+                    "uuid": "7716687c-ce29-4e1a-a580-15959616ca12"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 118.0
+                    },
+                    "uuid": "0c2149ed-823e-44bc-96c4-a2a32095a9a1"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 118.0
+                    },
+                    "uuid": "3ddb9d44-f76f-428c-8341-a31d2b16a851"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 118.0
+                    },
+                    "uuid": "0d6ae1f3-0e91-49ce-a821-e3da235c1ba4"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 118.0
+                    },
+                    "uuid": "a684eb26-45a7-459b-816a-af76e40800ab"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 118.0
+                    },
+                    "uuid": "0d968cb9-ff17-4a10-b4ff-9fb3bd600906"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 118.0
+                    },
+                    "uuid": "92964d07-b94c-46d0-b530-658f87dd5f5b"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 154.0
+                    },
+                    "uuid": "0db99245-cdb3-43e2-823d-7d867dbdb802"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 154.0
+                    },
+                    "uuid": "68555587-3be5-4c5c-a129-b18aea9f6442"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 46.0
+                    },
+                    "uuid": "0dda0f85-6ad5-4f3e-a0e8-15578d974441"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 46.0
+                    },
+                    "uuid": "bb8bec8f-91cd-465e-aa19-d981bdcf06ea"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 126.0
+                    },
+                    "uuid": "0e82d31c-a715-46ba-85a6-e1dc71674961"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 126.0
+                    },
+                    "uuid": "32065a68-0b83-4ecb-ba2b-b75665706bd3"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 42.0
+                    },
+                    "uuid": "0e9550d6-3f3d-4c10-a63a-7c700c572534"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 42.0
+                    },
+                    "uuid": "afdca816-0b24-4328-bb34-94c7fd4e9b9e"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 150.0
+                    },
+                    "uuid": "0ed1fc27-6e22-4d96-a72f-2e96713a1050"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 150.0
+                    },
+                    "uuid": "f1bc5153-9fe1-4ecb-aa3a-f941d7ec1ebf"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 42.0
+                    },
+                    "uuid": "0f6ccdf1-3189-4adb-8348-0d4b59e11679"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 42.0
+                    },
+                    "uuid": "daea23db-eabb-4e92-b091-fa68f535b949"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 162.0
+                    },
+                    "uuid": "0fff3648-3149-4c92-8640-9607cf8e42ea"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 162.0
+                    },
+                    "uuid": "76cc25f6-e7bd-43d2-b741-5a83a75c5358"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 146.0
+                    },
+                    "uuid": "11044aaa-e7cb-445d-8165-4389375ea6d3"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 146.0
+                    },
+                    "uuid": "a227f0b0-a694-46f1-a558-1b08efc36de8"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 122.0
+                    },
+                    "uuid": "11396327-cc27-44c0-b024-c5b1e02b1903"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 122.0
+                    },
+                    "uuid": "fd497fd1-8184-4e26-af57-7e014756161b"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 106.0
+                    },
+                    "uuid": "123217bb-8b88-43a5-882d-798eff1f88bc"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 106.0
+                    },
+                    "uuid": "692e90a9-e617-4ad1-901b-6dc47a5d12f6"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 110.0
+                    },
+                    "uuid": "12b9f590-4034-4d2e-ae21-b7dd988bf277"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 110.0
+                    },
+                    "uuid": "344442bb-4644-4535-b500-cb5ef0aacc25"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 106.0
+                    },
+                    "uuid": "12fa2f90-cc0d-4b38-a6db-7da43bcb19ba"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 106.0
+                    },
+                    "uuid": "d371f9a2-6529-4acc-b2f8-13a8f747c032"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 42.0
+                    },
+                    "uuid": "139a125e-935e-4192-8b9d-573f88558d64"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 42.0
+                    },
+                    "uuid": "513434fd-6a7f-4cf0-b604-07b7d4f4f786"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 150.0
+                    },
+                    "uuid": "13a4ac1c-0462-479b-a40d-30df5c56f839"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 150.0
+                    },
+                    "uuid": "ba259877-c8a0-4adb-9a77-80db0cbcc350"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 106.0
+                    },
+                    "uuid": "1518c935-1645-4a03-a171-c69404bfdab2"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 106.0
+                    },
+                    "uuid": "fbc8f2a6-f644-44b7-adb8-7273a2fb361c"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 162.0
+                    },
+                    "uuid": "15b210da-3fed-47c0-8d4d-7c6ebd38e33b"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 162.0
+                    },
+                    "uuid": "1a55a9fa-8866-408b-9039-d689853145bf"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 158.0
+                    },
+                    "uuid": "15bf7d61-1025-4da5-9953-76fa69da0359"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 158.0
+                    },
+                    "uuid": "a004183f-7718-4666-9700-2b75c50c1b33"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 54.0
+                    },
+                    "uuid": "164a3b97-dad0-4298-b1a9-a597d70df16d"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 54.0
+                    },
+                    "uuid": "d61833df-8def-4a39-a232-0692ec8d688b"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 89.2662,
+                        "y": 60.3279
+                    },
+                    "uuid": "16e3ec0e-fe1b-4b71-960b-0699b2351faa"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 89.2662,
+                        "y": 60.3279
+                    },
+                    "uuid": "d4f03966-a245-4bca-a71f-a971846b3b00"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 122.0
+                    },
+                    "uuid": "17221c53-dffb-4565-a73f-2f4dd81603b5"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 122.0
+                    },
+                    "uuid": "d72de188-aac0-4bd6-8ef8-36d117aa65a0"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 42.0
+                    },
+                    "uuid": "1810488f-ee86-4d2a-9162-c2e549266d38"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 42.0
+                    },
+                    "uuid": "804d7482-c732-4590-b1dd-69b22160d62b"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 42.0
+                    },
+                    "uuid": "181b90b1-565b-44e4-be14-506ccd27f3b8"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 42.0
+                    },
+                    "uuid": "e1d51f62-8620-437f-908d-b30aa4143a93"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 114.0
+                    },
+                    "uuid": "1895be47-8c5a-45cb-aa31-2f7acc7b9cee"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 114.0
+                    },
+                    "uuid": "e039bd2c-0922-4e49-8196-0d245c350e0b"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 86.0,
+                        "y": 114.0
+                    },
+                    "uuid": "189de924-9230-4a9b-874a-143f8ce64b43"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 86.0,
+                        "y": 114.0
+                    },
+                    "uuid": "36e261b6-6ce2-4947-b654-95a3db1ba512"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 50.0
+                    },
+                    "uuid": "18db8ac2-0b1e-4c5a-9f1d-b296dbd5fa16"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 50.0
+                    },
+                    "uuid": "975cee4a-c57b-4528-88e6-39041429f4e9"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 58.0
+                    },
+                    "uuid": "194545a7-ceb4-47fe-b6b0-48696a8352ce"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 58.0
+                    },
+                    "uuid": "536a7e4c-b3ee-4a25-b516-04d11685a8a4"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 90.0,
+                        "y": 42.0
+                    },
+                    "uuid": "195c3c88-3533-4e6a-ba11-e278dd46420f"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 90.0,
+                        "y": 42.0
+                    },
+                    "uuid": "3d843d87-d9fd-451a-a122-5c1b52cdee8c"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 42.0
+                    },
+                    "uuid": "19cde2ef-b968-4fb7-96f5-5cf0c86c7d30"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 42.0
+                    },
+                    "uuid": "6362ca91-9c8e-464c-8521-b54b55e1d47e"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 134.0
+                    },
+                    "uuid": "19fdc6aa-91d8-437d-a4d1-bdec60f34b69"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 134.0
+                    },
+                    "uuid": "8e3ea186-5ef2-44fc-b377-2dd28e50acc6"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 86.0,
+                        "y": 158.0
+                    },
+                    "uuid": "1aa801a1-ee51-4155-89f5-e9a62e5ec452"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 86.0,
+                        "y": 158.0
+                    },
+                    "uuid": "ce8074c0-dd71-4baa-a5ff-f9be038e1988"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 138.0
+                    },
+                    "uuid": "1ace6e3e-52c4-414c-86ef-453e3bb1b8a6"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 138.0
+                    },
+                    "uuid": "e04157e4-5bd6-40eb-9efa-3fa910133c22"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 138.0
+                    },
+                    "uuid": "1ad10ff6-a6f7-446d-a026-1ae668594771"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 138.0
+                    },
+                    "uuid": "879d4e4c-4a4b-4fc0-8c05-19782ab7a0ab"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 46.0
+                    },
+                    "uuid": "1b12afcf-f7de-484f-9b49-33597253f058"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 46.0
+                    },
+                    "uuid": "3909fb3e-8f30-441a-8384-5136f577d466"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 66.0
+                    },
+                    "uuid": "1b2dd9f7-009b-4577-9b4c-1163c603399b"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 66.0
+                    },
+                    "uuid": "2dc89e86-71b0-46c7-9ede-8c76238ce270"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 46.0
+                    },
+                    "uuid": "1b51b236-e7b9-4e1e-98f1-3720f87f0ad8"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 46.0
+                    },
+                    "uuid": "c4b91364-2273-4cdb-8b75-4db09d9ff141"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 146.0
+                    },
+                    "uuid": "1b63efac-c92b-4322-bec3-d049a9d1feb7"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 146.0
+                    },
+                    "uuid": "c3471b9c-aabd-4912-8d4a-d1b186478c9c"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 122.0
+                    },
+                    "uuid": "1bbb6859-734d-48f2-9b22-4a32b46149f7"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 122.0
+                    },
+                    "uuid": "d427f76c-78a5-4cb2-9bae-b410fc763016"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 162.0
+                    },
+                    "uuid": "1c216833-9fd7-4196-9a16-49a617e96bc3"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 162.0
+                    },
+                    "uuid": "3adaf2a4-4f7f-42d6-92c4-5c611cf3b9d7"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 138.0
+                    },
+                    "uuid": "1d173a9e-6108-475c-b9b5-9609838462c9"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 138.0
+                    },
+                    "uuid": "fbbe7745-aff4-40ba-81b8-4ae9b12ec8b9"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 46.0
+                    },
+                    "uuid": "1e8f1ff1-f0d1-4238-9a0c-a79079d7ef20"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 46.0
+                    },
+                    "uuid": "bdf48804-348e-4d3a-92d3-92822cbab2f6"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 62.0
+                    },
+                    "uuid": "1f25aadb-bc00-436e-8ea4-5a449db02191"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 62.0
+                    },
+                    "uuid": "36bd6ac6-c9d8-43c6-a7ba-c1a7842c8052"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 134.0
+                    },
+                    "uuid": "1f426605-4bb2-4c98-a7f5-575dc3059b1c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 134.0
+                    },
+                    "uuid": "931f0c81-a7e6-4bc9-a1a0-7048c756bd81"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 114.0
+                    },
+                    "uuid": "1f71cc28-28b8-483c-a233-71c27907e1f2"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 114.0
+                    },
+                    "uuid": "7c943484-b06c-488f-b5cf-33707d6269c3"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 130.0
+                    },
+                    "uuid": "1fa4ebfe-d0f2-4a5f-a4a3-0b57aa74bb4d"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 130.0
+                    },
+                    "uuid": "961df47c-9d54-4f5e-af3b-9d6289dbcd46"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 150.0
+                    },
+                    "uuid": "20051acb-88f2-45a1-a4c6-c3a6218328d3"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 150.0
+                    },
+                    "uuid": "43e52fa6-e847-48dd-824c-fddfc588c782"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 50.0
+                    },
+                    "uuid": "20c2fecf-25bc-4dd2-ba04-2da00bf4651c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 50.0
+                    },
+                    "uuid": "69c13a8f-372d-4f32-9caa-cf008eab95f2"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 114.0
+                    },
+                    "uuid": "210b2fa7-ecba-40e4-97c9-5caf44a3a5f6"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 114.0
+                    },
+                    "uuid": "dffb76e6-cdd2-4b0d-9914-b19234898f6b"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 62.0
+                    },
+                    "uuid": "212d9588-7624-4e2f-bd56-374934b86698"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 62.0
+                    },
+                    "uuid": "bee4832c-c274-420b-a250-426bd0907b78"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 122.0
+                    },
+                    "uuid": "215ebd60-4c05-496e-9fcc-6453a297fb3c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 122.0
+                    },
+                    "uuid": "d46bbd1e-8bd0-417d-9cd6-fad4a60a8eec"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 106.0
+                    },
+                    "uuid": "217ef80f-8bea-460b-9d68-c887d285ebb5"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 106.0
+                    },
+                    "uuid": "3a2b1f5a-f9b4-42d8-94ef-169550073608"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 42.0
+                    },
+                    "uuid": "2233ae50-3ded-42e2-8dfd-acb5fc26287e"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 42.0
+                    },
+                    "uuid": "397a3f02-358c-444c-8352-22b7c3936687"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 54.0
+                    },
+                    "uuid": "22364140-4a95-4ad2-95e5-5945a6ca4775"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 54.0
+                    },
+                    "uuid": "d7481871-d06b-4d8b-921b-47501452a97f"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 122.0
+                    },
+                    "uuid": "229c7091-becb-4199-a4dd-7317e2e06a4f"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 122.0
+                    },
+                    "uuid": "aa2230f8-7e4c-4a74-8111-507cfadf1b0a"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 146.0
+                    },
+                    "uuid": "22d8aff7-ad84-4797-b775-e4f1abe33c0f"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 146.0
+                    },
+                    "uuid": "4c36c21e-ba71-42cb-b74d-0543e81591ce"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 66.0
+                    },
+                    "uuid": "23cf404c-6c99-408a-8a67-7da6c1e82930"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 66.0
+                    },
+                    "uuid": "f122d388-acdd-494d-898a-92017f221eaf"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 110.0
+                    },
+                    "uuid": "2453385c-d691-48e8-ba2c-769f74dfee68"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 110.0
+                    },
+                    "uuid": "8bf43cc7-4218-4174-a8ac-72ad548be391"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 114.0
+                    },
+                    "uuid": "24c76238-8740-48a3-a88d-e68142bd656f"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 114.0
+                    },
+                    "uuid": "e191458d-c1e6-4d56-96d0-5404f54e2e0e"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 158.0
+                    },
+                    "uuid": "250655aa-c932-4114-8723-f9b29da65b33"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 158.0
+                    },
+                    "uuid": "e8f0b80f-14bb-464c-b285-57d62796740a"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 158.0
+                    },
+                    "uuid": "25477729-5611-441b-b450-3fd66b3cb193"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 158.0
+                    },
+                    "uuid": "f2c463c5-7954-462b-97db-5fdde507b3e4"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 78.0,
+                        "y": 142.0
+                    },
+                    "uuid": "255ae2a7-de7b-4b66-bf0a-4d0628d7ea0c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 78.0,
+                        "y": 142.0
+                    },
+                    "uuid": "2b8a3d33-b3e5-4f1e-8334-02e1aae87c4b"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 50.0
+                    },
+                    "uuid": "261c1399-17c2-4eb5-ab62-09a16971eb40"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 50.0
+                    },
+                    "uuid": "b95311d2-2979-4e61-820a-5fa4e60f9b14"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 66.0
+                    },
+                    "uuid": "2646f5b6-b6d5-4e00-9cf6-377349cffa2c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 66.0
+                    },
+                    "uuid": "7e3ac765-cd49-4be5-9e2f-30aa331b1cdc"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 162.0
+                    },
+                    "uuid": "26dd875c-f102-4af3-a264-170a1d785200"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 162.0
+                    },
+                    "uuid": "f1871308-4b36-45ad-b711-6b2826173d23"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 58.0
+                    },
+                    "uuid": "26df8c09-a683-4fc3-8592-75f7ca247ec0"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 58.0
+                    },
+                    "uuid": "2a9122e1-0652-467f-85f7-0c07a375a469"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 162.0
+                    },
+                    "uuid": "27b9c2f7-6895-4521-ad7c-6ca5b8955408"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 162.0
+                    },
+                    "uuid": "b21ea99b-ebe6-44c0-a784-15fcca68b814"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 138.0
+                    },
+                    "uuid": "284bdc68-17c4-445d-b162-4aefc6fd685c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 138.0
+                    },
+                    "uuid": "e49a8470-ba49-48a3-940a-0f6bc6437af3"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 154.0
+                    },
+                    "uuid": "28ebd763-3511-4929-8dd2-16087dcf4740"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 154.0
+                    },
+                    "uuid": "40daef23-78c5-4a7e-b44b-cf33cc47796e"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 142.0
+                    },
+                    "uuid": "29d95050-1079-484e-96b4-6eb5581360d3"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 142.0
+                    },
+                    "uuid": "4c829209-6076-4d60-b18d-ae99ece7ea09"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 150.0
+                    },
+                    "uuid": "2aa14746-48a6-4739-aea7-ad34a4613ba7"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 150.0
+                    },
+                    "uuid": "e903cbd3-8247-41bf-a306-f59200020058"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 146.0
+                    },
+                    "uuid": "2add69c0-680e-4fc1-addb-21f16126cc5b"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 146.0
+                    },
+                    "uuid": "8410ab1f-0c9f-4804-ac12-77118e6743a4"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 134.0
+                    },
+                    "uuid": "2ae455da-7d84-4434-b110-2763853dbbd2"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 134.0
+                    },
+                    "uuid": "cd3ad7b3-8796-4237-bbfd-13d240e8d03d"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 158.0
+                    },
+                    "uuid": "2af7fe5a-a372-41d8-87b9-efa8ae4d1408"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 158.0
+                    },
+                    "uuid": "c5b9ac92-3eec-4c60-a9d4-72805ae3458d"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 138.0
+                    },
+                    "uuid": "2c191fa5-4840-41e6-8d4a-d0ad53fc8b9a"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 138.0
+                    },
+                    "uuid": "552622c3-64e8-4026-b271-0ccd3f040eae"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 54.0
+                    },
+                    "uuid": "2c1abd15-8e4a-4bbd-a7fd-c674fe8650ef"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 54.0
+                    },
+                    "uuid": "2f335239-5a26-430e-9e17-3a19629f0bff"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 78.0,
+                        "y": 106.0
+                    },
+                    "uuid": "2c34a824-7198-43e0-bb4a-981e06226a02"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 78.0,
+                        "y": 106.0
+                    },
+                    "uuid": "6fd98cd5-d909-453f-a7bd-d8ef39aaa5da"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 54.0
+                    },
+                    "uuid": "2c7668fb-7538-49f7-a1da-91eaaf4a9188"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 54.0
+                    },
+                    "uuid": "415b3854-6109-41c8-9518-ea22871cd20e"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 106.0
+                    },
+                    "uuid": "2d1861ec-812b-4548-8d3f-018b72a39b5e"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 106.0
+                    },
+                    "uuid": "fb094b49-03d7-4cd9-99dc-98fe98c53a47"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 78.0,
+                        "y": 42.0
+                    },
+                    "uuid": "2d78e79e-02e9-4354-870a-f0bec93a87fb"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 78.0,
+                        "y": 42.0
+                    },
+                    "uuid": "9dad2ee7-e8c8-4283-a84f-fc19d04a9ec6"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 142.0
+                    },
+                    "uuid": "2db51589-97b3-422b-813d-d5e530b7f039"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 142.0
+                    },
+                    "uuid": "eeaeba78-85f8-412e-b9ad-6aa1a0d2a2a6"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 158.0
+                    },
+                    "uuid": "2e1af130-e66a-453f-a954-0714199b3f89"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 158.0
+                    },
+                    "uuid": "5a2fa1ad-ad38-4af9-a6ef-75fee3ede3f7"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 122.0
+                    },
+                    "uuid": "2f0bf7f0-e9b1-4706-ada6-d940c8d43e64"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 122.0
+                    },
+                    "uuid": "8f62a8ac-3051-41ff-8842-ff3086c21e14"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 106.0
+                    },
+                    "uuid": "2f4d48e8-a4d7-4400-b76d-27b1e1b59c15"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 106.0
+                    },
+                    "uuid": "bb979a6c-1e41-4494-a2ce-3980f03740db"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 122.0
+                    },
+                    "uuid": "303b322d-b223-4409-9cf2-b386b71ff969"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 122.0
+                    },
+                    "uuid": "e0969ec9-87b4-435d-b7e4-e0e1bca16b03"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 106.0
+                    },
+                    "uuid": "30690789-802c-4b73-b43c-8babafb865f1"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 106.0
+                    },
+                    "uuid": "67349ee7-3b0d-4c22-b9ef-31532f4fe1e9"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 82.0,
+                        "y": 42.0
+                    },
+                    "uuid": "309ac3b1-738a-495a-9503-17b22ad206a4"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 82.0,
+                        "y": 42.0
+                    },
+                    "uuid": "58d6a1e3-ed8c-430d-b09a-2200e4bd4575"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 122.0
+                    },
+                    "uuid": "30c8ace8-490d-4876-9ac4-fb171f551700"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 122.0
+                    },
+                    "uuid": "a503ba7d-e0fa-4f20-954b-bca28b03f5dc"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 158.0
+                    },
+                    "uuid": "31ce3c82-c5f3-4726-95c2-f0e86f854ce0"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 158.0
+                    },
+                    "uuid": "de5119b3-b937-4266-97d1-adb9b6c89fbf"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 138.0
+                    },
+                    "uuid": "31f82337-e04d-4de6-a564-6babb5db51d7"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 138.0
+                    },
+                    "uuid": "73bc30c6-9121-4497-8ee7-d3c6674b82b4"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 142.0
+                    },
+                    "uuid": "322452cc-ed3f-4f69-987a-70dafaece2cf"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 142.0
+                    },
+                    "uuid": "7fced8e9-01e6-41af-9076-3c8128c4553e"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 122.0
+                    },
+                    "uuid": "323b1845-85c2-415d-96b9-71d35128c658"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 122.0
+                    },
+                    "uuid": "55f406c3-854e-4e96-b781-6817b8f3522c"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 66.0
+                    },
+                    "uuid": "3325988a-e728-4444-959a-1df12ba96994"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 66.0
+                    },
+                    "uuid": "d90c41c3-5e84-4a56-8e57-0521fd6f2707"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 150.0
+                    },
+                    "uuid": "3439c6d1-9824-496c-b66e-8e03e3088cf4"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 150.0
+                    },
+                    "uuid": "fa03730f-ffb6-42de-87a9-66bab0f45996"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 130.0
+                    },
+                    "uuid": "3480edb7-8a00-4ca6-b5e2-c80f2785c68e"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 130.0
+                    },
+                    "uuid": "5418bc7c-9ca9-4ecd-8e9f-e79b76e92157"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 50.0
+                    },
+                    "uuid": "34df3b38-7d71-4e38-bbd8-fc1fcf73ac4f"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 50.0
+                    },
+                    "uuid": "dd0eae41-cfdc-4019-90ea-b34d6c09b3fa"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 154.0
+                    },
+                    "uuid": "34e180a9-7f39-40d8-a5c8-368c108d578f"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 154.0
+                    },
+                    "uuid": "9661b9aa-6b53-4a75-b75a-e14c953f504c"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 142.0
+                    },
+                    "uuid": "356bde4f-de6d-4f1b-a710-0fa1f883bd71"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 142.0
+                    },
+                    "uuid": "cade0c6c-ef1b-4bd3-96e6-8b69e8684613"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 58.0
+                    },
+                    "uuid": "36744bf3-e0e4-4214-9c4a-aa33d27aa29c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 58.0
+                    },
+                    "uuid": "c5e3197e-cfe4-4e66-a50a-a2f00ed95030"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 146.0
+                    },
+                    "uuid": "374be565-fa7c-4699-b6e2-a0ff7c172ab7"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 146.0
+                    },
+                    "uuid": "7240e190-dcb9-4428-9ae5-c9b6acda8fbc"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 42.0
+                    },
+                    "uuid": "378b89d1-55be-4470-be8c-65310d1654d7"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 42.0
+                    },
+                    "uuid": "447f22e7-2b67-47b4-8921-995ff1c8cc0d"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 110.0
+                    },
+                    "uuid": "37eae3c1-cf6a-45a0-9f0f-72b9b6146092"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 110.0
+                    },
+                    "uuid": "d1144b2d-bd30-424e-8f62-f3584305319d"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 142.0
+                    },
+                    "uuid": "3896eed3-64f2-41d4-afa6-c97ff95d19ed"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 142.0
+                    },
+                    "uuid": "cde1c68d-1229-46f3-80bd-120bdb874ab9"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 134.0
+                    },
+                    "uuid": "3b662578-b777-4b2e-ae71-8485279f5f7d"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 134.0
+                    },
+                    "uuid": "49c8a3d5-abf4-4a00-9601-05b5983ab57f"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 50.0
+                    },
+                    "uuid": "3b925915-6ecf-4a03-bd30-465641746a44"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 50.0
+                    },
+                    "uuid": "d984f001-9c79-4c21-86c0-696206e95962"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 138.0
+                    },
+                    "uuid": "3c24e8f9-1e47-4c3a-8f2c-6719c29c3244"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 138.0
+                    },
+                    "uuid": "85e7db3d-f329-4dd4-97ee-bc3adc551766"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 54.0
+                    },
+                    "uuid": "3c54abfb-e2ab-4071-8ac7-6d510be4a8ab"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 54.0
+                    },
+                    "uuid": "71a1fb57-9518-4816-a336-0d30d67ca714"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 44.7612,
+                        "y": 66.7546
+                    },
+                    "uuid": "3cc2cfad-75cf-45cc-bf65-3bdc5f8d7dcc"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 44.7612,
+                        "y": 66.7546
+                    },
+                    "uuid": "a1267b4d-a313-4b7c-94ed-e822c3d531ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 154.0
+                    },
+                    "uuid": "3d022eb2-671a-458b-b45b-08ff960548d1"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 154.0
+                    },
+                    "uuid": "86d7f74f-8647-484b-8a03-a1645d569be2"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 146.0
+                    },
+                    "uuid": "3e1faf56-4f56-41f8-a315-06638490e789"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 146.0
+                    },
+                    "uuid": "5a5c1fc3-88f7-4650-bf68-91dedd9bd3a6"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 158.0
+                    },
+                    "uuid": "3e339c7e-9b95-4347-a326-3ebd6e3decd2"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 158.0
+                    },
+                    "uuid": "80eccf2d-e105-45b0-a7f3-5d803d0a2f18"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 58.0
+                    },
+                    "uuid": "3e3fa67f-394d-4fd2-b878-d2a2ec4c897e"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 58.0
+                    },
+                    "uuid": "c6c1ed4c-e2f4-4844-a93a-1ea043590169"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 62.0
+                    },
+                    "uuid": "3e4ca6e1-8c33-4273-9dad-7b99ba55520b"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 62.0
+                    },
+                    "uuid": "70b90550-802d-47e9-8f19-44d5f9362731"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 110.0
+                    },
+                    "uuid": "3eca77ce-9083-495a-b50b-47c0705ed9de"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 110.0
+                    },
+                    "uuid": "e5424a0a-399a-4fac-89c4-4f616aaf51f1"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 62.0
+                    },
+                    "uuid": "3ff38a1d-f281-43fd-8a99-76dd75abf58d"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 62.0
+                    },
+                    "uuid": "d94c8874-5de0-4147-a740-b38051d226e6"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 110.0
+                    },
+                    "uuid": "40608f70-24f8-41ef-b98f-18d36535a448"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 110.0
+                    },
+                    "uuid": "ae6c7b98-f089-4eb2-b0df-594e7088a3df"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 58.0
+                    },
+                    "uuid": "40f70e3b-1b2e-4b41-855a-ee088778b7ec"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 58.0
+                    },
+                    "uuid": "ac9cb975-8e4a-48bf-ae1b-5353624590c2"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 50.0
+                    },
+                    "uuid": "41e8493e-2a22-4701-9c93-4c8537391792"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 50.0
+                    },
+                    "uuid": "89a0ac26-d27b-4aa5-8d1a-dad6386b7e4d"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 42.0
+                    },
+                    "uuid": "420c8fce-e415-408f-a896-af9990abcb62"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 42.0
+                    },
+                    "uuid": "e1c912c3-d5a6-47b3-b5c2-a3f3252c2b67"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 134.0
+                    },
+                    "uuid": "42708c38-13f6-4ae7-85a8-3bfe50ba27ae"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 134.0
+                    },
+                    "uuid": "aa23c6ea-7661-409d-b7cc-ed2a1844c065"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 142.0
+                    },
+                    "uuid": "42e94537-a5fe-4c93-8660-c0d6b0c98e58"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 142.0
+                    },
+                    "uuid": "ccd79fe1-18c1-4c7c-b2c3-192be2000980"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 114.0
+                    },
+                    "uuid": "42fec975-802e-4770-8394-a6b22c8da8c3"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 114.0
+                    },
+                    "uuid": "e1d9de2c-75a2-4d69-abcf-9f074407dcdf"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 138.0
+                    },
+                    "uuid": "43c3d191-38f0-40c5-8554-261d959c8825"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 138.0
+                    },
+                    "uuid": "79a4c8b2-aa63-4461-90f0-394560cadce1"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 150.0
+                    },
+                    "uuid": "43d6dc29-2ffa-4ca1-ae42-798733102a26"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 150.0
+                    },
+                    "uuid": "e2b9c347-7a6c-42c2-8778-4c901f2c1d13"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 150.0
+                    },
+                    "uuid": "4416561e-edfa-4546-b2df-65756d3ea7c0"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 150.0
+                    },
+                    "uuid": "dbccdc9d-ee96-492b-bcb7-119abb5ab3a0"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 130.0
+                    },
+                    "uuid": "4511e23b-d503-40ac-a939-b3e2b1709290"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 130.0
+                    },
+                    "uuid": "4d4e3cb2-6076-4c56-8a7d-a0814eb235ca"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 118.0
+                    },
+                    "uuid": "4547d0a5-0b30-4ec4-8411-fc26397e465e"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 118.0,
+                        "y": 118.0
+                    },
+                    "uuid": "72f297f7-e567-46b0-af9d-15794c417de0"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 114.0
+                    },
+                    "uuid": "454cfaa5-041e-4bd4-a284-0e1b15f9551c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 114.0
+                    },
+                    "uuid": "5394889a-0d10-4369-84fe-7398b09d9e65"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 118.0
+                    },
+                    "uuid": "459518b3-0a58-4f40-a94d-2ce8462ee4e4"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 118.0
+                    },
+                    "uuid": "9d2fab5e-27ae-4a03-8a89-8a9587559c52"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 138.0
+                    },
+                    "uuid": "46af394a-805b-4f0f-ac5b-0fbddf95e69b"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 138.0
+                    },
+                    "uuid": "803ff187-e3ac-452e-873a-e7f09806cb70"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 146.0
+                    },
+                    "uuid": "4706f9ca-7ede-440a-8cfd-9b651f337f0f"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 146.0
+                    },
+                    "uuid": "c19318e3-3efd-4c13-92ef-3d0f7898f1c4"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 154.0
+                    },
+                    "uuid": "4787a40c-115c-49f3-91ee-362df863f090"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 154.0
+                    },
+                    "uuid": "e4238277-e8d6-46f3-bd1c-2e318defadfc"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 130.0
+                    },
+                    "uuid": "4846a6ef-85dd-4bde-af30-bccbf125b4e4"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 130.0
+                    },
+                    "uuid": "9f006b49-f45b-4683-9d6d-a3cc6758a4cd"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 118.0
+                    },
+                    "uuid": "485079e0-fdf2-4ffb-8ba6-45b8e87a4679"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 118.0
+                    },
+                    "uuid": "fc3ba304-ce2b-46b0-b8a4-94cad1014ab5"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 158.0
+                    },
+                    "uuid": "488cd4e9-c9aa-47cd-94f5-7fd5574e2078"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 66.0,
+                        "y": 158.0
+                    },
+                    "uuid": "93521276-2e4a-444f-aea7-c8d498b1d26d"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 138.0
+                    },
+                    "uuid": "48dda618-f0f3-49e0-9074-a6105bb1b910"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 138.0
+                    },
+                    "uuid": "f5919c7a-5862-468d-a63a-57cf25ed3d5d"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 146.0
+                    },
+                    "uuid": "48eac47f-39a7-4068-abb8-5c0bb78cd9e9"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 146.0
+                    },
+                    "uuid": "ce0056ff-7826-4d59-b7be-8c5aae1d2dbe"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 46.0
+                    },
+                    "uuid": "48fa2b2b-78c1-43e9-980b-2a9c901c86fa"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 54.0,
+                        "y": 46.0
+                    },
+                    "uuid": "5cc1258e-042a-4b00-8f9f-c4f2becb9c07"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 54.0
+                    },
+                    "uuid": "49464e2b-c860-4f6c-99f2-619316009244"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 54.0
+                    },
+                    "uuid": "7ad18b9d-7eb8-4309-847b-832fbf4e05c1"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 130.0
+                    },
+                    "uuid": "4955c3da-2592-48b9-a1fb-13102d3d10f9"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 130.0
+                    },
+                    "uuid": "80bcc174-0180-42f2-bd51-baa9b0d4f82d"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 78.0,
+                        "y": 50.0
+                    },
+                    "uuid": "4b8e845b-0b08-4f0d-bc65-6e904dce4818"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 78.0,
+                        "y": 50.0
+                    },
+                    "uuid": "f6fcbe80-c1cb-4bc9-827e-f6d57dfd2382"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 162.0
+                    },
+                    "uuid": "4c27b406-5ed5-48e5-a5e2-0229e8dc2e8d"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.0,
+                        "y": 162.0
+                    },
+                    "uuid": "aa0dfe85-90a0-42de-96a4-87368eddd51a"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 142.0
+                    },
+                    "uuid": "4d3313b3-4f46-40be-8538-4aeae00d5d6e"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 142.0
+                    },
+                    "uuid": "ee38f405-ff9c-4c51-8851-5ebd9dc09952"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 106.0
+                    },
+                    "uuid": "4d805452-e7b5-414d-8e2e-e6d74dccddbe"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 106.0
+                    },
+                    "uuid": "cf66caf8-7f38-4cd8-b6c0-48e71f4ea7a9"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 66.0
+                    },
+                    "uuid": "4f2f9839-2057-490f-94ce-f3bcccfb8b66"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 66.0
+                    },
+                    "uuid": "60d5b2a9-dc6a-47ee-9298-34c999daf347"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 154.0
+                    },
+                    "uuid": "4f7d24b1-db7d-436f-ae2a-d4a95ce3e2d9"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 154.0
+                    },
+                    "uuid": "78ee615f-5f92-4eef-9c83-7ef6432ba80e"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 106.0
+                    },
+                    "uuid": "4fc49f2d-838c-4e7e-a027-3b1ee74d2506"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 106.0
+                    },
+                    "uuid": "f893c203-7284-4826-b1c6-b20ed0e2c6b4"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 114.0
+                    },
+                    "uuid": "502337ec-541f-436e-8d1c-bb05a595551d"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 114.0
+                    },
+                    "uuid": "839abaa9-c566-46f3-adb7-436e654dd92a"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 86.0,
+                        "y": 42.0
+                    },
+                    "uuid": "50440692-1a6c-4228-b50b-af32944a58c3"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 86.0,
+                        "y": 42.0
+                    },
+                    "uuid": "6f169a2d-a095-46ed-bef0-b630b97209c1"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 50.0
+                    },
+                    "uuid": "50f90b1f-efa3-4bba-b599-8b9b311c58b2"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 50.0
+                    },
+                    "uuid": "c7da6975-fe78-4fee-b18a-cc91dfeae474"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 162.0
+                    },
+                    "uuid": "51d13514-8f05-44e0-8808-43179c198bdc"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 110.0,
+                        "y": 162.0
+                    },
+                    "uuid": "68be0823-1af5-4783-852b-73c183b7e3ab"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 42.0
+                    },
+                    "uuid": "5276e674-d393-4df4-b7ae-6d1e07455be3"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 42.0
+                    },
+                    "uuid": "d5782ff6-7bfb-4140-b015-b8901fcdaaf2"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 134.0
+                    },
+                    "uuid": "52d3be97-2c3d-4e56-a1fe-b4e69a5e141d"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 134.0
+                    },
+                    "uuid": "5b64c5ab-737b-4d75-a612-a5248614c99a"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 150.0
+                    },
+                    "uuid": "538358f4-bae9-44ad-abe0-2c199ba409b5"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 150.0
+                    },
+                    "uuid": "6a7de8d7-6c3e-4057-99ae-d16f111378b9"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 118.0
+                    },
+                    "uuid": "54170420-3340-4cb6-b9e3-8dee48c37eec"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 118.0
+                    },
+                    "uuid": "86020d22-542b-439e-bfac-65d127a10d1f"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 46.0
+                    },
+                    "uuid": "542a4407-caa1-4b47-b956-48d76876887c"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 62.0,
+                        "y": 46.0
+                    },
+                    "uuid": "ca673ead-13ee-4706-a262-54228dbacc01"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 46.0
+                    },
+                    "uuid": "54f6d07a-3bf7-4a85-a9f7-741a8e424888"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 102.0,
+                        "y": 46.0
+                    },
+                    "uuid": "7f91163c-9be8-4286-b070-69b433ca23d4"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 62.0
+                    },
+                    "uuid": "553540d0-8c58-4d18-a73e-e41a840c4b3a"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 94.0,
+                        "y": 62.0
+                    },
+                    "uuid": "99ab4e73-f7da-4404-92a7-494912dfda22"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 58.0
+                    },
+                    "uuid": "5572a040-8d10-42ab-899f-6000625eb2ab"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 58.0
+                    },
+                    "uuid": "ae321d9c-6c15-4883-b095-f6d0ab2004bb"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 154.0
+                    },
+                    "uuid": "558161ca-360b-4e46-a320-4a2c8088687f"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 154.0
+                    },
+                    "uuid": "98cba92b-bdd6-487c-a109-fa7677cf1637"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 126.0
+                    },
+                    "uuid": "55ed5cdf-c430-4544-97c3-87d2160d56c8"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 50.0,
+                        "y": 126.0
+                    },
+                    "uuid": "b6f459f8-9efd-4d89-a908-6df4fe9d877a"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled holes co-located",
+            "items": [
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 130.0
+                    },
+                    "uuid": "569d2e6d-6a04-4c94-b834-02f5de559f85"
+                },
+                {
+                    "description": "Via [GND] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 130.0
+                    },
+                    "uuid": "77c6a1f8-7f3f-4e74-b94a-681ceac559eb"
+                }
+            ],
+            "severity": "warning",
+            "type": "holes_co_located"
+        },
+        {
+            "description": "Drilled hole too close to other hole (board setup constraints min 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Via [/SR_CLK] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 82.478,
+                        "y": 109.942
+                    },
+                    "uuid": "b46f2005-7452-4ecf-b55d-1db385823b7e"
+                },
+                {
+                    "description": "Via [/SR_CLK] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 82.478,
+                        "y": 109.9425
+                    },
+                    "uuid": "ffc8e0df-56d6-4bea-a1d1-beb7b571fdfd"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Drilled hole too close to other hole (board setup constraints min 0.2500 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Via [/BTN1] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 79.9175,
+                        "y": 117.9135
+                    },
+                    "uuid": "5f63f245-3e8d-4f13-8008-1052540f2da0"
+                },
+                {
+                    "description": "Via [/BTN1] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 79.9175,
+                        "y": 117.914
+                    },
+                    "uuid": "7a06c172-bbc2-4fe8-9e34-278e1aff32ae"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D1",
+                    "pos": {
+                        "x": 55.5,
+                        "y": 54.447042
+                    },
+                    "uuid": "65d7e228-174a-4d62-8409-55bb21de9520"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D4",
+                    "pos": {
+                        "x": 116.5,
+                        "y": 54.447042
+                    },
+                    "uuid": "7cdbd371-3ef7-4f79-b9bc-cf0820bddc78"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D3",
+                    "pos": {
+                        "x": 103.5,
+                        "y": 54.447042
+                    },
+                    "uuid": "c5b43636-cedc-4d9c-84db-0fe8cadf815e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ShtukaDruka'",
+            "items": [
+                {
+                    "description": "Footprint D2",
+                    "pos": {
+                        "x": 68.5,
+                        "y": 54.447042
+                    },
+                    "uuid": "e94366cb-6ea7-48cb-ab9c-7af1dff91146"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Footprint 'PinHeader_2x07_P1.27mm_Vertical' does not match copy in library 'Connector_PinHeader_1.27mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 89.81,
+                        "y": 107.913657
+                    },
+                    "uuid": "0dc307ae-bb69-4516-8abc-b160a152c4a0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'TSSOP-10_3x3mm_P0.5mm' does not match copy in library 'Package_SO'",
+            "items": [
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 86.0,
+                        "y": 140.0
+                    },
+                    "uuid": "1a84473f-260b-4176-9296-7c71b52b1314"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'C_0402_1005Metric' does not match copy in library 'Capacitor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint C9",
+                    "pos": {
+                        "x": 87.0,
+                        "y": 62.5
+                    },
+                    "uuid": "21b93d89-c1af-4748-8388-fa2c817c5bbb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'C_0402_1005Metric' does not match copy in library 'Capacitor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint C2",
+                    "pos": {
+                        "x": 95.0,
+                        "y": 163.0
+                    },
+                    "uuid": "2332b2e1-4a5e-4649-9af4-9f9aedae6818"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'QFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm' does not match copy in library 'Package_DFN_QFN'",
+            "items": [
+                {
+                    "description": "Footprint U3",
+                    "pos": {
+                        "x": 86.0,
+                        "y": 56.0
+                    },
+                    "uuid": "238dc927-3a7e-49be-b122-2b97206fba87"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'R_0402_1005Metric' does not match copy in library 'Resistor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint R4",
+                    "pos": {
+                        "x": 92.0,
+                        "y": 134.5
+                    },
+                    "uuid": "358a5946-90b7-4b09-ab7d-e1d5c197c3ec"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'C_0402_1005Metric' does not match copy in library 'Capacitor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint C6",
+                    "pos": {
+                        "x": 92.0,
+                        "y": 145.5
+                    },
+                    "uuid": "47c731dc-ed7a-417c-9f0a-f882628fdeac"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_2x07_P1.27mm_Vertical' does not match copy in library 'Connector_PinHeader_1.27mm'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 89.81,
+                        "y": 163.635
+                    },
+                    "uuid": "5461c99d-3425-43a1-aa2f-8464aa072da9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'C_0402_1005Metric' does not match copy in library 'Capacitor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint C10",
+                    "pos": {
+                        "x": 89.0,
+                        "y": 62.5
+                    },
+                    "uuid": "700561a2-72b5-4fc8-8aef-49468197ade9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'C_0402_1005Metric' does not match copy in library 'Capacitor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint C4",
+                    "pos": {
+                        "x": 84.0,
+                        "y": 145.5
+                    },
+                    "uuid": "8613bc7c-3f74-440c-95db-9b1352819855"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'TSSOP-16_4.4x5mm_P0.65mm' does not match copy in library 'Package_SO'",
+            "items": [
+                {
+                    "description": "Footprint U2",
+                    "pos": {
+                        "x": 86.0,
+                        "y": 122.0
+                    },
+                    "uuid": "993ee8b1-c2d7-4cf7-942c-92bece863cb2"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'C_0805_2012Metric' does not match copy in library 'Capacitor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint C1",
+                    "pos": {
+                        "x": 77.0,
+                        "y": 163.0
+                    },
+                    "uuid": "9ce7073c-2b57-4777-a645-7991cd7aa0fc"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'C_0402_1005Metric' does not match copy in library 'Capacitor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint C5",
+                    "pos": {
+                        "x": 88.0,
+                        "y": 145.5
+                    },
+                    "uuid": "ac496997-8ae6-4a05-8e86-24b42f01c275"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'R_0402_1005Metric' does not match copy in library 'Resistor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint R5",
+                    "pos": {
+                        "x": 83.0,
+                        "y": 62.5
+                    },
+                    "uuid": "dc32a0f5-c53b-4c9b-8133-8a0a2857d3be"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'C_0402_1005Metric' does not match copy in library 'Capacitor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint C7",
+                    "pos": {
+                        "x": 92.0,
+                        "y": 140.0
+                    },
+                    "uuid": "e1358240-4c6a-4ca0-9be9-613d74cafa38"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'R_0402_1005Metric' does not match copy in library 'Resistor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint R6",
+                    "pos": {
+                        "x": 85.0,
+                        "y": 62.5
+                    },
+                    "uuid": "e8685efd-fe46-4cbc-9cb4-25572ea6fe1b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'R_0402_1005Metric' does not match copy in library 'Resistor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint R2",
+                    "pos": {
+                        "x": 84.0,
+                        "y": 134.5
+                    },
+                    "uuid": "effb19fe-995c-47b0-958e-55ee59e119f6"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'R_0402_1005Metric' does not match copy in library 'Resistor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint R1",
+                    "pos": {
+                        "x": 80.0,
+                        "y": 134.5
+                    },
+                    "uuid": "f81c0905-9991-46df-b995-eab6e473670b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'C_0402_1005Metric' does not match copy in library 'Capacitor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint C3",
+                    "pos": {
+                        "x": 80.0,
+                        "y": 145.5
+                    },
+                    "uuid": "f8867fbc-448a-422e-8797-1ee196117092"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'R_0402_1005Metric' does not match copy in library 'Resistor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint R3",
+                    "pos": {
+                        "x": 88.0,
+                        "y": 134.5
+                    },
+                    "uuid": "fcf6e13a-5fb8-44c5-83d5-3732bc77471e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'C_0402_1005Metric' does not match copy in library 'Capacitor_SMD'",
+            "items": [
+                {
+                    "description": "Footprint C8",
+                    "pos": {
+                        "x": 93.0,
+                        "y": 122.0
+                    },
+                    "uuid": "ff72fffa-5bc1-445c-9aae-c1d776fd2c4b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C10 on B.Silkscreen",
+                    "pos": {
+                        "x": 88.64,
+                        "y": 62.607836
+                    },
+                    "uuid": "b3ff20d0-b356-442a-9168-0ae6e65bdcb1"
+                },
+                {
+                    "description": "Reference field of C9",
+                    "pos": {
+                        "x": 88.16,
+                        "y": 62.5
+                    },
+                    "uuid": "ea303ba6-15d2-4d11-805a-4e109c433665"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R6",
+                    "pos": {
+                        "x": 86.17,
+                        "y": 62.5
+                    },
+                    "uuid": "0d7629d8-d021-4bbb-a7e2-0d2d2f822efd"
+                },
+                {
+                    "description": "Segment of C9 on B.Silkscreen",
+                    "pos": {
+                        "x": 86.64,
+                        "y": 62.607836
+                    },
+                    "uuid": "b0e10738-ca0c-4a42-999f-3d29c6fccaf7"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of R6 on B.Silkscreen",
+                    "pos": {
+                        "x": 84.62,
+                        "y": 62.653641
+                    },
+                    "uuid": "4f91e5b9-d55a-47b5-ad2e-33c9c186a002"
+                },
+                {
+                    "description": "Reference field of R5",
+                    "pos": {
+                        "x": 84.17,
+                        "y": 62.5
+                    },
+                    "uuid": "9c12edb5-d49a-4ac7-8f6d-8fcb766be659"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R6",
+                    "pos": {
+                        "x": 86.17,
+                        "y": 62.5
+                    },
+                    "uuid": "0d7629d8-d021-4bbb-a7e2-0d2d2f822efd"
+                },
+                {
+                    "description": "Pad 1 [+5V] of C9 on B.Cu",
+                    "pos": {
+                        "x": 87.0,
+                        "y": 62.98
+                    },
+                    "uuid": "a5eec9ce-1022-4697-8f6d-cf194a2dad85"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R5",
+                    "pos": {
+                        "x": 84.17,
+                        "y": 62.5
+                    },
+                    "uuid": "9c12edb5-d49a-4ac7-8f6d-8fcb766be659"
+                },
+                {
+                    "description": "Pad 1 [/SDB] of R6 on B.Cu",
+                    "pos": {
+                        "x": 85.0,
+                        "y": 63.01
+                    },
+                    "uuid": "05ea7400-5e51-4f35-bf0f-6be1f8d0ac67"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

@@ -287,7 +287,7 @@ function buildSolid(V){
   [['Audio In',4.5,162.5,['Mic/Line 1–2, Hi-Z 1–2','Line 1–8, Phono, GND']],['Audio Out',172.5,242.5,['Main, Aux','RCA L R']],['Control',252.5,426.5,['MIDI In 1–2, Out 1–4, TRS','Clock, Reset, CV In 1–4, CV 1–8']],['Power / USB',436.5,510.5,['LAN, USB-A, USB-C','DC 12–24V, On/Off']]].forEach(([t,x0,x1,ls])=>{const cx=(x0+x1)/2*KPX,sc=Math.min(1,roofL/32);
    lab7(rf.g,t,cx,8*sc*KPX,3.2*sc,PRINT7,600,'center',TF);ls.forEach((l,i)=>lab7(rf.g,l,cx,(15*sc+i*6*sc)*KPX,2.3*sc,DIM7))});
   skinPlane(rf.c,Wd-2*IN,roofL-IN,SOLID.group,[Wd/2,S.ze+.08,-(S.ye+S.roofEnd-IN)/2],[-Math.PI/2,0,0])}
- rearPanel(S);frontJacks(V,S);
+ rearPanel(S);frontJacks(V,S);ventHoles(V);
  SOLID.group.updateMatrixWorld(true);
 }
 function screen7(p,e,info,S,s){const wg=new THREE.Group();wg.position.set(0,S.zs,-S.ys);wg.rotation.x=S.ang;SOLID.group.add(wg);
@@ -344,6 +344,12 @@ function rearPanel(S){const H=S.rear,Wd=515;if(H<90)return;const rp=canvasMM(Wd,
  skinPlane(rp.c,Wd-8,H-8,SOLID.group,[Wd/2,H/2,-S.D-.08],[0,Math.PI,0])}
 function frontJacks(V,S){for(const p of V.parts){if(!/^Phones( \d jack| jack)/.test(p.n))continue;const k=/3\.5/.test(p.n)?'mini':'trs';const n=/x 80|Phones 2/.test(p.n)?2:1;
  jack7(k,p.c[0],p.c[2],S.y0,true,{name:'Наушники '+n,group:'Передний торец',desc:(k==='mini'?'3,5 мм':'6,35 мм')+'; громкость — ручка Phones '+n+' на скате.'})}}
+// vents in the solid shell: side grooves and fan exhaust sit inside the wall volume, so draw them as dark slots just proud of the outer skin
+function ventHoles(V){for(const p of V.parts){if(p.g!=='vents'||/^Foot/.test(p.n))continue;const q={...p,c:[...p.c],s:[...p.s]};
+ const x0=p.c[0]-p.s[0]/2,x1=p.c[0]+p.s[0]/2;
+ if(x1>=512.5){q.s[0]=0.6;q.c[0]=515.3}else if(x0<=2.5){q.s[0]=0.6;q.c[0]=-0.3}else if(p.c[2]<=0.5){q.s[2]=0.6;q.c[2]=-0.3}else continue;
+ const {geo,mx}=mk(q);const m=new THREE.Mesh(geo,HOLE7());m.matrixAutoUpdate=false;m.matrix.copy(mx);SOLID.group.add(m);
+ reg7(m,{name:/Fan exhaust/.test(p.n)?'Выдув вентилятора':(/Side groove/.test(p.n)?'Паз на стенке':'Щель забора воздуха'),group:'Вентиляция',desc:p.n})}}
 function clearSolid(){if(!SOLID.group)return;scene.remove(SOLID.group);SOLID.group.traverse(o=>{if(o.isMesh&&o.geometry!==DOT7)o.geometry.dispose()});for(const d of SOLID.dispose)d.dispose();SOLID.group=null;SOLID.key=null;SOLID.pick=[];SOLID.pads=[];SOLID.dispose=[]}
 function solidHit(){const objs=SOLID.pick.filter(o=>o.visible);if(solidMesh)objs.push(solidMesh);const h=ray.intersectObjects(objs,false)[0];if(!h)return null;return h.object.userData.info7||h.object.userData.solidInfo||null}
 function showInfo7(i){selectBlock(null);if(!i){info.hidden=true;return}info.innerHTML='<button id="infoX" aria-label="Закрыть">×</button><b class="t">'+esc(i.name)+'</b><div class="d">'+esc(i.group||'')+'</div><div>'+esc(i.desc||'')+'</div>';info.hidden=false;document.getElementById('infoX').addEventListener('click',()=>{info.hidden=true})}

@@ -1,0 +1,1 @@
+Rev 0.1: schematic and placed board; not routed (task: placement only). CI keeps the DRC report but does not fail on this board until this file is removed.

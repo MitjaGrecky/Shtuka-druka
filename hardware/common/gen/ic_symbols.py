@@ -207,5 +207,13 @@ def lm70660():
               left, right, top, bottom)
 
 
+def rgb6028():
+    left = [("3", "A", PA)]
+    right = [("1", "K1", PA), ("2", "K2", PA), ("4", "K4", PA)]
+    return ic("RGB_6028_CA", "GL6028RGB01-B", "D", "ShtukaDruka:LED_RGB_6028_ReverseMount_C51933363_slot31",
+              "https://jlcpcb.com/partdetail/C51933363", "C51933363",
+              "Reverse-mount RGB 6028, common anode pin 3 (LCSC library symbol of C51933363; colour of K1/K2/K4 not confirmed by a datasheet)", left, right, [], [])
+
+
 def all_symbols():
-    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166() + adc128s102() + tps2051b() + bq77915() + tps26631() + bzt52c3v3() + isousb211() + lm70660()
+    return cs5308p() + cs5304p() + cs4308p() + xu316() + adum4166() + adc128s102() + tps2051b() + bq77915() + tps26631() + bzt52c3v3() + isousb211() + lm70660() + rgb6028()
